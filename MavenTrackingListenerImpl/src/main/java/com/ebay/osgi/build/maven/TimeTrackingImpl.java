@@ -27,7 +27,7 @@ public class TimeTrackingImpl extends AbstractExecutionListener {
 
 	@Override
 	public void sessionStarted(ExecutionEvent event) {
-		sessionTransaction = CALLoggerUtil.startCALTransaction(event.getProject().getId(), event.getSession().getGoals().toString());
+		sessionTransaction = CALLoggerUtil.startCALTransaction("Session-" + event.getSession().getTopLevelProject().getId(), event.getSession().getGoals().toString());
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public class TimeTrackingImpl extends AbstractExecutionListener {
 
 	@Override
 	public void projectStarted(ExecutionEvent event) {
-		projectTransaction = CALLoggerUtil.startCALTransaction(event.getProject().getId(), event.getProject().getId());
+		projectTransaction = CALLoggerUtil.startCALTransaction("Project-" + event.getProject().getId(), "");
 	}
 
 	@Override
@@ -59,12 +59,12 @@ public class TimeTrackingImpl extends AbstractExecutionListener {
 
 	@Override
 	public void projectFailed(ExecutionEvent event) {
-		CALLoggerUtil.endCALTransaction(projectTransaction, "Failed", event.getException());
+		CALLoggerUtil.endCALTransaction(projectTransaction, "FAILED", event.getException().fillInStackTrace());
 	}
 	
 	@Override
 	public void mojoStarted(ExecutionEvent event) {
-		mojoTransaction = CALLoggerUtil.startCALTransaction(event.getMojoExecution().getPlugin().getId(), event.getMojoExecution().getPlugin().getId());
+		mojoTransaction = CALLoggerUtil.startCALTransaction(event.getMojoExecution().getPlugin().getId(), "");
 	}
 
 	@Override
@@ -74,7 +74,7 @@ public class TimeTrackingImpl extends AbstractExecutionListener {
 
 	@Override
 	public void mojoFailed(ExecutionEvent event) {
-		CALLoggerUtil.endCALTransaction(mojoTransaction, "Failed", event.getException());
+		CALLoggerUtil.endCALTransaction(mojoTransaction, "FAILED", event.getException().getCause());
 	}
 
 	@Override

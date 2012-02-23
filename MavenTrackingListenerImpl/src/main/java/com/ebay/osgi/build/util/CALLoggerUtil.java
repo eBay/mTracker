@@ -60,15 +60,17 @@ public final class CALLoggerUtil {
 	 */
 	public static void destroy()
 	{
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		if(calService != null){
-			try {
-				System.out.println(" Sleeping for 2 seconds .. ");
-				Thread.sleep(2*1000);
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			} 
 			calService.disconnect();
 		}
+		
 	}
 	
 	/**
@@ -112,7 +114,6 @@ public final class CALLoggerUtil {
 	 * @param status
 	 */
 	public static void endCALTransaction(CalTransaction calTransaction, String status, Throwable t) {
-		calTransaction.setStatus(status);
 		calTransaction.setStatus(t);
 		calTransaction.completed();
 	}
