@@ -1,0 +1,183 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+ <head>
+  <title> New Document </title>
+  <meta name="Generator" content="EditPlus">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <style type="text/css">
+  
+	table
+	{
+		border-collapse:collapse;
+		border:1px solid black;
+	}
+	
+  	table th,table td
+	{		
+		padding-left:5px;
+		padding-right:5px;
+		text-align:left;
+		border:1px solid black;
+		
+	}
+	table tr
+	{
+		border:none;
+	} 
+	
+	.textleft{
+		text-align:left;
+		padding-left:5px;
+		font-family:Calibri;
+	}
+	
+	.textcenter{
+		text-align:center;
+		font-family:Calibri;
+	}
+	
+	body{
+		font-family:Calibri;
+	}
+	
+	.textright{
+		text-align:right;
+		padding-right:5px;
+		font-family:Calibri;
+	}
+	
+	#statistb
+	{
+		border:1px solid black;
+	}
+	
+	#statistb td
+	{
+		border:1px solid black;
+		padding-top:5px;
+		padding-bottom:4px;
+		padding-left:10px;
+	}
+		
+
+  </style>
+ </head>
+
+ <body>
+	
+	<br/>
+	<!-- result with special color-->
+	<br/>
+	#if(($!{colorResultList.size()}) != 0)
+		<div>
+			<table id="statistb" style="border-collapse:collapse;">
+				<tbody>
+					<tr style="text-align:center;">
+						<td colspan="6" class="textcenter" style="background-color:#E9E9E9; color:#1F497D;">ALRAM - Metrics out of Measurement Allowance</td>					
+					</tr>
+					<tr style="font-weight:bold;">
+						<td class="textcenter" style="width:200px; background-color:#E9E9E9;">Collection</td>
+						<td class="textcenter" style="width:180px; background-color:#E9E9E9;">Field</td>					
+						<td class="textcenter" style="width:100px; background-color:#CACACA;">Current Value</td>						
+						<td class="textcenter" style="width:140px; background-color:#E9E9E9;">Measurement Allowance</td>
+						<td class="textcenter" style="width:140px; background-color:#E9E9E9;">Moving Average (Last 7 Days)</td>
+					</tr>
+			
+					#foreach($singleResult in ${colorResultList})
+						<tr>
+							<td class="textleft"><a href="$singleResult.getLink()" target="_blank">$singleResult.getCollection()</a></td>
+							<td class="textleft">$singleResult.getField()</td>
+							#if($singleResult.getField().contains("Reliability"))
+								#if($singleResult.getNowValue() == "N/A")
+									<td class="textright" style="background-color:$singleResult.getColor()">$singleResult.getNowValue()</td>
+								#else
+									<td class="textright" style="background-color:$singleResult.getColor()">$singleResult.getNowValue()%</td>
+								#end
+								
+								<td class="textright">$singleResult.getLower()% ~ $singleResult.getUpper()%</td>
+								#if($singleResult.getMovingAverage() == "N/A")
+									<td class="textright">N/A</td>
+								#else
+									<td class="textright">$singleResult.getMovingAverage()% $singleResult.getFlag()</td>
+								#end
+							#else
+								#if($singleResult.getNowValue() == "N/A")
+									<td class="textright" style="background-color:$singleResult.getColor()">$singleResult.getNowValue()</td>
+								#else
+									<td class="textright" style="background-color:$singleResult.getColor()">$singleResult.getNowValue()min</td>
+								#end										
+								<td class="textright">$singleResult.getLower()min ~ $singleResult.getUpper()min</td>
+								#if($singleResult.getMovingAverage() == "N/A")
+									<td class="textright">N/A</td>
+								#else
+									<td class="textright">$singleResult.getMovingAverage()min $singleResult.getFlag()</td>
+								#end
+							#end
+						</tr>
+					#end 
+				</tbody>
+			</table>
+		</div>
+		<br/>
+	#end
+	
+	
+	<!--result within expectations-->
+	#if(($!{normalResultList.size()}) != 0)
+		<div>
+			<table id="statistb" style="border-collapse:collapse;">
+				<tbody>
+					<tr style="text-align:center;">
+						<td colspan="6" class="textcenter" style="background-color:#E9E9E9; color:#1F497D;">INFO - Metrics within Measurement Allowance</td>					
+					</tr>
+					<tr style="font-weight:bold;">
+						<td class="textcenter" style="width:200px; background-color:#E9E9E9;">Collection</td>
+						<td class="textcenter" style="width:180px; background-color:#E9E9E9;">Field</td>					
+						<td class="textcenter" style="width:100px; background-color:#CACACA;">Current Value</td>						
+						<td class="textcenter" style="width:140px; background-color:#E9E9E9;">Measurement Allowance</td>
+						<td class="textcenter" style="width:140px; background-color:#E9E9E9;">Moving Average (Last 7 Days)</td>
+					</tr>
+			
+					#foreach($singleResult in ${normalResultList})
+						<tr>
+							<td class="textleft"><a href="$singleResult.getLink()" target="_blank">$singleResult.getCollection()</a></td>
+							<td class="textleft">$singleResult.getField()</td>
+							#if($singleResult.getField().contains("Reliability"))
+								#if($singleResult.getNowValue() == "N/A")
+									<td class="textright" style="background-color:$singleResult.getColor()">$singleResult.getNowValue()</td>
+								#else
+									<td class="textright" style="background-color:$singleResult.getColor()">$singleResult.getNowValue()%</td>
+								#end								
+								<td class="textright">$singleResult.getLower()% ~ $singleResult.getUpper()%</td>
+								#if($singleResult.getMovingAverage() == "N/A")
+									<td class="textright">N/A</td>
+								#else
+									<td class="textright">$singleResult.getMovingAverage()% $singleResult.getFlag()</td>
+								#end
+							#else
+								#if($singleResult.getNowValue() == "N/A")
+									<td class="textright" style="background-color:$singleResult.getColor()">$singleResult.getNowValue()</td>
+								#else
+									<td class="textright" style="background-color:$singleResult.getColor()">$singleResult.getNowValue()min</td>
+								#end						        
+								<td class="textright">$singleResult.getLower()min ~ $singleResult.getUpper()min</td>
+								#if($singleResult.getMovingAverage() == "N/A")
+									<td class="textright">N/A</td>
+								#else
+									<td class="textright">$singleResult.getMovingAverage()min $singleResult.getFlag()</td>
+								#end
+							#end
+						</tr>
+					#end 
+				</tbody>
+			</table>
+		</div>
+		<br/>
+	#end
+	<div>
+		<a href="$pfdashDataViewService">PFDash Data Viewer</a>  (<a href='https://chrome.google.com/webstore/detail/jsonview/chklaanhfefbnpoihckbnefhakgolnmc' target='_blank'>JSONView</a> required on Chrome)
+	</div>
+ </body>
+</html>

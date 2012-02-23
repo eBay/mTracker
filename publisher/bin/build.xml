@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	
+<!--
+Copyright [2013-2014] eBay Software Foundation
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<project name="maven build tracking log publisher" default="publish" basedir=".">
+
+	<property environment="env"/>
+
+	<property name="MailLogger.mailhost" value=""/>
+	<property name="MailLogger.from" value=""/>
+	<property name="MailLogger.success.notify" value="false"/>
+	<property name="MailLogger.failure.to" value=""/>
+	<property name="MailLogger.failure.subject" value="LogPublisher failed on ${env.COMPUTERNAME}."/>
+	
+	<property name="NXRAPTOR_HOST" value="nxraptor.qa.ccoe.com"/>
+	<property name="BUILD_SERVICE_HOST" value="rbuildservice.stratus.qa.ccoe.com"/>
+
+	<property name="maven.repo.baseurl" value="http://${NXRAPTOR_HOST}/content/repositories/releases/com/ccoe/build/publisher/publisher"/>
+
+	<property name="git.repo.baseurl" value="https://github.com/eBay/mTracker/raw/master/publisher/bin"/>
+
+	<property name="rbservice.baseurl" value="http://${BUILD_SERVICE_HOST}/build-service"/>
+
+	<property name="lib.dir" value="${basedir}/lib"/>
+	<property name="logs.dir" value="${basedir}/logs"/>
+
+	<property name="jar.prefix" value="LogPublisher"/>
+	<property name="jar.postfix" value="jar-with-dependencies.jar"/>
+	<property name="retension.days" value="14"/>
+
+	<property name="key.name" value="LogPublisher-Jar-KEY"/>
+
+	<property name="staging.dir" value="${lib.dir}/staging" />
+	
+	<tstamp>
+        <format property="touch.time" pattern="MM/dd/yyyy hh:mm aa" offset="-3" unit="hour"/>
+	</tstamp>
+
+	<target name="check.in.progress">
+		<condition property="need.remove.stop.sign">
+		    <and>
+		    	<available file="${basedir}/LOG_PUBLISH_IN_PROGRESS"/>
+				<islastmodified dateTime="${touch.time}" mode="before">
+				    <file file="${basedir}/LOG_PUBLISH_IN_PROGRESS"/>
+				</islastmodified>
+		    </and>
+		 </condition>
+		<echo message="Need to remove the stop sign: ${need.remove.stop.sign}"/>
+	</target>
+	
+	<target name="remove.stop.sign" if="need.remove.stop.sign">
+		<echo message="LOG_PUBLISH_IN_PROGRESS exists and it reaches expire date, so we are removing this file."/>
+		<delete file="${basedir}/LOG_PUBLISH_IN_PROGRESS"/>
+	</target>
+	
+	<target name="init.local" depends="check.in.progress, remove.stop.sign">
+		<mkdir dir="${staging.dir}" />
+		<loadresource property="local.version" failonerror="false">
+			<file file="${lib.dir}/${key.name}"/>
+		</loadresource>
+
+		<property name="current.jar.file" value="${jar.prefix}-${local.version}-${jar.postfix}"/>
+
+		<available file="${basedir}/LOG_PUBLISH_IN_PROGRESS" property="is.publishing"/>
+
+		<echo message="Local version: ${current.jar.file}"/>
+		<echo message="Last publishing in progress: ${is.publishing}"/>
+	</target>
+
+	<target name="get.key.from.rbservice">
+		<echo message="Fetching KEY file from -> ${rbservice.baseurl}"/>
+		<loadresource property="remote.version" failonerror="false">
+			<url url="${rbservice.baseurl}/${key.name}"/>
+		</loadresource>
+		<echo message="Remote version from rbservice: ${remote.version}"/>
+	</target>
+
+	<target name="get.key.from.git" unless="remote.version">
+		<echo message="Fetching KEY file from -> ${git.repo.baseurl}"/>
+		<loadresource property="remote.version" failonerror="false">
+			<url url="${git.repo.baseurl}/${key.name}"/>
+		</loadresource>
+		<echo message="Remote version from git: ${remote.version}"/>
+	</target>
+
+	<target name="init" depends="init.local, get.key.from.rbservice, get.key.from.git">
+		<condition property="uptodate">
+			<and>
+			    <available file="${lib.dir}/${current.jar.file}"/>
+			    <equals arg1="${local.version}" arg2="${remote.version}" casesensitive="false" trim="true"/>
+			</and>
+		</condition>
+
+		<property name="latest.jar.file" value="${jar.prefix}-${remote.version}-${jar.postfix}"/>
+
+		<property name="remote.jar.fullurl" value="${maven.repo.baseurl}/${remote.version}/${latest.jar.file}"/>
+		<property name="remote.key.file" value="${git.repo.baseurl}/${key.name}"/>
+		
+		<echo message="Local JAR version is uptodate: ${uptodate}"/>
+	</target>
+
+	<target name="download" unless="uptodate">
+		<echo message="New MavenLogPublisher version found ${remote.version}"/>
+
+		<get src="${remote.jar.fullurl}" dest="${staging.dir}/${latest.jar.file}" maxtime="180"/>
+		<get src="${remote.key.file}" dest="${staging.dir}/${key.name}" maxtime="30"/>
+
+		<condition property="download.success">
+			<and>
+				<available file="${staging.dir}/${latest.jar.file}"/>
+				<available file="${staging.dir}/${key.name}"/>
+			</and>
+		</condition>
+	</target>
+
+	<target name="install" if="download.success">
+		<delete file="${lib.dir}/${current.jar.file}" failonerror="false"/>
+		<delete file="${lib.dir}/${key.name}" failonerror="false"/>
+
+		<move file="${staging.dir}/${latest.jar.file}" tofile="${lib.dir}/${latest.jar.file}"/>
+		<move file="${staging.dir}/${key.name}" tofile="${lib.dir}/${key.name}"/>
+	</target>
+
+	<target name="publish" depends="init.local" unless="is.publishing">
+		<touch file="${basedir}/LOG_PUBLISH_IN_PROGRESS"/>
+		<echo message="Maven Build Tracking Log Publishing..."/>
+		<echo message="Running ${lib.dir}/${current.jar.file}"/>
+		<java jar="${lib.dir}/${current.jar.file}" fork="true">
+			<arg line="${logs.dir} ${retension.days}"/>
+		</java>
+		<delete file="${basedir}/LOG_PUBLISH_IN_PROGRESS"/>
+	</target>
+
+	<target name="upgrade" depends="init, download, install"/>
+
+</project>

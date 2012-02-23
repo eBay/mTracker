@@ -1,0 +1,9 @@
+target
+*.log
+logs/
+queue
+.settings
+.project
+.classpath
+nb-configuration.xml
+.idea

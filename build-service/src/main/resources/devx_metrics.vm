@@ -1,0 +1,316 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+ <head>
+  <title> New Document </title>
+  <meta name="Generator" content="EditPlus">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <style type="text/css">
+  
+	table
+	{
+		border-collapse:collapse;
+		border:1px solid black;
+		width: 60%
+	}
+	
+  	table th,table td
+	{		
+		padding-left:5px;
+		padding-right:5px;
+		text-align:left;
+		border:1px solid black;
+		
+	}
+	table tr
+	{
+		border:none;
+	} 
+	
+	.textleft{
+		text-align:left;
+		padding-left:5px;
+		font-family:Calibri;
+	}
+	
+	.textcenter{
+		text-align:center;
+		font-family:Calibri;
+	}
+	
+	.textright{
+		text-align:right;
+		padding-right:5px;
+		font-family:Calibri;
+	}
+	
+
+	
+	table td
+	{
+		border:1px solid black;
+		padding-top:5px;
+		padding-bottom:4px;
+		padding-left:10px;
+		font-family:Calibri; font-size:15px
+	}
+		
+
+  </style>
+ </head>
+
+ <body>	
+	
+	<div style="font-family:Calibri; width:790px;font-size:14px;background-color:#663366">
+		<h2><font color="white">RIDE(Raptor 1.x)</font></h2>
+	</div>
+  <table id="statistb">
+  <tr>
+	<td colspan="3" style="width:285px; background-color:#E9E9E9;"> <span style="font-weight:bold">Metrics</span></td>
+	<td style="width:212px; background-color:#E9E9E9;"><span style="font-weight:bold">Worksapce Setup</span></td>
+	<td style="width:213px; background-color:#E9E9E9;"><span style="font-weight:bold">Server Startup</span></td>
+
+  </tr>
+  <tr>
+  	<td rowspan="7" >Reliability</td>
+	<td colspan="2">Overall Reliability</td>
+	<td class="textright">$valueRetriever.getValue("RIDEWorkspaceSetupData", "Reliability")</td>
+	<td class="textright">$valueRetriever.getValue("RIDEServerStartupData", "Reliability")</td>
+  </tr>
+  <tr>
+	<td colspan="2">System Reliability</td>
+	<td class="textright">$valueRetriever.getValue("RIDEWorkspaceSetupData", "SystemReliability")</td>
+	<td class="textright">$valueRetriever.getValue("RIDEServerStartupData", "SystemReliability")</td>
+  </tr>
+   <tr>
+	<td colspan="2">Total Count</td>
+	<td class="textright">$valueRetriever.getValue("RIDEWorkspaceSetupData", "TotalEvents")</td>
+	<td class="textright">$valueRetriever.getValue("RIDEServerStartupData", "TotalEvents")</td>
+  </tr> 
+  <tr>
+	<td colspan="2">Success Count</td>
+	<td class="textright">$valueRetriever.getValue("RIDEWorkspaceSetupData", "SuccessEvents")</td>
+	<td class="textright">$valueRetriever.getValue("RIDEServerStartupData", "SuccessEvents")</td>
+  </tr>
+   <tr>
+	<td  colspan="2" >Failed Count</td>
+	<td class="textright">$valueRetriever.getValue("RIDEWorkspaceSetupData", "TotalErrorEvents")</td>
+	<td class="textright">$valueRetriever.getValue("RIDEServerStartupData", "TotalErrorEvents")</td>
+  </tr>
+   <tr>
+    <td rowspan="2"></td>
+	<td  >System Errors</td>
+	<td class="textright">$valueRetriever.getValue("RIDEWorkspaceSetupData", "SystemErrorEvents")</td>
+	<td class="textright">$valueRetriever.getValue("RIDEServerStartupData", "SystemErrorEvents")</td>
+  </tr> 
+   <tr>
+	<td >User Errors</td>
+	<td class="textright">$valueRetriever.getValue("RIDEWorkspaceSetupData", "UserErrorEvents")</td>
+	<td class="textright">$valueRetriever.getValue("RIDEServerStartupData", "UserErrorEvents")</td>
+  </tr>  
+  
+  <tr>
+	<td colspan="3">Performance</td>
+	<td class="textright">$valueRetriever.getValue("RIDEWorkspaceSetupData", "Average") </td>
+	<td class="textright">$valueRetriever.getValue("RIDEServerStartupData", "Average") </td>
+  </tr>
+  </table>
+
+<div>
+<pre style="font-family:Calibri; width:790px;font-size:12px">
+<b>Notes:</b>
+* RIDE for Raptor 2.0 GA (RIDE 5.0) has basic telemetry instrumented (mainly usage adoption related), more advanced telemetry instrumentation are working in progress and targeted for Raptor 2.1 (RIDE 5.1).
+</pre>
+</div>
+
+  	<div style="font-family:Calibri; width:790px;font-size:14px;background-color:#663366">
+		<h2><font color="white">Raptor CI Build & Assembly</font></h2>
+	</div>
+	  	<div style="font-family:Calibri; width:680px;font-size:12px">
+		<h3><font >Build</font></h3>
+	</div>
+	  <table>
+  <tr>
+	<td colspan="3" style="width:200px; background-color:#E9E9E9;"> <span style="font-weight:bold">Metrics</span></td>
+	<td style="width:215px; background-color:#E9E9E9;"><span style="font-weight:bold">Raptor 2.X</span></td>
+	<td style="width:215px; background-color:#E9E9E9;"><span style="font-weight:bold">Raptor 1.X</span></td>
+
+  </tr>
+  <tr>
+	<td rowspan="7" >Reliability</td>
+	<td colspan="2">Overall Reliability</td>
+	<td class="textright">$valueRetriever.getValue("CI2Data", "Reliability")</td>
+	<td class="textright">$valueRetriever.getValue("CIData", "Reliability")</td>
+  </tr>
+    <tr>
+	<td colspan="2">System Reliability</td>
+	<td class="textright">$valueRetriever.getValue("CI2Data", "SystemReliability")</td>
+	<td class="textright">$valueRetriever.getValue("CIData", "SystemReliability")</td>
+  </tr>
+   <tr>
+	<td colspan="2">Total Count</td>
+	<td class="textright">$valueRetriever.getValue("CI2Data", "TotalEvents")</td>
+	<td class="textright">$valueRetriever.getValue("CIData", "TotalEvents")</td>
+  </tr> 
+  <tr>
+	<td colspan="2">Success Count</td>
+	<td class="textright">$valueRetriever.getValue("CI2Data", "SuccessEvents")</td>
+	<td class="textright">$valueRetriever.getValue("CIData", "SuccessEvents")</td>
+  </tr>
+   <tr>
+	<td  colspan="2" >Failed Count</td>
+	<td class="textright">$valueRetriever.getValue("CI2Data", "TotalErrorEvents")</td>
+	<td class="textright">$valueRetriever.getValue("CIData", "TotalErrorEvents")</td>
+  </tr>
+   <tr>
+    <td rowspan="2"></td>
+	<td  >System Errors</td>
+	<td class="textright">$valueRetriever.getValue("CI2Data", "SystemErrorEvents")</td>
+	<td class="textright">$valueRetriever.getValue("CIData", "SystemErrorEvents")</td>
+  </tr> 
+   <tr>
+	<td >User Errors</td>
+	<td class="textright">$valueRetriever.getValue("CI2Data", "UserErrorEvents")</td>
+	<td class="textright">$valueRetriever.getValue("CIData", "UserErrorEvents")</td>
+  </tr>  
+ 
+  <tr>
+	<td rowspan="3" >Performance</td>
+	<td colspan="2">Dependency Download Time</td>
+	<td class="textright">$valueRetriever.getValue("CI2Data", "AverageDownload") </td>
+	<td class="textright">$valueRetriever.getValue("CIData", "AverageDownload") </td>
+  </tr>
+    <tr>
+	<td colspan="2" >Build Execution Time</td>
+	<td class="textright">$valueRetriever.getValue("CI2Data", "AveragePureBuild") </td>
+	<td class="textright">$valueRetriever.getValue("CIData", "AveragePureBuild") </td>
+  </tr>
+  <tr>
+	<td colspan="2">Total Build Time</td>
+	<td class="textright">$valueRetriever.getValue("CI2Data", "AverageBuild") </td>
+	<td class="textright">$valueRetriever.getValue("CIData", "AverageBuild") </td>
+  </tr>
+  </table>
+
+  	  	<div style="font-family:Calibri; width:680px;font-size:12px">
+		<h3><font >Assembly</font></h3>
+	</div>
+	  <table>
+  <tr>
+	<td colspan="3" style="width:200px; background-color:#E9E9E9;"> <span style="font-weight:bold">Metrics</span></td>
+	<td style="width:215px; background-color:#E9E9E9;"><span style="font-weight:bold">Raptor 2.X</span></td>
+	<td style="width:215px; background-color:#E9E9E9;"><span style="font-weight:bold">Raptor 1.X</span></td>
+
+  </tr>
+  <tr>
+	<td rowspan="8" >Reliability</td>
+	<td colspan="2">Overall Reliability</td>
+	<td class="textright">$valueRetriever.getValue("CIAssembler2Data", "Reliability")</td>
+	<td class="textright">$valueRetriever.getValue("CIAssemblerData", "Reliability")</td>
+  </tr>
+  <tr>
+	<td colspan="2">System Reliability</td>
+	<td class="textright">$valueRetriever.getValue("CIAssembler2Data", "SystemReliability")</td>
+	<td class="textright">$valueRetriever.getValue("CIAssemblerData", "SystemReliability")</td>
+  </tr>
+     <tr>
+	<td colspan="2">Total Count</td>
+	<td class="textright">$valueRetriever.getValue("CIAssembler2Data", "TotalEvents")</td>
+	<td class="textright">$valueRetriever.getValue("CIAssemblerData", "TotalEvents")</td>
+  </tr> 
+  <tr>
+	<td colspan="2">Success Count</td>
+	<td class="textright">$valueRetriever.getValue("CIAssembler2Data", "SuccessEvents")</td>
+	<td class="textright">$valueRetriever.getValue("CIAssemblerData", "SuccessEvents")</td>
+  </tr>
+   <tr>
+	<td  colspan="2" >Failed Count</td>
+	<td class="textright">$valueRetriever.getValue("CIAssembler2Data", "TotalErrorEvents")</td>
+	<td class="textright">$valueRetriever.getValue("CIAssemblerData", "TotalErrorEvents")</td>
+  </tr>
+   <tr>
+    <td rowspan="3"></td>
+	<td  >System Errors</td>
+	<td class="textright">$valueRetriever.getValue("CIAssembler2Data", "SystemErrorEvents")</td>
+	<td class="textright">$valueRetriever.getValue("CIAssemblerData", "SystemErrorEvents")</td>
+  </tr> 
+   <tr>
+
+	<td >User Errors</td>
+	<td class="textright">$valueRetriever.getValue("CIAssembler2Data", "UserErrorEvents")</td>
+	<td class="textright">$valueRetriever.getValue("CIAssemblerData", "UserErrorEvents")</td>
+  </tr> 
+    <tr>
+
+	<td >External Service Errors</td>
+	<td class="textright">$valueRetriever.getValue("CIAssembler2Data", "ExternalErrorEvents")</td>
+	<td class="textright">$valueRetriever.getValue("CIAssemblerData", "ExternalErrorEvents")</td>
+  </tr>    
+
+  <tr>
+	<td rowspan="3" >Performance</td>
+	<td colspan="2">Dependency Download Time</td>
+	<td class="textright">$valueRetriever.getValue("CIAssembler2Data", "AverageDownload") </td>
+	<td class="textright">$valueRetriever.getValue("CIAssemblerData", "AverageDownload") </td>
+  </tr>
+    <tr>
+	<td colspan="2">Assembly Execution Time</td>
+	<td class="textright">$valueRetriever.getValue("CIAssembler2Data", "AveragePureBuild") </td>
+	<td class="textright">$valueRetriever.getValue("CIAssemblerData", "AveragePureBuild") </td>
+
+  </tr>
+     <tr>
+	<td colspan="2">Total Assembly Time</td>
+	<td class="textright">$valueRetriever.getValue("CIAssembler2Data", "AverageBuild") </td>
+	<td class="textright">$valueRetriever.getValue("CIAssemblerData", "AverageBuild") </td>
+  </tr>
+  </table>
+  	<div style="font-family:Calibri; width:680px;font-size:12px">
+		<h3><font >SRP</font></h3>
+	</div>
+	<table>
+
+  <tr>
+	<td colspan="2"  style="width:130px; background-color:#E9E9E9;"> <span style="font-weight:bold">Metrics</span></td>
+	<td style="width:145px; background-color:#E9E9E9;"><span style="font-weight:bold">2.X Benchmark CI </span></td>
+	<td style="width:145px; background-color:#E9E9E9;"><span style="font-weight:bold">1.X Benchmark CI </span></td>
+	<td style="width:145px; background-color:#E9E9E9;"><span style="font-weight:bold">1.X SRP Team CI </span></td>
+ </tr>
+  <tr>
+	<td  rowspan=4>Performance</td>
+	<td>Dependency Download Time</td>
+	<td class="textright">$valueRetriever.getValue("SRPBenchmark2Data", "DownloadTime") </td>
+	<td class="textright">$valueRetriever.getValue("SRPBenchmark1Data", "DownloadTime") </td>
+	<td class="textright">$valueRetriever.getValue("SRPDev1Data", "DownloadTime") </td>
+  </tr>
+  <tr>
+	<td>Build Execution Time</td>
+	<td class="textright">$valueRetriever.getValue("SRPBenchmark2Data", "PureBuildTime") </td>
+	<td class="textright">$valueRetriever.getValue("SRPBenchmark1Data", "PureBuildTime") </td>
+	<td class="textright">$valueRetriever.getValue("SRPDev1Data", "PureBuildTime") </td>
+  </tr>
+   <tr>
+	<td>Assembly Execution Time</td>
+    <td class="textright">$valueRetriever.getValue("SRPBenchmark2Data", "AssemblyDuration") </td>
+	<td class="textright">$valueRetriever.getValue("SRPBenchmark1Data", "AssemblyDuration") </td>
+	<td class="textright">$valueRetriever.getValue("SRPDev1Data", "AssemblyDuration") </td>
+  </tr> 
+   <tr>
+	<td>Total</td>
+    <td class="textright">$valueRetriever.getValue("SRPBenchmark2Data", "TotalBuildTime") </td>
+	<td class="textright">$valueRetriever.getValue("SRPBenchmark1Data", "TotalBuildTime") </td>
+	<td class="textright">$valueRetriever.getValue("SRPDev1Data", "TotalBuildTime") </td>
+  </tr> 
+  
+  </table>
+  
+  <div >
+<pre style="font-family:Calibri; width:790px;font-size:12px">
+<b>Notes:</b>
+* SRP benchmark CI's were setup by DevX team using SRP code base for active investigating and tuning performance w/o impacting SRP team
+* SRP team has not started the migration to Raptor 2.X hence no 2.X SRP Team CI
+</pre>
+</div>
+ </body>
+</html>

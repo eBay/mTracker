@@ -1,0 +1,84 @@
+SQLLog for Test3Parent-MavenBuild:D-SHC-00436998
+Environment: raptor-build-tracking
+Start: 27-03-2013 12:14:15
+0 t12:14:15.00   Environment CI 
+1   t12:14:15.00    URL Session 
+2     t12:14:16.00  Project Samples Parent 
+3       t12:14:16.00  Phase clean 
+4         A12:14:16.00  Plugin org.apache.maven.plugins:maven-clean-plugin:2.4.1 0 66  (default-clean)   
+3       T12:14:16.00  Phase clean 0 68 
+
+3       t12:14:16.00  Phase validate 
+4         A12:14:16.00  Plugin com.ccoe.osgi.build:dependency-version-validator:1.0.0 0 224  (default)   
+3       T12:14:16.00  Phase validate 0 225 
+
+3       t12:14:17.00  Phase generate-sources 
+4         A12:14:17.00  Plugin org.codehaus.mojo:build-helper-maven-plugin:1.7 0 97  (generate-build-id)   
+4         A12:14:17.00  Plugin org.codehaus.mojo:buildnumber-maven-plugin:1.0 0 178  (generate-build-number)   
+3       T12:14:17.00  Phase generate-sources 0 277 
+
+3       t12:14:17.00  Phase generate-resources 
+4         A12:14:17.00  Plugin com.ccoe.osgi.build:maven-scm-build-info:1.0.6 0 93  (build-info)   
+3       T12:14:17.00  Phase generate-resources 0 94 
+
+3       t12:14:17.00  Phase process-classes 
+4         A12:14:17.00  Plugin org.apache.maven.plugins:maven-resources-plugin:2.5 0 89  (copy-manifest-to-target-for-gep)   
+3       T12:14:17.00  Phase process-classes 0 133 
+
+3       t12:14:17.00  Phase validate 
+4         A12:14:17.00  Plugin com.ccoe.osgi.build:dependency-version-validator:1.0.0 0 7  (default)   
+3       T12:14:17.00  Phase validate 0 8 
+
+3       t12:14:17.00  Phase generate-sources 
+4         A12:14:17.00  Plugin org.codehaus.mojo:build-helper-maven-plugin:1.7 0 4  (generate-build-id)   
+4         A12:14:17.00  Plugin org.codehaus.mojo:buildnumber-maven-plugin:1.0 0 3  (generate-build-number)   
+3       T12:14:17.00  Phase generate-sources 0 10 
+
+3       t12:14:17.00  Phase package 
+4         A12:14:17.00  Plugin org.apache.maven.plugins:maven-source-plugin:2.1.2.ccoe 0 118  (default)   
+3       T12:14:17.00  Phase package 0 119 
+
+3       t12:14:17.00  Phase install 
+4         A12:14:17.00  Plugin org.apache.maven.plugins:maven-install-plugin:2.3.1 0 81  (default-install)   
+3       T12:14:17.00  Phase install 0 637 
+
+2     T12:14:16.00  Project Samples Parent 0 1136 com.ccoe.app.raptor:Test3Parent:pom:0.0.1-SNAPSHOT 
+
+2     t12:14:17.00  Project test3 
+3       t12:14:18.00  Phase clean 
+4         A12:14:18.00  Plugin org.apache.maven.plugins:maven-clean-plugin:2.4.1 0 51  (default-clean)   
+3       T12:14:18.00  Phase clean 0 52 
+
+3       t12:14:18.00  Phase validate 
+4         A12:14:18.00  Plugin com.ccoe.osgi.build:dependency-version-validator:1.0.0 0 43  (default)   
+3       T12:14:18.00  Phase validate 0 44 
+
+3       t12:14:18.00  Phase generate-sources 
+4         A12:14:18.00  Plugin org.codehaus.mojo:build-helper-maven-plugin:1.7 0 48  (generate-build-id)   
+4         A12:14:18.00  Plugin org.codehaus.mojo:build-helper-maven-plugin:1.7 0 7  (add-source)   
+4         A12:14:18.00  Plugin org.codehaus.mojo:buildnumber-maven-plugin:1.0 0 82  (generate-build-number)   
+3       T12:14:18.00  Phase generate-sources 0 139 
+
+3       t12:14:18.00  Phase generate-resources 
+4         A12:14:18.00  Plugin org.codehaus.mojo:build-helper-maven-plugin:1.7 0 6  (add-resource)   
+4         A12:14:18.00  Plugin com.ccoe.osgi.build:maven-scm-build-info:1.0.6 0 42  (build-info)   
+3       T12:14:18.00  Phase generate-resources 0 49 
+
+3       t12:14:18.00  Phase process-resources 
+4         A12:14:18.00  Plugin org.apache.maven.plugins:maven-resources-plugin:2.5 0 89  (default-resources)   
+4         A12:14:18.00  Plugin com.ccoe.content:maven-content-plugin:2.0.1 0 406  (process-content-resources)   
+3       T12:14:18.00  Phase process-resources 0 496 
+
+3       t12:14:19.00  Phase compile 
+4         A12:14:19.00  Plugin org.apache.maven.plugins:maven-compiler-plugin:2.5 0 729  (default-compile)   
+3       T12:14:19.00  Phase compile 1 730 
+
+2     T12:14:17.00  Project test3 1 2066 com.ccoe.app.raptor:test3:war:0.0.1-SNAPSHOT 
+
+1   T12:14:15.00  URL Session 1 4360 [clean, install] 
+0 T12:14:15.00   Environment  CI 1 4360 git.url=N/A;machine=D-SHC-00436998;uname=mmao;maven.version=e:\bin\apache-maven-3.0.5-RaptorTimeTracking\bin\..;java.version=1.6.0_38-b05 
+-----------------EXCEPTION MESSAGE-----------------
+Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:2.5:compile (default-compile) on project test3: Compilation failure
+E:\workspace\raptor_test3\Test3Parent\test3\src\main\java\com\ccoe\app\raptor\controller\SampleRaptorController.java:[1,0] ��ҪΪ class��interface �� enum
+
+-----------------EXCEPTION MESSAGE-----------------

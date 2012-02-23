@@ -1,0 +1,372 @@
+0 SQLLog for CalTestParent-MavenBuild:D-SHC-00436998
+Environment: raptor-build-tracking
+Label: unset;***;unset
+Start: 06-03-2013 15:34:08
+0 t15:34:08.14	Environment	RIDE
+1    t15:34:09.28	URL	Session
+2       t15:34:09.30	Project	Samples Parent
+3          t15:34:09.47	Phase	validate
+4             A15:34:09.47	Plugin	com.ccoe.osgi.build:dependency-version-validator:1.0.0	0	316	 (default)  
+3          T15:34:09.79	Phase	validate	0	318	
+         -------------------------------------------------------
+3          t15:34:09.79	Phase	generate-sources
+4             A15:34:09.79	Plugin	org.codehaus.mojo:build-helper-maven-plugin:1.7	0	136	 (generate-build-id)  
+4             A15:34:09.93	Plugin	org.codehaus.mojo:buildnumber-maven-plugin:1.0	0	257	 (generate-build-number)  
+3          T15:34:10.18	Phase	generate-sources	0	393	
+         -------------------------------------------------------
+3          t15:34:10.18	Phase	generate-resources
+4             A15:34:10.18	Plugin	com.ccoe.osgi.build:maven-scm-build-info:1.0.7	0	117	 (build-info)  
+3          T15:34:10.30	Phase	generate-resources	0	117	
+         -------------------------------------------------------
+3          t15:34:10.30	Phase	process-classes
+4             A15:34:10.30	Plugin	org.apache.maven.plugins:maven-resources-plugin:2.5	0	162	 (copy-manifest-to-target-for-gep)  
+3          T15:34:10.51	Phase	process-classes	0	208	
+         -------------------------------------------------------
+3          t15:34:10.51	Phase	validate
+4             A15:34:10.51	Plugin	com.ccoe.osgi.build:dependency-version-validator:1.0.0	0	34	 (default)  
+3          T15:34:10.54	Phase	validate	0	34	
+         -------------------------------------------------------
+3          t15:34:10.54	Phase	generate-sources
+4             A15:34:10.54	Plugin	org.codehaus.mojo:build-helper-maven-plugin:1.7	0	4	 (generate-build-id)  
+4             A15:34:10.55	Plugin	org.codehaus.mojo:buildnumber-maven-plugin:1.0	0	5	 (generate-build-number)  
+3          T15:34:10.55	Phase	generate-sources	0	10	
+         -------------------------------------------------------
+3          t15:34:10.55	Phase	package
+4             A15:34:10.55	Plugin	org.apache.maven.plugins:maven-source-plugin:2.1.2.ccoe	0	164	 (default)  
+3          T15:34:10.72	Phase	package	0	164	
+         -------------------------------------------------------
+3          t15:34:10.72	Phase	install
+4             A15:34:10.72	Plugin	org.apache.maven.plugins:maven-install-plugin:2.3.1	0	109	 (default-install)  
+3          T15:34:10.83	Phase	install	0	109	
+         -------------------------------------------------------
+2       T15:34:10.83	Project	Samples Parent	0	1526	com.ccoe.app.raptor:CalTestParent:pom:0.0.1-SNAPSHOT
+      -------------------------------------------------------
+2       t15:34:10.83	Project	caltest
+3          E15:34:12.07	CAL	BadInstrumentation	AlreadyCompleted	Class=T&When=15:34:10.83&Type=Phase&Name=install&Func=SetStatus&Arg=0
+3          t15:34:12.07	Phase	validate
+4             A15:34:12.07	Plugin	com.ccoe.osgi.build:dependency-version-validator:1.0.0	0	193	 (default)  
+3          T15:34:12.26	Phase	validate	0	193	
+         -------------------------------------------------------
+3          t15:34:12.27	Phase	generate-sources
+4             A15:34:12.27	Plugin	org.codehaus.mojo:build-helper-maven-plugin:1.7	0	120	 (generate-build-id)  
+4             A15:34:12.39	Plugin	org.codehaus.mojo:build-helper-maven-plugin:1.7	0	3	 (add-source)  
+4             A15:34:12.39	Plugin	org.codehaus.mojo:buildnumber-maven-plugin:1.0	0	203	 (generate-build-number)  
+3          T15:34:12.59	Phase	generate-sources	0	327	
+         -------------------------------------------------------
+3          t15:34:12.59	Phase	generate-resources
+4             A15:34:12.59	Plugin	org.codehaus.mojo:build-helper-maven-plugin:1.7	0	4	 (add-resource)  
+4             A15:34:12.60	Plugin	com.ccoe.osgi.build:maven-scm-build-info:1.0.7	0	61	 (build-info)  
+3          T15:34:12.66	Phase	generate-resources	0	65	
+         -------------------------------------------------------
+3          t15:34:12.66	Phase	process-resources
+4             A15:34:12.66	Plugin	org.apache.maven.plugins:maven-resources-plugin:2.5	0	171	 (default-resources)  
+4             A15:34:12.83	Plugin	com.ccoe.content:maven-content-plugin:2.0.1	0	507	 (process-content-resources)  
+3          T15:34:13.34	Phase	process-resources	0	679	
+         -------------------------------------------------------
+3          t15:34:13.34	Phase	compile
+4             A15:34:13.34	Plugin	org.apache.maven.plugins:maven-compiler-plugin:2.5	0	314	 (default-compile)  
+4             A15:34:13.65	Plugin	org.apache.maven.plugins:maven-compiler-plugin:2.5	0	183	 (default-compile)  
+4             A15:34:13.83	Plugin	org.apache.felix:maven-bundle-plugin:2.3.7	0	1533	 (bundle-manifest)  
+3          T15:34:15.37	Phase	compile	0	2031	
+         -------------------------------------------------------
+3          t15:34:15.37	Phase	process-classes
+4             A15:34:15.37	Plugin	org.apache.maven.plugins:maven-resources-plugin:2.5	0	31	 (copy-manifest-to-target-for-gep)  
+3          T15:34:15.40	Phase	process-classes	0	31	
+         -------------------------------------------------------
+3          t15:34:15.40	Phase	process-test-resources
+4             A15:34:15.40	Plugin	org.apache.maven.plugins:maven-resources-plugin:2.5	0	52	 (default-testResources)  
+3          T15:34:15.45	Phase	process-test-resources	0	52	
+         -------------------------------------------------------
+3          t15:34:15.45	Phase	test-compile
+4             A15:34:15.45	Plugin	org.apache.maven.plugins:maven-compiler-plugin:2.5	0	170	 (default-testCompile)  
+3          T15:34:15.62	Phase	test-compile	0	170	
+         -------------------------------------------------------
+3          t15:34:15.62	Phase	test
+4             A15:34:15.62	Plugin	org.apache.maven.plugins:maven-surefire-plugin:2.9	0	1125	 (default-test)  
+3          T15:34:16.75	Phase	test	0	1125	
+         -------------------------------------------------------
+3          t15:34:16.75	Phase	package
+4             A15:34:16.75	Plugin	org.apache.maven.plugins:maven-war-plugin:2.1.1	0	1116	 (default-war)  
+3          T15:34:17.86	Phase	package	0	1117	
+         -------------------------------------------------------
+3          t15:34:17.86	Phase	validate
+4             A15:34:17.86	Plugin	com.ccoe.osgi.build:dependency-version-validator:1.0.0	0	46	 (default)  
+3          T15:34:17.91	Phase	validate	0	46	
+         -------------------------------------------------------
+3          t15:34:17.91	Phase	generate-sources
+4             A15:34:17.91	Plugin	org.codehaus.mojo:build-helper-maven-plugin:1.7	0	2	 (generate-build-id)  
+4             A15:34:17.91	Plugin	org.codehaus.mojo:build-helper-maven-plugin:1.7	0	2	 (add-source)  
+4             A15:34:17.92	Plugin	org.codehaus.mojo:buildnumber-maven-plugin:1.0	0	4	 (generate-build-number)  
+3          T15:34:17.92	Phase	generate-sources	0	9	
+         -------------------------------------------------------
+3          t15:34:17.92	Phase	package
+4             A15:34:17.92	Plugin	org.apache.maven.plugins:maven-source-plugin:2.1.2.ccoe	0	256	 (default)  
+3          T15:34:18.18	Phase	package	0	256	
+         -------------------------------------------------------
+3          t15:34:18.18	Phase	install
+4             A15:34:18.18	Plugin	org.apache.maven.plugins:maven-install-plugin:2.3.1	0	107	 (default-install)  
+4             A15:34:18.28	Plugin	org.apache.felix:maven-bundle-plugin:2.3.7	0	236	 (bundle-install)  
+3          T15:34:18.52	Phase	install	0	343	
+         -------------------------------------------------------
+2       T15:34:18.52	Project	caltest	0	7693	com.ccoe.app.raptor:caltest:war:0.0.1-SNAPSHOT
+      -------------------------------------------------------
+2       t15:34:18.52	Project	EBA For caltest
+3          E15:34:19.56	CAL	BadInstrumentation	AlreadyCompleted	Class=T&When=15:34:18.52&Type=Phase&Name=install&Func=SetStatus&Arg=0
+3          t15:34:19.56	Phase	validate
+4             A15:34:19.56	Plugin	com.ccoe.osgi.build:dependency-version-validator:1.0.0	0	139	 (default)  
+3          T15:34:19.70	Phase	validate	0	139	
+         -------------------------------------------------------
+3          t15:34:19.70	Phase	generate-sources
+4             A15:34:19.70	Plugin	org.codehaus.mojo:build-helper-maven-plugin:1.7	0	114	 (generate-build-id)  
+4             A15:34:19.81	Plugin	org.codehaus.mojo:buildnumber-maven-plugin:1.0	0	208	 (generate-build-number)  
+3          T15:34:20.02	Phase	generate-sources	0	322	
+         -------------------------------------------------------
+3          t15:34:20.02	Phase	generate-resources
+4             A15:34:20.02	Plugin	com.ccoe.osgi.build:maven-scm-build-info:1.0.7	0	58	 (build-info)  
+3          T15:34:20.08	Phase	generate-resources	0	58	
+         -------------------------------------------------------
+3          t15:34:20.08	Phase	process-resources
+4             A15:34:20.08	Plugin	org.apache.maven.plugins:maven-resources-plugin:2.5	0	165	 (default-resources)  
+3          T15:34:20.25	Phase	process-resources	0	165	
+         -------------------------------------------------------
+3          t15:34:20.25	Phase	compile
+4             A15:34:20.25	Plugin	org.apache.maven.plugins:maven-compiler-plugin:2.5	0	186	 (default-compile)  
+4             A15:34:20.43	Plugin	org.apache.maven.plugins:maven-compiler-plugin:2.5	0	81	 (default-compile)  
+4             A15:34:20.51	Plugin	com.ccoe.osgi.build:obrgen-maven-plugin:0.1.8	0	16144	 (obrgen)  
+3          T15:34:36.66	Phase	compile	0	16411	
+         -------------------------------------------------------
+3          t15:34:36.66	Phase	process-classes
+4             A15:34:36.66	Plugin	org.apache.maven.plugins:maven-resources-plugin:2.5	0	33	 (copy-manifest-to-target-for-gep)  
+3          T15:34:36.69	Phase	process-classes	0	33	
+         -------------------------------------------------------
+3          t15:34:36.69	Phase	process-test-resources
+4             A15:34:36.69	Plugin	org.apache.maven.plugins:maven-resources-plugin:2.5	0	49	 (default-testResources)  
+3          T15:34:36.74	Phase	process-test-resources	0	49	
+         -------------------------------------------------------
+3          t15:34:36.74	Phase	test-compile
+4             A15:34:36.74	Plugin	org.apache.maven.plugins:maven-compiler-plugin:2.5	0	101	 (default-testCompile)  
+3          T15:34:36.84	Phase	test-compile	0	101	
+         -------------------------------------------------------
+3          t15:34:36.84	Phase	test
+4             A15:34:36.84	Plugin	org.apache.maven.plugins:maven-surefire-plugin:2.9	0	660	 (default-test)  
+3          T15:34:37.50	Phase	test	0	660	
+         -------------------------------------------------------
+3          t15:34:37.50	Phase	package
+4             A15:34:37.50	Plugin	org.apache.aries:eba-maven-plugin:0.4.0	0	255	 (default-eba)  
+3          T15:34:37.76	Phase	package	0	257	
+         -------------------------------------------------------
+3          t15:34:37.76	Phase	validate
+4             A15:34:37.76	Plugin	com.ccoe.osgi.build:dependency-version-validator:1.0.0	0	35	 (default)  
+3          T15:34:37.79	Phase	validate	0	35	
+         -------------------------------------------------------
+3          t15:34:37.79	Phase	generate-sources
+4             A15:34:37.79	Plugin	org.codehaus.mojo:build-helper-maven-plugin:1.7	0	7	 (generate-build-id)  
+4             A15:34:37.80	Plugin	org.codehaus.mojo:buildnumber-maven-plugin:1.0	0	7	 (generate-build-number)  
+3          T15:34:37.81	Phase	generate-sources	0	15	
+         -------------------------------------------------------
+3          t15:34:37.81	Phase	package
+4             A15:34:37.81	Plugin	org.apache.maven.plugins:maven-source-plugin:2.1.2.ccoe	0	153	 (default)  
+3          T15:34:37.96	Phase	package	0	153	
+         -------------------------------------------------------
+3          t15:34:37.96	Phase	install
+4             A15:34:37.96	Plugin	org.apache.maven.plugins:maven-install-plugin:2.4	0	91	 (default-install)  
+3          T15:34:38.05	Phase	install	0	91	
+         -------------------------------------------------------
+2       T15:34:38.05	Project	EBA For caltest	0	19533	com.ccoe.app.raptor:caltest.eba:eba:0.0.1-SNAPSHOT
+      -------------------------------------------------------
+1    T15:34:38.05	URL	Session	0	28771	[install]
+   -------------------------------------------------------
+0 T15:34:38.05	Environment	RIDE	0	29910	git_url: null;machine=D-SHC-00436998;uname=mmao;maven.version=Apache Maven 3.0.5 (r01de14724cdef164cd33c7c8c2fe155faf9602da; 2013-02-19 21:51:28+0800);java.version=1.6.0_38-b05
+-------------------------------------------------------
+0 SQLLog for CalTestParent-MavenBuild:D-SHC-00436998
+Environment: raptor-build-tracking
+Label: unset;***;unset
+Start: 06-03-2013 15:41:21
+0 t15:41:21.22	Environment	DEV
+1    t15:41:22.25	URL	Session
+2       t15:41:22.26	Project	Samples Parent
+3          t15:41:22.37	Phase	clean
+4             A15:41:22.37	Plugin	org.apache.maven.plugins:maven-clean-plugin:2.4.1	0	61	 (default-clean)  
+3          T15:41:22.43	Phase	clean	0	62	
+         -------------------------------------------------------
+3          t15:41:22.43	Phase	validate
+4             A15:41:22.43	Plugin	com.ccoe.osgi.build:dependency-version-validator:1.0.0	0	236	 (default)  
+3          T15:41:22.66	Phase	validate	0	236	
+         -------------------------------------------------------
+3          t15:41:22.67	Phase	generate-sources
+4             A15:41:22.67	Plugin	org.codehaus.mojo:build-helper-maven-plugin:1.7	0	97	 (generate-build-id)  
+4             A15:41:22.76	Plugin	org.codehaus.mojo:buildnumber-maven-plugin:1.0	0	183	 (generate-build-number)  
+3          T15:41:22.95	Phase	generate-sources	0	280	
+         -------------------------------------------------------
+3          t15:41:22.95	Phase	generate-resources
+4             A15:41:22.95	Plugin	com.ccoe.osgi.build:maven-scm-build-info:1.0.7	0	96	 (build-info)  
+3          T15:41:23.04	Phase	generate-resources	0	96	
+         -------------------------------------------------------
+3          t15:41:23.04	Phase	process-classes
+4             A15:41:23.04	Plugin	org.apache.maven.plugins:maven-resources-plugin:2.5	0	96	 (copy-manifest-to-target-for-gep)  
+3          T15:41:23.18	Phase	process-classes	0	141	
+         -------------------------------------------------------
+3          t15:41:23.18	Phase	validate
+4             A15:41:23.18	Plugin	com.ccoe.osgi.build:dependency-version-validator:1.0.0	0	3	 (default)  
+3          T15:41:23.19	Phase	validate	0	3	
+         -------------------------------------------------------
+3          t15:41:23.19	Phase	generate-sources
+4             A15:41:23.19	Plugin	org.codehaus.mojo:build-helper-maven-plugin:1.7	0	2	 (generate-build-id)  
+4             A15:41:23.19	Plugin	org.codehaus.mojo:buildnumber-maven-plugin:1.0	0	1	 (generate-build-number)  
+3          T15:41:23.19	Phase	generate-sources	0	4	
+         -------------------------------------------------------
+3          t15:41:23.19	Phase	package
+4             A15:41:23.19	Plugin	org.apache.maven.plugins:maven-source-plugin:2.1.2.ccoe	0	149	 (default)  
+3          T15:41:23.34	Phase	package	0	149	
+         -------------------------------------------------------
+3          t15:41:23.34	Phase	install
+4             A15:41:23.34	Plugin	org.apache.maven.plugins:maven-install-plugin:2.3.1	0	95	 (default-install)  
+3          T15:41:23.43	Phase	install	0	96	
+         -------------------------------------------------------
+2       T15:41:23.43	Project	Samples Parent	0	1169	com.ccoe.app.raptor:CalTestParent:pom:0.0.1-SNAPSHOT
+      -------------------------------------------------------
+2       t15:41:23.43	Project	caltest
+3          E15:41:24.69	CAL	BadInstrumentation	AlreadyCompleted	Class=T&When=15:41:23.43&Type=Phase&Name=install&Func=SetStatus&Arg=0
+3          t15:41:24.69	Phase	clean
+4             A15:41:24.69	Plugin	org.apache.maven.plugins:maven-clean-plugin:2.4.1	0	295	 (default-clean)  
+3          T15:41:24.99	Phase	clean	0	295	
+         -------------------------------------------------------
+3          t15:41:24.99	Phase	validate
+4             A15:41:24.99	Plugin	com.ccoe.osgi.build:dependency-version-validator:1.0.0	0	39	 (default)  
+3          T15:41:25.02	Phase	validate	0	39	
+         -------------------------------------------------------
+3          t15:41:25.02	Phase	generate-sources
+4             A15:41:25.02	Plugin	org.codehaus.mojo:build-helper-maven-plugin:1.7	0	44	 (generate-build-id)  
+4             A15:41:25.07	Plugin	org.codehaus.mojo:build-helper-maven-plugin:1.7	0	4	 (add-source)  
+4             A15:41:25.07	Plugin	org.codehaus.mojo:buildnumber-maven-plugin:1.0	0	87	 (generate-build-number)  
+3          T15:41:25.16	Phase	generate-sources	0	135	
+         -------------------------------------------------------
+3          t15:41:25.16	Phase	generate-resources
+4             A15:41:25.16	Plugin	org.codehaus.mojo:build-helper-maven-plugin:1.7	0	3	 (add-resource)  
+4             A15:41:25.16	Plugin	com.ccoe.osgi.build:maven-scm-build-info:1.0.7	0	38	 (build-info)  
+3          T15:41:25.20	Phase	generate-resources	0	41	
+         -------------------------------------------------------
+3          t15:41:25.20	Phase	process-resources
+4             A15:41:25.20	Plugin	org.apache.maven.plugins:maven-resources-plugin:2.5	0	89	 (default-resources)  
+4             A15:41:25.29	Plugin	com.ccoe.content:maven-content-plugin:2.0.1	0	403	 (process-content-resources)  
+3          T15:41:25.69	Phase	process-resources	0	493	
+         -------------------------------------------------------
+3          t15:41:25.69	Phase	compile
+4             A15:41:25.69	Plugin	org.apache.maven.plugins:maven-compiler-plugin:2.5	0	1225	 (default-compile)  
+4             A15:41:26.92	Plugin	org.apache.maven.plugins:maven-compiler-plugin:2.5	0	203	 (default-compile)  
+4             A15:41:27.12	Plugin	org.apache.felix:maven-bundle-plugin:2.3.7	0	1078	 (bundle-manifest)  
+3          T15:41:28.20	Phase	compile	0	2507	
+         -------------------------------------------------------
+3          t15:41:28.20	Phase	process-classes
+4             A15:41:28.20	Plugin	org.apache.maven.plugins:maven-resources-plugin:2.5	0	6	 (copy-manifest-to-target-for-gep)  
+3          T15:41:28.21	Phase	process-classes	0	6	
+         -------------------------------------------------------
+3          t15:41:28.21	Phase	process-test-resources
+4             A15:41:28.21	Plugin	org.apache.maven.plugins:maven-resources-plugin:2.5	0	4	 (default-testResources)  
+3          T15:41:28.21	Phase	process-test-resources	0	4	
+         -------------------------------------------------------
+3          t15:41:28.21	Phase	test-compile
+4             A15:41:28.21	Plugin	org.apache.maven.plugins:maven-compiler-plugin:2.5	0	6	 (default-testCompile)  
+3          T15:41:28.22	Phase	test-compile	0	6	
+         -------------------------------------------------------
+3          t15:41:28.22	Phase	test
+4             A15:41:28.22	Plugin	org.apache.maven.plugins:maven-surefire-plugin:2.9	0	863	 (default-test)  
+3          T15:41:29.08	Phase	test	0	863	
+         -------------------------------------------------------
+3          t15:41:29.08	Phase	package
+4             A15:41:29.08	Plugin	org.apache.maven.plugins:maven-war-plugin:2.1.1	0	1026	 (default-war)  
+3          T15:41:30.11	Phase	package	0	1028	
+         -------------------------------------------------------
+3          t15:41:30.11	Phase	validate
+4             A15:41:30.11	Plugin	com.ccoe.osgi.build:dependency-version-validator:1.0.0	0	3	 (default)  
+3          T15:41:30.11	Phase	validate	0	3	
+         -------------------------------------------------------
+3          t15:41:30.11	Phase	generate-sources
+4             A15:41:30.11	Plugin	org.codehaus.mojo:build-helper-maven-plugin:1.7	0	2	 (generate-build-id)  
+4             A15:41:30.11	Plugin	org.codehaus.mojo:build-helper-maven-plugin:1.7	0	2	 (add-source)  
+4             A15:41:30.12	Plugin	org.codehaus.mojo:buildnumber-maven-plugin:1.0	0	1	 (generate-build-number)  
+3          T15:41:30.12	Phase	generate-sources	0	5	
+         -------------------------------------------------------
+3          t15:41:30.12	Phase	package
+4             A15:41:30.12	Plugin	org.apache.maven.plugins:maven-source-plugin:2.1.2.ccoe	0	162	 (default)  
+3          T15:41:30.28	Phase	package	0	162	
+         -------------------------------------------------------
+3          t15:41:30.28	Phase	install
+4             A15:41:30.28	Plugin	org.apache.maven.plugins:maven-install-plugin:2.3.1	0	89	 (default-install)  
+4             A15:41:30.37	Plugin	org.apache.felix:maven-bundle-plugin:2.3.7	0	254	 (bundle-install)  
+3          T15:41:30.62	Phase	install	0	344	
+         -------------------------------------------------------
+2       T15:41:30.62	Project	caltest	0	7188	com.ccoe.app.raptor:caltest:war:0.0.1-SNAPSHOT
+      -------------------------------------------------------
+2       t15:41:30.62	Project	EBA For caltest
+3          E15:41:31.06	CAL	BadInstrumentation	AlreadyCompleted	Class=T&When=15:41:30.62&Type=Phase&Name=install&Func=SetStatus&Arg=0
+3          t15:41:31.06	Phase	clean
+4             A15:41:31.06	Plugin	org.apache.maven.plugins:maven-clean-plugin:2.4.1	0	379	 (default-clean)  
+3          T15:41:31.44	Phase	clean	0	379	
+         -------------------------------------------------------
+3          t15:41:31.44	Phase	validate
+4             A15:41:31.44	Plugin	com.ccoe.osgi.build:dependency-version-validator:1.0.0	0	36	 (default)  
+3          T15:41:31.48	Phase	validate	0	36	
+         -------------------------------------------------------
+3          t15:41:31.48	Phase	generate-sources
+4             A15:41:31.48	Plugin	org.codehaus.mojo:build-helper-maven-plugin:1.7	0	39	 (generate-build-id)  
+4             A15:41:31.52	Plugin	org.codehaus.mojo:buildnumber-maven-plugin:1.0	0	72	 (generate-build-number)  
+3          T15:41:31.59	Phase	generate-sources	0	111	
+         -------------------------------------------------------
+3          t15:41:31.59	Phase	generate-resources
+4             A15:41:31.59	Plugin	com.ccoe.osgi.build:maven-scm-build-info:1.0.7	0	35	 (build-info)  
+3          T15:41:31.63	Phase	generate-resources	0	36	
+         -------------------------------------------------------
+3          t15:41:31.63	Phase	process-resources
+4             A15:41:31.63	Plugin	org.apache.maven.plugins:maven-resources-plugin:2.5	0	68	 (default-resources)  
+3          T15:41:31.69	Phase	process-resources	0	69	
+         -------------------------------------------------------
+3          t15:41:31.69	Phase	compile
+4             A15:41:31.69	Plugin	org.apache.maven.plugins:maven-compiler-plugin:2.5	0	52	 (default-compile)  
+4             A15:41:31.75	Plugin	org.apache.maven.plugins:maven-compiler-plugin:2.5	0	5	 (default-compile)  
+4             A15:41:31.75	Plugin	com.ccoe.osgi.build:obrgen-maven-plugin:0.1.8	0	8882	 (obrgen)  
+3          T15:41:40.63	Phase	compile	0	8939	
+         -------------------------------------------------------
+3          t15:41:40.63	Phase	process-classes
+4             A15:41:40.63	Plugin	org.apache.maven.plugins:maven-resources-plugin:2.5	0	9	 (copy-manifest-to-target-for-gep)  
+3          T15:41:40.64	Phase	process-classes	0	10	
+         -------------------------------------------------------
+3          t15:41:40.64	Phase	process-test-resources
+4             A15:41:40.64	Plugin	org.apache.maven.plugins:maven-resources-plugin:2.5	0	6	 (default-testResources)  
+3          T15:41:40.65	Phase	process-test-resources	0	6	
+         -------------------------------------------------------
+3          t15:41:40.65	Phase	test-compile
+4             A15:41:40.65	Plugin	org.apache.maven.plugins:maven-compiler-plugin:2.5	0	5	 (default-testCompile)  
+3          T15:41:40.66	Phase	test-compile	0	5	
+         -------------------------------------------------------
+3          t15:41:40.66	Phase	test
+4             A15:41:40.66	Plugin	org.apache.maven.plugins:maven-surefire-plugin:2.9	0	283	 (default-test)  
+3          T15:41:40.94	Phase	test	0	284	
+         -------------------------------------------------------
+3          t15:41:40.94	Phase	package
+4             A15:41:40.94	Plugin	org.apache.aries:eba-maven-plugin:0.4.0	0	114	 (default-eba)  
+3          T15:41:41.06	Phase	package	0	117	
+         -------------------------------------------------------
+3          t15:41:41.06	Phase	validate
+4             A15:41:41.06	Plugin	com.ccoe.osgi.build:dependency-version-validator:1.0.0	0	2	 (default)  
+3          T15:41:41.06	Phase	validate	0	2	
+         -------------------------------------------------------
+3          t15:41:41.06	Phase	generate-sources
+4             A15:41:41.06	Plugin	org.codehaus.mojo:build-helper-maven-plugin:1.7	0	1	 (generate-build-id)  
+4             A15:41:41.06	Plugin	org.codehaus.mojo:buildnumber-maven-plugin:1.0	0	1	 (generate-build-number)  
+3          T15:41:41.06	Phase	generate-sources	0	3	
+         -------------------------------------------------------
+3          t15:41:41.06	Phase	package
+4             A15:41:41.06	Plugin	org.apache.maven.plugins:maven-source-plugin:2.1.2.ccoe	0	74	 (default)  
+3          T15:41:41.14	Phase	package	0	74	
+         -------------------------------------------------------
+3          t15:41:41.14	Phase	install
+4             A15:41:41.14	Plugin	org.apache.maven.plugins:maven-install-plugin:2.4	0	70	 (default-install)  
+3          T15:41:41.21	Phase	install	0	70	
+         -------------------------------------------------------
+2       T15:41:41.21	Project	EBA For caltest	0	10583	com.ccoe.app.raptor:caltest.eba:eba:0.0.1-SNAPSHOT
+      -------------------------------------------------------
+1    T15:41:41.21	URL	Session	0	18959	[clean, install]
+   -------------------------------------------------------
+0 T15:41:41.21	Environment	DEV	0	19983	git_url: null;machine=D-SHC-00436998;uname=mmao;maven.version=Apache Maven 3.0.5 (r01de14724cdef164cd33c7c8c2fe155faf9602da; 2013-02-19 21:51:28+0800);java.version=1.6.0_38-b05
+-------------------------------------------------------

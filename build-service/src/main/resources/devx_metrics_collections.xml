@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+Copyright [2013-2014] eBay Software Foundation
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+-->
+
+<collections>
+   	<collection name="RIDEServerStartupData">
+   		<field name="SystemReliability"/>
+   		<field name="Reliability"/>
+   		<field name="Average"/>
+   		<field name="SuccessEvents"/>
+   		<field name="UserErrorEvents"/>
+   		<field name="SystemErrorEvents"/>
+   		<field name="TotalErrorEvents"/>
+   		<field name="TotalEvents"/>
+   	</collection>
+   	 
+   	<collection name="RIDEWorkspaceSetupData">
+   		<field name="SystemReliability"/>
+   		<field name="Reliability"/>
+   		<field name="Average"/>
+   		<field name="SuccessEvents"/>
+   		<field name="UserErrorEvents"/>
+   		<field name="SystemErrorEvents"/>
+   		<field name="TotalErrorEvents"/>
+   		<field name="TotalEvents"/>
+   	</collection>
+   	
+   	<collection name="CIData">
+   		<field name="SystemReliability"/>
+   		<field name="Reliability"/>
+   		<field name="AverageDownload"/>
+   		<field name="AveragePureBuild"/>
+   		<field name="AverageBuild"/>
+   		<field name="SuccessEvents"/>
+   		<field name="UserErrorEvents"/>
+   		<field name="SystemErrorEvents"/>
+   		<field name="TotalErrorEvents"/>
+   		<field name="TotalEvents"/>
+   	</collection>
+   	
+   	<collection name="CIAssemblerData">
+   		<field name="SystemReliability"/>
+   		<field name="Reliability"/>
+   		<field name="AverageDownload"/>
+   		<field name="AveragePureBuild"/>
+   		<field name="AverageBuild"/>
+   		<field name="SuccessEvents"/>
+   		<field name="UserErrorEvents"/>
+   		<field name="SystemErrorEvents"/>
+   		<field name="ExternalErrorEvents"/>
+   		<field name="TotalErrorEvents"/>
+   		<field name="TotalEvents"/>
+   	</collection>
+   	
+   	<collection name="CIAssembler2Data">
+   		<field name="SystemReliability"/>
+   		<field name="Reliability"/>
+   		<field name="AverageDownload"/>
+   		<field name="AveragePureBuild"/>
+   		<field name="AverageBuild"/>
+		<field name="SuccessEvents"/>
+   		<field name="UserErrorEvents"/>
+   		<field name="SystemErrorEvents"/>
+   		<field name="ExternalErrorEvents"/>
+   		<field name="TotalErrorEvents"/>
+   		<field name="TotalEvents"/>   		
+   	</collection>   	
+   	
+   	<collection name="CI2Data">
+   		<field name="SystemReliability"/>
+   		<field name="Reliability"/>
+   		<field name="AverageDownload"/>
+   		<field name="AveragePureBuild"/>
+   		<field name="AverageBuild"/>
+		<field name="SuccessEvents"/>
+   		<field name="UserErrorEvents"/>
+   		<field name="SystemErrorEvents"/>
+   		<field name="TotalErrorEvents"/>
+   		<field name="TotalEvents"/>   		
+   	</collection>
+   	
+   	<collection name="SRPBenchmark1Data">
+   		<field name="DownloadTime"/>
+   		<field name="PureBuildTime"/>
+   		<field name="AssemblyDuration"/>
+   	</collection>
+   	
+   	<collection name="SRPBenchmark2Data">
+   		<field name="DownloadTime"/>
+   		<field name="PureBuildTime"/>
+   		<field name="AssemblyDuration"/>
+   	</collection>
+	
+   	<collection name="SRPDev1Data">
+   		<field name="DownloadTime"/>
+   		<field name="PureBuildTime"/>
+   		<field name="AssemblyDuration"/>
+   	</collection>
+</collections>
