@@ -1,6 +1,7 @@
 package com.ebay.osgi.build.maven;
 
 import java.net.URL;
+import java.net.UnknownHostException;
 
 import org.apache.maven.execution.AbstractExecutionListener;
 import org.apache.maven.execution.ExecutionEvent;
@@ -27,7 +28,21 @@ public class TimeTrackingImpl extends AbstractExecutionListener {
 
 	@Override
 	public void sessionStarted(ExecutionEvent event) {
-		sessionTransaction = CALLoggerUtil.startCALTransaction("Session-" + event.getSession().getTopLevelProject().getId(), event.getSession().getGoals().toString());
+		StringBuilder data = new StringBuilder();
+		
+		data.append("Goals=").append(event.getSession().getGoals().toString());
+		
+		data.append(";username=").append(System.getProperty("user.name"));
+		
+		try {
+			data.append(";machine=").append(java.net.InetAddress.getLocalHost().getHostName());
+		} catch (UnknownHostException e) {}
+
+		if(System.getenv("BUILD_URL") != null) {
+             data.append(";jenkinsurl=").append(System.getenv("BUILD_URL"));
+         }
+
+		sessionTransaction = CALLoggerUtil.startCALTransaction("Session-" + event.getSession().getTopLevelProject().getId(), data.toString());
 	}
 
 	@Override
