@@ -74,10 +74,7 @@ public class TimeTrackingImpl extends AbstractExecutionListener {
 
 	@Override
 	public void sessionStarted(ExecutionEvent event) {
-		
-		StringBuilder data = new StringBuilder();
-
-		sessionTransaction = CALLoggerUtil.startCALTransaction(event.getSession().getTopLevelProject().getId(), "SESSION", data.toString());
+		sessionTransaction = CALLoggerUtil.startCALTransaction(event.getSession().getTopLevelProject().getId(), "SESSION", "");
 	}
 
 	@Override
