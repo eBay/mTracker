@@ -28,20 +28,18 @@ public class TimeTrackingImpl extends AbstractExecutionListener {
 		
 		StringBuilder data = new StringBuilder();
 		data.append("goals=").append(event.getSession().getGoals().toString());
+		data.append(";options=").append(event.getSession().getUserProperties().toString());
 
 		File gitMeta = GitUtil.findGitRepository(new File(event.getSession().getExecutionRootDirectory()));
 		String gitURL = "";
 		if(gitMeta != null && gitMeta.exists()) {
 			File gitConfig = new File(new File(gitMeta,".git"), "config");
-			System.out.println("Config: " + gitConfig.getAbsolutePath());
 			gitURL =  GitUtil.getRepoName(gitConfig);
 			if(gitURL != null) {
 				data.append(";git_repo=").append(gitURL);
 			}
 		}
-		
-		System.out.println(gitMeta.getAbsolutePath());
-		
+				
 		URL calConfig = getClass().getClassLoader().getResource("cal.properties");
 		String appName = "UNKNOWN";
 		if(gitURL != null && !gitURL.equals("")) {
