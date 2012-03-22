@@ -49,7 +49,9 @@ public class GitUtil {
 			BufferedReader br = new BufferedReader(new FileReader(gitConfigFile));
 			String line = "";
 			while((line = br.readLine()) != null) {
+				System.out.println(line);
 				if(line.trim().startsWith("url")) {
+					System.out.println("Inisde IF");
 					repourl = line.split("=")[1].trim();
 				}
 			}

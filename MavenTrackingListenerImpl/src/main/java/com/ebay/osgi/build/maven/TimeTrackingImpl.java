@@ -20,16 +20,47 @@ public class TimeTrackingImpl extends AbstractExecutionListener {
 	
 	
 	public TimeTrackingImpl() {
-		URL calConfig = getClass().getClassLoader().getResource("cal.properties");
-		CALLoggerUtil.initialize(calConfig);
+		
 	}
 
 	@Override
 	public void projectDiscoveryStarted(ExecutionEvent event) {
 		
 		StringBuilder data = new StringBuilder();
+		data.append("goals=").append(event.getSession().getGoals().toString());
+
+		File gitMeta = GitUtil.findGitRepository(new File(event.getSession().getExecutionRootDirectory()));
+		String gitURL = "";
+		if(gitMeta != null && gitMeta.exists()) {
+			File gitConfig = new File(new File(gitMeta,".git"), "config");
+			System.out.println("Config: " + gitConfig.getAbsolutePath());
+			gitURL =  GitUtil.getRepoName(gitConfig);
+			if(gitURL != null) {
+				data.append(";git_repo=").append(gitURL);
+			}
+		}
 		
-		data.append("goals=").append(event.getSession().getGoals().toString()).append(" ").append(event.getSession().getSystemProperties().toString());
+		System.out.println(gitMeta.getAbsolutePath());
+		
+		URL calConfig = getClass().getClassLoader().getResource("cal.properties");
+		String appName = "UNKNOWN";
+		if(gitURL != null && !gitURL.equals("")) {
+			String tempName = gitURL.substring(gitURL.lastIndexOf(":")+1);
+			if(tempName.contains("/")) {
+				appName = tempName.substring(tempName.lastIndexOf("/")+1, tempName.lastIndexOf("."));
+			} else {
+				appName = tempName.substring(0, tempName.lastIndexOf("."));
+			}
+		}
+		
+		CALLoggerUtil.initialize(calConfig, appName);
+		
+
+		if(System.getenv("BUILD_URL") != null) {
+             data.append(";jenkins_url=").append(System.getenv("BUILD_URL"));
+             data.append(";git_branch").append(System.getenv("GIT_BRANCH"));
+         }
+		
 		
 		try {
 			data.append(";machine=").append(java.net.InetAddress.getLocalHost().getHostName());
@@ -37,26 +68,16 @@ public class TimeTrackingImpl extends AbstractExecutionListener {
 		
 		data.append(";username=").append(System.getProperty("user.name"));
 		
-		File gitMeta = GitUtil.findGitRepository(event.getSession().getTopLevelProject().getBasedir());
-		if(gitMeta != null && gitMeta.exists()) {
-			File gitConfig = new File(gitMeta, "config");
-			String gitURL =  GitUtil.getRepoName(gitConfig);
-			if(gitURL != null) {
-				data.append(";git_repo=").append(gitURL);
-			}
-		}
-
-		if(System.getenv("BUILD_URL") != null) {
-             data.append(";jenkins_url=").append(System.getenv("BUILD_URL"));
-             data.append(";git_branch").append(System.getenv("GIT_BRANCH"));
-         }
 		discoveryTransaction = CALLoggerUtil.startCALTransaction("Project Discovery" , data.toString());
 	}
 
 
 	@Override
 	public void sessionStarted(ExecutionEvent event) {
-		sessionTransaction = CALLoggerUtil.startCALTransaction(event.getSession().getTopLevelProject().getId(), "SESSION", event.getSession().getStartTime().toString());
+		
+		StringBuilder data = new StringBuilder();
+
+		sessionTransaction = CALLoggerUtil.startCALTransaction(event.getSession().getTopLevelProject().getId(), "SESSION", data.toString());
 	}
 
 	@Override

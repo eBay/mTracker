@@ -1,6 +1,8 @@
 package com.ebay.osgi.build.util;
 
+import java.net.InetAddress;
 import java.net.URL;
+import java.net.UnknownHostException;
 
 import com.ebay.kernel.cal.CalServiceFactory;
 import com.ebay.kernel.cal.java.CalClientConfigBean;
@@ -31,11 +33,17 @@ public final class CALLoggerUtil {
 	 * 
 	 * @param calConfig
 	 */
-	public static void initialize(URL calConfig) {
+	public static void initialize(URL calConfig, String appName) {
 		if (calConfig == null){
 			throw new IllegalArgumentException("calConfig URL cannot be Null");
 		}
 		CalClientConfigBean calClientCfgBean = new CalClientConfigBean(null,false,calConfig);
+		try {
+			calClientCfgBean.setPoolname(appName + "-MavenBuild");
+			calClientCfgBean.setMachineName(InetAddress.getLocalHost().getCanonicalHostName());
+		} catch (UnknownHostException e1) {
+			
+		}
 		initialize(calClientCfgBean);
 	}
 	
