@@ -44,9 +44,11 @@ public class TimeTrackingImpl extends AbstractExecutionListener {
 		String appName = "UNKNOWN";
 		if(gitURL != null && !gitURL.equals("")) {
 			String tempName = gitURL.substring(gitURL.lastIndexOf(":")+1);
-			if(tempName.contains("/")) {
+			if(tempName.contains("/") && tempName.contains(".")) {
 				appName = tempName.substring(tempName.lastIndexOf("/")+1, tempName.lastIndexOf("."));
-			} else {
+			} else if(tempName.contains("/") ) {
+				appName = tempName.substring(tempName.lastIndexOf("/")+1);
+			}else {
 				appName = tempName.substring(0, tempName.lastIndexOf("."));
 			}
 		}
@@ -66,7 +68,14 @@ public class TimeTrackingImpl extends AbstractExecutionListener {
 		
 		data.append(";username=").append(System.getProperty("user.name"));
 		
-		discoveryTransaction = CALLoggerUtil.startCALTransaction("Project Discovery" , data.toString());
+		String transName="";
+		if(System.getenv("BUILD_URL") != null) {
+			transName = "CI";
+		} else {
+			transName = "DEV";
+		}
+		
+		discoveryTransaction = CALLoggerUtil.startCALTransaction(transName , data.toString());
 	}
 
 
