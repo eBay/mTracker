@@ -48,8 +48,10 @@ public class TimeTrackingImpl extends AbstractExecutionListener {
 				appName = tempName.substring(tempName.lastIndexOf("/")+1, tempName.lastIndexOf("."));
 			} else if(tempName.contains("/") ) {
 				appName = tempName.substring(tempName.lastIndexOf("/")+1);
-			}else {
+			} else if(tempName.contains(".")){
 				appName = tempName.substring(0, tempName.lastIndexOf("."));
+			} else {
+				appName = tempName;
 			}
 		}
 		
