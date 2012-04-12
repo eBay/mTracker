@@ -41,19 +41,8 @@ public class TimeTrackingImpl extends AbstractExecutionListener {
 		}
 				
 		URL calConfig = getClass().getClassLoader().getResource("cal.properties");
-		String appName = "UNKNOWN";
-		if(gitURL != null && !gitURL.equals("")) {
-			String tempName = gitURL.substring(gitURL.lastIndexOf(":")+1);
-			if(tempName.contains("/") && tempName.contains(".")) {
-				appName = tempName.substring(tempName.lastIndexOf("/")+1, tempName.lastIndexOf("."));
-			} else if(tempName.contains("/") ) {
-				appName = tempName.substring(tempName.lastIndexOf("/")+1);
-			} else if(tempName.contains(".")){
-				appName = tempName.substring(0, tempName.lastIndexOf("."));
-			} else {
-				appName = tempName;
-			}
-		}
+		String appName = getCALPoolName(gitURL);
+		
 		
 		CALLoggerUtil.initialize(calConfig, appName);
 		
@@ -78,6 +67,25 @@ public class TimeTrackingImpl extends AbstractExecutionListener {
 		}
 		
 		discoveryTransaction = CALLoggerUtil.startCALTransaction(transName , data.toString());
+	}
+	
+	
+	public String getCALPoolName(String gitURL) {
+		String appName = "UNKNOWN";
+		if(gitURL != null && !gitURL.equals("")) {
+			String tempName = gitURL.substring(gitURL.lastIndexOf(":")+1);
+			if(tempName.contains("/") && tempName.contains(".")) {
+				appName = tempName.substring(tempName.lastIndexOf("/")+1, tempName.lastIndexOf("."));
+			} else if(tempName.contains("/") ) {
+				appName = tempName.substring(tempName.lastIndexOf("/")+1);
+			} else if(tempName.contains(".")){
+				appName = tempName.substring(0, tempName.lastIndexOf("."));
+			} else {
+				appName = tempName;
+			}
+		}
+		
+		return appName;
 	}
 
 
@@ -176,5 +184,6 @@ public class TimeTrackingImpl extends AbstractExecutionListener {
 	public void forkedProjectFailed(ExecutionEvent event) {
 		
 	}
+	
 	
 }
