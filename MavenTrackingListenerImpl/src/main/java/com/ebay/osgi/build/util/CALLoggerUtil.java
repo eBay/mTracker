@@ -33,18 +33,28 @@ public final class CALLoggerUtil {
 	 * 
 	 * @param calConfig
 	 */
-	public static void initialize(URL calConfig, String appName) {
+	public static boolean initialize(URL calConfig, String appName) {
+		
+		boolean isSuccess=true;
+		
 		if (calConfig == null){
 			throw new IllegalArgumentException("calConfig URL cannot be Null");
 		}
 		CalClientConfigBean calClientCfgBean = new CalClientConfigBean(null,false,calConfig);
 		try {
 			calClientCfgBean.setPoolname(appName + "-MavenBuild");
-			calClientCfgBean.setMachineName(InetAddress.getLocalHost().getCanonicalHostName());
+			calClientCfgBean.setMachineName(InetAddress.getLocalHost().getHostName());
 		} catch (UnknownHostException e1) {
-			
+			isSuccess=false;
 		}
-		initialize(calClientCfgBean);
+		
+		try {
+			initialize(calClientCfgBean);
+		} catch (Throwable t) {
+			isSuccess = false;
+		}
+		
+		return isSuccess;
 	}
 	
 	/**

@@ -18,6 +18,8 @@ public class TimeTrackingImpl extends AbstractExecutionListener {
 	private CalTransaction projectTransaction;
 	private CalTransaction mojoTransaction;
 	
+	private boolean isCalEnabled;
+	
 	
 	public TimeTrackingImpl() {
 		
@@ -44,8 +46,8 @@ public class TimeTrackingImpl extends AbstractExecutionListener {
 		String appName = getCALPoolName(gitURL);
 		
 		
-		CALLoggerUtil.initialize(calConfig, appName);
-		
+		isCalEnabled = CALLoggerUtil.initialize(calConfig, appName);
+		System.out.println("CAL Enabled : " + isCalEnabled);
 
 		if(System.getenv("BUILD_URL") != null) {
              data.append(";jenkins_url=").append(System.getenv("BUILD_URL"));
@@ -66,7 +68,9 @@ public class TimeTrackingImpl extends AbstractExecutionListener {
 			transName = "DEV";
 		}
 		
-		discoveryTransaction = CALLoggerUtil.startCALTransaction(transName , data.toString());
+		if(isCalEnabled) {
+			discoveryTransaction = CALLoggerUtil.startCALTransaction(transName , data.toString());
+		}
 	}
 	
 	
@@ -84,68 +88,85 @@ public class TimeTrackingImpl extends AbstractExecutionListener {
 				appName = tempName;
 			}
 		}
-		
+		System.out.println("Cal Pool Name : " + appName);
 		return appName;
 	}
 
 
 	@Override
 	public void sessionStarted(ExecutionEvent event) {
-		sessionTransaction = CALLoggerUtil.startCALTransaction(event.getSession().getTopLevelProject().getId(), "SESSION", "");
+		if(isCalEnabled) {
+			sessionTransaction = CALLoggerUtil.startCALTransaction(event.getSession().getTopLevelProject().getId(), "SESSION", "");
+		}
 	}
 
 	@Override
 	public void sessionEnded(ExecutionEvent event) {
-		
-		if(event.getSession().getResult().getExceptions().size() > 0) {
-			CALLoggerUtil.endCALTransaction(sessionTransaction, "FAILED", event.getSession().getResult().getExceptions().get(0));
-			CALLoggerUtil.endCALTransaction(discoveryTransaction, "FAILED", event.getException());
+		if(isCalEnabled) {
+			if(event.getSession().getResult().getExceptions().size() > 0) {
+				CALLoggerUtil.endCALTransaction(sessionTransaction, "FAILED", event.getSession().getResult().getExceptions().get(0));
+				CALLoggerUtil.endCALTransaction(discoveryTransaction, "FAILED", event.getException());
+			}
+			else {
+				CALLoggerUtil.endCALTransaction(sessionTransaction, "0");
+				CALLoggerUtil.endCALTransaction(discoveryTransaction, "0");
+			}
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			CALLoggerUtil.destroy();
 		}
-		else {
-			CALLoggerUtil.endCALTransaction(sessionTransaction, "0");
-			CALLoggerUtil.endCALTransaction(discoveryTransaction, "0");
-		}
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		CALLoggerUtil.destroy();
 	}
 
 	@Override
 	public void projectSkipped(ExecutionEvent event) {
-		CALLoggerUtil.logCALEvent("SKIPPED", event.getProject().getId());
+		if(isCalEnabled) {
+			CALLoggerUtil.logCALEvent("SKIPPED", event.getProject().getId());
+		}
 	}
 
 	@Override
 	public void projectStarted(ExecutionEvent event) {
-		projectTransaction = CALLoggerUtil.startCALTransaction(event.getProject().getId(),"PROJECT", "");
+		if(isCalEnabled) {
+			projectTransaction = CALLoggerUtil.startCALTransaction(event.getProject().getId(),"PROJECT", "");
+		}
 	}
 
 	@Override
 	public void projectSucceeded(ExecutionEvent event) {
-		CALLoggerUtil.endCALTransaction(projectTransaction, "0");
+		if(isCalEnabled) {
+			CALLoggerUtil.endCALTransaction(projectTransaction, "0");
+		}
 	}
 
 	@Override
 	public void projectFailed(ExecutionEvent event) {
-		CALLoggerUtil.endCALTransaction(projectTransaction, "FAILED", event.getException().fillInStackTrace());
+		if(isCalEnabled) {
+			CALLoggerUtil.endCALTransaction(projectTransaction, "FAILED", event.getException().fillInStackTrace());
+		}
 	}
 	
 	@Override
 	public void mojoStarted(ExecutionEvent event) {
-		mojoTransaction = CALLoggerUtil.startCALTransaction(event.getMojoExecution().getPlugin().getId(), "PLUGIN", "");
+		if(isCalEnabled) {
+			mojoTransaction = CALLoggerUtil.startCALTransaction(event.getMojoExecution().getPlugin().getId(), "PLUGIN", "");
+		}
 	}
 
 	@Override
 	public void mojoSucceeded(ExecutionEvent event) {
-		CALLoggerUtil.endCALTransaction(mojoTransaction, "0");
+		if(isCalEnabled) {
+			CALLoggerUtil.endCALTransaction(mojoTransaction, "0");
+		}
 	}
 
 	@Override
 	public void mojoFailed(ExecutionEvent event) {
-		CALLoggerUtil.endCALTransaction(mojoTransaction, "FAILED", event.getException().getCause());
+		if(isCalEnabled) {
+			CALLoggerUtil.endCALTransaction(mojoTransaction, "FAILED", event.getException().getCause());
+		}
 	}
 
 	@Override
