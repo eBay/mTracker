@@ -1,0 +1,34 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.ebay.build.profiler</groupId>
+  <artifactId>BuildProfiler</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>Build Profiler</name>
+  <description>BuildProfiler is used to collect build metrics for maven builds. It gives a break up of maven build like how much each project took and how much each plugin took etc.,</description>
+  
+  <!-- Build Properties -->
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.version>3.0.3</maven.version>
+  </properties>
+  
+  
+  <dependencies>
+  	<!-- Compile Scope Dependencies -->
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-core</artifactId>
+      <version>${maven.version}</version>
+    </dependency>
+    
+    
+    <!-- Test Scope Dependencies -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.8.2</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  
+</project>

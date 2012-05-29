@@ -1,4 +1,6 @@
-package io.tesla.lifecycle.profiler;
+package com.ebay.build.profiler.profile;
+
+import com.ebay.build.profile.util.Timer;
 
 public class Profile {
   
