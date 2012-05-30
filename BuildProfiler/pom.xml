@@ -12,6 +12,12 @@
     <maven.version>3.0.3</maven.version>
   </properties>
   
+   <repositories>
+  	<repository>
+  		<id>eBox</id>
+  		<url>http://repository.qa.ebay.com/nexus/ebox_releases/</url>
+  	</repository>
+  </repositories>
   
   <dependencies>
   	<!-- Compile Scope Dependencies -->
@@ -27,6 +33,12 @@
       <version>2.2.1</version>
       <scope>compile</scope>
     </dependency>
+    
+     <dependency>
+ 	 <groupId>com.ebay.kernel</groupId>
+  	 <artifactId>uKernelCore</artifactId>
+  	 <version>2.0.451</version>
+	</dependency>
     
     <!-- Test Scope Dependencies -->
     <dependency>
