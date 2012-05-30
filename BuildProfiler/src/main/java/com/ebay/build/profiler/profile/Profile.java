@@ -15,7 +15,7 @@ public class Profile {
     timer.stop();
   }
   
-  void setElapsedTime(long elapsedTime) {
+  public void setElapsedTime(long elapsedTime) {
     this.elapsedTime = elapsedTime;
   }
   

@@ -69,6 +69,7 @@ public class MavenLifecycleProfiler extends AbstractEventSpy {
 				sessionProfile = new SessionProfile();
 			} else if (executionEventType == ExecutionEvent.Type.SessionEnded) {
 				sessionProfile.stop();
+				
 			}
 		}
 	}
