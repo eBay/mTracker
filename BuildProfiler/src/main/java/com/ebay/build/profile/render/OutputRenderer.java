@@ -1,7 +1,6 @@
 package com.ebay.build.profile.render;
 
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -39,11 +38,11 @@ public class OutputRenderer {
 	
 	public void renderToJSON() {
 		ProfileOutputJSON json = new ProfileOutputJSON();
-		List<String> projects = json.getProjects();
+		Map<String, Long> projects = json.getTimingSlice();
 		Map<String, LinkedList<Long>> plugin = json.getPlugin();
 		int prjCnt = 0;
 		for(ProjectProfile pp : sessionProfile.getProjectProfiles()) {
-		      projects.add(pp.getProjectName());
+		      projects.put(pp.getProjectName(), pp.getElapsedTime());
 		      for(PhaseProfile phaseProfile : pp.getPhaseProfile()) {
 		        for(MojoProfile mp : phaseProfile.getMojoProfiles()) {
 		        	String key = mp.getId() + " (" + phaseProfile.getPhase() + ")";
@@ -68,6 +67,7 @@ public class OutputRenderer {
 		    	  }
 		      }
 		    }
+		json.setTimingSlice(projects);
 		
 		Gson gson = new Gson();
 		System.out.println(gson.toJson(json));

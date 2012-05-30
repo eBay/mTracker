@@ -19,6 +19,7 @@ public class LifecycleProfilerTest extends TestCase {
     SessionProfile s = new SessionProfile();
     
     ProjectProfile p0 = new ProjectProfile(project("g0", "a0", "v0"));
+    p0.setElapsedTime(2323);
     PhaseProfile ph0 = new PhaseProfile("phase0");
     MojoProfile m0 = new MojoProfile(mojoExecution("goal0","m0"));
     m0.setElapsedTime(3000);
@@ -30,6 +31,7 @@ public class LifecycleProfilerTest extends TestCase {
     s.addProjectProfile(p0);
     
     ProjectProfile p1 = new ProjectProfile(project("g1", "a1", "v1"));
+    p1.setElapsedTime(2355);
     PhaseProfile ph1 = new PhaseProfile("phase1");
     MojoProfile m1 = new MojoProfile(mojoExecution("goal1", "m1"));
     m1.setElapsedTime(2500);
