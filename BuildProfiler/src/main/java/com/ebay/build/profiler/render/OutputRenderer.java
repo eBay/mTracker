@@ -1,14 +1,14 @@
-package com.ebay.build.profile.render;
+package com.ebay.build.profiler.render;
 
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.ebay.build.profile.util.Timer;
 import com.ebay.build.profiler.profile.MojoProfile;
 import com.ebay.build.profiler.profile.PhaseProfile;
 import com.ebay.build.profiler.profile.ProjectProfile;
 import com.ebay.build.profiler.profile.SessionProfile;
+import com.ebay.build.profiler.util.Timer;
 import com.google.gson.Gson;
 
 public class OutputRenderer {

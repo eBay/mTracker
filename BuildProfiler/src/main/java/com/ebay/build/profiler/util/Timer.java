@@ -1,4 +1,4 @@
-package com.ebay.build.profile.util;
+package com.ebay.build.profiler.util;
 
 public class Timer {
 

@@ -3,7 +3,7 @@ package com.ebay.build.profiler.profile;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ebay.build.profile.util.Timer;
+import com.ebay.build.profiler.util.Timer;
 
 public class SessionProfile extends Profile {
 	private List<ProjectProfile> projectProfiles;

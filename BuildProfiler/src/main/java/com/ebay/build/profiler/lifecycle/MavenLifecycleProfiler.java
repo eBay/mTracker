@@ -1,5 +1,8 @@
 package com.ebay.build.profiler.lifecycle;
 
+import javax.inject.Named;
+import javax.inject.Singleton;
+
 import org.apache.maven.eventspy.AbstractEventSpy;
 import org.apache.maven.execution.ExecutionEvent;
 import org.apache.maven.execution.ExecutionEvent.Type;
@@ -8,6 +11,7 @@ import com.ebay.build.profiler.profile.MojoProfile;
 import com.ebay.build.profiler.profile.PhaseProfile;
 import com.ebay.build.profiler.profile.ProjectProfile;
 import com.ebay.build.profiler.profile.SessionProfile;
+import com.ebay.build.profiler.render.OutputRenderer;
 
 /**
  * MavenLifecycleProfiler will profile the maven build.
@@ -15,6 +19,9 @@ import com.ebay.build.profiler.profile.SessionProfile;
  * @author kmuralidharan
  * 
  */
+
+@Named
+@Singleton
 public class MavenLifecycleProfiler extends AbstractEventSpy {
 
 	private SessionProfile sessionProfile;
@@ -30,6 +37,7 @@ public class MavenLifecycleProfiler extends AbstractEventSpy {
 	@Override
 	public void onEvent(Object event) throws Exception {
 		if (event instanceof ExecutionEvent) {
+			
 			ExecutionEvent executionEvent = (ExecutionEvent) event;
 			Type executionEventType = executionEvent.getType();
 
@@ -69,7 +77,9 @@ public class MavenLifecycleProfiler extends AbstractEventSpy {
 				sessionProfile = new SessionProfile();
 			} else if (executionEventType == ExecutionEvent.Type.SessionEnded) {
 				sessionProfile.stop();
-				
+				OutputRenderer renderer = new OutputRenderer(sessionProfile);
+				renderer.renderToScreen();
+				renderer.renderToJSON();
 			}
 		}
 	}

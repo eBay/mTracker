@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.apache.maven.project.MavenProject;
 
-import com.ebay.build.profile.util.Timer;
+import com.ebay.build.profiler.util.Timer;
 
 public class ProjectProfile extends Profile {
 

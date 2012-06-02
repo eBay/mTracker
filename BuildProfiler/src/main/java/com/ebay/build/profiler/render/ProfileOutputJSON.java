@@ -1,4 +1,4 @@
-package com.ebay.build.profile.render;
+package com.ebay.build.profiler.render;
 
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;

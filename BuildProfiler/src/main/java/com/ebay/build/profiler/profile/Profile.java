@@ -1,6 +1,6 @@
 package com.ebay.build.profiler.profile;
 
-import com.ebay.build.profile.util.Timer;
+import com.ebay.build.profiler.util.Timer;
 
 public class Profile {
   

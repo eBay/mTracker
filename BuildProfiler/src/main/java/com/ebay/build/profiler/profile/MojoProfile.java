@@ -2,7 +2,7 @@ package com.ebay.build.profiler.profile;
 
 import org.apache.maven.plugin.MojoExecution;
 
-import com.ebay.build.profile.util.Timer;
+import com.ebay.build.profiler.util.Timer;
 
 /**
  * 

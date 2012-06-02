@@ -34,11 +34,11 @@
       <scope>compile</scope>
     </dependency>
     
-     <dependency>
+     <!--  dependency>
  	 <groupId>com.ebay.kernel</groupId>
   	 <artifactId>uKernelCore</artifactId>
   	 <version>2.0.451</version>
-	</dependency>
+	</dependency -->
     
     <!-- Test Scope Dependencies -->
     <dependency>
