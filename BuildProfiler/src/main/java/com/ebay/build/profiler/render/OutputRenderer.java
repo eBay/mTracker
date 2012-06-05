@@ -10,7 +10,6 @@ import com.ebay.build.profiler.profile.PhaseProfile;
 import com.ebay.build.profiler.profile.ProjectProfile;
 import com.ebay.build.profiler.profile.SessionProfile;
 import com.ebay.build.profiler.util.Timer;
-import com.google.gson.Gson;
 
 public class OutputRenderer {
 	
