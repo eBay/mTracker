@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.ebay.build.profiler.profile.DiscoveryProfile;
 import com.ebay.build.profiler.profile.MojoProfile;
 import com.ebay.build.profiler.profile.PhaseProfile;
 import com.ebay.build.profiler.profile.ProjectProfile;
@@ -14,14 +15,19 @@ import com.google.gson.Gson;
 public class OutputRenderer {
 	
 	SessionProfile sessionProfile;
+	DiscoveryProfile discoveryProfile;
 	
-	public OutputRenderer(SessionProfile profile) {
-		this.sessionProfile = profile;
+	public OutputRenderer(SessionProfile sessionProfile, DiscoveryProfile discoveryProfile) {
+		this.sessionProfile = sessionProfile;
+		this.discoveryProfile = discoveryProfile;
 	}
 	
 	public void renderToScreen() {
+		render("Build Profile Output :");
+		render("-----------------------------------------------------------");
+		render("Project Discovery : " + Timer.formatTime(discoveryProfile.getElapsedTime()));
 		for(ProjectProfile pp : sessionProfile.getProjectProfiles()) {
-		      render(pp.getProjectName());
+		      render(pp.getProjectName() + " " + Timer.formatTime(pp.getElapsedTime()));
 		      for(PhaseProfile phaseProfile : pp.getPhaseProfile()) {
 		        render("  " + phaseProfile.getPhase() + " " + Timer.formatTime(phaseProfile.getElapsedTime()));
 		        for(MojoProfile mp : phaseProfile.getMojoProfiles()) {
@@ -70,7 +76,7 @@ public class OutputRenderer {
 		json.setTimingSlice(projects);
 		
 		Gson gson = new Gson();
-		System.out.println(gson.toJson(json));
+		render(gson.toJson(json));
 		
 	}
 	

@@ -6,6 +6,7 @@ import org.apache.maven.model.Plugin;
 import org.apache.maven.plugin.MojoExecution;
 import org.apache.maven.project.MavenProject;
 
+import com.ebay.build.profiler.profile.DiscoveryProfile;
 import com.ebay.build.profiler.profile.MojoProfile;
 import com.ebay.build.profiler.profile.PhaseProfile;
 import com.ebay.build.profiler.profile.ProjectProfile;
@@ -47,7 +48,10 @@ public class LifecycleProfilerTest extends TestCase {
     p2.addPhaseProfile(ph2);
     s.addProjectProfile(p2);
     
-    OutputRenderer r = new OutputRenderer(s);
+    DiscoveryProfile discoveryProfile = new DiscoveryProfile();
+    discoveryProfile.setElapsedTime(500);
+    
+    OutputRenderer r = new OutputRenderer(s, discoveryProfile);
     r.renderToScreen();
     r.renderToJSON();
   }
