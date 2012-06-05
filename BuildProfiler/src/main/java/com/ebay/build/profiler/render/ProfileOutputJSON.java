@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 public class ProfileOutputJSON {
@@ -26,5 +27,20 @@ public class ProfileOutputJSON {
 		return plugin;
 	}
 	
+	public void toCSV() {
+		for(Entry<String,LinkedList<Long>> entry : plugin.entrySet()) {
+			System.out.println(csvLine(entry));
+		}
+	}
 	
+	private String csvLine(Entry<String, LinkedList<Long>> entry) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(entry.getKey());
+		for(Long l : entry.getValue()) {
+			sb.append(",");
+			sb.append(l.toString());
+		}
+		
+		return sb.toString();
+	}
 }

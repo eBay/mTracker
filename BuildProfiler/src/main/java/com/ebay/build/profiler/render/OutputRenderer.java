@@ -75,8 +75,7 @@ public class OutputRenderer {
 		    }
 		json.setTimingSlice(projects);
 		
-		Gson gson = new Gson();
-		render(gson.toJson(json));
+		json.toCSV();
 		
 	}
 	
