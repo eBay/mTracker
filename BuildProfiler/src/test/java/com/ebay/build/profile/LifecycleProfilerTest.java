@@ -67,7 +67,7 @@ public class LifecycleProfilerTest extends TestCase {
   protected MojoExecution mojoExecution(String goal, String executionId) {
     Plugin p = new Plugin();
     p.setGroupId("groupId");
-    p.setArtifactId("artifactId");
+    p.setArtifactId("artifactId" + System.nanoTime());
     p.setVersion("version");
     MojoExecution me = new MojoExecution(p, goal, executionId);
     return me;        

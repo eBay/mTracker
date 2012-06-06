@@ -1,34 +1,70 @@
 package com.ebay.build.profiler.render;
 
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 
 public class ProfileOutputJSON {
-	private Set<String> projects = new LinkedHashSet<String>();
-	private Map<String,LinkedList<Long>> plugin = new LinkedHashMap<String,LinkedList<Long>>();
-	private Map<String, Long> timingSlice = new LinkedHashMap<String, Long>();
-	
 
-	public void setPlugin(Map<String,LinkedList<Long>> plugin) {
-		this.plugin = plugin;
+	private Map<String, Long> projectSlicing = new LinkedHashMap<String, Long>();
+	private Map<String, Long> PhaseSlice = new LinkedHashMap<String, Long>();
+	private Map<String, Long> pluginSlice = new LinkedHashMap<String, Long>();
+	
+	private Map<String,LinkedList<Long>> projectToPluginSlicing = new LinkedHashMap<String,LinkedList<Long>>();
+	private Map<String,LinkedList<Long>> projectToPhaseSlicing = new LinkedHashMap<String,LinkedList<Long>>();
+
+	public Map<String, Long> getPhaseSlice() {
+		return PhaseSlice;
 	}
-	public Map<String, Long> getTimingSlice() {
-		return timingSlice;
+	public void setPhaseSlice(Map<String, Long> phaseSlice) {
+		PhaseSlice = phaseSlice;
 	}
-	public void setTimingSlice(Map<String, Long> timingSlice) {
-		this.timingSlice = timingSlice;
-		this.projects = timingSlice.keySet();
+	
+	public Map<String,LinkedList<Long>> getProjectToPluginSlicing() {
+		return projectToPluginSlicing;
 	}
-	public Map<String,LinkedList<Long>> getPlugin() {
-		return plugin;
+	public void setProjectToPluginSlicing(Map<String,LinkedList<Long>> projectToPluginSlicing) {
+		this.projectToPluginSlicing = projectToPluginSlicing;
+	}
+	
+	public Map<String, Long> getPluginSlice() {
+		return pluginSlice;
+	}
+	public void setPluginSlice(Map<String, Long> pluginSlice) {
+		this.pluginSlice = pluginSlice;
+	}
+	
+	public Map<String, Long> getProjectSlicing() {
+		return projectSlicing;
+	}
+	public void setProjectSlicing(Map<String, Long> projectSlicing) {
+		this.projectSlicing = projectSlicing;
+	}
+	
+	public Map<String,LinkedList<Long>> getProjectToPhaseSlicing() {
+		return projectToPhaseSlicing;
+	}
+	public void setProjectToPhaseSlicing(Map<String,LinkedList<Long>> projectToPhaseSlicing) {
+		this.projectToPhaseSlicing = projectToPhaseSlicing;
 	}
 	
 	public void toCSV() {
-		for(Entry<String,LinkedList<Long>> entry : plugin.entrySet()) {
+		
+		System.out.println("Project Slicing");
+		for(String entry : projectSlicing.keySet()) {
+			System.out.print(entry);
+			System.out.print(",");
+			System.out.println();
+		}
+		
+		System.out.println("Plugin Slicing");
+		for(Entry<String,LinkedList<Long>> entry : projectToPluginSlicing.entrySet()) {
+			System.out.println(csvLine(entry));
+		}
+		
+		System.out.println("Phase Slicing");
+		for(Entry<String,LinkedList<Long>> entry : projectToPhaseSlicing.entrySet()) {
 			System.out.println(csvLine(entry));
 		}
 	}
@@ -43,4 +79,6 @@ public class ProfileOutputJSON {
 		
 		return sb.toString();
 	}
+	
+	
 }
