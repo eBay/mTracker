@@ -1,6 +1,6 @@
 package com.ebay.build.profiler.util;
 
-/*import java.net.InetAddress;
+import java.net.InetAddress;
 import java.net.URL;
 import java.net.UnknownHostException;
 
@@ -11,7 +11,7 @@ import com.ebay.kernel.calwrapper.CalEvent;
 import com.ebay.kernel.calwrapper.CalEventFactory;
 import com.ebay.kernel.calwrapper.CalTransaction;
 import com.ebay.kernel.calwrapper.CalTransactionFactory;
-import com.ebay.kernel.calwrapper.CalTransactionHelper;*/
+import com.ebay.kernel.calwrapper.CalTransactionHelper;
 
 /**
  * 
@@ -21,17 +21,17 @@ import com.ebay.kernel.calwrapper.CalTransactionHelper;*/
 
 
 public class CALLogger {
-	/*private static final String CAL_DEFAULT_TRAN_TYPE = "URL";
+	private static final String CAL_DEFAULT_TRAN_TYPE = "URL";
 	private static JavaCalService calService;
 	
 	private CALLogger() {
 		
 	}
 	
-	*//**
+	/**
 	 * 
 	 * @param calConfig
-	 *//*
+	 */
 	public static boolean initialize(URL calConfig, String appName) {
 		
 		boolean isSuccess=true;
@@ -56,10 +56,10 @@ public class CALLogger {
 		return isSuccess;
 	}
 	
-	*//**
+	/**
 	 * 
 	 * @param calClientCfgBean
-	 *//*
+	 */
 	public static void initialize(CalClientConfigBean calClientCfgBean){
 		if(isCalInitialized()){
 			return;
@@ -71,10 +71,10 @@ public class CALLogger {
 		CalServiceFactory.setCalService(calService);
 	}
 	
-	*//**
+	/**
 	 * destroy() method needs to be called at the end of the application.
 	 * This method is disconnect the CAL Service and terminate the process.
-	 *//*
+	 */
 	public static void destroy()
 	{
 		try {
@@ -90,56 +90,56 @@ public class CALLogger {
 		
 	}
 	
-	*//**
+	/**
 	 * Creates a CAL Transaction (default type URL) for the given transaction Name and data
 	 * 
 	 * @param transName name to identify the transaction
 	 * @param transData data which needs to be logged 
 	 * @return
-	 *//*
+	 */
 	public static CalTransaction startCALTransaction(String transName, String transData) {
 		return createTransaction(transName, CAL_DEFAULT_TRAN_TYPE, transData);
 	}
 	
-	*//**
+	/**
 	 * Creates a CAL Transaction for the given transaction Name, transaction Type and data
 	 * 
 	 * @param transName name to identify the transaction
 	 * @param transType type of the transaction
 	 * @param transData data which needs to be logged 
 	 * @return
-	 *//*
+	 */
 	public static CalTransaction startCALTransaction(String transName,String transType, String transData) {
 		return createTransaction(transName, transType, transData);
 	}
 	
-	*//**
+	/**
 	 * Complete a CAL Transaction with a status
 	 * 
 	 * @param calTransaction
 	 * @param status
-	 *//*
+	 */
 	public static void endCALTransaction(CalTransaction calTransaction, String status) {
 		calTransaction.setStatus(status);
 		calTransaction.completed();
 	}
 	
-	*//**
+	/**
 	 * Complete a CAL Transaction with a status
 	 * 
 	 * @param calTransaction
 	 * @param status
-	 *//*
+	 */
 	public static void endCALTransaction(CalTransaction calTransaction, String status, Throwable t) {
 		calTransaction.setStatus(t);
 		calTransaction.completed();
 	}
 	
-	*//**
+	/**
 	 * log CAL Event with the given name and data
 	 * @param eventType Type of the event
 	 * @param data data to be logged
-	 *//*
+	 */
 	public static void logCALEvent(String eventType, String data) {
 	    CalEvent event = CalEventFactory.create(eventType);
 	    event.setName(eventType);
@@ -155,12 +155,12 @@ public class CALLogger {
 		return calTransaction;
 	}
 	
-	*//**
+	/**
 	 * Answers if a CAL Service is initialized
 	 * 
 	 * @return
-	 *//*
+	 */
 	public static boolean isCalInitialized(){
 		return calService != null;
-	}*/
+	}
 }

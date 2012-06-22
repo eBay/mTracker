@@ -29,7 +29,7 @@ public class MavenLifecycleProfiler extends AbstractEventSpy {
 	private ProjectProfile projectProfile;
 	private PhaseProfile phaseProfile;
 	private MojoProfile mojoProfile;
-
+	
 	@Override
 	public void init(Context context) throws Exception {
 
@@ -44,15 +44,15 @@ public class MavenLifecycleProfiler extends AbstractEventSpy {
 			if (executionEvent.getType() == ExecutionEvent.Type.ProjectDiscoveryStarted) {
 				discoveryProfile = new DiscoveryProfile();
 			} else if (executionEvent.getType() == ExecutionEvent.Type.SessionStarted) {
-				discoveryProfile.stop();
 				sessionProfile = new SessionProfile();
 			} else if (executionEvent.getType() == ExecutionEvent.Type.SessionEnded) {
 				phaseProfile.stop();
 				projectProfile.addPhaseProfile(phaseProfile);
 				sessionProfile.stop();
+				discoveryProfile.stop();
 				OutputRenderer renderer = new OutputRenderer(sessionProfile, discoveryProfile);
 				renderer.renderToScreen();
-				renderer.renderToJSON();
+				//renderer.renderToJSON();
 			} else if (executionEvent.getType() == ExecutionEvent.Type.ProjectStarted) {
 				projectProfile = new ProjectProfile(executionEvent.getProject());
 			} else if (executionEvent.getType() == ExecutionEvent.Type.ProjectSucceeded
