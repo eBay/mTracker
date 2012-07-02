@@ -4,7 +4,7 @@
 
   <groupId>com.ebay.osgi.build</groupId>
   <artifactId>MavenTrackingListenerImpl</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.2</version>
   <packaging>jar</packaging>
 
   <name>MavenTrackingListenerImpl</name>
