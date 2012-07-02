@@ -76,18 +76,14 @@ public class TimeTrackingImpl extends AbstractExecutionListener {
 	
 	public String getCALPoolName(String gitURL) {
 		String appName = "UNKNOWN";
-		if(gitURL != null && !gitURL.equals("")) {
-			String tempName = gitURL.substring(gitURL.lastIndexOf(":")+1);
-			if(tempName.contains("/") && tempName.contains(".")) {
-				appName = tempName.substring(tempName.lastIndexOf("/")+1, tempName.lastIndexOf("."));
-			} else if(tempName.contains("/") ) {
-				appName = tempName.substring(tempName.lastIndexOf("/")+1);
-			} else if(tempName.contains(".")){
-				appName = tempName.substring(0, tempName.lastIndexOf("."));
-			} else {
-				appName = tempName;
+		
+		if ( gitURL.startsWith("https:") || gitURL.startsWith("git@") || gitURL.startsWith("git:") ) {
+			appName = gitURL.substring(gitURL.lastIndexOf("/")+1);
+			if(appName.endsWith(".git")) {
+				appName = appName.substring(0, appName.lastIndexOf("."));
 			}
 		}
+		
 		System.out.println("Cal Pool Name : " + appName);
 		return appName;
 	}
@@ -99,6 +95,16 @@ public class TimeTrackingImpl extends AbstractExecutionListener {
 			sessionTransaction = CALLoggerUtil.startCALTransaction(event.getSession().getTopLevelProject().getId(), "SESSION", "");
 		}
 	}
+	
+	/*public static void main(String[] args) {
+		TimeTrackingImpl m = new TimeTrackingImpl();
+		System.out.println("1: " + m.getCALPoolName("https://github.scm.corp.ebay.com/sonsinha/RaptorMetadataPlugin.git"));
+		System.out.println("2: " + m.getCALPoolName("https://github.scm.corp.ebay.com/sonsinha/RaptorMetadataPlugin"));
+		System.out.println("3: " + m.getCALPoolName("git@github.scm.corp.ebay.com:sonsinha/RaptorMetadataPlugin.git"));
+		System.out.println("4: " + m.getCALPoolName("git@github.scm.corp.ebay.com:sonsinha/RaptorMetadataPlugin"));
+		System.out.println("5: " + m.getCALPoolName("git://github.scm.corp.ebay.com/sonsinha/RaptorMetadataPlugin.git"));
+		System.out.println("6: " + m.getCALPoolName("git://github.scm.corp.ebay.com/sonsinha/RaptorMetadataPlugin"));
+	}*/
 
 	@Override
 	public void sessionEnded(ExecutionEvent event) {
