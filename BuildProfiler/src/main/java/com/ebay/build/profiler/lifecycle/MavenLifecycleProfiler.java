@@ -42,11 +42,10 @@ public class MavenLifecycleProfiler extends AbstractEventSpy {
 			ExecutionEvent executionEvent = (ExecutionEvent) event;
 
 			if (executionEvent.getType() == ExecutionEvent.Type.ProjectDiscoveryStarted) {
-				discoveryProfile = new DiscoveryProfile();
+				discoveryProfile = new DiscoveryProfile(executionEvent);
 			} else if (executionEvent.getType() == ExecutionEvent.Type.SessionStarted) {
-				sessionProfile = new SessionProfile();
+				sessionProfile = new SessionProfile(executionEvent);
 			} else if (executionEvent.getType() == ExecutionEvent.Type.SessionEnded) {
-				phaseProfile.stop();
 				projectProfile.addPhaseProfile(phaseProfile);
 				sessionProfile.stop();
 				discoveryProfile.stop();
@@ -54,22 +53,23 @@ public class MavenLifecycleProfiler extends AbstractEventSpy {
 				renderer.renderToScreen();
 				//renderer.renderToJSON();
 			} else if (executionEvent.getType() == ExecutionEvent.Type.ProjectStarted) {
-				projectProfile = new ProjectProfile(executionEvent.getProject());
+				projectProfile = new ProjectProfile(executionEvent.getProject(),executionEvent);
 			} else if (executionEvent.getType() == ExecutionEvent.Type.ProjectSucceeded
 					|| executionEvent.getType() == ExecutionEvent.Type.ProjectFailed) {
+				phaseProfile.stop();
 				projectProfile.stop();
 				sessionProfile.addProjectProfile(projectProfile);
 			} else if (executionEvent.getType() == ExecutionEvent.Type.MojoStarted) {
 				String phase = executionEvent.getMojoExecution()
 						.getLifecyclePhase();
 				if (phaseProfile == null) {
-					phaseProfile = new PhaseProfile(phase);
+					phaseProfile = new PhaseProfile(phase,executionEvent);
 				} else if (!phaseProfile.getPhase().equals(phase)) {
 					phaseProfile.stop();
 					projectProfile.addPhaseProfile(phaseProfile);
-					phaseProfile = new PhaseProfile(phase);
+					phaseProfile = new PhaseProfile(phase,executionEvent);
 				}
-				mojoProfile = new MojoProfile(executionEvent.getMojoExecution());
+				mojoProfile = new MojoProfile(executionEvent.getMojoExecution(),executionEvent);
 			} else if (executionEvent.getType() == ExecutionEvent.Type.MojoSucceeded
 					|| executionEvent.getType() == ExecutionEvent.Type.MojoFailed) {
 				mojoProfile.stop();
