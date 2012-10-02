@@ -62,9 +62,20 @@ public class OutputRenderer {
 		render("Total Time spent by each mojo");
 		render("==============================");
 		
+		Long totaltime = 0L;
 		for( String mojo : mojotimes.keySet() ){
-			Long totaltime = mojotimes.get(mojo);
-			render(" " + mojo + " : " + Timer.formatTime(totaltime) );
+			Long mojotime = mojotimes.get(mojo);
+			totaltime = totaltime + mojotime;
+		}
+		
+		for( String mojo : mojotimes.keySet() ){
+			Long mojotime = mojotimes.get(mojo);
+			//render(" " + mojo + " : " + Timer.formatTime(mojotime) );
+			Float top = new Float(mojotime);
+			Float bottom = new Float(totaltime);
+			float percent =  top / bottom;
+			percent = percent * 100;
+			System.out.format("%-75s : %7d%2s %2.2f%1s \n", mojo, mojotime, "ms", percent, "%" );
 		}
 	}
 
