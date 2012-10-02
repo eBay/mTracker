@@ -63,9 +63,13 @@ public class OutputRenderer {
 		render("==============================");
 		
 		Long totaltime = 0L;
+		int maxlength = 70;
 		for( String mojo : mojotimes.keySet() ){
 			Long mojotime = mojotimes.get(mojo);
 			totaltime = totaltime + mojotime;
+			if( mojo.length() > maxlength ){
+				maxlength = mojo.length() + 1;
+			}
 		}
 		
 		for( String mojo : mojotimes.keySet() ){
@@ -75,7 +79,8 @@ public class OutputRenderer {
 			Float bottom = new Float(totaltime);
 			float percent =  top / bottom;
 			percent = percent * 100;
-			System.out.format("%-75s : %7d%2s %2.2f%1s \n", mojo, mojotime, "ms", percent, "%" );
+			String format= "%-"+ maxlength +"s : %7d%2s %2.2f%1s \n";
+			System.out.format( format, mojo, mojotime, "ms", percent, "%" );
 		}
 	}
 
