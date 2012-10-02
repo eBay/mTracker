@@ -1,5 +1,6 @@
 package com.ebay.build.profiler.render;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -25,8 +26,8 @@ public class OutputRenderer {
 	public void renderToScreen() {
 		render("Build Profile Output :");
 		render("-----------------------------------------------------------");
-		render("Project Discovery : "
-				+ Timer.formatTime(discoveryProfile.getElapsedTime()));
+		render("Project Discovery : " + Timer.formatTime(discoveryProfile.getElapsedTime()));
+		
 		for (ProjectProfile pp : sessionProfile.getProjectProfiles()) {
 			render(pp.getProjectName() + " "
 					+ Timer.formatTime(pp.getElapsedTime()));
@@ -40,7 +41,33 @@ public class OutputRenderer {
 			}
 			render("");
 		}
+		
+		// collect the amount of time each plugin took overall
+		HashMap<String,Long> mojotimes = new HashMap<String,Long>();
+		for (ProjectProfile pp : sessionProfile.getProjectProfiles()) {
+			for (PhaseProfile phaseProfile : pp.getPhaseProfile()) {
+				for (MojoProfile mp : phaseProfile.getMojoProfiles()) {
+					if( mojotimes.containsKey(mp.getId() )){
+						Long count = mojotimes.get(mp.getId());
+						count = count + mp.getElapsedTime();
+						mojotimes.put(mp.getId(), count);
+					}else{
+						mojotimes.put(mp.getId(), mp.getElapsedTime());
+					}
+				}
+			}
+		}
+		
+		render("==============================");
+		render("Total Time spent by each mojo");
+		render("==============================");
+		
+		for( String mojo : mojotimes.keySet() ){
+			Long totaltime = mojotimes.get(mojo);
+			render(" " + mojo + " : " + Timer.formatTime(totaltime) );
+		}
 	}
+
 
 	public void renderToHTML() {
 
