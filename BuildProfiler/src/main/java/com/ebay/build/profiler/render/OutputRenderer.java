@@ -79,7 +79,7 @@ public class OutputRenderer {
 			Float bottom = new Float(totaltime);
 			float percent =  top / bottom;
 			percent = percent * 100;
-			String format= "%-"+ maxlength +"s : %7d%2s %2.2f%1s \n";
+			String format= "%-"+ maxlength +"s : %7d%2s %5.2f%1s \n";
 			System.out.format( format, mojo, mojotime, "ms", percent, "%" );
 		}
 	}
