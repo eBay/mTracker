@@ -58,10 +58,6 @@ public class OutputRenderer {
 			}
 		}
 		
-		render("==============================");
-		render("Total Time spent by each mojo");
-		render("==============================");
-		
 		Long totaltime = 0L;
 		int maxlength = 70;
 		for( String mojo : mojotimes.keySet() ){
@@ -71,6 +67,10 @@ public class OutputRenderer {
 				maxlength = mojo.length() + 1;
 			}
 		}
+		
+		render("===========================================");
+		render("Time spent by each mojo, Total : " + totaltime + " ms");
+		render("===========================================");
 		
 		for( String mojo : mojotimes.keySet() ){
 			Long mojotime = mojotimes.get(mojo);
