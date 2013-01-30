@@ -52,7 +52,8 @@ public class GitUtil {
 				System.out.println(line);
 				if(line.trim().startsWith("url")) {
 					System.out.println("Inisde IF");
-					repourl = line.split("=")[1].trim();
+					String[] url = line.split("=");
+					repourl = url.length > 1 ? url[1].trim() : null;
 				}
 			}
 		} catch (FileNotFoundException e) {
@@ -60,6 +61,8 @@ public class GitUtil {
 		} catch (IOException e) {
 			
 		}
+		
+		
 		
 		return repourl;
 	}
