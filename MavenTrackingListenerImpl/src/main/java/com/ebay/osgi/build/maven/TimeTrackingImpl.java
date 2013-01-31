@@ -32,9 +32,10 @@ public class TimeTrackingImpl extends AbstractExecutionListener {
 		data.append("goals=").append(event.getSession().getGoals().toString());
 		data.append(";options=").append(event.getSession().getUserProperties().toString());
 
-		File gitMeta = GitUtil.findGitRepository(new File(event.getSession().getExecutionRootDirectory()));
+		File currentDir = new File(event.getSession().getExecutionRootDirectory());
+		File gitMeta = GitUtil.findGitRepository(currentDir);
 		String gitURL = "";
-		String appName = "";
+		String appName = "UNKNON";
 		
 		if(gitMeta != null && gitMeta.exists()) {
 			File gitConfig = new File(new File(gitMeta,".git"), "config");
@@ -46,8 +47,11 @@ public class TimeTrackingImpl extends AbstractExecutionListener {
 				appName = getCALPoolName(gitURL);
 				data.append(";git_repo=").append(gitURL);
 			}
+		} else {
+			if (null != currentDir && currentDir.exists()) {
+				appName = currentDir.getName();
+			}
 		}
-		
 		System.out.println("Cal Pool Name : " + appName);
 				
 		URL calConfig = getClass().getClassLoader().getResource("cal.properties");
