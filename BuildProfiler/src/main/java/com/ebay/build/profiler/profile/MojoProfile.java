@@ -3,7 +3,6 @@ package com.ebay.build.profiler.profile;
 import org.apache.maven.execution.ExecutionEvent;
 import org.apache.maven.plugin.MojoExecution;
 
-import com.ebay.build.profiler.util.CALLogger;
 import com.ebay.build.profiler.util.Timer;
 import com.ebay.kernel.calwrapper.CalTransaction;
 
@@ -52,8 +51,8 @@ public class MojoProfile extends Profile {
 		
 		this.event = event;
 		
-		if(CALLogger.isCalInitialized()) {
-			mojoTransaction = CALLogger.startCALTransaction("Plugin" , mojoExecution.getPlugin().getId() + " (" + pluginExecutionId + ")");
+		if(calogger.isCalInitialized()) {
+			mojoTransaction = calogger.startCALTransaction("Plugin" , mojoExecution.getPlugin().getId() + " (" + pluginExecutionId + ")");
 		}
 		
 	}
@@ -100,9 +99,9 @@ public class MojoProfile extends Profile {
 	public void stop() {
 		if(mojoTransaction != null) {
 			if(event.getSession().getResult().getExceptions().size() > 0) {
-				CALLogger.endCALTransaction(mojoTransaction,"FAILED", event.getException());
+				calogger.endCALTransaction(mojoTransaction,"FAILED", event.getException());
 			} else {
-				CALLogger.endCALTransaction(mojoTransaction, "0");
+				calogger.endCALTransaction(mojoTransaction, "0");
 			}
 		}
 		

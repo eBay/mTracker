@@ -1,8 +1,12 @@
-package com.ebay.build.profiler.util;
+package com.ebay.build.cal;
 
 import java.net.InetAddress;
 import java.net.URL;
 import java.net.UnknownHostException;
+
+import javax.inject.Singleton;
+
+import org.codehaus.plexus.component.annotations.Component;
 
 import com.ebay.kernel.cal.CalServiceFactory;
 import com.ebay.kernel.cal.java.CalClientConfigBean;
@@ -18,13 +22,13 @@ import com.ebay.kernel.calwrapper.CalTransactionHelper;
  * @author kmuralidharan
  *
  */
-
-
-public class CALLogger {
-	private static final String CAL_DEFAULT_TRAN_TYPE = "URL";
-	private static JavaCalService calService;
+@Component( role = CALLogger.class )
+@Singleton
+public class CALLoggerImpl implements CALLogger{
+	private final String CAL_DEFAULT_TRAN_TYPE = "URL";
+	private JavaCalService calService;
 	
-	private CALLogger() {
+	public CALLoggerImpl(){
 		
 	}
 	
@@ -32,7 +36,7 @@ public class CALLogger {
 	 * 
 	 * @param calConfig
 	 */
-	public static boolean initialize(URL calConfig, String appName) {
+	public boolean initialize(URL calConfig, String appName) {
 		
 		boolean isSuccess=true;
 		
@@ -60,7 +64,7 @@ public class CALLogger {
 	 * 
 	 * @param calClientCfgBean
 	 */
-	public static void initialize(CalClientConfigBean calClientCfgBean){
+	public void initialize(CalClientConfigBean calClientCfgBean){
 		if(isCalInitialized()){
 			return;
 		}
@@ -69,13 +73,23 @@ public class CALLogger {
 		}
 		calService = new JavaCalService(calClientCfgBean, CalTransactionHelper.CAL_TRANSACTION_LEVEL);
 		CalServiceFactory.setCalService(calService);
+		
+		System.out.println("initialized CAL...");
+	}
+	
+	/**
+	 * get available cal service.
+	 * @return
+	 */
+	public JavaCalService getCalService(){
+		return calService;
 	}
 	
 	/**
 	 * destroy() method needs to be called at the end of the application.
 	 * This method is disconnect the CAL Service and terminate the process.
 	 */
-	public static void destroy()
+	public void destroy()
 	{
 		try {
 			Thread.sleep(1000);
@@ -88,6 +102,8 @@ public class CALLogger {
 			calService.disconnect();
 		}
 		
+		System.out.println("CAL is destroied...");
+		
 	}
 	
 	/**
@@ -97,7 +113,7 @@ public class CALLogger {
 	 * @param transData data which needs to be logged 
 	 * @return
 	 */
-	public static CalTransaction startCALTransaction(String transName, String transData) {
+	public CalTransaction startCALTransaction(String transName, String transData) {
 		return createTransaction(transName, CAL_DEFAULT_TRAN_TYPE, transData);
 	}
 	
@@ -109,7 +125,7 @@ public class CALLogger {
 	 * @param transData data which needs to be logged 
 	 * @return
 	 */
-	public static CalTransaction startCALTransaction(String transName,String transType, String transData) {
+	public CalTransaction startCALTransaction(String transName,String transType, String transData) {
 		return createTransaction(transName, transType, transData);
 	}
 	
@@ -119,7 +135,7 @@ public class CALLogger {
 	 * @param calTransaction
 	 * @param status
 	 */
-	public static void endCALTransaction(CalTransaction calTransaction, String status) {
+	public void endCALTransaction(CalTransaction calTransaction, String status) {
 		calTransaction.setStatus(status);
 		calTransaction.completed();
 	}
@@ -130,7 +146,7 @@ public class CALLogger {
 	 * @param calTransaction
 	 * @param status
 	 */
-	public static void endCALTransaction(CalTransaction calTransaction, String status, Throwable t) {
+	public void endCALTransaction(CalTransaction calTransaction, String status, Throwable t) {
 		calTransaction.setStatus(t);
 		calTransaction.completed();
 	}
@@ -140,7 +156,7 @@ public class CALLogger {
 	 * @param eventType Type of the event
 	 * @param data data to be logged
 	 */
-	public static void logCALEvent(String eventType, String data) {
+	public void logCALEvent(String eventType, String data) {
 	    CalEvent event = CalEventFactory.create(eventType);
 	    event.setName(eventType);
 	    event.addData(data);
@@ -148,7 +164,7 @@ public class CALLogger {
 	    event.completed();
 	  }
 	
-	private static CalTransaction createTransaction(String transName, String transType, String transData) {
+	private CalTransaction createTransaction(String transName, String transType, String transData) {
 		CalTransaction calTransaction = CalTransactionFactory.create(transType);
 		calTransaction.setName(transName);
 		calTransaction.addData(transData);
@@ -160,7 +176,7 @@ public class CALLogger {
 	 * 
 	 * @return
 	 */
-	public static boolean isCalInitialized(){
+	public boolean isCalInitialized(){
 		return calService != null;
 	}
 }

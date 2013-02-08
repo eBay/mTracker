@@ -6,7 +6,6 @@ import java.util.List;
 import org.apache.maven.execution.ExecutionEvent;
 import org.apache.maven.project.MavenProject;
 
-import com.ebay.build.profiler.util.CALLogger;
 import com.ebay.build.profiler.util.Timer;
 import com.ebay.kernel.calwrapper.CalTransaction;
 
@@ -33,8 +32,8 @@ public class ProjectProfile extends Profile {
 		this.projectVersion = project.getVersion();
 		this.event = event;
 		
-		if(CALLogger.isCalInitialized()) {
-			projectTransaction = CALLogger.startCALTransaction("Project" , event.getProject().getId());
+		if(calogger.isCalInitialized()) {
+			projectTransaction = calogger.startCALTransaction("Project" , event.getProject().getId());
 		}
 	}
 	
@@ -93,9 +92,9 @@ public class ProjectProfile extends Profile {
 	public void stop() {
 		if(projectTransaction != null) {
 			if(event.getSession().getResult().getExceptions().size() > 0) {
-				CALLogger.endCALTransaction(projectTransaction,"FAILED", event.getException());
+				calogger.endCALTransaction(projectTransaction,"FAILED", event.getException());
 			} else {
-				CALLogger.endCALTransaction(projectTransaction, "0");
+				calogger.endCALTransaction(projectTransaction, "0");
 			}
 		}
 		

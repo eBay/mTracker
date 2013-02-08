@@ -1,16 +1,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.ebay.build.profiler</groupId>
-  <artifactId>BuildProfiler</artifactId>
+  <groupId>com.ebay.build.cal</groupId>
+  <artifactId>calhelper</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>Build Profiler</name>
-  <description>BuildProfiler is used to collect build metrics for maven builds. It gives a break up of maven build like how much each project took and how much each plugin took etc.,</description>
+  <name>CAL Helper</name>
+  <description>calhelper is used to initialize CAL service and provide utils methods for CAL API users.</description>
   
   <!-- Build Properties -->
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.version>3.0.4</maven.version>
-    <calhelper.version>0.0.1-SNAPSHOT</calhelper.version>
   </properties>
   
    <repositories>
@@ -26,11 +25,6 @@
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-core</artifactId>
       <version>${maven.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.ebay.build.cal</groupId>
-      <artifactId>calhelper</artifactId>
-      <version>${calhelper.version}</version>
     </dependency>
     
     <!--  dependency>
@@ -54,33 +48,5 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-  
-  <build>
-  	<plugins>
-  		<plugin>
-	        <groupId>org.apache.maven.plugins</groupId>
-	        <artifactId>maven-shade-plugin</artifactId>
-	        <version>1.5</version>
-	        <executions>
-	          <execution>
-	            <phase>package</phase>
-	            <goals>
-	              <goal>shade</goal>
-	            </goals>
-	            <configuration>
-	              <artifactSet>
-	                <excludes>
-	                  <exclude>org.apache.maven:*</exclude>
-	                  <exclude>org.sonatype.plexus:*</exclude>
-	                  <exclude>org.codehaus.plexus:*</exclude>
-	                  <exclude>com.ebay.build.cal:*</exclude>
-	                </excludes>
-	              </artifactSet>
-	            </configuration>
-	          </execution>
-	        </executions>
-	      </plugin>
-  	</plugins>
-  </build>
   
 </project>

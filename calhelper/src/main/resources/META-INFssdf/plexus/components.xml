@@ -2,12 +2,12 @@
 <component-set>
   <components>
     <component>
-      <role>org.apache.maven.eventspy.EventSpy</role>
+      <role>com.ebay.build.cal.CALLogger</role>
       <role-hint>default</role-hint>
-      <implementation>com.ebay.build.profiler.lifecycle.MavenLifecycleProfiler</implementation>
+      <implementation>com.ebay.build.cal.CALLoggerImpl</implementation>
       <description />
       <isolated-realm>false</isolated-realm>
+      <instantiation-strategy>singleton</instantiation-strategy>
     </component>
-
   </components>
 </component-set>

@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.apache.maven.execution.ExecutionEvent;
 
-import com.ebay.build.profiler.util.CALLogger;
 import com.ebay.build.profiler.util.Timer;
 import com.ebay.kernel.calwrapper.CalTransaction;
 
@@ -30,8 +29,8 @@ public class PhaseProfile extends Profile {
 		
 		this.event = event;
 		
-		if(CALLogger.isCalInitialized()) {
-			phaseTransaction = CALLogger.startCALTransaction("Phase" , phase);
+		if(calogger.isCalInitialized()) {
+			phaseTransaction = calogger.startCALTransaction("Phase" , phase);
 		}
 	}
 
@@ -51,9 +50,9 @@ public class PhaseProfile extends Profile {
 	public void stop() {
 		if(phaseTransaction != null) {
 			if(event.getSession().getResult().getExceptions().size() > 0) {
-				CALLogger.endCALTransaction(phaseTransaction,"FAILED", event.getException());
+				calogger.endCALTransaction(phaseTransaction,"FAILED", event.getException());
 			} else {
-				CALLogger.endCALTransaction(phaseTransaction, "0");
+				calogger.endCALTransaction(phaseTransaction, "0");
 			}
 		}
 		

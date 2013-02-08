@@ -29,10 +29,13 @@ public class MavenLifecycleProfiler extends AbstractEventSpy {
 	private ProjectProfile projectProfile;
 	private PhaseProfile phaseProfile;
 	private MojoProfile mojoProfile;
+	private Context context; 
 	
 	@Override
 	public void init(Context context) throws Exception {
-
+		
+		System.out.println("staring profiling...");
+		this.context = context;
 	}
 
 	@Override
@@ -42,7 +45,8 @@ public class MavenLifecycleProfiler extends AbstractEventSpy {
 			ExecutionEvent executionEvent = (ExecutionEvent) event;
 
 			if (executionEvent.getType() == ExecutionEvent.Type.ProjectDiscoveryStarted) {
-				discoveryProfile = new DiscoveryProfile(executionEvent);
+				discoveryProfile = new DiscoveryProfile(context, executionEvent);
+				
 			} else if (executionEvent.getType() == ExecutionEvent.Type.SessionStarted) {
 				sessionProfile = new SessionProfile(executionEvent);
 			} else if (executionEvent.getType() == ExecutionEvent.Type.SessionEnded) {
