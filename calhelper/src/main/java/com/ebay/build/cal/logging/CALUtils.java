@@ -1,4 +1,4 @@
-package com.ebay.build.cal;
+package com.ebay.build.cal.logging;
 
 import java.lang.reflect.Method;
 
