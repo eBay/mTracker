@@ -8,7 +8,7 @@ import org.apache.maven.execution.ExecutionEvent;
 import org.codehaus.plexus.DefaultPlexusContainer;
 import org.codehaus.plexus.component.repository.exception.ComponentLookupException;
 
-import com.ebay.build.cal.CALLogger;
+import com.ebay.build.cal.logging.CALLogger;
 import com.ebay.build.profiler.util.GitUtil;
 import com.ebay.build.profiler.util.Timer;
 
