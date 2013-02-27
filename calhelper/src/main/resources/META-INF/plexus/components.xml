@@ -2,9 +2,9 @@
 <component-set>
   <components>
     <component>
-      <role>com.ebay.build.cal.CALLogger</role>
+      <role>com.ebay.build.cal.logging.CALLogger</role>
       <role-hint>default</role-hint>
-      <implementation>com.ebay.build.cal.CALLoggerImpl</implementation>
+      <implementation>com.ebay.build.cal.logging.CALLoggerImpl</implementation>
       <description />
       <isolated-realm>false</isolated-realm>
       <instantiation-strategy>singleton</instantiation-strategy>
