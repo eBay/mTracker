@@ -84,9 +84,26 @@ private void initializeCAL() {
 				this.gitRepoUrl = gitURL;
 			}
 		}
+		
+		String appName = "UNKNON";
+		File currentDir = new File(event.getSession().getExecutionRootDirectory());
+		
+		if(gitMeta != null && gitMeta.exists()) {
+			File gitConfig = new File(new File(gitMeta,".git"), "config");
+			gitURL =  GitUtil.getRepoName(gitConfig);
+			
+			if (null == gitURL) {
+				appName = gitMeta.getName();
+			} else {
+				appName = getCALPoolName(gitURL);
+			}
+		} else {
+			if (null != currentDir && currentDir.exists()) {
+				appName = currentDir.getName();
+			}
+		}
+		System.out.println("Cal Pool Name : " + appName);
 				
-		String appName = getCALPoolName(gitURL);
-
 		return appName;
 	}
 	
@@ -104,7 +121,6 @@ private void initializeCAL() {
 			}
 		}
 		
-		System.out.println("Cal Pool Name : " + appName);
 		return appName;
 	}
 }
