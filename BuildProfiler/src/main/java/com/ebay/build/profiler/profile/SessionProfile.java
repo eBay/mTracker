@@ -15,6 +15,10 @@ public class SessionProfile extends Profile {
 	private CalTransaction sesionTransaction;
 	private ExecutionEvent event;
 
+	public SessionProfile() {
+		this(null);
+	}
+
 	public SessionProfile(ExecutionEvent event) {
 		super(new Timer());
 				
@@ -22,21 +26,14 @@ public class SessionProfile extends Profile {
 		this.event = event;
 		
 		if(calogger.isCalInitialized()) {
-			sesionTransaction = calogger.startCALTransaction("Session" , event.getSession().getGoals().toString());
+			String goal = "";
+			if (event != null) {
+				goal = event.getSession().getGoals().toString();
+			}
+			sesionTransaction = calogger.startCALTransaction("Session" , goal);
 		}
-		
 	}
 	
-	public SessionProfile() {
-		super(new Timer());
-		this.projectProfiles = new ArrayList<ProjectProfile>();
-		
-		if(calogger.isCalInitialized()) {
-			sesionTransaction = calogger.startCALTransaction("Session" , "data");
-		}
-		
-	}
-
 	public void addProjectProfile(ProjectProfile projectProfile) {
 		projectProfiles.add(projectProfile);
 	}

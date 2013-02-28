@@ -29,13 +29,13 @@ public class DiscoveryProfile extends Profile {
 		super(new Timer(), event, context);
 	
 		if(calogger.isCalInitialized()) {
-			String transName= getTransactionName();
-			String data = populateData();
+			String transName= getTransactionName(event);
+			String data = populateData(event);
 			discoveryTransaction = calogger.startCALTransaction(transName , data);
 		}
 	}
 	
-	private String populateData() {
+	private String populateData(ExecutionEvent event) {
 		StringBuilder data = new StringBuilder();
 		data.append("Git URL: ").append(gitRepoUrl);
 		
@@ -48,13 +48,22 @@ public class DiscoveryProfile extends Profile {
 			data.append(";machine=").append(java.net.InetAddress.getLocalHost().getHostName());
 		} catch (UnknownHostException e) {}
 		
-		data.append(";username=").append(System.getProperty("user.name"));
+		data.append(";uname=").append(System.getProperty("user.name"));
+		
+		if (event != null) {
+			String mavenVersion = event.getSession().getSystemProperties().getProperty("maven.build.version");
+			String javaVersion = System.getProperty("java.runtime.version");
+			data.append(";maven.version=").append(mavenVersion).append(";java.version=").append(javaVersion);
+		}	
 		
 		return data.toString();
 	}
 
-	private String getTransactionName() {
-		String transName="";
+	private String getTransactionName(ExecutionEvent event) {
+		String transName = event.getSession().getSystemProperties().getProperty("build.env");
+		if (null != transName) {
+			return transName;
+		}
 		
 		if(System.getenv("BUILD_URL") != null) {
 			transName = "CI";
@@ -71,7 +80,7 @@ public class DiscoveryProfile extends Profile {
 		super.stop();
 		
 		if(calogger.isCalInitialized()) {
-			if(event.getSession().getResult().getExceptions().size() > 0) {
+			if(event != null && event.getSession().getResult().getExceptions().size() > 0) {
 				calogger.endCALTransaction(discoveryTransaction,"FAILED", event.getException());
 			} else {
 				calogger.endCALTransaction(discoveryTransaction, "0");

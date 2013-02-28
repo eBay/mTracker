@@ -30,14 +30,7 @@ public class MojoProfile extends Profile {
 	private ExecutionEvent event;
 
 	public MojoProfile(MojoExecution mojoExecution) {
-		super(new Timer());
-		
-		this.mojoExecution = mojoExecution;
-		this.pluginGroupID = mojoExecution.getGroupId();
-		this.pluginArtifactID = mojoExecution.getArtifactId();
-		this.pluginVersion = mojoExecution.getVersion();
-		this.pluginExecutionId = mojoExecution.getExecutionId();
-		
+		this(mojoExecution, null);
 	}
 	
 	public MojoProfile(MojoExecution mojoExecution, ExecutionEvent event) {
@@ -52,9 +45,15 @@ public class MojoProfile extends Profile {
 		this.event = event;
 		
 		if(calogger.isCalInitialized()) {
-			mojoTransaction = calogger.startCALTransaction("Plugin" , mojoExecution.getPlugin().getId() + " (" + pluginExecutionId + ")");
+			String configuration = "";
+			if (mojoExecution.getPlugin().getConfiguration() != null 
+					&& mojoExecution.getPlugin().getGroupId().contains("ebay")) {
+				configuration = mojoExecution.getPlugin().getConfiguration().toString();
+			}
+			mojoTransaction = calogger.startCALTransaction(mojoExecution.getPlugin().getId(), 
+					"Plugin",  
+					" (" + pluginExecutionId + ")  " + configuration);
 		}
-		
 	}
 
 	public String getPluginGroupID() {

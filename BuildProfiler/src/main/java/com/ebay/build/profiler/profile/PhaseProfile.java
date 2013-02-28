@@ -18,9 +18,7 @@ public class PhaseProfile extends Profile {
 	private ExecutionEvent event;
 
 	public PhaseProfile(String phase) {
-		super(new Timer());
-		this.phase = phase;
-		this.mojoProfiles = new ArrayList<MojoProfile>();
+		this(phase, null);
 	}
 	
 	public PhaseProfile(String phase, ExecutionEvent event) {
@@ -31,7 +29,7 @@ public class PhaseProfile extends Profile {
 		this.event = event;
 		
 		if(calogger.isCalInitialized()) {
-			phaseTransaction = calogger.startCALTransaction("Phase" , phase);
+			phaseTransaction = calogger.startCALTransaction(phase, "Phase", "");
 		}
 	}
 

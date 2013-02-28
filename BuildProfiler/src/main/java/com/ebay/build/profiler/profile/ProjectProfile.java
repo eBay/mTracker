@@ -23,6 +23,11 @@ public class ProjectProfile extends Profile {
 	private String projectArtifactId;
 	private String projectVersion;
 
+
+	public ProjectProfile(MavenProject project) {
+		this(project, null);
+	}
+
 	public ProjectProfile(MavenProject project, ExecutionEvent event) {
 		super(new Timer());
 		this.project = project;
@@ -32,20 +37,21 @@ public class ProjectProfile extends Profile {
 		this.projectVersion = project.getVersion();
 		this.event = event;
 		
+		String prjName = "NoProjectName";
+		String prjID = "NoProjectID";
+		
+		if (event != null) {
+			prjName = event.getProject().getName();
+			prjID = event.getProject().getId();
+		}
+		
 		if(calogger.isCalInitialized()) {
-			projectTransaction = calogger.startCALTransaction("Project" , event.getProject().getId());
+			projectTransaction = calogger.startCALTransaction(prjName, 
+					"Project", 
+					prjID);
 		}
 	}
 	
-	public ProjectProfile(MavenProject project) {
-		super(new Timer());
-		this.project = project;
-		this.phaseProfiles = new ArrayList<PhaseProfile>();
-		this.projectGroupId = project.getGroupId();
-		this.projectArtifactId = project.getArtifactId();
-		this.projectVersion = project.getVersion();
-	}
-
 	public String getProjectGroupId() {
 		return projectGroupId;
 	}
@@ -91,7 +97,7 @@ public class ProjectProfile extends Profile {
 	@Override
 	public void stop() {
 		if(projectTransaction != null) {
-			if(event.getSession().getResult().getExceptions().size() > 0) {
+			if(event != null && event.getSession().getResult().getExceptions().size() > 0) {
 				calogger.endCALTransaction(projectTransaction,"FAILED", event.getException());
 			} else {
 				calogger.endCALTransaction(projectTransaction, "0");

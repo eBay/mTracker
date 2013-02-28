@@ -17,7 +17,7 @@ import com.ebay.build.profiler.render.OutputRenderer;
  * MavenLifecycleProfiler will profile the maven build.
  * 
  * @author kmuralidharan
- * 
+ * @author mmao
  */
 
 @Named
@@ -33,11 +33,10 @@ public class MavenLifecycleProfiler extends AbstractEventSpy {
 	
 	@Override
 	public void init(Context context) throws Exception {
-		
 		System.out.println( " __  __" );
 		System.out.println( "|  \\/  |__ _Apache__ ___" );
 		System.out.println( "| |\\/| / _` \\ V / -_) ' \\  ~ eBay Raptor Build Profiling ~" );
-		System.out.println( "|_|  |_\\__,_|\\_/\\___|_||_|  v. " );
+		System.out.println( "|_|  |_\\__,_|\\_/\\___|_||_|  v. ");
 		System.out.println( "" );
 
 		this.context = context;
