@@ -1,0 +1,19 @@
+<project name="raptor build tracking deploy" default="deploy">
+    
+	<property file="maven-time-tracking.properties"/>
+	<property name="maven.lib" value="e:/bin/apache-maven-3.0.4/lib"/>
+	
+	<property name="CALHelper.prj" value="calhelper"/>
+	<property name="BuildProfiler.prj" value="BuildProfiler"/>
+	
+	<target name="deploy">
+	    
+		<copy file="${CALHelper.prj}/target/${CALHelper.prj}-${calhelper.version}.jar" 
+			  todir="${maven.lib}" 
+			  verbose="true"/>
+			  
+		<copy file="${BuildProfiler.prj}/target/${BuildProfiler.prj}-${BuildProfiler.version}.jar" 
+		      todir="${maven.lib}/ext" 
+			  verbose="true"/>
+	</target>
+</project>

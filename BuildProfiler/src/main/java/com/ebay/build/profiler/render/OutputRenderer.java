@@ -12,6 +12,7 @@ import com.ebay.build.profiler.profile.ProjectProfile;
 import com.ebay.build.profiler.profile.SessionProfile;
 import com.ebay.build.profiler.util.Timer;
 
+
 public class OutputRenderer {
 
 	SessionProfile sessionProfile;

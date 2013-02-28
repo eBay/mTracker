@@ -1,7 +1,6 @@
 package com.ebay.build.cal.query;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import net.sf.json.JSONArray;

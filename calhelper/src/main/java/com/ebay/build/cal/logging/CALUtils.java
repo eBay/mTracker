@@ -6,10 +6,11 @@ import org.apache.maven.execution.MavenSession;
 import org.codehaus.plexus.classworlds.realm.ClassRealm;
 
 public class CALUtils {
-	private ClassRealm realm;
+	@SuppressWarnings("rawtypes")
 	private Class caloggerClz;
 	private Object caloggerObj;
 	
+	@SuppressWarnings("rawtypes")
 	private Class calTransactionClz;
 	
 	public CALUtils(MavenSession session){
@@ -17,6 +18,7 @@ public class CALUtils {
 		initialize(session);
 	}
 	
+	@SuppressWarnings("deprecation")
 	private void initialize(MavenSession session) {
 		ClassLoader oldClassLoader = Thread.currentThread().getContextClassLoader();
 		
@@ -38,6 +40,7 @@ public class CALUtils {
 		
 	}
 
+	@SuppressWarnings("unchecked")
 	public boolean isCalInitialized(){
 		Method isCalInitialized;
 		try {
@@ -52,6 +55,7 @@ public class CALUtils {
 		return false;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public Object startCALTransaction(String transName, String transData){
 		Method startTrasaction;
 		try {
@@ -65,6 +69,7 @@ public class CALUtils {
 		return null;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void endCALtransaction(Object calTransactionObj, String status){
 		Method endTrasaction;
 		try {
@@ -76,6 +81,7 @@ public class CALUtils {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void logCALEvent(String eventType, String data){
 		Method logCALEvent;
 		try {
