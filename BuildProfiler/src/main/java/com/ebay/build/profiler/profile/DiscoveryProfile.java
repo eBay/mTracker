@@ -15,7 +15,7 @@ public class DiscoveryProfile extends Profile {
 	private ExecutionEvent event;
 	
 	private String gitRepoUrl;
-	private boolean isCalEnabled;
+	
 	
 	public DiscoveryProfile() {
 		super(new Timer());
@@ -28,7 +28,7 @@ public class DiscoveryProfile extends Profile {
 	public DiscoveryProfile(Context context, ExecutionEvent event) {
 		super(new Timer(), event, context);
 	
-		if(isCalEnabled) {
+		if(calogger.isCalInitialized()) {
 			String transName= getTransactionName();
 			String data = populateData();
 			discoveryTransaction = calogger.startCALTransaction(transName , data);
@@ -70,7 +70,7 @@ public class DiscoveryProfile extends Profile {
 		
 		super.stop();
 		
-		if(isCalEnabled) {
+		if(calogger.isCalInitialized()) {
 			if(event.getSession().getResult().getExceptions().size() > 0) {
 				calogger.endCALTransaction(discoveryTransaction,"FAILED", event.getException());
 			} else {
