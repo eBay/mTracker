@@ -4,6 +4,7 @@ import com.ebay.build.cal.query.GetMachinesRequest;
 import com.ebay.build.cal.query.GetMachinesResponse;
 import com.ebay.build.cal.query.GetPoolsRequest;
 import com.ebay.build.cal.query.GetPoolsResponse;
+import com.ebay.build.cal.query.GetRawLogResponse;
 
 public enum ServiceResponseFactory {
 	INSTANCE;
@@ -15,6 +16,10 @@ public enum ServiceResponseFactory {
 		
 		if (request instanceof GetMachinesRequest){
 			return new GetMachinesResponse(respJsonString);
+		}
+		
+		if (request instanceof GetRawLogResponse) {
+			return new GetRawLogResponse(request.getRequestPath(), respJsonString);
 		}
 		
 		return null;

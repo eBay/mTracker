@@ -1,7 +1,8 @@
 <project name="raptor build tracking deploy" default="deploy">
     
 	<property file="maven-time-tracking.properties"/>
-	<property name="maven.lib" value="e:/bin/apache-maven-3.0.4/lib"/>
+	<!--property name="maven.lib" value="e:/bin/apache-maven-3.0.4/lib"/-->
+	<property name="maven.lib" value="e:/bin/apache-maven-3.0.5-RaptorTimeTracking/lib"/>
 	
 	<property name="CALHelper.prj" value="calhelper"/>
 	<property name="BuildProfiler.prj" value="BuildProfiler"/>

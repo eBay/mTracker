@@ -18,4 +18,8 @@ public class CALPool {
 		this.poolName = poolName;
 	}
 	
+	public String toString() {
+		return requestPath + "/" + poolName;
+	}
+	
 }

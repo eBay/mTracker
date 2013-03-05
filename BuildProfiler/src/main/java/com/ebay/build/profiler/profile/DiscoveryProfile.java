@@ -37,7 +37,7 @@ public class DiscoveryProfile extends Profile {
 	
 	private String populateData(ExecutionEvent event) {
 		StringBuilder data = new StringBuilder();
-		data.append("Git URL: ").append(gitRepoUrl);
+		data.append("git_url: ").append(gitRepoUrl);
 		
 		if(System.getenv("BUILD_URL") != null) {
             data.append(";jenkins_url=").append(System.getenv("BUILD_URL"));

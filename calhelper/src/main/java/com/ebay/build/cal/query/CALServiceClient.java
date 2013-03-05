@@ -2,8 +2,6 @@ package com.ebay.build.cal.query;
 
 import java.net.URI;
 
-import javax.ws.rs.core.MediaType;
-
 import com.ebay.build.cal.query.common.CALServiceException;
 import com.ebay.build.cal.query.common.IServiceClient;
 import com.ebay.build.cal.query.common.IServiceRequest;
@@ -20,7 +18,8 @@ public class CALServiceClient implements IServiceClient{
 	
 	public CALServiceClient(){
 		client = ServiceUtils.createClient();
-        baseResource = client.resource("http://appmon.vip.ebay.com/logview/");
+        //baseResource = client.resource("http://appmon.vip.ebay.com/logview/");
+        baseResource = client.resource("http://appmon.vip.qa.ebay.com/logview/");
 	}
 
 	public void dispose(){
@@ -41,7 +40,7 @@ public class CALServiceClient implements IServiceClient{
 			responseStr = baseResource
 					.path(request.getRequestPath())
 					.queryParams(request.getParameters())
-					.accept(MediaType.APPLICATION_JSON)
+					.accept(request.getAccept())
 					.get(String.class);
 		}catch(Exception e){
 			throw new CALServiceException("Fail to talk with remote service API, maybe remote services aren't avalable now:"+e.getMessage(),e);

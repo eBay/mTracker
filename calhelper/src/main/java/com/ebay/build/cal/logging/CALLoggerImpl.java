@@ -45,8 +45,10 @@ public class CALLoggerImpl implements CALLogger{
 		}
 		CalClientConfigBean calClientCfgBean = new CalClientConfigBean(null,false,calConfig);
 		try {
-			calClientCfgBean.setPoolname(appName + "-MavenBuild");
+			String poolName = appName + "-MavenBuild";
+			calClientCfgBean.setPoolname(poolName);
 			calClientCfgBean.setMachineName(InetAddress.getLocalHost().getHostName());
+			System.out.println("[Raptor Build Tracking] PoolName: " + poolName + " Machine Name:" + InetAddress.getLocalHost().getHostName());
 		} catch (UnknownHostException e1) {
 			isSuccess=false;
 		}

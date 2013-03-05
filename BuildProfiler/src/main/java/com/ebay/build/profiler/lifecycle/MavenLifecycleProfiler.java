@@ -36,7 +36,7 @@ public class MavenLifecycleProfiler extends AbstractEventSpy {
 		System.out.println( " __  __" );
 		System.out.println( "|  \\/  |__ _Apache__ ___" );
 		System.out.println( "| |\\/| / _` \\ V / -_) ' \\  ~ eBay Raptor Build Profiling ~" );
-		System.out.println( "|_|  |_\\__,_|\\_/\\___|_||_|  v. ");
+		System.out.println( "|_|  |_\\__,_|\\_/\\___|_||_|");
 		System.out.println( "" );
 
 		this.context = context;
