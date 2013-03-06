@@ -19,6 +19,8 @@ public class Session {
 	private List<String> goals;
 	private Map<String, Project> projects =  new HashMap<String, Project>();
 	
+	private Project currentProject;
+	
 	public Pool getPool() {
 		return pool;
 	}
@@ -75,5 +77,11 @@ public class Session {
 	}
 	public void setJavaVersion(String javaVersion) {
 		this.javaVersion = javaVersion;
+	}
+	public Project getCurrentProject() {
+		return currentProject;
+	}
+	public void setCurrentProject(Project currentProject) {
+		this.currentProject = currentProject;
 	}
 }

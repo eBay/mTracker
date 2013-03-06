@@ -8,6 +8,8 @@ import java.util.Date;
 import java.util.List;
 
 import com.ebay.build.cal.model.Machine;
+import com.ebay.build.cal.model.Phase;
+import com.ebay.build.cal.model.Plugin;
 import com.ebay.build.cal.model.Pool;
 import com.ebay.build.cal.model.Project;
 import com.ebay.build.cal.model.Session;
@@ -22,9 +24,15 @@ public class LineProcessor {
 		Session session = null;
 		for (String line : lines) {
 			 
+			if (skipLine(line)) {
+				continue;
+			}
+			
 			if ((session = newSession(line)) != null) {
 				sessions.add(session);
 				continue;
+			} else {
+				session = sessions.get(sessions.size() - 1);
 			}
 			
 			if (sessionStart(line, session)) {
@@ -46,14 +54,111 @@ public class LineProcessor {
 			if (projectEnd(line, session)) {
 				continue;
 			}
+			
+			if (phaseStart(line, session)) {
+				continue;
+			}
+			
+			if (phaseEnd(line, session)) {
+				continue;
+			}
+			if (pluginAtom(line, session)) {
+				continue;
+			}
 		}
 		return sessions;
 	}
 	
+	protected boolean skipLine(String line) {
+		String[] patterns = new String[]{"\\s+------",
+				"Label:\\s+unset;",
+				"Environment:\\s+"};
+		
+		for (int i = 0; i < patterns.length; i++) {
+			if (!StringUtils.isEmpty(StringUtils.getFirstFound(line, patterns[i], false))) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+
+	protected boolean pluginAtom(String line, Session session) {
+		String phasePattern = "(\\d+)\\s+A(\\d{2}:\\d{2}:\\d{2})\\.\\d+\\s*Plugin\\s+(.*)\\s+(\\d+)\\s+(\\d+)\\s+(.*)";
+		List<String> found = StringUtils.getFound(line, phasePattern, false);
+		
+		if (found.size() == 6) {
+			//String id = found.get(0);
+			String timeString = found.get(1);
+			String name = found.get(2);
+			String status = found.get(3);
+			String duration = found.get(4);
+			//String payload = found.get(5);
+			
+			Plugin plugin = new Plugin();
+			String[] gav = name.split(":");
+			plugin.setGroupID(gav[0]);
+			plugin.setArtifactID(gav[1]);
+			plugin.setVersion(gav[2]);
+			
+			plugin.setDuration(Long.parseLong(duration));
+			plugin.setEventTime(StringUtils.setTime(session.getStartTime(), timeString));
+			plugin.setStatus(status);
+			
+			Phase phase = session.getCurrentProject().getLastPhase();
+			phase.getPlugins().add(plugin);
+			// TODO parse playload
+			return true;
+		}
+		return false;
+	}
+
+	protected boolean phaseEnd(String line, Session session) {
+		String phasePattern = "(\\d+)\\s+T\\d{2}:\\d{2}:\\d{2}\\.\\d+\\s*Phase\\s+(.*)\\s+(\\d+)\\s+(\\d+)";
+		List<String> found = StringUtils.getFound(line, phasePattern, false);
+		if (found.size() == 4) {
+			//String id = found.get(0);
+			String name = found.get(1);
+			String status = found.get(2);
+			String duration = found.get(3);
+			
+			Phase phase = session.getCurrentProject().getLastPhase();
+			
+			if (!name.equals(phase.getName())) {
+				return false;
+			}
+			phase.setDuration(Long.parseLong(duration));
+			phase.setStatus(status);
+			
+			return true;
+		}
+		return false;
+	}
+
+	protected boolean phaseStart(String line, Session session) {
+		String phasePattern = "(\\d+)\\s+t(\\d{2}:\\d{2}:\\d{2})\\.\\d+\\s*Phase\\s+(.*)";
+		List<String> found = StringUtils.getFound(line, phasePattern, false);
+		
+		if (found.size() == 3) {
+			//String id = found.get(0);
+			String timeString = found.get(1);
+			String name = found.get(2);
+			
+			Phase phase = new Phase();
+			phase.setName(name);
+			
+			phase.setStartTime(StringUtils.setTime(session.getStartTime(), timeString));
+
+			Project project = session.getCurrentProject();
+			project.getPhases().add(phase);
+			return true;
+		}
+		return false;
+	}
+
 	protected boolean projectEnd(String line, Session session) {
 		String prjPattern = "(\\d+)\\s+T\\d{2}:\\d{2}:\\d{2}\\.\\d+\\s*Project\\s+(.*)\\s+(\\d+)\\s+(\\d+)\\s+(.*)";
 		List<String> found = StringUtils.getFound(line, prjPattern, false);
-		System.out.println(found);
 		if (found.size() == 5) {
 			String id = found.get(0);
 			String name = found.get(1);
@@ -61,9 +166,7 @@ public class LineProcessor {
 			String duration = found.get(3);
 			String payload = found.get(4);
 			
-			String key = id + "-" + name;
-			
-			Project project = session.getProjects().get(key);
+			Project project = session.getProjects().get(name);
 			if (project == null) {
 				// TODO : throw exception here, the transaction should end?
 				return false;
@@ -92,16 +195,17 @@ public class LineProcessor {
 			String timeString = found.get(1);
 			String name= found.get(2);
 			
-			String key = id + "-" + name;
-			Project project = session.getProjects().get(key);
+			Project project = session.getProjects().get(name);
 				
 			if (project == null) {
 				project = new Project();
-				session.getProjects().put(key, project);
+				session.getProjects().put(name, project);
 			}
 
 			project.setName(name);
 			project.setStartTime(StringUtils.setTime(session.getStartTime(), timeString));
+			
+			session.setCurrentProject(project);
 			return true;
 		}
 		return false;
@@ -167,24 +271,19 @@ public class LineProcessor {
 	}
 
 	protected Session newSession(String line) {
-		if (line == null) {
-			return null;
-		}
-		
-		if (!line.startsWith("SQLLog for")) {
+		if (StringUtils.isEmpty(StringUtils.getFirstFound(line, "\\d*\\s+SQLLog for", false))) {
 			return null;
 		}
 		
 		Session session = new Session();
 
-		String poolName = StringUtils.getFirstFound(line, "SQLLog for (.*)-MavenBuild", false);
-		String machineName = StringUtils.getFirstFound(line, "-MavenBuild:(.*)", false);
+		List<String> found = StringUtils.getFound(line, "\\d*\\s+SQLLog\\sfor\\s+(.*)-MavenBuild:(.*)", false);
 		
 		Pool pool = new Pool();
-		pool.setName(poolName);
+		pool.setName(found.get(0));
 		
 		Machine machine = new Machine();
-		machine.setName(machineName);
+		machine.setName(found.get(1));
 		machine.setPool(pool);
 		
 		pool.setMachine(machine);

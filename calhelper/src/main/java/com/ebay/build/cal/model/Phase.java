@@ -1,17 +1,18 @@
 package com.ebay.build.cal.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class Phase {
 	private String name;
 	
-	private List<Plugin> plugins;
+	private List<Plugin> plugins =  new ArrayList<Plugin>();
 	
 	private Date startTime;
-	private Date endTime;
 	
 	private long duration;
+	private String status;
 
 	public String getName() {
 		return name;
@@ -37,19 +38,19 @@ public class Phase {
 		this.startTime = startTime;
 	}
 
-	public Date getEndTime() {
-		return endTime;
-	}
-
-	public void setEndTime(Date endTime) {
-		this.endTime = endTime;
-	}
-
 	public long getDuration() {
 		return duration;
 	}
 
 	public void setDuration(long duration) {
 		this.duration = duration;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 }

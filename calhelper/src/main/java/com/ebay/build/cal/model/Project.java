@@ -1,5 +1,6 @@
 package com.ebay.build.cal.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,7 +14,7 @@ public class Project {
 	private long duration;
 	private String status;
 	
-	private List<Phase> phases;
+	private List<Phase> phases = new ArrayList<Phase>();
 	
 	public Pool getPool() {
 		return pool;
@@ -54,7 +55,8 @@ public class Project {
 	public List<Phase> getPhases() {
 		return phases;
 	}
-	public void setPhases(List<Phase> phases) {
-		this.phases = phases;
+	
+	public Phase getLastPhase() {
+		return phases.get(phases.size() - 1);
 	}
 }
