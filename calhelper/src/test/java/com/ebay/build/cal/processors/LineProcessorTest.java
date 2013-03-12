@@ -2,6 +2,7 @@ package com.ebay.build.cal.processors;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.BufferedReader;
@@ -42,17 +43,19 @@ public class LineProcessorTest {
 	@Test
 	public void testTransactionStart() {
 		Session session = new Session();
-		assertTrue(processor.transactionStart("0  t17:41:38.58	URL	RIDE", session));
+		assertTrue(processor.transactionStart("0  t17:41:38.58	Environment	RIDE", session));
 		assertEquals("RIDE", session.getEnvironment());
 	}
 	
 	@Test
 	public void testTransactionEnd() {
 		Session session = new Session();
-		assertTrue(processor.transactionEnd("0  T17:41:55.83	URL	RIDE	0	17248	git_url: null;machine=D-SHC-00436998;uname=mmao;maven.version=Apache Maven 3.0.5 (r01de14724cdef164cd33c7c8c2fe155faf9602da; 2013-02-19 21:51:28+0800);java.version=1.6.0_38-b05", session));
+		assertTrue(processor.transactionEnd("0  T17:41:55.83	Environment	RIDE	0	17248	git_url: null;machine=D-SHC-00436998;uname=mmao;maven.version=Apache Maven 3.0.5 (r01de14724cdef164cd33c7c8c2fe155faf9602da; 2013-02-19 21:51:28+0800);java.version=1.6.0_38-b05", session));
 		
 		assertEquals(17248, session.getDuration());
 		assertEquals("0", session.getStatus());
+		
+		assertEquals("mmao", session.getUserName());
 		// TODO: assert the payload
 	}
 	
@@ -62,7 +65,6 @@ public class LineProcessorTest {
 		// prepare session
 		Session session = new Session();
 		processor.sessionStart("Start: 01-03-2013 17:41:38", session);
-		
 		
 		assertTrue(processor.projectStart("2      t17:41:39.64	Project	Samples Parent", session));
 		
@@ -83,7 +85,13 @@ public class LineProcessorTest {
 		
 		assertEquals("0", project.getStatus());
 		assertEquals(1134, project.getDuration());
-		//TODO assert the payload
+		assertEquals("com.ebay.app.raptor", project.getGroupId());
+		assertEquals("CalTestParent", project.getArtifactId());
+		assertEquals("pom", project.getType());
+		assertEquals("0.0.1-SNAPSHOT", project.getVersion());
+		
+		// pool not set to project
+		assertNull(project.getPool());
 	}
 	
 	@Test
@@ -118,11 +126,12 @@ public class LineProcessorTest {
 		assertTrue(processor.pluginAtom(line, session));
 		
 		Plugin plugin = session.getCurrentProject().getLastPhase().getPlugins().get(0);
-		assertEquals("com.ebay.osgi.build", plugin.getGroupID());
-		assertEquals("dependency-version-validator", plugin.getArtifactID());
+		assertEquals("com.ebay.osgi.build", plugin.getGroupId());
+		assertEquals("dependency-version-validator", plugin.getArtifactId());
 		assertEquals("1.0.0", plugin.getVersion());
 		assertEquals("0", plugin.getStatus());
 		assertEquals(246, plugin.getDuration());
+		assertEquals("com.ebay.osgi.build:dependency-version-validator:1.0.0", plugin.getPluginKey());
 		
 		// TODO assert payload
 	}
@@ -160,8 +169,8 @@ public class LineProcessorTest {
 		
 		assertEquals(1, phase.getPlugins().size());
 		
-		assertEquals("com.ebay.osgi.build", phase.getPlugins().get(0).getGroupID());
-		assertEquals("maven-scm-build-info", phase.getPlugins().get(0).getArtifactID());
+		assertEquals("com.ebay.osgi.build", phase.getPlugins().get(0).getGroupId());
+		assertEquals("maven-scm-build-info", phase.getPlugins().get(0).getArtifactId());
 		assertEquals("1.0.7", phase.getPlugins().get(0).getVersion());
 		assertEquals(98, phase.getPlugins().get(0).getDuration());
 		assertEquals(Calendar.MARCH, phase.getPlugins().get(0).getEventTime().getMonth());
@@ -197,6 +206,9 @@ public class LineProcessorTest {
 		assertEquals(7693, sessions.get(0).getProjects().get("caltest").getDuration());
 		assertEquals(19533, sessions.get(0).getProjects().get("EBA For caltest").getDuration());
 		
+		assertEquals("CalTestParent", sessions.get(0).getPool().getName());
+		assertEquals("CalTestParent", sessions.get(1).getPool().getName());
+		
 		assertEquals("DEV", sessions.get(1).getEnvironment());
 		assertEquals(3, sessions.get(1).getProjects().size());
 		assertEquals(1169, sessions.get(1).getProjects().get("Samples Parent").getDuration());
@@ -211,8 +223,8 @@ public class LineProcessorTest {
 		
 		assertEquals(1, phase.getPlugins().size());
 		
-		assertEquals("org.apache.maven.plugins", phase.getPlugins().get(0).getGroupID());
-		assertEquals("maven-source-plugin", phase.getPlugins().get(0).getArtifactID());
+		assertEquals("org.apache.maven.plugins", phase.getPlugins().get(0).getGroupId());
+		assertEquals("maven-source-plugin", phase.getPlugins().get(0).getArtifactId());
 		assertEquals("2.1.2.ebay", phase.getPlugins().get(0).getVersion());
 		assertEquals(149, phase.getPlugins().get(0).getDuration());
 		assertEquals(Calendar.MARCH, phase.getPlugins().get(0).getEventTime().getMonth());
@@ -227,5 +239,17 @@ public class LineProcessorTest {
 		assertTrue(processor.skipLine("Label: unset;***;unset"));
 		assertTrue(processor.skipLine("         -------------------------------------------------------"));
 		assertFalse(processor.skipLine("0 SQLLog for CalTestParent-MavenBuild:D-SHC-00436998"));
+	}
+	
+	@Test
+	public void testSessionEnd() {
+		Session session = new Session();
+		String line = "1    T15:34:38.05	URL	Session	0	28771	[install]";
+		assertTrue(processor.sessionEnd(line, session));
+		assertEquals("install", session.getGoals());
+		
+		line = "1    T15:41:41.21	URL	Session	0	18959	[clean, install]";
+		assertTrue(processor.sessionEnd(line, session));
+		assertEquals("clean, install", session.getGoals());
 	}
 }

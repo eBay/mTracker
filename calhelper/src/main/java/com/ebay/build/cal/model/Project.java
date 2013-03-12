@@ -8,6 +8,9 @@ public class Project {
 	private Pool pool;
 	
 	private String name;
+	private String groupId;
+	private String artifactId;
+	private String type;
 	private String version;
 	
 	private Date startTime;
@@ -15,6 +18,7 @@ public class Project {
 	private String status;
 	
 	private List<Phase> phases = new ArrayList<Phase>();
+	
 	
 	public Pool getPool() {
 		return pool;
@@ -58,5 +62,23 @@ public class Project {
 	
 	public Phase getLastPhase() {
 		return phases.get(phases.size() - 1);
+	}
+	public String getGroupId() {
+		return groupId;
+	}
+	public void setGroupId(String groupId) {
+		this.groupId = groupId;
+	}
+	public String getArtifactId() {
+		return artifactId;
+	}
+	public void setArtifactId(String artifactId) {
+		this.artifactId = artifactId;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
 }

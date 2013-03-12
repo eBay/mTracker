@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd ">
+
+   <!-- Initialization for data source -->
+   <bean id="dataSource" 
+      class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+      <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+      <property name="url" value="jdbc:mysql://svcdb05.arch.ebay.com:3306/trackingadmin"/>
+      <property name="username" value="trackingadmin"/>
+      <property name="password" value="trackingadmin"/>
+   </bean>
+
+   <bean id="sessionJDBCTemplate" 
+      class="com.ebay.build.cal.dal.SessionJDBCTemplate">
+      <property name="dataSource"  ref="dataSource" />    
+   </bean>
+      
+   <bean id="projectJDBCTemplate" 
+      class="com.ebay.build.cal.dal.ProjectJDBCTemplate">
+      <property name="dataSource"  ref="dataSource" />    
+   </bean>
+   
+   <bean id="sessionProjectJDBCTemplate" 
+      class="com.ebay.build.cal.dal.SessionProjectJDBCTemplate">
+      <property name="dataSource"  ref="dataSource" />    
+   </bean>
+   
+   <bean id="pluginJDBCTemplate" 
+      class="com.ebay.build.cal.dal.PluginJDBCTemplate">
+      <property name="dataSource"  ref="dataSource" />    
+   </bean>
+
+   <bean id="rawDataJDBCTemplate" 
+      class="com.ebay.build.cal.dal.RawDataJDBCTemplate">
+      <property name="dataSource"  ref="dataSource" />    
+   </bean>
+
+      
+</beans>

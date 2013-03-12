@@ -1,0 +1,33 @@
+package com.ebay.build.cal.dal;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import org.springframework.jdbc.core.RowMapper;
+
+import com.ebay.build.cal.model.Machine;
+import com.ebay.build.cal.model.Pool;
+import com.ebay.build.cal.model.Session;
+
+public class SessionMapper implements RowMapper<Session> {
+
+	public Session mapRow(ResultSet rs, int arg1) throws SQLException {
+		Session session = new Session();
+		session.setDuration(rs.getLong("duration"));
+		session.setEnvironment(rs.getString("environment"));
+		session.setJavaVersion(rs.getString("java_version"));
+		session.setMavenVersion(rs.getString("maven_version"));
+		session.setStartTime(rs.getDate("start_time"));
+		session.setUserName(rs.getString("user_name"));
+		session.setStatus(rs.getString("status"));
+		session.setGoals(rs.getString("goals"));
+		Pool pool = new Pool();
+		pool.setName(rs.getString("pool_name"));
+		Machine machine = new Machine();
+		machine.setName(rs.getString("machine_name"));
+		pool.setMachine(machine);
+		session.setPool(pool);
+		
+		return session;
+	}
+}

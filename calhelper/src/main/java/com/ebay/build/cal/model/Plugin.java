@@ -3,30 +3,35 @@ package com.ebay.build.cal.model;
 import java.util.Date;
 
 public class Plugin {
-	private String groupID;
-	private String artifactID;
+	private String groupId;
+	private String artifactId;
 	private String version;
 	
 	private Date eventTime;
 	private long duration;
 	
 	private String status;
-	private String executionID;
+	private String executionId;
+	
+	private String phaseName;
+	private String pluginKey;
+	
+	private int id;
 
-	public String getGroupID() {
-		return groupID;
+	public String getGroupId() {
+		return groupId;
 	}
 
-	public void setGroupID(String groupID) {
-		this.groupID = groupID;
+	public void setGroupId(String groupId) {
+		this.groupId = groupId;
 	}
 
-	public String getArtifactID() {
-		return artifactID;
+	public String getArtifactId() {
+		return artifactId;
 	}
 
-	public void setArtifactID(String artifactID) {
-		this.artifactID = artifactID;
+	public void setArtifactId(String artifactId) {
+		this.artifactId = artifactId;
 	}
 
 	public String getVersion() {
@@ -61,11 +66,35 @@ public class Plugin {
 		this.status = status;
 	}
 
-	public String getExecutionID() {
-		return executionID;
+	public String getExecutionId() {
+		return executionId;
 	}
 
-	public void setExecutionID(String executionID) {
-		this.executionID = executionID;
+	public void setExecutionId(String executionId) {
+		this.executionId = executionId;
+	}
+
+	public String getPhaseName() {
+		return phaseName;
+	}
+
+	public void setPhaseName(String phaseName) {
+		this.phaseName = phaseName;
+	}
+
+	public String getPluginKey() {
+		return pluginKey;
+	}
+
+	public void setPluginKey(String pluginKey) {
+		this.pluginKey = pluginKey;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 }

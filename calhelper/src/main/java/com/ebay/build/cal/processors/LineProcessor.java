@@ -65,10 +65,22 @@ public class LineProcessor {
 			if (pluginAtom(line, session)) {
 				continue;
 			}
+			if (sessionEnd(line, session)) {
+				continue;
+			}
 		}
 		return sessions;
 	}
 	
+	protected boolean sessionEnd(String line, Session session) {
+		List<String> found = StringUtils.getFound(line, "\\d+\\s+T\\d{2}:\\d{2}:\\d{2}\\.\\d{2}\\s+URL\\s+Session\\s+\\d+\\s+(\\d+)\\s+\\[(.*)\\]", false);
+		if (found.size() == 2) {
+			session.setGoals(found.get(1));
+			return true;
+		}
+		return false;
+	}
+
 	protected boolean skipLine(String line) {
 		String[] patterns = new String[]{"\\s+------",
 				"Label:\\s+unset;",
@@ -96,17 +108,21 @@ public class LineProcessor {
 			//String payload = found.get(5);
 			
 			Plugin plugin = new Plugin();
+			plugin.setPluginKey(name);
 			String[] gav = name.split(":");
-			plugin.setGroupID(gav[0]);
-			plugin.setArtifactID(gav[1]);
+			plugin.setGroupId(gav[0]);
+			plugin.setArtifactId(gav[1]);
 			plugin.setVersion(gav[2]);
 			
 			plugin.setDuration(Long.parseLong(duration));
 			plugin.setEventTime(StringUtils.setTime(session.getStartTime(), timeString));
 			plugin.setStatus(status);
 			
+			
 			Phase phase = session.getCurrentProject().getLastPhase();
 			phase.getPlugins().add(plugin);
+			
+			plugin.setPhaseName(phase.getName());
 			// TODO parse playload
 			return true;
 		}
@@ -173,16 +189,27 @@ public class LineProcessor {
 			}
 			project.setDuration(Long.parseLong(duration));
 			project.setStatus(status);
+			project.setPool(session.getPool());
+			
 			// TODO: parsePayload here
-			praseProjectPayload(payload);
+			praseProjectPayload(payload, project);
 			return true;
 		}
 		return false;
 	}
 	
-	private void praseProjectPayload(String payload) {
-		// TODO Auto-generated method stub
-		
+	private void praseProjectPayload(String payload, Project project) {
+		if (!StringUtils.isEmpty(payload)) {
+			String[] gav = payload.split(":");
+			if (gav != null) {
+				if (gav.length == 4) {
+					project.setGroupId(gav[0]);
+					project.setArtifactId(gav[1]);
+					project.setType(gav[2]);
+					project.setVersion(gav[3]);
+				}
+			}
+		}
 	}
 
 	protected boolean projectStart(String line, Session session) {
@@ -212,7 +239,7 @@ public class LineProcessor {
 	}
 	
 	protected boolean transactionEnd(String line, Session session) {
-		String tEndPattern = "(\\d+)\\s+T\\d{2}:\\d{2}:\\d{2}\\.\\d+\\s+URL\\s+\\w+\\s+(\\d+)\\s+(\\d+)\\s+(.*)";
+		String tEndPattern = "(\\d+)\\s+T\\d{2}:\\d{2}:\\d{2}\\.\\d+\\s+Environment\\s+\\w+\\s+(\\d+)\\s+(\\d+)\\s+(.*)";
 		List<String> found = StringUtils.getFound(line, tEndPattern, false);
 		
 		if (found.size() == 4) {
@@ -232,13 +259,35 @@ public class LineProcessor {
 		return false;
 	}
 
+	// TODO parse all the properties
 	private void parseSessionPayLoad(String payload, Session session) {
-		// TODO Auto-generated method stub
+		String[] properties = payload.split(";");
+		for (String prop : properties) {
+			String[] keyValue = prop.split("=");
+			if ("uname".equals(keyValue[0])) {
+				session.setUserName(keyValue[1]);
+			}
+			if ("maven.version".equals(keyValue[0])) {
+				session.setMavenVersion(keyValue[1]);
+			}
+			if ("java.version".equals(keyValue[0])) {
+				session.setJavaVersion(keyValue[1]);
+			}
+			if ("git.url".equals(keyValue[0])) {
+				session.setGitUrl(keyValue[1]);
+			}
+			if ("jenkins.url".equals(keyValue[0])) {
+				session.setJekinsUrl(keyValue[1]);
+			}
+			if ("git.branch".equals(keyValue[0])) {
+				session.setGitBranch(keyValue[1]);
+			}
+		}
 	}
 
 	protected boolean transactionStart(String line, Session session) {
-		String tStartPattern = "(\\d+)\\s+t\\d{2}:\\d{2}:\\d{2}\\.\\d+\\s+URL\\s+(\\w+)";
-		// 0  t17:41:38.58	URL	RIDE
+		String tStartPattern = "(\\d+)\\s+t\\d{2}:\\d{2}:\\d{2}\\.\\d+\\s+Environment\\s+(\\w+)";
+		// 0  t17:41:38.58	Environment	RIDE
 		List<String> found = StringUtils.getFound(line, tStartPattern, false);
 		
 		if (found.size() == 2) {

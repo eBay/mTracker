@@ -2,7 +2,7 @@
 Environment: raptor-build-tracking
 Label: unset;***;unset
 Start: 06-03-2013 15:34:08
-0 t15:34:08.14	URL	RIDE
+0 t15:34:08.14	Environment	RIDE
 1    t15:34:09.28	URL	Session
 2       t15:34:09.30	Project	Samples Parent
 3          t15:34:09.47	Phase	validate
@@ -176,13 +176,13 @@ Start: 06-03-2013 15:34:08
       -------------------------------------------------------
 1    T15:34:38.05	URL	Session	0	28771	[install]
    -------------------------------------------------------
-0 T15:34:38.05	URL	RIDE	0	29910	git_url: null;machine=D-SHC-00436998;uname=mmao;maven.version=Apache Maven 3.0.5 (r01de14724cdef164cd33c7c8c2fe155faf9602da; 2013-02-19 21:51:28+0800);java.version=1.6.0_38-b05
+0 T15:34:38.05	Environment	RIDE	0	29910	git_url: null;machine=D-SHC-00436998;uname=mmao;maven.version=Apache Maven 3.0.5 (r01de14724cdef164cd33c7c8c2fe155faf9602da; 2013-02-19 21:51:28+0800);java.version=1.6.0_38-b05
 -------------------------------------------------------
 0 SQLLog for CalTestParent-MavenBuild:D-SHC-00436998
 Environment: raptor-build-tracking
 Label: unset;***;unset
 Start: 06-03-2013 15:41:21
-0 t15:41:21.22	URL	DEV
+0 t15:41:21.22	Environment	DEV
 1    t15:41:22.25	URL	Session
 2       t15:41:22.26	Project	Samples Parent
 3          t15:41:22.37	Phase	clean
@@ -368,5 +368,5 @@ Start: 06-03-2013 15:41:21
       -------------------------------------------------------
 1    T15:41:41.21	URL	Session	0	18959	[clean, install]
    -------------------------------------------------------
-0 T15:41:41.21	URL	DEV	0	19983	git_url: null;machine=D-SHC-00436998;uname=mmao;maven.version=Apache Maven 3.0.5 (r01de14724cdef164cd33c7c8c2fe155faf9602da; 2013-02-19 21:51:28+0800);java.version=1.6.0_38-b05
+0 T15:41:41.21	Environment	DEV	0	19983	git_url: null;machine=D-SHC-00436998;uname=mmao;maven.version=Apache Maven 3.0.5 (r01de14724cdef164cd33c7c8c2fe155faf9602da; 2013-02-19 21:51:28+0800);java.version=1.6.0_38-b05
 -------------------------------------------------------

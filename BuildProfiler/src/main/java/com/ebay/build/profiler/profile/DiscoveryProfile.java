@@ -21,7 +21,7 @@ public class DiscoveryProfile extends Profile {
 		super(new Timer());
 		
 		if(isCalInitialized()) {
-			discoveryTransaction = calogger.startCALTransaction("DEV" , "data");
+			discoveryTransaction = calogger.startCALTransaction("DEV", "Environment", "data");
 		}
 	}
 
@@ -31,17 +31,17 @@ public class DiscoveryProfile extends Profile {
 		if(calogger.isCalInitialized()) {
 			String transName= getTransactionName(event);
 			String data = populateData(event);
-			discoveryTransaction = calogger.startCALTransaction(transName , data);
+			discoveryTransaction = calogger.startCALTransaction(transName, "Environment",  data);
 		}
 	}
 	
 	private String populateData(ExecutionEvent event) {
 		StringBuilder data = new StringBuilder();
-		data.append("git_url=").append(gitRepoUrl);
+		data.append("git.url=").append(gitRepoUrl);
 		
 		if(System.getenv("BUILD_URL") != null) {
-            data.append(";jenkins_url=").append(System.getenv("BUILD_URL"));
-            data.append(";git_branch").append(System.getenv("GIT_BRANCH"));
+            data.append(";jenkins.url=").append(System.getenv("BUILD_URL"));
+            data.append(";git.branch").append(System.getenv("GIT_BRANCH"));
         }
 		
 		try {

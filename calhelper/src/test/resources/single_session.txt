@@ -2,7 +2,7 @@
 Environment: raptor-build-tracking
 Label: unset;***;unset
 Start: 01-03-2013 17:41:38
-0  t17:41:38.58	URL	RIDE
+0  t17:41:38.58	Environment	RIDE
 1    t17:41:39.62	URL	Session
 2      t17:41:39.64	Project	Samples Parent
 3        t17:41:39.74	Phase	validate
@@ -176,5 +176,5 @@ Start: 01-03-2013 17:41:38
     --------------------------------------------------------
 1    T17:41:55.83	URL	Session	0	16206	[install]
   --------------------------------------------------------
-0  T17:41:55.83	URL	RIDE	0	17248	git_url: null;machine=D-SHC-00436998;uname=mmao;maven.version=Apache Maven 3.0.5 (r01de14724cdef164cd33c7c8c2fe155faf9602da; 2013-02-19 21:51:28+0800);java.version=1.6.0_38-b05
+0  T17:41:55.83	Environment	RIDE	0	17248	git_url: null;machine=D-SHC-00436998;uname=mmao;maven.version=Apache Maven 3.0.5 (r01de14724cdef164cd33c7c8c2fe155faf9602da; 2013-02-19 21:51:28+0800);java.version=1.6.0_38-b05
 --------------------------------------------------------

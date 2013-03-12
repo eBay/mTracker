@@ -2,8 +2,9 @@ package com.ebay.build.cal.model;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+
+import org.sonatype.aether.util.StringUtils;
 
 public class Session {
 	private Pool pool;
@@ -15,8 +16,11 @@ public class Session {
 	private String mavenVersion;
 	private String javaVersion;
 	private String environment;
+	private String gitUrl;
+	private String gitBranch;
+	private String jekinsUrl; 
 	
-	private List<String> goals;
+	private String goals;
 	private Map<String, Project> projects =  new HashMap<String, Project>();
 	
 	private Project currentProject;
@@ -63,10 +67,10 @@ public class Session {
 	public void setEnvironment(String environment) {
 		this.environment = environment;
 	}
-	public List<String> getGoals() {
+	public String getGoals() {
 		return goals;
 	}
-	public void setGoals(List<String> goals) {
+	public void setGoals(String goals) {
 		this.goals = goals;
 	}
 	public Map<String, Project> getProjects() {
@@ -83,5 +87,33 @@ public class Session {
 	}
 	public void setCurrentProject(Project currentProject) {
 		this.currentProject = currentProject;
+	}
+	public String getGitUrl() {
+		if (StringUtils.isEmpty(gitUrl)) {
+			return "N/A";
+		}
+
+		return gitUrl;
+	}
+	public void setGitUrl(String gitUrl) {
+		this.gitUrl = gitUrl;
+	}
+	public String getGitBranch() {
+		if (StringUtils.isEmpty(gitBranch)) {
+			return "N/A";
+		}
+		return gitBranch;
+	}
+	public void setGitBranch(String gitBranch) {
+		this.gitBranch = gitBranch;
+	}
+	public String getJekinsUrl() {
+		if (StringUtils.isEmpty(jekinsUrl)) {
+			return "N/A";
+		}
+		return jekinsUrl;
+	}
+	public void setJekinsUrl(String jekinsUrl) {
+		this.jekinsUrl = jekinsUrl;
 	}
 }
