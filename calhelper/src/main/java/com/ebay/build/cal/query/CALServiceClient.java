@@ -29,7 +29,7 @@ public class CALServiceClient implements IServiceClient{
 	
 	public IServiceResponse get(IServiceRequest request) throws CALServiceException {
 		String respString = getResponseJsonString(request);
-		
+		System.out.println(respString);
 		return ServiceResponseFactory.INSTANCE.getResponse(request, respString);
 	}
 	

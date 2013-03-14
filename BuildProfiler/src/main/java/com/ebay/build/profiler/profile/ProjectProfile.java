@@ -98,7 +98,7 @@ public class ProjectProfile extends Profile {
 	public void stop() {
 		if(projectTransaction != null) {
 			if(event != null && event.getSession().getResult().getExceptions().size() > 0) {
-				calogger.endCALTransaction(projectTransaction,"FAILED", event.getException());
+				calogger.endCALTransaction(projectTransaction,"1", event.getException());
 			} else {
 				calogger.endCALTransaction(projectTransaction, "0");
 			}

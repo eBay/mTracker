@@ -252,4 +252,19 @@ public class LineProcessorTest {
 		assertTrue(processor.sessionEnd(line, session));
 		assertEquals("clean, install", session.getGoals());
 	}
+	
+	@Test
+	public void testProjectEnd() {
+		Session session = new Session();
+		processor.sessionStart("Start: 01-03-2013 17:41:38", session);
+		assertTrue(processor.projectStart("2      t17:41:39.64	Project	mweb", session));
+
+		// Test Project End
+		String log = "2      T03:22:48.99	Project	mweb	log	72840	com.ebay.app.raptor:mweb:war:1.0.0-SNAPSHOT";
+		assertTrue(processor.projectEnd(log, session));
+		
+		Project project = session.getProjects().values().iterator().next();		
+		assertEquals("com.ebay.app.raptor", project.getGroupId());
+		assertEquals("log", project.getStatus());
+	}
 }

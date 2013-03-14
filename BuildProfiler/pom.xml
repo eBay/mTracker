@@ -40,10 +40,17 @@
       <scope>compile</scope>
     </dependency -->
     
+    <!-- 
      <dependency>
  	 <groupId>com.ebay.kernel</groupId>
   	 <artifactId>uKernelCore</artifactId>
-  	 <version>2.0.451</version>
+  	 <version>2.10.0</version>
+	</dependency>
+	 -->
+    <dependency>
+	 	 <groupId>com.ebay.kernel</groupId>
+  	 	<artifactId>kernelMerged</artifactId>
+  	 	<version>1.15.0</version>
 	</dependency>
     
     <!-- Test Scope Dependencies -->

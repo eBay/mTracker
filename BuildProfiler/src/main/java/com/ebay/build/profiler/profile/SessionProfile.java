@@ -46,7 +46,7 @@ public class SessionProfile extends Profile {
 	public void stop() {
 		if(sesionTransaction != null) {
 			if(event.getSession().getResult().getExceptions().size() > 0) {
-				calogger.endCALTransaction(sesionTransaction,"FAILED", event.getException());
+				calogger.endCALTransaction(sesionTransaction,"1", event.getException());
 			} else {
 				calogger.endCALTransaction(sesionTransaction, "0");
 			}

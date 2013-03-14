@@ -32,7 +32,12 @@ public class LineProcessor {
 				sessions.add(session);
 				continue;
 			} else {
-				session = sessions.get(sessions.size() - 1);
+				if (!sessions.isEmpty()) {
+					session = sessions.get(sessions.size() - 1);
+				} else {
+					// no sessions left, should end the process.
+					break;
+				}
 			}
 			
 			if (sessionStart(line, session)) {
@@ -73,9 +78,9 @@ public class LineProcessor {
 	}
 	
 	protected boolean sessionEnd(String line, Session session) {
-		List<String> found = StringUtils.getFound(line, "\\d+\\s+T\\d{2}:\\d{2}:\\d{2}\\.\\d{2}\\s+URL\\s+Session\\s+\\d+\\s+(\\d+)\\s+\\[(.*)\\]", false);
-		if (found.size() == 2) {
-			session.setGoals(found.get(1));
+		List<String> found = StringUtils.getFound(line, "\\d+\\s+T\\d{2}:\\d{2}:\\d{2}\\.\\d{2}\\s+URL\\s+Session\\s+(.*)\\s+(\\d+)\\s+\\[(.*)\\]", false);
+		if (found.size() == 3) {
+			session.setGoals(found.get(2));
 			return true;
 		}
 		return false;
@@ -130,7 +135,7 @@ public class LineProcessor {
 	}
 
 	protected boolean phaseEnd(String line, Session session) {
-		String phasePattern = "(\\d+)\\s+T\\d{2}:\\d{2}:\\d{2}\\.\\d+\\s*Phase\\s+(.*)\\s+(\\d+)\\s+(\\d+)";
+		String phasePattern = "(\\d+)\\s+T\\d{2}:\\d{2}:\\d{2}\\.\\d+\\s*Phase\\s+(.*)\\s+(.*)\\s+(\\d+)";
 		List<String> found = StringUtils.getFound(line, phasePattern, false);
 		if (found.size() == 4) {
 			//String id = found.get(0);
@@ -173,7 +178,7 @@ public class LineProcessor {
 	}
 
 	protected boolean projectEnd(String line, Session session) {
-		String prjPattern = "(\\d+)\\s+T\\d{2}:\\d{2}:\\d{2}\\.\\d+\\s*Project\\s+(.*)\\s+(\\d+)\\s+(\\d+)\\s+(.*)";
+		String prjPattern = "(\\d+)\\s+T\\d{2}:\\d{2}:\\d{2}\\.\\d+\\s*Project\\s+(.*)\\s+(.*)\\s+(\\d+)\\s+(.*)";
 		List<String> found = StringUtils.getFound(line, prjPattern, false);
 		if (found.size() == 5) {
 			String id = found.get(0);
@@ -320,13 +325,13 @@ public class LineProcessor {
 	}
 
 	protected Session newSession(String line) {
-		if (StringUtils.isEmpty(StringUtils.getFirstFound(line, "\\d*\\s+SQLLog for", false))) {
+		if (StringUtils.isEmpty(StringUtils.getFirstFound(line, "\\d*\\s*SQLLog for", false))) {
 			return null;
 		}
 		
 		Session session = new Session();
 
-		List<String> found = StringUtils.getFound(line, "\\d*\\s+SQLLog\\sfor\\s+(.*)-MavenBuild:(.*)", false);
+		List<String> found = StringUtils.getFound(line, "\\d*\\s*SQLLog\\sfor\\s+(.*)-MavenBuild:(.*)", false);
 		
 		Pool pool = new Pool();
 		pool.setName(found.get(0));

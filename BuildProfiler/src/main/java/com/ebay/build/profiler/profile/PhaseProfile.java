@@ -49,7 +49,7 @@ public class PhaseProfile extends Profile {
 	public void stop() {
 		if(phaseTransaction != null) {
 			if(event.getSession().getResult().getExceptions().size() > 0) {
-				calogger.endCALTransaction(phaseTransaction,"FAILED", event.getException());
+				calogger.endCALTransaction(phaseTransaction,"1", event.getException());
 			} else {
 				calogger.endCALTransaction(phaseTransaction, "0");
 			}

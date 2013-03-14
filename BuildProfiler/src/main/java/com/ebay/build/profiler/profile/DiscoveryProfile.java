@@ -14,9 +14,6 @@ public class DiscoveryProfile extends Profile {
 	private CalTransaction discoveryTransaction;
 	private ExecutionEvent event;
 	
-	private String gitRepoUrl;
-	
-	
 	public DiscoveryProfile() {
 		super(new Timer());
 		
@@ -37,11 +34,11 @@ public class DiscoveryProfile extends Profile {
 	
 	private String populateData(ExecutionEvent event) {
 		StringBuilder data = new StringBuilder();
-		data.append("git.url=").append(gitRepoUrl);
+		data.append("git.url=").append(this.getGitRepoUrl());
 		
 		if(System.getenv("BUILD_URL") != null) {
             data.append(";jenkins.url=").append(System.getenv("BUILD_URL"));
-            data.append(";git.branch").append(System.getenv("GIT_BRANCH"));
+            data.append(";git.branch=").append(System.getenv("GIT_BRANCH"));
         }
 		
 		try {

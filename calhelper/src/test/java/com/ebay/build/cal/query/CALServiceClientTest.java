@@ -1,5 +1,6 @@
 package com.ebay.build.cal.query;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Calendar;
@@ -15,7 +16,7 @@ public class CALServiceClientTest {
 		CALServiceClient client = new CALServiceClient();
 		
 		Calendar cal = Calendar.getInstance();
-		cal.set(2013, 2, 1, 2, 0);
+		cal.set(2013, Calendar.MARCH, 13, 3, 0);
 		
 		GetPoolsRequest request = new GetPoolsRequest("raptor-build-trackingsql", cal.getTime());
 		//GetPoolsRequest request = new GetPoolsRequest("prod", cal.getTime());
@@ -23,7 +24,7 @@ public class CALServiceClientTest {
 		
 		System.out.println(response.getPools());
 			
-		assertTrue(response.getPools().size()>0);	
+		assertTrue(response.getPools().size()>0);
 	}
 	
 	@Test
@@ -31,9 +32,9 @@ public class CALServiceClientTest {
 		CALServiceClient client = new CALServiceClient();
 		
 		Calendar cal = Calendar.getInstance();
-		cal.set(2013, 2, 1, 2, 0);
+		cal.set(2013, Calendar.MARCH, 13, 3, 0);
 		
-		GetMachinesRequest request = new GetMachinesRequest("raptor-build-trackingsql", "caltestparent-mavenbuild", cal.getTime());
+		GetMachinesRequest request = new GetMachinesRequest("raptor-build-trackingsql", "mobileweb-mavenbuild", cal.getTime());
 		GetMachinesResponse response = (GetMachinesResponse) client.get(request);
 			
 		assertTrue(response.getMachines().size()>0);	
@@ -44,13 +45,11 @@ public class CALServiceClientTest {
 		CALServiceClient client = new CALServiceClient();
 		
 		Calendar cal = Calendar.getInstance();
-		cal.set(2013, 2, 1, 2, 0);
+		cal.set(2013, Calendar.MARCH, 13, 3, 0);
 		
-		GetRawLogRequest request = new GetRawLogRequest("raptor-build-trackingsql", "caltestparent-mavenbuild", "d-shc-00436998.corp.ebay.com", cal.getTime());
+		GetRawLogRequest request = new GetRawLogRequest("raptor-build-trackingsql", "mobileweb-mavenbuild", "10.109.34.138", cal.getTime());
 		GetRawLogResponse response = (GetRawLogResponse) client.get(request);
-		//System.out.println(response.getRawLog());
-		
-		assertTrue(response.getRawLog().length() > 0);
-		///assertTrue(response.getMachines().size()>0);	
+		assertNotNull(response);
+		assertNotNull(response.getRawLog());
 	}
 }

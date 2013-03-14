@@ -73,6 +73,10 @@ private void initializeCAL() {
     return timer.getTime();
   }
   
+  protected String getGitRepoUrl() {
+	  return this.gitRepoUrl == null ? "N/A" : this.gitRepoUrl;
+  }
+  
   private String getAppName() {
 		File gitMeta = GitUtil.findGitRepository(new File(event.getSession().getExecutionRootDirectory()));
 		String gitURL = "";
