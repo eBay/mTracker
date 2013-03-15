@@ -65,7 +65,6 @@ public class MavenLifecycleProfiler extends AbstractEventSpy {
 				OutputRenderer renderer = new OutputRenderer(sessionProfile, discoveryProfile);
 				renderer.renderToScreen();
 				//renderer.renderToJSON();
-				System.out.println(session);
 			} else if (executionEvent.getType() == ExecutionEvent.Type.ProjectStarted) {
 				projectProfile = new ProjectProfile(context, executionEvent.getProject(),executionEvent);
 			} else if (executionEvent.getType() == ExecutionEvent.Type.ProjectSucceeded

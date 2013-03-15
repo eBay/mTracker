@@ -9,6 +9,7 @@ import org.apache.maven.execution.ExecutionEvent;
 import org.apache.maven.project.MavenProject;
 
 import com.ebay.build.cal.model.Project;
+import com.ebay.build.cal.processors.ProcessHelper;
 import com.ebay.build.profiler.util.Timer;
 import com.ebay.kernel.calwrapper.CalTransaction;
 
@@ -50,10 +51,10 @@ public class ProjectProfile extends Profile {
 				p.setName(projectName);
 				p.setPayload(projectId);
 				p.setStartTime(new Date(this.getTimer().getStartTime()));
-				p.setGroupId(projectGroupId);
-				p.setArtifactId(projectArtifactId);
-				p.setVersion(projectVersion);
-				p.setType(project.getPackaging());
+				
+				ProcessHelper.praseProjectPayload(projectId, p);
+
+				p.setPool(getSession().getPool());
 
 				getSession().getProjects().put(projectName, p);
 				getSession().setCurrentProject(p);

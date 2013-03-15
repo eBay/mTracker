@@ -6,6 +6,8 @@ import java.util.Date;
 import org.apache.maven.eventspy.EventSpy.Context;
 import org.apache.maven.execution.ExecutionEvent;
 
+import com.ebay.build.cal.processors.LoaderProcessor;
+import com.ebay.build.cal.processors.ProcessHelper;
 import com.ebay.build.profiler.util.Timer;
 import com.ebay.kernel.calwrapper.CalTransaction;
 
@@ -34,8 +36,8 @@ public class DiscoveryProfile extends Profile {
 			
 			if (this.isInJekins()) {
 				getSession().setEnvironment(transName);
-				getSession().setPayload(data);
 				getSession().setStartTime(new Date(this.getTimer().getStartTime()));
+				ProcessHelper.parseSessionPayLoad(data, getSession());
 			} else {
 				discoveryTransaction = calogger.startCALTransaction(transName, "Environment",  data);
 			}
@@ -80,6 +82,15 @@ public class DiscoveryProfile extends Profile {
 			if (this.isInJekins()) {
 				this.getSession().setDuration(this.getElapsedTime());
 				this.getSession().setStatus(status);
+				
+				LoaderProcessor processor = new LoaderProcessor();
+				try {
+					System.out.println("[INFO] Storing Session into DB...");
+					processor.process(getSession());
+					System.out.println("[INFO] Session store completed!");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			} else {
 				try {
 					System.out.println("Stopping CAL Service...");

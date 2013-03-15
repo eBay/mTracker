@@ -198,24 +198,10 @@ public class LineProcessor {
 			
 			// TODO: parsePayload here
 			project.setPayload(payload);
-			praseProjectPayload(payload, project);
+			ProcessHelper.praseProjectPayload(payload, project);
 			return true;
 		}
 		return false;
-	}
-	
-	private void praseProjectPayload(String payload, Project project) {
-		if (!StringUtils.isEmpty(payload)) {
-			String[] gav = payload.split(":");
-			if (gav != null) {
-				if (gav.length == 4) {
-					project.setGroupId(gav[0]);
-					project.setArtifactId(gav[1]);
-					project.setType(gav[2]);
-					project.setVersion(gav[3]);
-				}
-			}
-		}
 	}
 
 	protected boolean projectStart(String line, Session session) {
@@ -257,39 +243,12 @@ public class LineProcessor {
 			if ("0".equals(id)) {
 				session.setDuration(Long.parseLong(duration));
 				session.setStatus(status);
-				parseSessionPayLoad(payload, session);
+				ProcessHelper.parseSessionPayLoad(payload, session);
 				return true;
 			}
 		}
 		
 		return false;
-	}
-
-	// TODO parse all the properties
-	private void parseSessionPayLoad(String payload, Session session) {
-		session.setPayload(payload);
-		String[] properties = payload.split(";");
-		for (String prop : properties) {
-			String[] keyValue = prop.split("=");
-			if ("uname".equals(keyValue[0])) {
-				session.setUserName(keyValue[1]);
-			}
-			if ("maven.version".equals(keyValue[0])) {
-				session.setMavenVersion(keyValue[1]);
-			}
-			if ("java.version".equals(keyValue[0])) {
-				session.setJavaVersion(keyValue[1]);
-			}
-			if ("git.url".equals(keyValue[0])) {
-				session.setGitUrl(keyValue[1]);
-			}
-			if ("jenkins.url".equals(keyValue[0])) {
-				session.setJekinsUrl(keyValue[1]);
-			}
-			if ("git.branch".equals(keyValue[0])) {
-				session.setGitBranch(keyValue[1]);
-			}
-		}
 	}
 
 	protected boolean transactionStart(String line, Session session) {

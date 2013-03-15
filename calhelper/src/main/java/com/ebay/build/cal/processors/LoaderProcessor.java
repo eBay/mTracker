@@ -45,6 +45,8 @@ public class LoaderProcessor {
 					if (dbPlugin == null) {
 						int pluginDBId = pluginJDBCTemplate.create(plugin);
 						plugin.setId(pluginDBId);
+					} else {
+						plugin.setId(dbPlugin.getId());
 					}
 					rawJDBCTemplate.create(plugin, sessionID, projectID);
 				}
