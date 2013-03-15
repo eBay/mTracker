@@ -1,35 +1,43 @@
 package com.ebay.build.profiler.profile;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import org.apache.maven.eventspy.EventSpy.Context;
 import org.apache.maven.execution.ExecutionEvent;
 
-
+import com.ebay.build.cal.model.Phase;
+import com.ebay.build.cal.model.Project;
 import com.ebay.build.profiler.util.Timer;
 import com.ebay.kernel.calwrapper.CalTransaction;
 
 public class PhaseProfile extends Profile {
 
-	private String phase;
+	private String phaseName;
 	private List<MojoProfile> mojoProfiles;
 	
 	private CalTransaction phaseTransaction;
 	private ExecutionEvent event;
-
-	public PhaseProfile(String phase) {
-		this(phase, null);
-	}
 	
-	public PhaseProfile(String phase, ExecutionEvent event) {
-		super(new Timer());
-		this.phase = phase;
+	private Phase phase = new Phase();
+
+	public PhaseProfile(Context c, String p, ExecutionEvent event) {
+		super(new Timer(), event, c);
+		this.phaseName = p;
 		this.mojoProfiles = new ArrayList<MojoProfile>();
 		
 		this.event = event;
 		
 		if(calogger.isCalInitialized()) {
-			phaseTransaction = calogger.startCALTransaction(phase, "Phase", "");
+			if (isInJekins()) {
+				Project project = getSession().getCurrentProject();
+				phase.setName(phaseName);
+				phase.setStartTime(new Date(this.getTimer().getStartTime()));
+				project.getPhases().add(phase);
+			} else {
+				phaseTransaction = calogger.startCALTransaction(phaseName, "Phase", "");
+			}
 		}
 	}
 
@@ -38,7 +46,7 @@ public class PhaseProfile extends Profile {
 	}
 
 	public String getPhase() {
-		return phase;
+		return phaseName;
 	}
 
 	public List<MojoProfile> getMojoProfiles() {
@@ -47,15 +55,14 @@ public class PhaseProfile extends Profile {
 
 	@Override
 	public void stop() {
-		if(phaseTransaction != null) {
-			if(event.getSession().getResult().getExceptions().size() > 0) {
-				calogger.endCALTransaction(phaseTransaction,"1", event.getException());
-			} else {
-				calogger.endCALTransaction(phaseTransaction, "0");
+		super.stop();
+
+		if (calogger.isCalInitialized()) {
+			String status = endTransaction(phaseTransaction);
+			if (isInJekins()) {
+				phase.setDuration(this.getElapsedTime());
+				phase.setStatus(status);
 			}
 		}
-		
-		
-		super.stop();
 	}
 }

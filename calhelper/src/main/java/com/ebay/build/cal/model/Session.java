@@ -1,16 +1,15 @@
 package com.ebay.build.cal.model;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.sonatype.aether.util.StringUtils;
 
-public class Session {
+import com.ebay.build.cal.query.utils.DateUtils;
+
+public class Session extends TrackingModel {
 	private Pool pool;
 	
-	private Date startTime;
-	private long duration;
 	private String userName;
 	private String status;
 	private String mavenVersion;
@@ -25,24 +24,15 @@ public class Session {
 	
 	private Project currentProject;
 	
+	private String payload;
+	
 	public Pool getPool() {
 		return pool;
 	}
 	public void setPool(Pool pool) {
 		this.pool = pool;
 	}
-	public Date getStartTime() {
-		return startTime;
-	}
-	public void setStartTime(Date startTime) {
-		this.startTime = startTime;
-	}
-	public long getDuration() {
-		return duration;
-	}
-	public void setDuration(long d) {
-		this.duration = d;
-	}
+
 	public String getUserName() {
 		return userName;
 	}
@@ -115,5 +105,31 @@ public class Session {
 	}
 	public void setJekinsUrl(String jekinsUrl) {
 		this.jekinsUrl = jekinsUrl;
+	}
+	
+	public String toString() {
+		StringBuffer sBuffer = new StringBuffer();
+
+		appendLine(sBuffer, "SQLLog for " + getPool().getName() + "-MavenBuild:" + getPool().getMachine().getName());
+		appendLine(sBuffer, "Environment: raptor-build-tracking");
+		appendLine(sBuffer, "Start: " + DateUtils.getCALDateTimeString(getStartTime()));
+		
+		appendTransacionStart(sBuffer, 0, " Environment " + getEnvironment());
+		appendTransacionStart(sBuffer, 1, "  URL Session");
+		
+		for (Project project : getProjects().values()) {
+			appendLine(sBuffer, project.toString());
+		}
+		
+		appendTransacionEnd(sBuffer, 1, "URL Session", getStatus(), getDuration().toString(), getGoals());
+		appendTransacionEnd(sBuffer, 0, " Environment ", getEnvironment(), getStatus(), getDuration().toString(), getPayload());
+		return sBuffer.toString();
+	}
+	
+	private String getPayload() {
+		return this.payload;
+	}
+	public void setPayload(String payload) {
+		this.payload = payload;
 	}
 }

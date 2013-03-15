@@ -36,18 +36,18 @@ public class CALLoggerImpl implements CALLogger{
 	 * 
 	 * @param calConfig
 	 */
-	public boolean initialize(URL calConfig, String appName) {
+	public boolean initialize(URL calConfig, String appName, String machineName) {
 		
 		boolean isSuccess=true;
 		
 		if (calConfig == null){
 			throw new IllegalArgumentException("calConfig URL cannot be Null");
 		}
-		CalClientConfigBean calClientCfgBean = new CalClientConfigBean(null,false,calConfig);
+		CalClientConfigBean calClientCfgBean = new CalClientConfigBean(null, false, calConfig);
 		try {
 			String poolName = appName + "-MavenBuild";
 			calClientCfgBean.setPoolname(poolName);
-			calClientCfgBean.setMachineName(InetAddress.getLocalHost().getHostName());
+			calClientCfgBean.setMachineName(machineName);
 			System.out.println("[Raptor Build Tracking] PoolName: " + poolName + " Machine Name:" + InetAddress.getLocalHost().getHostName());
 		} catch (UnknownHostException e1) {
 			isSuccess=false;

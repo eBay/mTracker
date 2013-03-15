@@ -1,5 +1,6 @@
 package com.ebay.build.cal.query.utils;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -19,5 +20,14 @@ public class DateUtils {
 		
 		return cal;
 	}
-
+	
+	public static String getCALDateTimeString(Date date) {
+		SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+		return dateFormatter.format(date);
+	}
+	
+	public static String getCALTimeString(Date date) {
+		SimpleDateFormat dateFormatter = new SimpleDateFormat("HH:mm:ss.00");
+		return dateFormatter.format(date);
+	}
 }

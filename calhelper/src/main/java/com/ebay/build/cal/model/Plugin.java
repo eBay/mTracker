@@ -1,14 +1,10 @@
 package com.ebay.build.cal.model;
 
-import java.util.Date;
 
-public class Plugin {
+public class Plugin extends TrackingModel {
 	private String groupId;
 	private String artifactId;
 	private String version;
-	
-	private Date eventTime;
-	private long duration;
 	
 	private String status;
 	private String executionId;
@@ -17,6 +13,8 @@ public class Plugin {
 	private String pluginKey;
 	
 	private int id;
+	
+	private String payload;
 
 	public String getGroupId() {
 		return groupId;
@@ -40,22 +38,6 @@ public class Plugin {
 
 	public void setVersion(String version) {
 		this.version = version;
-	}
-
-	public Date getEventTime() {
-		return eventTime;
-	}
-
-	public void setEventTime(Date eventTime) {
-		this.eventTime = eventTime;
-	}
-
-	public long getDuration() {
-		return duration;
-	}
-
-	public void setDuration(long duration) {
-		this.duration = duration;
 	}
 
 	public String getStatus() {
@@ -96,5 +78,19 @@ public class Plugin {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getPayload() {
+		return payload;
+	}
+
+	public void setPayload(String payload) {
+		this.payload = payload;
+	}
+	
+	public String toString() {
+		StringBuffer sBuffer = new StringBuffer();
+		appendTransactionAtom(sBuffer, 4, "Plugin", getPluginKey(), this.getStatus(), getDuration().toString(), getPayload());
+		return sBuffer.toString();
 	}
 }

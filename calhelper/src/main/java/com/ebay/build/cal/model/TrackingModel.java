@@ -6,7 +6,7 @@ import com.ebay.build.cal.query.utils.DateUtils;
 
 public abstract class TrackingModel {
 	private Date startTime;
-	private Long duration;
+	private Long duration = 0L;
 	
 	
 	public String getAtomPrefix(int index, Date date) {
@@ -58,7 +58,7 @@ public abstract class TrackingModel {
 		for (String part : parts) {
 			sBuffer.append(part).append(" ");
 		}
-		sBuffer.append("\n");
+		//sBuffer.append("\n");
 	}
 
 	public Date getStartTime() {

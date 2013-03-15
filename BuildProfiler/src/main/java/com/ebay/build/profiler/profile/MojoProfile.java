@@ -1,8 +1,12 @@
 package com.ebay.build.profiler.profile;
 
+import java.util.Date;
+
+import org.apache.maven.eventspy.EventSpy.Context;
 import org.apache.maven.execution.ExecutionEvent;
 import org.apache.maven.plugin.MojoExecution;
 
+import com.ebay.build.cal.model.Plugin;
 import com.ebay.build.profiler.util.Timer;
 import com.ebay.kernel.calwrapper.CalTransaction;
 
@@ -28,13 +32,11 @@ public class MojoProfile extends Profile {
 	
 	private CalTransaction mojoTransaction;
 	private ExecutionEvent event;
-
-	public MojoProfile(MojoExecution mojoExecution) {
-		this(mojoExecution, null);
-	}
 	
-	public MojoProfile(MojoExecution mojoExecution, ExecutionEvent event) {
-		super(new Timer());
+	private Plugin plugin = new Plugin();
+
+	public MojoProfile(Context c, MojoExecution mojoExecution, ExecutionEvent event) {
+		super(new Timer(), event, c);
 		
 		this.mojoExecution = mojoExecution;
 		this.pluginGroupID = mojoExecution.getGroupId();
@@ -50,9 +52,22 @@ public class MojoProfile extends Profile {
 					&& mojoExecution.getPlugin().getGroupId().contains("ebay")) {
 				configuration = mojoExecution.getPlugin().getConfiguration().toString();
 			}
-			mojoTransaction = calogger.startCALTransaction(mojoExecution.getPlugin().getId(), 
-					"Plugin",  
-					" (" + pluginExecutionId + ")  " + configuration);
+			String payload = " (" + pluginExecutionId + ")  " + configuration;
+			
+			if (this.isInJekins()) {
+				plugin.setGroupId(pluginGroupID);
+				plugin.setArtifactId(pluginArtifactID);
+				plugin.setVersion(pluginVersion);
+				plugin.setPluginKey(mojoExecution.getPlugin().getId());
+				plugin.setStartTime(new Date(this.getTimer().getStartTime()));
+				plugin.setPayload(payload);
+				plugin.setExecutionId(pluginExecutionId);
+				getSession().getCurrentProject().getLastPhase().getPlugins().add(plugin);
+			} else {
+				mojoTransaction = calogger.startCALTransaction(mojoExecution.getPlugin().getId(), 
+						"Plugin",  
+						payload);
+			}
 		}
 	}
 
@@ -96,15 +111,15 @@ public class MojoProfile extends Profile {
 
 	@Override
 	public void stop() {
-		if(mojoTransaction != null) {
-			if(event.getSession().getResult().getExceptions().size() > 0) {
-				calogger.endCALTransaction(mojoTransaction,"FAILED", event.getException());
-			} else {
-				calogger.endCALTransaction(mojoTransaction, "0");
+		super.stop();
+		
+		if(calogger.isCalInitialized()) {
+			String status = this.endTransaction(mojoTransaction);
+			
+			if (this.isInJekins()) {
+				plugin.setDuration(this.getElapsedTime());
+				plugin.setStatus(status);
 			}
 		}
-		
-		
-		super.stop();
 	}
 }

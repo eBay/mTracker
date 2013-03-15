@@ -1,10 +1,9 @@
 package com.ebay.build.cal.model;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-public class Project {
+public class Project extends TrackingModel {
 	private Pool pool;
 	
 	private String name;
@@ -13,9 +12,9 @@ public class Project {
 	private String type;
 	private String version;
 	
-	private Date startTime;
-	private long duration;
 	private String status;
+	
+	private String payload;
 	
 	private List<Phase> phases = new ArrayList<Phase>();
 	
@@ -38,18 +37,7 @@ public class Project {
 	public void setVersion(String version) {
 		this.version = version;
 	}
-	public Date getStartTime() {
-		return startTime;
-	}
-	public void setStartTime(Date startTime) {
-		this.startTime = startTime;
-	}
-	public long getDuration() {
-		return duration;
-	}
-	public void setDuration(long d) {
-		this.duration = d;
-	}
+	
 	public String getStatus() {
 		return status;
 	}
@@ -80,5 +68,25 @@ public class Project {
 	}
 	public void setType(String type) {
 		this.type = type;
+	}
+	public String getPayload() {
+		return payload;
+	}
+	public void setPayload(String payload) {
+		this.payload = payload;
+	}
+	
+	public String toString() {
+		StringBuffer sBuffer = new StringBuffer();
+
+		appendTransacionStart(sBuffer, 2, "Project", getName());
+		
+		for (Phase phase : getPhases()) {
+			appendLine(sBuffer, phase.toString());
+		}
+		
+		appendTransacionEnd(sBuffer, 2, "Project", getName(), getStatus(), getDuration().toString(), getPayload());
+		
+		return sBuffer.toString();
 	}
 }

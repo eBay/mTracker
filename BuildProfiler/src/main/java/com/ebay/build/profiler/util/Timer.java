@@ -19,6 +19,10 @@ public class Timer {
 	public long getTime() {
 		return elaspsedTime;
 	}
+	
+	public long getStartTime() {
+		return this.start;
+	}
 
 	private long elapsedTime() {
 		return System.currentTimeMillis() - start;

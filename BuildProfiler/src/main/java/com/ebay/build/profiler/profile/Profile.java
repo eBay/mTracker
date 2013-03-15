@@ -1,7 +1,9 @@
 package com.ebay.build.profiler.profile;
 
 import java.io.File;
+import java.net.InetAddress;
 import java.net.URL;
+import java.net.UnknownHostException;
 
 import org.apache.maven.eventspy.EventSpy.Context;
 import org.apache.maven.execution.ExecutionEvent;
@@ -9,8 +11,12 @@ import org.codehaus.plexus.DefaultPlexusContainer;
 import org.codehaus.plexus.component.repository.exception.ComponentLookupException;
 
 import com.ebay.build.cal.logging.CALLogger;
+import com.ebay.build.cal.model.Machine;
+import com.ebay.build.cal.model.Pool;
+import com.ebay.build.cal.model.Session;
 import com.ebay.build.profiler.util.GitUtil;
 import com.ebay.build.profiler.util.Timer;
+import com.ebay.kernel.calwrapper.CalTransaction;
 
 /**
  * @requiresDependencyResolution runtime
@@ -26,13 +32,16 @@ public class Profile {
   protected ExecutionEvent event;
   protected String gitRepoUrl;
   
+  private Context context;
+  
   protected Profile(Timer timer){
 	  this.timer = timer;
   }
   
-  protected Profile(Timer timer, ExecutionEvent event, Context context) {
+  protected Profile(Timer timer, ExecutionEvent event, Context c) {
     this.timer = timer; 
     this.event = event;
+    this.context = c;
     DefaultPlexusContainer container = (DefaultPlexusContainer) context.getData().get("plexus");
     
     if (calogger == null){
@@ -43,18 +52,39 @@ public class Profile {
     	}
     }
     
-    if (!calogger.isCalInitialized()){
+    if (isCALEnabled() && !calogger.isCalInitialized()) {
+    	System.out.println("[INFO] Initializing CAL...");
     	initializeCAL();
     }
   }
 
 private void initializeCAL() {
 	String poolName = getAppName();
+	String machineName = "N/A";
+	try {
+		machineName = InetAddress.getLocalHost().getHostName();
+	} catch (UnknownHostException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+
 	URL calConfig = getClass().getClassLoader().getResource("cal.properties");
-	calogger.initialize(calConfig, poolName);
+	calogger.initialize(calConfig, poolName, machineName);
+	
+	if (getSession().getPool() == null) {
+		Pool pool = new Pool();
+		pool.setName(poolName);
+		Machine machine = new Machine();
+		machine.setName(machineName);
+		pool.setMachine(machine);
+		getSession().setPool(pool);
+    }
 }
   
   protected boolean isCalInitialized(){
+	  if (!isCALEnabled()) {
+		  return false;
+	  }
 	  return calogger.isCalInitialized();
   }
     
@@ -71,6 +101,10 @@ private void initializeCAL() {
       return elapsedTime;
     }
     return timer.getTime();
+  }
+  
+  public Timer getTimer() {
+	  return this.timer;
   }
   
   protected String getGitRepoUrl() {
@@ -126,5 +160,43 @@ private void initializeCAL() {
 		}
 		
 		return appName;
+	}
+	
+	protected Session getSession() {
+		if (this.context != null) {
+			return (Session) this.context.getData().get(Session.class.toString());
+		}
+		return null;
+	}
+	
+	protected boolean isCALEnabled() {
+		String value = event.getSession().getSystemProperties().getProperty("cal.logging");
+		if (value == null) {
+			return true;
+		}
+		return !("off".equalsIgnoreCase(value) || "no".equalsIgnoreCase(value) || "false".equalsIgnoreCase(value));
+	}
+	
+	protected boolean isInJekins() {
+		return "CI".equalsIgnoreCase(context.getData().get("build.env").toString());
+	}
+	
+	protected String endTransaction(CalTransaction transaction) {
+		String status = "0";
+		Exception exception = null;
+		
+		if(event != null && event.getSession().getResult().getExceptions().size() > 0) {
+			status = "1";
+			exception = event.getException();
+		}
+		
+		if (!isInJekins() && transaction != null) {
+			if (exception != null) {
+				calogger.endCALTransaction(transaction, status, exception);
+			} else {
+				calogger.endCALTransaction(transaction, status);
+			}
+		}
+		return status;
 	}
 }

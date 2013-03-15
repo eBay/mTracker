@@ -173,10 +173,10 @@ public class LineProcessorTest {
 		assertEquals("maven-scm-build-info", phase.getPlugins().get(0).getArtifactId());
 		assertEquals("1.0.7", phase.getPlugins().get(0).getVersion());
 		assertEquals(98, phase.getPlugins().get(0).getDuration());
-		assertEquals(Calendar.MARCH, phase.getPlugins().get(0).getEventTime().getMonth());
-		assertEquals(1, phase.getPlugins().get(0).getEventTime().getDate());
-		assertEquals(41, phase.getPlugins().get(0).getEventTime().getMinutes());
-		assertEquals(40, phase.getPlugins().get(0).getEventTime().getSeconds());
+		assertEquals(Calendar.MARCH, phase.getPlugins().get(0).getStartTime().getMonth());
+		assertEquals(1, phase.getPlugins().get(0).getStartTime().getDate());
+		assertEquals(41, phase.getPlugins().get(0).getStartTime().getMinutes());
+		assertEquals(40, phase.getPlugins().get(0).getStartTime().getSeconds());
 	}
 	
 	
@@ -227,10 +227,10 @@ public class LineProcessorTest {
 		assertEquals("maven-source-plugin", phase.getPlugins().get(0).getArtifactId());
 		assertEquals("2.1.2.ebay", phase.getPlugins().get(0).getVersion());
 		assertEquals(149, phase.getPlugins().get(0).getDuration());
-		assertEquals(Calendar.MARCH, phase.getPlugins().get(0).getEventTime().getMonth());
-		assertEquals(6, phase.getPlugins().get(0).getEventTime().getDate());
-		assertEquals(41, phase.getPlugins().get(0).getEventTime().getMinutes());
-		assertEquals(23, phase.getPlugins().get(0).getEventTime().getSeconds());
+		assertEquals(Calendar.MARCH, phase.getPlugins().get(0).getStartTime().getMonth());
+		assertEquals(6, phase.getPlugins().get(0).getStartTime().getDate());
+		assertEquals(41, phase.getPlugins().get(0).getStartTime().getMinutes());
+		assertEquals(23, phase.getPlugins().get(0).getStartTime().getSeconds());
 	}
 	
 	@Test

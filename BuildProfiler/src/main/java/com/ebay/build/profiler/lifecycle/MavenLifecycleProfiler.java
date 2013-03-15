@@ -6,6 +6,7 @@ import javax.inject.Singleton;
 import org.apache.maven.eventspy.AbstractEventSpy;
 import org.apache.maven.execution.ExecutionEvent;
 
+import com.ebay.build.cal.model.Session;
 import com.ebay.build.profiler.profile.DiscoveryProfile;
 import com.ebay.build.profiler.profile.MojoProfile;
 import com.ebay.build.profiler.profile.PhaseProfile;
@@ -31,6 +32,8 @@ public class MavenLifecycleProfiler extends AbstractEventSpy {
 	private MojoProfile mojoProfile;
 	private Context context; 
 	
+	private Session session = new Session();
+	
 	@Override
 	public void init(Context context) throws Exception {
 		System.out.println( " __  __" );
@@ -40,6 +43,8 @@ public class MavenLifecycleProfiler extends AbstractEventSpy {
 		System.out.println( "" );
 
 		this.context = context;
+		
+		this.context.getData().put(session.getClass().toString(), session);
 	}
 
 	@Override
@@ -52,7 +57,7 @@ public class MavenLifecycleProfiler extends AbstractEventSpy {
 				discoveryProfile = new DiscoveryProfile(context, executionEvent);
 				
 			} else if (executionEvent.getType() == ExecutionEvent.Type.SessionStarted) {
-				sessionProfile = new SessionProfile(executionEvent);
+				sessionProfile = new SessionProfile(context, executionEvent);
 			} else if (executionEvent.getType() == ExecutionEvent.Type.SessionEnded) {
 				projectProfile.addPhaseProfile(phaseProfile);
 				sessionProfile.stop();
@@ -60,8 +65,9 @@ public class MavenLifecycleProfiler extends AbstractEventSpy {
 				OutputRenderer renderer = new OutputRenderer(sessionProfile, discoveryProfile);
 				renderer.renderToScreen();
 				//renderer.renderToJSON();
+				System.out.println(session);
 			} else if (executionEvent.getType() == ExecutionEvent.Type.ProjectStarted) {
-				projectProfile = new ProjectProfile(executionEvent.getProject(),executionEvent);
+				projectProfile = new ProjectProfile(context, executionEvent.getProject(),executionEvent);
 			} else if (executionEvent.getType() == ExecutionEvent.Type.ProjectSucceeded
 					|| executionEvent.getType() == ExecutionEvent.Type.ProjectFailed) {
 				phaseProfile.stop();
@@ -71,13 +77,13 @@ public class MavenLifecycleProfiler extends AbstractEventSpy {
 				String phase = executionEvent.getMojoExecution()
 						.getLifecyclePhase();
 				if (phaseProfile == null) {
-					phaseProfile = new PhaseProfile(phase,executionEvent);
+					phaseProfile = new PhaseProfile(context, phase,executionEvent);
 				} else if (!phaseProfile.getPhase().equals(phase)) {
 					phaseProfile.stop();
 					projectProfile.addPhaseProfile(phaseProfile);
-					phaseProfile = new PhaseProfile(phase,executionEvent);
+					phaseProfile = new PhaseProfile(context, phase,executionEvent);
 				}
-				mojoProfile = new MojoProfile(executionEvent.getMojoExecution(),executionEvent);
+				mojoProfile = new MojoProfile(context, executionEvent.getMojoExecution(),executionEvent);
 			} else if (executionEvent.getType() == ExecutionEvent.Type.MojoSucceeded
 					|| executionEvent.getType() == ExecutionEvent.Type.MojoFailed) {
 				mojoProfile.stop();

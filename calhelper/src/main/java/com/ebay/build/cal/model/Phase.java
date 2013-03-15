@@ -1,17 +1,13 @@
 package com.ebay.build.cal.model;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-public class Phase {
+public class Phase extends TrackingModel {
 	private String name;
 	
 	private List<Plugin> plugins =  new ArrayList<Plugin>();
 	
-	private Date startTime;
-	
-	private long duration;
 	private String status;
 
 	public String getName() {
@@ -30,27 +26,21 @@ public class Phase {
 		this.plugins = plugins;
 	}
 
-	public Date getStartTime() {
-		return startTime;
-	}
-
-	public void setStartTime(Date startTime) {
-		this.startTime = startTime;
-	}
-
-	public long getDuration() {
-		return duration;
-	}
-
-	public void setDuration(long duration) {
-		this.duration = duration;
-	}
-
 	public String getStatus() {
 		return status;
 	}
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	
+	public String toString() {
+		StringBuffer sBuffer = new StringBuffer();
+		appendTransacionStart(sBuffer, 3, "Phase", getName());
+		for (Plugin plugin : this.getPlugins()) {
+			appendLine(sBuffer, plugin.toString());
+		}
+		appendTransacionEnd(sBuffer, 3, "Phase", getName(), getStatus(), getDuration().toString());
+		return sBuffer.toString();
 	}
 }

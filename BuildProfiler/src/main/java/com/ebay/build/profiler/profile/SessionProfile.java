@@ -1,8 +1,10 @@
 package com.ebay.build.profiler.profile;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
+import org.apache.maven.eventspy.EventSpy.Context;
 import org.apache.maven.execution.ExecutionEvent;
 
 import com.ebay.build.profiler.util.Timer;
@@ -13,24 +15,23 @@ public class SessionProfile extends Profile {
 	private List<ProjectProfile> projectProfiles;
 	
 	private CalTransaction sesionTransaction;
-	private ExecutionEvent event;
 
-	public SessionProfile() {
-		this(null);
-	}
-
-	public SessionProfile(ExecutionEvent event) {
-		super(new Timer());
-				
+	public SessionProfile(Context c, ExecutionEvent event) {
+		super(new Timer(), event, c);
+		
 		this.projectProfiles = new ArrayList<ProjectProfile>();
-		this.event = event;
 		
 		if(calogger.isCalInitialized()) {
 			String goal = "";
 			if (event != null) {
 				goal = event.getSession().getGoals().toString();
 			}
-			sesionTransaction = calogger.startCALTransaction("Session" , goal);
+
+			if (isInJekins()) {
+				getSession().setGoals(goal);
+			} else {
+				sesionTransaction = calogger.startCALTransaction("Session" , goal);
+			}
 		}
 	}
 	
@@ -44,15 +45,10 @@ public class SessionProfile extends Profile {
 	
 	@Override
 	public void stop() {
-		if(sesionTransaction != null) {
-			if(event.getSession().getResult().getExceptions().size() > 0) {
-				calogger.endCALTransaction(sesionTransaction,"1", event.getException());
-			} else {
-				calogger.endCALTransaction(sesionTransaction, "0");
-			}
-		}
-		
-		
 		super.stop();
+		
+		if(calogger.isCalInitialized()) {
+			endTransaction(sesionTransaction);
+		}
 	}
 }

@@ -1,11 +1,14 @@
 package com.ebay.build.profiler.profile;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import org.apache.maven.eventspy.EventSpy.Context;
 import org.apache.maven.execution.ExecutionEvent;
 import org.apache.maven.project.MavenProject;
 
+import com.ebay.build.cal.model.Project;
 import com.ebay.build.profiler.util.Timer;
 import com.ebay.kernel.calwrapper.CalTransaction;
 
@@ -22,14 +25,14 @@ public class ProjectProfile extends Profile {
 	private String projectGroupId;
 	private String projectArtifactId;
 	private String projectVersion;
+	
+	private String projectName = "N/A";
+	private String projectId = "N/A";
+	
+	Project p = new Project();
 
-
-	public ProjectProfile(MavenProject project) {
-		this(project, null);
-	}
-
-	public ProjectProfile(MavenProject project, ExecutionEvent event) {
-		super(new Timer());
+	public ProjectProfile(Context c, MavenProject project, ExecutionEvent event) {
+		super(new Timer(), event, c);
 		this.project = project;
 		this.phaseProfiles = new ArrayList<PhaseProfile>();
 		this.projectGroupId = project.getGroupId();
@@ -37,18 +40,26 @@ public class ProjectProfile extends Profile {
 		this.projectVersion = project.getVersion();
 		this.event = event;
 		
-		String prjName = "NoProjectName";
-		String prjID = "NoProjectID";
-		
 		if (event != null) {
-			prjName = event.getProject().getName();
-			prjID = event.getProject().getId();
+			projectName = event.getProject().getName();
+			projectId = event.getProject().getId();
 		}
 		
 		if(calogger.isCalInitialized()) {
-			projectTransaction = calogger.startCALTransaction(prjName, 
-					"Project", 
-					prjID);
+			if (isInJekins()) {
+				p.setName(projectName);
+				p.setPayload(projectId);
+				p.setStartTime(new Date(this.getTimer().getStartTime()));
+				p.setGroupId(projectGroupId);
+				p.setArtifactId(projectArtifactId);
+				p.setVersion(projectVersion);
+				p.setType(project.getPackaging());
+
+				getSession().getProjects().put(projectName, p);
+				getSession().setCurrentProject(p);
+			} else {
+				projectTransaction = calogger.startCALTransaction(this.projectName, "Project", this.projectId);
+			}
 		}
 	}
 	
@@ -96,16 +107,15 @@ public class ProjectProfile extends Profile {
 
 	@Override
 	public void stop() {
-		if(projectTransaction != null) {
-			if(event != null && event.getSession().getResult().getExceptions().size() > 0) {
-				calogger.endCALTransaction(projectTransaction,"1", event.getException());
-			} else {
-				calogger.endCALTransaction(projectTransaction, "0");
+		super.stop();
+
+		if(calogger.isCalInitialized()) {
+			String status = endTransaction(projectTransaction);
+			
+			if (isInJekins()) {
+				p.setDuration(this.getElapsedTime());
+				p.setStatus(status);
 			}
 		}
-		
-		
-		super.stop();
 	}
-
 }

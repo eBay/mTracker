@@ -37,7 +37,7 @@ public class RawDataJDBCTemplate {
 				ps.setInt(2, sessionID);
 				ps.setInt(3, projectID);
 				ps.setLong(4, plugin.getDuration());
-				ps.setTimestamp(5, new java.sql.Timestamp(plugin.getEventTime().getTime()));
+				ps.setTimestamp(5, new java.sql.Timestamp(plugin.getStartTime().getTime()));
 
 				return ps;
 			}

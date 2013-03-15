@@ -12,7 +12,7 @@ public interface CALLogger {
 	 * 
 	 * @param calConfig
 	 */
-	public boolean initialize(URL calConfig, String appName);
+	public boolean initialize(URL calConfig, String appName, String machineName);
 	
 	/**
 	 * 

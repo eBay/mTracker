@@ -110,7 +110,7 @@ public class LineProcessor {
 			String name = found.get(2);
 			String status = found.get(3);
 			String duration = found.get(4);
-			//String payload = found.get(5);
+			String payload = found.get(5);
 			
 			Plugin plugin = new Plugin();
 			plugin.setPluginKey(name);
@@ -120,9 +120,9 @@ public class LineProcessor {
 			plugin.setVersion(gav[2]);
 			
 			plugin.setDuration(Long.parseLong(duration));
-			plugin.setEventTime(StringUtils.setTime(session.getStartTime(), timeString));
+			plugin.setStartTime(StringUtils.setTime(session.getStartTime(), timeString));
 			plugin.setStatus(status);
-			
+			plugin.setPayload(payload);
 			
 			Phase phase = session.getCurrentProject().getLastPhase();
 			phase.getPlugins().add(plugin);
@@ -197,6 +197,7 @@ public class LineProcessor {
 			project.setPool(session.getPool());
 			
 			// TODO: parsePayload here
+			project.setPayload(payload);
 			praseProjectPayload(payload, project);
 			return true;
 		}
@@ -266,6 +267,7 @@ public class LineProcessor {
 
 	// TODO parse all the properties
 	private void parseSessionPayLoad(String payload, Session session) {
+		session.setPayload(payload);
 		String[] properties = payload.split(";");
 		for (String prop : properties) {
 			String[] keyValue = prop.split("=");

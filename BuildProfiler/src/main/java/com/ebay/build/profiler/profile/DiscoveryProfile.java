@@ -1,6 +1,7 @@
 package com.ebay.build.profiler.profile;
 
 import java.net.UnknownHostException;
+import java.util.Date;
 
 import org.apache.maven.eventspy.EventSpy.Context;
 import org.apache.maven.execution.ExecutionEvent;
@@ -24,12 +25,24 @@ public class DiscoveryProfile extends Profile {
 
 	public DiscoveryProfile(Context context, ExecutionEvent event) {
 		super(new Timer(), event, context);
+		
+		String transName= getTransactionName(event);
+		context.getData().put("build.env", transName);
 	
 		if(calogger.isCalInitialized()) {
-			String transName= getTransactionName(event);
 			String data = populateData(event);
-			discoveryTransaction = calogger.startCALTransaction(transName, "Environment",  data);
+			
+			if (this.isInJekins()) {
+				getSession().setEnvironment(transName);
+				getSession().setPayload(data);
+				getSession().setStartTime(new Date(this.getTimer().getStartTime()));
+			} else {
+				discoveryTransaction = calogger.startCALTransaction(transName, "Environment",  data);
+			}
 		}
+		System.out.println("[INFO] CAL logging Enabled: " + this.isCALEnabled());
+		System.out.println("[INFO] Running From CI: " + this.isInJekins());
+		System.out.println("[INFO] Build Environment: " + context.getData().get("build.env"));
 	}
 	
 	private String populateData(ExecutionEvent event) {
@@ -56,6 +69,29 @@ public class DiscoveryProfile extends Profile {
 		return data.toString();
 	}
 
+	@Override
+	public void stop() {
+		
+		super.stop();
+		
+		if(calogger.isCalInitialized()) {
+			String status = endTransaction(discoveryTransaction);
+			
+			if (this.isInJekins()) {
+				this.getSession().setDuration(this.getElapsedTime());
+				this.getSession().setStatus(status);
+			} else {
+				try {
+					System.out.println("Stopping CAL Service...");
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				calogger.destroy();
+			}
+		}
+	}
+	
 	private String getTransactionName(ExecutionEvent event) {
 		String transName = event.getSession().getSystemProperties().getProperty("build.env");
 		if (null != transName) {
@@ -70,28 +106,4 @@ public class DiscoveryProfile extends Profile {
 		
 		return transName;
 	}
-
-	@Override
-	public void stop() {
-		
-		super.stop();
-		
-		if(calogger.isCalInitialized()) {
-			if(event != null && event.getSession().getResult().getExceptions().size() > 0) {
-				calogger.endCALTransaction(discoveryTransaction,"FAILED", event.getException());
-			} else {
-				calogger.endCALTransaction(discoveryTransaction, "0");
-			}
-		
-			try {
-				System.out.println("Stopping CAL Service...");
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			calogger.destroy();
-		}
-		
-	}
-
 }
