@@ -8,6 +8,7 @@ import org.apache.maven.execution.ExecutionEvent;
 
 import com.ebay.build.cal.processors.LoaderProcessor;
 import com.ebay.build.cal.processors.ProcessHelper;
+import com.ebay.build.cal.processors.SessionExporter;
 import com.ebay.build.profiler.util.Timer;
 import com.ebay.kernel.calwrapper.CalTransaction;
 
@@ -15,7 +16,6 @@ import com.ebay.kernel.calwrapper.CalTransaction;
 public class DiscoveryProfile extends Profile {
 	
 	private CalTransaction discoveryTransaction;
-	private ExecutionEvent event;
 	
 	public DiscoveryProfile() {
 		super(new Timer());
@@ -83,14 +83,8 @@ public class DiscoveryProfile extends Profile {
 				this.getSession().setDuration(this.getElapsedTime());
 				this.getSession().setStatus(status);
 				
-				LoaderProcessor processor = new LoaderProcessor();
-				try {
-					System.out.println("[INFO] Storing Session into DB...");
-					processor.process(getSession());
-					System.out.println("[INFO] Session store completed!");
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				exportSession();
+				
 			} else {
 				try {
 					System.out.println("Stopping CAL Service...");
@@ -101,6 +95,22 @@ public class DiscoveryProfile extends Profile {
 				calogger.destroy();
 			}
 		}
+	}
+	
+//	private void importToDB() {
+//		try {
+//			LoaderProcessor processor = new LoaderProcessor(event.getSession().getSystemProperties().getProperty("maven.home"));
+//			System.out.println("[INFO] Storing Session into DB...");
+//			processor.process(getSession());
+//			System.out.println("[INFO] Session store completed!");
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
+
+	private void exportSession() {
+		SessionExporter exporter = new SessionExporter();
+		exporter.process(this.getSession());
 	}
 	
 	private String getTransactionName(ExecutionEvent event) {

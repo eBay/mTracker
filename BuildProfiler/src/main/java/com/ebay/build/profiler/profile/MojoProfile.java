@@ -31,7 +31,6 @@ public class MojoProfile extends Profile {
 	private String pluginExecutionId;
 	
 	private CalTransaction mojoTransaction;
-	private ExecutionEvent event;
 	
 	private Plugin plugin = new Plugin();
 

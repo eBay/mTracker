@@ -18,7 +18,6 @@ public class PhaseProfile extends Profile {
 	private List<MojoProfile> mojoProfiles;
 	
 	private CalTransaction phaseTransaction;
-	private ExecutionEvent event;
 	
 	private Phase phase = new Phase();
 

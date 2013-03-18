@@ -163,7 +163,7 @@ public class LineProcessor {
 		if (found.size() == 3) {
 			//String id = found.get(0);
 			String timeString = found.get(1);
-			String name = found.get(2);
+			String name = found.get(2).trim();
 			
 			Phase phase = new Phase();
 			phase.setName(name);
@@ -212,7 +212,7 @@ public class LineProcessor {
 		if (found.size() == 3) {
 			String id = found.get(0);
 			String timeString = found.get(1);
-			String name= found.get(2);
+			String name= found.get(2).trim();
 			
 			Project project = session.getProjects().get(name);
 				

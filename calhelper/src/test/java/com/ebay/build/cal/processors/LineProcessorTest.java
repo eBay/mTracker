@@ -52,7 +52,7 @@ public class LineProcessorTest {
 		Session session = new Session();
 		assertTrue(processor.transactionEnd("0  T17:41:55.83	Environment	RIDE	0	17248	git_url: null;machine=D-SHC-00436998;uname=mmao;maven.version=Apache Maven 3.0.5 (r01de14724cdef164cd33c7c8c2fe155faf9602da; 2013-02-19 21:51:28+0800);java.version=1.6.0_38-b05", session));
 		
-		assertEquals(17248, session.getDuration());
+		assertEquals(17248, session.getDuration().longValue());
 		assertEquals("0", session.getStatus());
 		
 		assertEquals("mmao", session.getUserName());
@@ -84,7 +84,7 @@ public class LineProcessorTest {
 		assertTrue(processor.projectEnd(log, session));
 		
 		assertEquals("0", project.getStatus());
-		assertEquals(1134, project.getDuration());
+		assertEquals(1134, project.getDuration().longValue());
 		assertEquals("com.ebay.app.raptor", project.getGroupId());
 		assertEquals("CalTestParent", project.getArtifactId());
 		assertEquals("pom", project.getType());
@@ -110,7 +110,12 @@ public class LineProcessorTest {
 		line = "3        T17:41:39.99	Phase	validate	0	248";
 		assertTrue(processor.phaseEnd(line, session));
 		
-		assertEquals(248, project.getLastPhase().getDuration());
+		assertEquals(248, project.getLastPhase().getDuration().longValue());
+		assertEquals("0", project.getLastPhase().getStatus());
+		
+		line = "3       T16:26:13.00  Phase validate 0 268 ";
+		assertTrue(processor.phaseEnd(line, session));
+		assertEquals(268L, project.getLastPhase().getDuration().longValue());
 		assertEquals("0", project.getLastPhase().getStatus());
 	}
 	
@@ -130,7 +135,7 @@ public class LineProcessorTest {
 		assertEquals("dependency-version-validator", plugin.getArtifactId());
 		assertEquals("1.0.0", plugin.getVersion());
 		assertEquals("0", plugin.getStatus());
-		assertEquals(246, plugin.getDuration());
+		assertEquals(246, plugin.getDuration().longValue());
 		assertEquals("com.ebay.osgi.build:dependency-version-validator:1.0.0", plugin.getPluginKey());
 		
 		// TODO assert payload
@@ -157,22 +162,22 @@ public class LineProcessorTest {
 		
 		assertEquals("RIDE", sessions.get(0).getEnvironment());
 		assertEquals(3, sessions.get(0).getProjects().size());
-		assertEquals(1134, sessions.get(0).getProjects().get("Samples Parent").getDuration());
-		assertEquals(5086, sessions.get(0).getProjects().get("caltest").getDuration());
-		assertEquals(9970, sessions.get(0).getProjects().get("EBA For caltest").getDuration());
+		assertEquals(1134, sessions.get(0).getProjects().get("Samples Parent").getDuration().longValue());
+		assertEquals(5086, sessions.get(0).getProjects().get("caltest").getDuration().longValue());
+		assertEquals(9970, sessions.get(0).getProjects().get("EBA For caltest").getDuration().longValue());
 		
 		assertEquals(8, sessions.get(0).getProjects().get("Samples Parent").getPhases().size());
 		
 		Phase phase = sessions.get(0).getProjects().get("Samples Parent").getPhases().get(2);
 		assertEquals("generate-resources", phase.getName());
-		assertEquals(98, phase.getDuration());
+		assertEquals(98, phase.getDuration().longValue());
 		
 		assertEquals(1, phase.getPlugins().size());
 		
 		assertEquals("com.ebay.osgi.build", phase.getPlugins().get(0).getGroupId());
 		assertEquals("maven-scm-build-info", phase.getPlugins().get(0).getArtifactId());
 		assertEquals("1.0.7", phase.getPlugins().get(0).getVersion());
-		assertEquals(98, phase.getPlugins().get(0).getDuration());
+		assertEquals(98, phase.getPlugins().get(0).getDuration().longValue());
 		assertEquals(Calendar.MARCH, phase.getPlugins().get(0).getStartTime().getMonth());
 		assertEquals(1, phase.getPlugins().get(0).getStartTime().getDate());
 		assertEquals(41, phase.getPlugins().get(0).getStartTime().getMinutes());
@@ -202,31 +207,31 @@ public class LineProcessorTest {
 		
 		assertEquals("RIDE", sessions.get(0).getEnvironment());
 		assertEquals(3, sessions.get(0).getProjects().size());
-		assertEquals(1526, sessions.get(0).getProjects().get("Samples Parent").getDuration());
-		assertEquals(7693, sessions.get(0).getProjects().get("caltest").getDuration());
-		assertEquals(19533, sessions.get(0).getProjects().get("EBA For caltest").getDuration());
+		assertEquals(1526, sessions.get(0).getProjects().get("Samples Parent").getDuration().longValue());
+		assertEquals(7693, sessions.get(0).getProjects().get("caltest").getDuration().longValue());
+		assertEquals(19533, sessions.get(0).getProjects().get("EBA For caltest").getDuration().longValue());
 		
 		assertEquals("CalTestParent", sessions.get(0).getPool().getName());
 		assertEquals("CalTestParent", sessions.get(1).getPool().getName());
 		
 		assertEquals("DEV", sessions.get(1).getEnvironment());
 		assertEquals(3, sessions.get(1).getProjects().size());
-		assertEquals(1169, sessions.get(1).getProjects().get("Samples Parent").getDuration());
-		assertEquals(7188, sessions.get(1).getProjects().get("caltest").getDuration());
-		assertEquals(10583, sessions.get(1).getProjects().get("EBA For caltest").getDuration());
+		assertEquals(1169, sessions.get(1).getProjects().get("Samples Parent").getDuration().longValue());
+		assertEquals(7188, sessions.get(1).getProjects().get("caltest").getDuration().longValue());
+		assertEquals(10583, sessions.get(1).getProjects().get("EBA For caltest").getDuration().longValue());
 		
 		assertEquals(8, sessions.get(0).getProjects().get("Samples Parent").getPhases().size());
 		
 		Phase phase = sessions.get(1).getProjects().get("Samples Parent").getPhases().get(7);
 		assertEquals("package", phase.getName());
-		assertEquals(149, phase.getDuration());
+		assertEquals(149, phase.getDuration().longValue());
 		
 		assertEquals(1, phase.getPlugins().size());
 		
 		assertEquals("org.apache.maven.plugins", phase.getPlugins().get(0).getGroupId());
 		assertEquals("maven-source-plugin", phase.getPlugins().get(0).getArtifactId());
 		assertEquals("2.1.2.ebay", phase.getPlugins().get(0).getVersion());
-		assertEquals(149, phase.getPlugins().get(0).getDuration());
+		assertEquals(149, phase.getPlugins().get(0).getDuration().longValue());
 		assertEquals(Calendar.MARCH, phase.getPlugins().get(0).getStartTime().getMonth());
 		assertEquals(6, phase.getPlugins().get(0).getStartTime().getDate());
 		assertEquals(41, phase.getPlugins().get(0).getStartTime().getMinutes());

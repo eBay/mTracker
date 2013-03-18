@@ -1,7 +1,10 @@
 package com.ebay.build.cal.processors;
 
+import java.io.File;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import com.ebay.build.cal.dal.PluginJDBCTemplate;
 import com.ebay.build.cal.dal.ProjectJDBCTemplate;
@@ -14,7 +17,17 @@ import com.ebay.build.cal.model.Project;
 import com.ebay.build.cal.model.Session;
 
 public class LoaderProcessor {
-	private final ApplicationContext context = new ClassPathXmlApplicationContext("sprint-jdbc-config.xml");
+	private ApplicationContext context = null;
+	
+	public LoaderProcessor() {
+		context = new ClassPathXmlApplicationContext("sprint-jdbc-config.xml");
+	}
+	
+	public LoaderProcessor(String mavenHome) {
+		File conf = new File(mavenHome, "conf/spring-jdbc-config.xml");
+		System.out.println("[INFO] Loading raptor tracking db configure file... " + conf);
+		context = new FileSystemXmlApplicationContext(conf.toString());
+	}
 	
 	public void process(Session session) {
 		

@@ -16,8 +16,6 @@ import com.ebay.kernel.calwrapper.CalTransaction;
 public class ProjectProfile extends Profile {
 
 	private CalTransaction projectTransaction;
-	private ExecutionEvent event;
-	
 	private MavenProject project;
 	private List<PhaseProfile> phaseProfiles;
 	private String status;
@@ -39,8 +37,6 @@ public class ProjectProfile extends Profile {
 		this.projectGroupId = project.getGroupId();
 		this.projectArtifactId = project.getArtifactId();
 		this.projectVersion = project.getVersion();
-		this.event = event;
-		
 		if (event != null) {
 			projectName = event.getProject().getName();
 			projectId = event.getProject().getId();

@@ -78,5 +78,33 @@
       <version>5.1.23</version>
     </dependency>
   </dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.2.1</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<executable>java</executable>
+					<arguments>
+						<!-- argument>-Dmyproperty=myvalue</argument-->
+						<argument>-classpath</argument>
+						<!-- automatically creates the classpath using all project dependencies, 
+							also adding the project build directory -->
+						<classpath />
+						<argument>com.ebay.build.cal.processors.LogImporter</argument>
+					</arguments>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
   
 </project>

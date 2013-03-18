@@ -33,7 +33,11 @@ public class ProjectJDBCTemplate {
 					Connection connection) throws SQLException {
 				PreparedStatement ps = connection.prepareStatement(SQL,
 						new String[] { "id" });
-				ps.setString(1, project.getPool().getName());
+				String poolName = "N/A";
+				if (project.getPool() != null) {
+					poolName = project.getPool().getName();
+				}
+				ps.setString(1, poolName);
 				ps.setString(2, project.getName());
 				ps.setString(3, project.getGroupId());
 				ps.setString(4, project.getArtifactId());
