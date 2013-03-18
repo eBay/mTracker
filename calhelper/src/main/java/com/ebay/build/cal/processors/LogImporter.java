@@ -18,11 +18,16 @@ public class LogImporter {
 	public static void main(String[] args) {
 		LogImporter importer = new LogImporter();
 		//importer.process(new File("E:/bin/apache-maven-3.0.5-RaptorTimeTracking/raptor.build.tracking.logs"));
+		System.out.println("[INFO] Looking for log files in " + importer.genTargetFolder());
 		importer.process(importer.genTargetFolder());
 	}
 	
 	public void process(File targetFolder) {
-		for (File file : loadSessions(targetFolder)) {
+		File[] files = loadSessions(targetFolder);
+		if (files == null || files.length == 0) {
+			System.out.println("[INFO] Found 0 log files");
+		}
+		for (File file : files) {
 			System.out.println("[INFO] loading the file " + file);
 			BufferedReader br = null;
 			DataInputStream in = null;
