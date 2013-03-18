@@ -36,12 +36,7 @@ public class SessionExporter {
 	}
 
 	protected File genTargetFolder() {
-		String baseDir = System.getProperty("maven.home");
-		if (baseDir == null) {
-			baseDir = System.getProperty("user.dir");
-		}
-
-		File targetFolder = new File(baseDir, "raptor.build.tracking.logs");
+		File targetFolder = new File("/tmp", "raptor.build.tracking.logs");
 		if (!targetFolder.exists()) {
 			targetFolder.mkdirs();
 		}
