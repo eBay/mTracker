@@ -32,10 +32,10 @@ public class SessionExporterTest {
 	
 	//@Test
 	public void testGetSessionAsString() throws IOException {
-		SessionExporter exporter = new SessionExporter();
+		//SessionExporter exporter = new SessionExporter();
 		
-		String modelString = exporter.getModelAsString(getSession());
-		System.out.println(modelString);
+		//String modelString = exporter.getModelAsString(getSession());
+		//System.out.println(modelString);
 	}
 	
 	@Test
