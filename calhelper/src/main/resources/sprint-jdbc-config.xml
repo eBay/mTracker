@@ -5,6 +5,7 @@
     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd ">
 
    <!-- Initialization for data source -->
+   <!-- 
    <bean id="dataSource" 
       class="org.springframework.jdbc.datasource.DriverManagerDataSource">
       <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
@@ -12,7 +13,16 @@
       <property name="username" value="trackingadmin"/>
       <property name="password" value="trackingadmin"/>
    </bean>
-
+   -->
+   
+   <bean id="dataSource" 
+      class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+      <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+      <property name="url" value="jdbc:mysql://myfeature.vip.qa.ebay.com:3306/raptortracking"/>
+      <property name="username" value="raptortracking"/>
+      <property name="password" value="raptortracking"/>
+   </bean>
+   
    <bean id="sessionJDBCTemplate" 
       class="com.ebay.build.cal.dal.SessionJDBCTemplate">
       <property name="dataSource"  ref="dataSource" />    

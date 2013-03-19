@@ -11,9 +11,9 @@
 /*!40014 SET FOREIGN_KEY_CHECKS=0 */;
 
 -- Dumping database structure for trackingadmin
-DROP DATABASE IF EXISTS `trackingadmin`;
-CREATE DATABASE IF NOT EXISTS "trackingadmin" /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `trackingadmin`;
+DROP DATABASE IF EXISTS `raptortracking`;
+CREATE DATABASE IF NOT EXISTS "raptortracking" /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `raptortracking`;
 
 
 -- Dumping structure for table trackingadmin.RBT_PLUGIN
