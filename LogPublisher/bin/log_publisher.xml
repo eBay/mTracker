@@ -1,0 +1,16 @@
+<project name="raptor build tracking log publisher" default="publish">
+    
+	<property file="log_publisher.properties"/>
+	
+	<target name="download.new.version" if="${has.new.version}">
+		<mkdir dir="${lib.dir}"/>
+		<delete file="${log.publisher.name}-${current.version}.jar"/>
+		<get src="${remote.url}/${latest.jar}"
+		       dest="${lib.dir}/${latest.jar}"/>
+	</target>
+	
+	<target name="publish" depends="download.new.version">
+		<java jar="${lib.dir}/${latest.jar}" fork="true"/>
+	</target>
+	
+</project>
