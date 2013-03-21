@@ -1,16 +1,42 @@
-<project name="raptor build tracking log publisher" default="publish">
+<project name="raptor build tracking log publisher" default="publish" basedir=".">
     
-	<property file="log_publisher.properties"/>
+	<property name="maven.repo.baseurl" value="http://nxraptor.qa.ebay.com/content/repositories/releases/com/ebay/build/profiler/LogPublisher"/>
 	
-	<target name="download.new.version" if="${has.new.version}">
+	<property name="git.repo.baseurl" value="https://github.scm.corp.ebay.com/DevExTech/maven-time-tracking/raw/embededCal/LogPublisher/bin/"/>
+	
+	
+	<property name="lib.dir" value="${basedir}/lib"/>
+	<property name="logs.dir" value="${basedir}/logs"/>
+	
+	<property name="jar.prefix" value="LogPublisher"/>
+	<property name="jar.postfix" value="jar-with-dependencies.jar"/>
+	
+	<property name="current.jar.file" value="${jar.prefix}-${current.version}-${jar.postfix}"/>
+	<property name="latest.jar.file" value="${jar.prefix}-${latest.version}-${jar.postfix}"/>
+	
+	<property name="remote.jar.fullurl" value="${maven.repo.baseurl}/${latest.version}/${latest.jar.file}"/>
+	
+	<property name="key.name" value="LogPublisher-Jar-KEY"/>
+	<property name="remote.key.file" value="${git.repo.baseurl}/${key.name}"/>
+	
+	<condition property="uptodate">
+		<equals arg1="${current.version}" arg2="${latest.version}" casesensitive="false" trim="true"/>
+	</condition>
+
+	<target name="download" unless="${uptodate}">	   
 		<mkdir dir="${lib.dir}"/>
-		<delete file="${log.publisher.name}-${current.version}.jar"/>
-		<get src="${remote.url}/${latest.jar}"
-		       dest="${lib.dir}/${latest.jar}"/>
+		<mkdir dir="${logs.dir}"/>
+		<delete file="${lib.dir}/${current.jar.file}" failonerror="false"/>
+		<delete file="${lib.dir}/${key.name}" failonerror="false"/>
+		<get src="${remote.jar.fullurl}" dest="${lib.dir}/${latest.jar.file}"/>
+		<get src="${remote.key.file}" dest="${lib.dir}/${key.name}"/>
 	</target>
+
 	
-	<target name="publish" depends="download.new.version">
-		<java jar="${lib.dir}/${latest.jar}" fork="true"/>
+	<target name="publish" depends="download">
+		<java jar="${lib.dir}/${latest.jar.file}" fork="true">
+		    <arg value="${logs.dir}"/>
+		</java>
 	</target>
 	
 </project>

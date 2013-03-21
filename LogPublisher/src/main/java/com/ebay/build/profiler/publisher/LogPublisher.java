@@ -17,14 +17,8 @@ public class LogPublisher {
 	private final LoaderProcessor loaderProcessor = new LoaderProcessor();
 	private final LineProcessor pro = new LineProcessor();
 	
-	public static void main(String[] args) {
-		LogPublisher importer = new LogPublisher();
-		//importer.process(new File("E:/bin/apache-maven-3.0.5-RaptorTimeTracking/raptor.build.tracking.logs"));
-		System.out.println("[INFO] Looking for log files in " + importer.genTargetFolder());
-		importer.process(importer.genTargetFolder());
-	}
-	
 	public void process(File targetFolder) {
+		System.out.println("[INFO] Looking into target folder: " + targetFolder);
 		File[] files = loadSessions(targetFolder);
 		if (files == null || files.length == 0) {
 			System.out.println("[INFO] Found 0 log files");
@@ -86,13 +80,4 @@ public class LogPublisher {
 			}
 		});
 	}
-
-	protected File genTargetFolder() {
-		File targetFolder = new File("/tmp", "raptor.build.tracking.logs");
-		if (!targetFolder.exists()) {
-			targetFolder.mkdirs();
-		}
-		return targetFolder;
-	}
-
 }

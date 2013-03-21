@@ -4,9 +4,21 @@
 	<groupId>com.ebay.build.profiler</groupId>
 	<artifactId>LogPublisher</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>LogPublisher</name>
 	<url>http://maven.apache.org</url>
+	
+	<distributionManagement>
+  	<snapshotRepository>
+  		<id>snapshots</id>
+  		<url>http://nxraptor.qa.ebay.com/content/repositories/snapshots/</url>
+  	</snapshotRepository>
+	
+	<repository>
+  		<id>releases</id>
+  		<url>http://nxraptor.qa.ebay.com/content/repositories/releases/</url>
+  	</repository>
+  </distributionManagement>
 
 	<dependencies>
 		<dependency>
@@ -33,6 +45,13 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.23</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>1.4</version>
+		</dependency>
+		
 	</dependencies>
 
 
@@ -57,7 +76,7 @@
 						<!-- automatically creates the classpath using all project dependencies, 
 							also adding the project build directory -->
 						<classpath />
-						<argument>com.ebay.build.cal.processors.LogImporter</argument>
+						<argument>com.ebay.build.profiler.publisher.Main</argument>
 					</arguments>
 				</configuration>
 			</plugin>
@@ -67,7 +86,8 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>com.ebay.build.profiler.publisher.Main</mainClass>
+						<mainClass>com.ebay.build.profiler.publisher.Main</mainClass>						
+						
 						</manifest>
 					</archive>
 					<descriptorRefs>
@@ -76,8 +96,8 @@
 				</configuration>
 				<executions>
 					<execution>
-						<id>make-assembly</id> <!-- this is used for inheritance merges -->
-						<phase>package</phase> <!-- bind to the packaging phase -->
+						<id>make-assembly</id> 
+						<phase>package</phase> 
 						<goals>
 							<goal>single</goal>
 						</goals>
@@ -85,5 +105,6 @@
 				</executions>
 			</plugin>
 		</plugins>
+		
 	</build>
 </project>
