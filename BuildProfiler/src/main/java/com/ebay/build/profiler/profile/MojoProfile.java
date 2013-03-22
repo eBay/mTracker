@@ -45,7 +45,7 @@ public class MojoProfile extends Profile {
 		
 		this.event = event;
 		
-		if(calogger.isCalInitialized()) {
+		if(isCalInitialized()) {
 			String configuration = "";
 			if (mojoExecution.getPlugin().getConfiguration() != null 
 					&& mojoExecution.getPlugin().getGroupId().contains("ebay")) {
@@ -112,7 +112,7 @@ public class MojoProfile extends Profile {
 	public void stop() {
 		super.stop();
 		
-		if(calogger.isCalInitialized()) {
+		if(isCalInitialized()) {
 			String status = this.endTransaction(mojoTransaction);
 			
 			if (this.isInJekins()) {

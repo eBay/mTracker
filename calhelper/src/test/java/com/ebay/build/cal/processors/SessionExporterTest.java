@@ -1,9 +1,12 @@
 package com.ebay.build.cal.processors;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import org.junit.Test;
@@ -30,12 +33,9 @@ public class SessionExporterTest {
 		return sessions.get(0);
 	}
 	
-	//@Test
+	@Test
 	public void testGetSessionAsString() throws IOException {
-		//SessionExporter exporter = new SessionExporter();
-		
-		//String modelString = exporter.getModelAsString(getSession());
-		//System.out.println(modelString);
+		assertTrue(getSession().toString().contains("4         A17:41:55.00  Plugin org.apache.maven.plugins:maven-install-plugin:2.4 0 60 (default-install) "));
 	}
 	
 	@Test
@@ -46,10 +46,12 @@ public class SessionExporterTest {
 		plugin.setVersion("1.0.0");
 		plugin.setDuration(123L);
 		plugin.setStatus("0");
-		plugin.setStartTime(new Date());
 		
-		System.out.println("====");
-		System.out.println(plugin.toString());
-		System.out.println("====");
+		Calendar cal = Calendar.getInstance();
+		cal.set(2013, Calendar.MARCH, 13, 3, 0, 40);
+
+		plugin.setStartTime(cal.getTime());
+		
+		assertEquals("4         A03:00:40.00  Plugin null 0 123 null ", plugin.toString());
 	}
 }

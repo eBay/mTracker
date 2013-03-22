@@ -21,7 +21,7 @@ public class SessionProfile extends Profile {
 		
 		this.projectProfiles = new ArrayList<ProjectProfile>();
 		
-		if(calogger.isCalInitialized()) {
+		if(isCalInitialized()) {
 			String goal = "";
 			if (event != null) {
 				goal = event.getSession().getGoals().toString();
@@ -47,7 +47,7 @@ public class SessionProfile extends Profile {
 	public void stop() {
 		super.stop();
 		
-		if(calogger.isCalInitialized()) {
+		if(isCalInitialized()) {
 			endTransaction(sesionTransaction);
 		}
 	}

@@ -42,19 +42,22 @@ public class Profile {
     this.timer = timer; 
     this.event = event;
     this.context = c;
-    DefaultPlexusContainer container = (DefaultPlexusContainer) context.getData().get("plexus");
     
-    if (calogger == null){
-        try {
-    		calogger = container.lookup(CALLogger.class);
-    	} catch (ComponentLookupException e) {
-    		e.printStackTrace();
+    if (context != null) {
+    	DefaultPlexusContainer container = (DefaultPlexusContainer) context.getData().get("plexus");
+
+    	if (calogger == null) {
+    		try {
+    			calogger = container.lookup(CALLogger.class);
+    		} catch (ComponentLookupException e) {
+    			e.printStackTrace();
+    		}
     	}
-    }
-    
-    if (isCALEnabled() && !calogger.isCalInitialized()) {
-    	System.out.println("[INFO] Initializing CAL...");
-    	initializeCAL();
+
+    	if (isCALEnabled() && !calogger.isCalInitialized()) {
+    		System.out.println("[INFO] Initializing CAL...");
+    		initializeCAL();
+    	}
     }
   }
 
@@ -85,7 +88,7 @@ private void initializeCAL() {
 	  if (!isCALEnabled()) {
 		  return false;
 	  }
-	  return calogger.isCalInitialized();
+	  return calogger != null && calogger.isCalInitialized();
   }
     
   public void stop() {
@@ -170,7 +173,7 @@ private void initializeCAL() {
 	}
 	
 	protected boolean isCALEnabled() {
-		String value = event.getSession().getSystemProperties().getProperty("cal.logging");
+		String value = System.getProperty("cal.logging");
 		if (value == null) {
 			return true;
 		}

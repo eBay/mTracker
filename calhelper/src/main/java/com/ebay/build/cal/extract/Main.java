@@ -17,7 +17,6 @@ import com.ebay.build.cal.query.GetPoolsResponse;
 import com.ebay.build.cal.query.GetRawLogRequest;
 import com.ebay.build.cal.query.GetRawLogResponse;
 import com.ebay.build.cal.query.common.CALServiceException;
-import com.ebay.build.cal.query.utils.DateUtils;
 
 public class Main {
 	private final String RAPTOR_BUILD_CAL_ENV = "raptor-build-trackingsql";

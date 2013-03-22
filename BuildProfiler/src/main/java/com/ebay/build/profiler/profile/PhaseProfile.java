@@ -28,7 +28,7 @@ public class PhaseProfile extends Profile {
 		
 		this.event = event;
 		
-		if(calogger.isCalInitialized()) {
+		if(isCalInitialized()) {
 			if (isInJekins()) {
 				Project project = getSession().getCurrentProject();
 				phase.setName(phaseName);
@@ -56,7 +56,7 @@ public class PhaseProfile extends Profile {
 	public void stop() {
 		super.stop();
 
-		if (calogger.isCalInitialized()) {
+		if (isCalInitialized()) {
 			String status = endTransaction(phaseTransaction);
 			if (isInJekins()) {
 				phase.setDuration(this.getElapsedTime());

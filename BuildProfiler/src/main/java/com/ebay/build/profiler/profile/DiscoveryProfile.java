@@ -6,7 +6,6 @@ import java.util.Date;
 import org.apache.maven.eventspy.EventSpy.Context;
 import org.apache.maven.execution.ExecutionEvent;
 
-import com.ebay.build.cal.processors.LoaderProcessor;
 import com.ebay.build.cal.processors.ProcessHelper;
 import com.ebay.build.cal.processors.SessionExporter;
 import com.ebay.build.profiler.util.Timer;
@@ -31,7 +30,7 @@ public class DiscoveryProfile extends Profile {
 		String transName= getTransactionName(event);
 		context.getData().put("build.env", transName);
 	
-		if(calogger.isCalInitialized()) {
+		if(isCalInitialized()) {
 			String data = populateData(event);
 			
 			if (this.isInJekins()) {
@@ -76,7 +75,7 @@ public class DiscoveryProfile extends Profile {
 		
 		super.stop();
 		
-		if(calogger.isCalInitialized()) {
+		if(isCalInitialized()) {
 			String status = endTransaction(discoveryTransaction);
 			
 			if (this.isInJekins()) {

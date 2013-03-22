@@ -32,8 +32,6 @@ public class MobileWebTest {
 		
 		assertEquals("MobileWeb", sessions.get(0).getPool().getName());
 		
-		System.out.println(sessions.get(0).getProjects().keySet());
-		
 		assertEquals("MobileWeb", sessions.get(0).getProjects().get("Samples Parent").getPool().getName());
 		
 		assertNotNull(sessions.get(0).getProjects().get("mweb"));

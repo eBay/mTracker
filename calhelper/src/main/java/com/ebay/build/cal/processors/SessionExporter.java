@@ -16,7 +16,6 @@ public class SessionExporter {
 		try {
 			fileWriter = new FileWriter(targetFile);
 			fileWriter.write(session.toString());
-			fileWriter.close();
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		} finally {

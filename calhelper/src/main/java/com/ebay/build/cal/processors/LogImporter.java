@@ -11,6 +11,8 @@ import java.util.List;
 
 import com.ebay.build.cal.model.Session;
 
+@Deprecated // This class is moved to another project LogPublisher 
+
 public class LogImporter {
 	private final LoaderProcessor loaderProcessor = new LoaderProcessor();
 	private final LineProcessor pro = new LineProcessor();

@@ -42,7 +42,7 @@ public class ProjectProfile extends Profile {
 			projectId = event.getProject().getId();
 		}
 		
-		if(calogger.isCalInitialized()) {
+		if(isCalInitialized()) {
 			if (isInJekins()) {
 				p.setName(projectName);
 				p.setPayload(projectId);
@@ -106,7 +106,7 @@ public class ProjectProfile extends Profile {
 	public void stop() {
 		super.stop();
 
-		if(calogger.isCalInitialized()) {
+		if(isCalInitialized()) {
 			String status = endTransaction(projectTransaction);
 			
 			if (isInJekins()) {
