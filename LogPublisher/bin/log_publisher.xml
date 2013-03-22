@@ -23,7 +23,7 @@
 		<equals arg1="${current.version}" arg2="${latest.version}" casesensitive="false" trim="true"/>
 	</condition>
 
-	<target name="download" unless="${uptodate}">	   
+	<target name="download" unless="uptodate">		
 		<mkdir dir="${lib.dir}"/>
 		<mkdir dir="${logs.dir}"/>
 		<delete file="${lib.dir}/${current.jar.file}" failonerror="false"/>
