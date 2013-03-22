@@ -4,7 +4,7 @@
 	<groupId>com.ebay.build.profiler</groupId>
 	<artifactId>LogPublisher</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0.1</version>
+	<version>1.0.2</version>
 	<name>LogPublisher</name>
 	<url>http://maven.apache.org</url>
 	
@@ -32,18 +32,6 @@
 			<groupId>com.ebay.build.cal</groupId>
 			<artifactId>calhelper</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-jdbc</artifactId>
-			<version>3.1.3.RELEASE</version>
-		</dependency>
-
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.23</version>
 		</dependency>
 		
 	</dependencies>

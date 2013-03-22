@@ -5,19 +5,19 @@ import java.io.File;
 public class Main {
 	
 	public static void main(String[] args) {
-		String baseDir = null;
+		String logDir = null;
 		if (args != null && args.length == 1) {
-			 baseDir = args[0];
+			 logDir = args[0];
 		}
 		LogPublisher publisher = new LogPublisher();
-		publisher.process(genTargetFolder(baseDir));
+		publisher.process(genTargetFolder(logDir));
 	}
 	
-	private static File genTargetFolder(String baseDir) {
-		if (baseDir == null) {
-			baseDir = "/tmp";
+	private static File genTargetFolder(String logDir) {
+		if (logDir == null) {
+			logDir = "/tmp/raptor.build.tracking/logs";
 		}
-		File targetFolder = new File(baseDir, "raptor.build.tracking/logs");
+		File targetFolder = new File(logDir);
 		if (!targetFolder.exists()) {
 			targetFolder.mkdirs();
 		}
