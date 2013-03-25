@@ -20,18 +20,18 @@ public class SessionProfile extends Profile {
 		super(new Timer(), event, c);
 		
 		this.projectProfiles = new ArrayList<ProjectProfile>();
+
+		String goal = "";
+		if (event != null) {
+			goal = event.getSession().getGoals().toString();
+		}
+
+		if (isInJekins()) {
+			getSession().setGoals(goal);
+		}
 		
 		if(isCalInitialized()) {
-			String goal = "";
-			if (event != null) {
-				goal = event.getSession().getGoals().toString();
-			}
-
-			if (isInJekins()) {
-				getSession().setGoals(goal);
-			} else {
-				sesionTransaction = calogger.startCALTransaction("Session" , goal);
-			}
+			sesionTransaction = calogger.startCALTransaction("Session" , goal);
 		}
 	}
 	
@@ -46,9 +46,7 @@ public class SessionProfile extends Profile {
 	@Override
 	public void stop() {
 		super.stop();
-		
-		if(isCalInitialized()) {
-			endTransaction(sesionTransaction);
-		}
+
+		endTransaction(sesionTransaction);
 	}
 }

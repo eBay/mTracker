@@ -41,22 +41,22 @@ public class ProjectProfile extends Profile {
 			projectName = event.getProject().getName();
 			projectId = event.getProject().getId();
 		}
+
+		if (isInJekins()) {
+			p.setName(projectName);
+			p.setPayload(projectId);
+			p.setStartTime(new Date(this.getTimer().getStartTime()));
+			
+			ProcessHelper.praseProjectPayload(projectId, p);
+
+			p.setPool(getSession().getPool());
+
+			getSession().getProjects().put(projectName, p);
+			getSession().setCurrentProject(p);
+		}
 		
 		if(isCalInitialized()) {
-			if (isInJekins()) {
-				p.setName(projectName);
-				p.setPayload(projectId);
-				p.setStartTime(new Date(this.getTimer().getStartTime()));
-				
-				ProcessHelper.praseProjectPayload(projectId, p);
-
-				p.setPool(getSession().getPool());
-
-				getSession().getProjects().put(projectName, p);
-				getSession().setCurrentProject(p);
-			} else {
-				projectTransaction = calogger.startCALTransaction(this.projectName, "Project", this.projectId);
-			}
+			projectTransaction = calogger.startCALTransaction(this.projectName, "Project", this.projectId);
 		}
 	}
 	
@@ -106,13 +106,11 @@ public class ProjectProfile extends Profile {
 	public void stop() {
 		super.stop();
 
-		if(isCalInitialized()) {
-			String status = endTransaction(projectTransaction);
-			
-			if (isInJekins()) {
-				p.setDuration(this.getElapsedTime());
-				p.setStatus(status);
-			}
+		String status = endTransaction(projectTransaction);
+		
+		if (isInJekins()) {
+			p.setDuration(this.getElapsedTime());
+			p.setStatus(status);
 		}
 	}
 }

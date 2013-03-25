@@ -11,6 +11,7 @@
 	<property name="jar.prefix" value="LogPublisher"/>
 	<property name="jar.postfix" value="jar-with-dependencies.jar"/>
 	
+	<property name="key.name" value="LogPublisher-Jar-KEY"/>
 	
 	<target name="init">
 		<loadresource property="remote.version" failonerror="false">
@@ -29,8 +30,6 @@
 		<property name="latest.jar.file" value="${jar.prefix}-${remote.version}-${jar.postfix}"/>
 		
 		<property name="remote.jar.fullurl" value="${maven.repo.baseurl}/${remote.version}/${latest.jar.file}"/>
-		
-		<property name="key.name" value="LogPublisher-Jar-KEY"/>
 		<property name="remote.key.file" value="${git.repo.baseurl}/${key.name}"/>
 		
 	</target>

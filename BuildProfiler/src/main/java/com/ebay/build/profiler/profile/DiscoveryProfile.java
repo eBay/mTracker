@@ -29,18 +29,19 @@ public class DiscoveryProfile extends Profile {
 		
 		String transName= getTransactionName(event);
 		context.getData().put("build.env", transName);
+		
+		String data = populateData(event);
+		
+		if (this.isInJekins()) {
+			getSession().setEnvironment(transName);
+			getSession().setStartTime(new Date(this.getTimer().getStartTime()));
+			ProcessHelper.parseSessionPayLoad(data, getSession());
+		}
 	
 		if(isCalInitialized()) {
-			String data = populateData(event);
-			
-			if (this.isInJekins()) {
-				getSession().setEnvironment(transName);
-				getSession().setStartTime(new Date(this.getTimer().getStartTime()));
-				ProcessHelper.parseSessionPayLoad(data, getSession());
-			} else {
-				discoveryTransaction = calogger.startCALTransaction(transName, "Environment",  data);
-			}
+			discoveryTransaction = calogger.startCALTransaction(transName, "Environment",  data);
 		}
+		
 		System.out.println("[INFO] CAL logging Enabled: " + this.isCALEnabled());
 		System.out.println("[INFO] Running From CI: " + this.isInJekins());
 		System.out.println("[INFO] Build Environment: " + context.getData().get("build.env"));
@@ -75,24 +76,24 @@ public class DiscoveryProfile extends Profile {
 		
 		super.stop();
 		
-		if(isCalInitialized()) {
-			String status = endTransaction(discoveryTransaction);
+		String status = endTransaction(discoveryTransaction);
+		
+		if (this.isInJekins()) {
+			this.getSession().setDuration(this.getElapsedTime());
+			this.getSession().setStatus(status);
 			
-			if (this.isInJekins()) {
-				this.getSession().setDuration(this.getElapsedTime());
-				this.getSession().setStatus(status);
-				
-				exportSession();
-				
-			} else {
-				try {
-					System.out.println("Stopping CAL Service...");
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				calogger.destroy();
+			exportSession();
+			return;
+		}
+		
+		if (isCalInitialized()) {
+			try {
+				System.out.println("Stopping CAL Service...");
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
+			calogger.destroy();
 		}
 	}
 	

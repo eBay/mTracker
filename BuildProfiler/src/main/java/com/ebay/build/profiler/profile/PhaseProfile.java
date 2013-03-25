@@ -28,15 +28,15 @@ public class PhaseProfile extends Profile {
 		
 		this.event = event;
 		
+		if (isInJekins()) {
+			Project project = getSession().getCurrentProject();
+			phase.setName(phaseName);
+			phase.setStartTime(new Date(this.getTimer().getStartTime()));
+			project.getPhases().add(phase);
+		}
+		
 		if(isCalInitialized()) {
-			if (isInJekins()) {
-				Project project = getSession().getCurrentProject();
-				phase.setName(phaseName);
-				phase.setStartTime(new Date(this.getTimer().getStartTime()));
-				project.getPhases().add(phase);
-			} else {
-				phaseTransaction = calogger.startCALTransaction(phaseName, "Phase", "");
-			}
+			phaseTransaction = calogger.startCALTransaction(phaseName, "Phase", "");
 		}
 	}
 
@@ -56,12 +56,11 @@ public class PhaseProfile extends Profile {
 	public void stop() {
 		super.stop();
 
-		if (isCalInitialized()) {
-			String status = endTransaction(phaseTransaction);
-			if (isInJekins()) {
-				phase.setDuration(this.getElapsedTime());
-				phase.setStatus(status);
-			}
+		String status = endTransaction(phaseTransaction);
+		
+		if (isInJekins()) {
+			phase.setDuration(this.getElapsedTime());
+			phase.setStatus(status);
 		}
 	}
 }

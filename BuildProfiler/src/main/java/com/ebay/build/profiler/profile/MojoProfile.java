@@ -45,28 +45,28 @@ public class MojoProfile extends Profile {
 		
 		this.event = event;
 		
+		String configuration = "";
+		if (mojoExecution.getPlugin().getConfiguration() != null 
+				&& mojoExecution.getPlugin().getGroupId().contains("ebay")) {
+			configuration = mojoExecution.getPlugin().getConfiguration().toString();
+		}
+		String payload = " (" + pluginExecutionId + ")  " + configuration;
+		
+		if (this.isInJekins()) {
+			plugin.setGroupId(pluginGroupID);
+			plugin.setArtifactId(pluginArtifactID);
+			plugin.setVersion(pluginVersion);
+			plugin.setPluginKey(mojoExecution.getPlugin().getId());
+			plugin.setStartTime(new Date(this.getTimer().getStartTime()));
+			plugin.setPayload(payload);
+			plugin.setExecutionId(pluginExecutionId);
+			getSession().getCurrentProject().getLastPhase().getPlugins().add(plugin);
+		}
+		
 		if(isCalInitialized()) {
-			String configuration = "";
-			if (mojoExecution.getPlugin().getConfiguration() != null 
-					&& mojoExecution.getPlugin().getGroupId().contains("ebay")) {
-				configuration = mojoExecution.getPlugin().getConfiguration().toString();
-			}
-			String payload = " (" + pluginExecutionId + ")  " + configuration;
-			
-			if (this.isInJekins()) {
-				plugin.setGroupId(pluginGroupID);
-				plugin.setArtifactId(pluginArtifactID);
-				plugin.setVersion(pluginVersion);
-				plugin.setPluginKey(mojoExecution.getPlugin().getId());
-				plugin.setStartTime(new Date(this.getTimer().getStartTime()));
-				plugin.setPayload(payload);
-				plugin.setExecutionId(pluginExecutionId);
-				getSession().getCurrentProject().getLastPhase().getPlugins().add(plugin);
-			} else {
-				mojoTransaction = calogger.startCALTransaction(mojoExecution.getPlugin().getId(), 
-						"Plugin",  
-						payload);
-			}
+			mojoTransaction = calogger.startCALTransaction(mojoExecution.getPlugin().getId(), 
+					"Plugin",  
+					payload);
 		}
 	}
 
@@ -112,13 +112,11 @@ public class MojoProfile extends Profile {
 	public void stop() {
 		super.stop();
 		
-		if(isCalInitialized()) {
-			String status = this.endTransaction(mojoTransaction);
-			
-			if (this.isInJekins()) {
-				plugin.setDuration(this.getElapsedTime());
-				plugin.setStatus(status);
-			}
+		String status = this.endTransaction(mojoTransaction);
+		
+		if (this.isInJekins()) {
+			plugin.setDuration(this.getElapsedTime());
+			plugin.setStatus(status);
 		}
 	}
 }

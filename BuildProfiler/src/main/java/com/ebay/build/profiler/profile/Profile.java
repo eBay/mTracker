@@ -45,6 +45,15 @@ public class Profile {
     
     if (context != null) {
     	DefaultPlexusContainer container = (DefaultPlexusContainer) context.getData().get("plexus");
+    	
+    	String poolName = getAppName();
+    	String machineName = "N/A";
+    	try {
+    		machineName = InetAddress.getLocalHost().getHostName();
+    	} catch (UnknownHostException e) {
+    		// TODO Auto-generated catch block
+    		e.printStackTrace();
+    	}
 
     	if (calogger == null) {
     		try {
@@ -56,32 +65,23 @@ public class Profile {
 
     	if (isCALEnabled() && !calogger.isCalInitialized()) {
     		System.out.println("[INFO] Initializing CAL...");
-    		initializeCAL();
+    		initializeCAL(poolName, machineName);
     	}
+    	
+        if (getSession().getPool() == null) {
+    		Pool pool = new Pool();
+    		pool.setName(poolName);
+    		Machine machine = new Machine();
+    		machine.setName(machineName);
+    		pool.setMachine(machine);
+    		getSession().setPool(pool);
+        }
     }
   }
 
-private void initializeCAL() {
-	String poolName = getAppName();
-	String machineName = "N/A";
-	try {
-		machineName = InetAddress.getLocalHost().getHostName();
-	} catch (UnknownHostException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-
+private void initializeCAL(String poolName, String machineName) {
 	URL calConfig = getClass().getClassLoader().getResource("cal.properties");
 	calogger.initialize(calConfig, poolName, machineName);
-	
-	if (getSession().getPool() == null) {
-		Pool pool = new Pool();
-		pool.setName(poolName);
-		Machine machine = new Machine();
-		machine.setName(machineName);
-		pool.setMachine(machine);
-		getSession().setPool(pool);
-    }
 }
   
   protected boolean isCalInitialized(){
@@ -173,6 +173,9 @@ private void initializeCAL() {
 	}
 	
 	protected boolean isCALEnabled() {
+		if (isInJekins()) {
+			return false;
+		}
 		String value = System.getProperty("cal.logging");
 		if (value == null) {
 			return true;
@@ -181,7 +184,7 @@ private void initializeCAL() {
 	}
 	
 	protected boolean isInJekins() {
-		return "CI".equalsIgnoreCase(context.getData().get("build.env").toString());
+		return "CI".equalsIgnoreCase(System.getProperty("build.env").toString());
 	}
 	
 	protected String endTransaction(CalTransaction transaction) {
@@ -193,7 +196,7 @@ private void initializeCAL() {
 			exception = event.getException();
 		}
 		
-		if (!isInJekins() && transaction != null) {
+		if (isCALEnabled() && transaction != null) {
 			if (exception != null) {
 				calogger.endCALTransaction(transaction, status, exception);
 			} else {

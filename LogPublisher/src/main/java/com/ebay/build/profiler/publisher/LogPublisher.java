@@ -7,17 +7,25 @@ import java.io.FileInputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.ebay.build.cal.model.Session;
 import com.ebay.build.cal.processors.LineProcessor;
 import com.ebay.build.cal.processors.LoaderProcessor;
+import com.ebay.build.cal.query.utils.StringUtils;
 
 public class LogPublisher {
 	private final LoaderProcessor loaderProcessor = new LoaderProcessor();
 	private final LineProcessor pro = new LineProcessor();
 	
 	public void process(File targetFolder) {
+		try {
+			System.out.println("[INFO] Cleaning up Done files older than two weeks in target folder: " + targetFolder);
+			diskClean(targetFolder);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 		System.out.println("[INFO] Looking into target folder: " + targetFolder);
 		File[] files = loadSessions(targetFolder);
 		if (files == null || files.length == 0) {
@@ -50,6 +58,12 @@ public class LogPublisher {
 			}
 
 			System.out.println("[INFO] Loading sessions from file " + file);
+			
+			if (!isACompleteSession(sBuffer.toString()))	{
+				System.out.println("[INFO] Skipped " + file + " is not a complete session.");
+				continue;
+			}
+			
 			List<Session> sessions = pro.process(sBuffer.toString());
 			System.out.println("[INFO] found " + sessions.size() + " sessions");
 			
@@ -60,6 +74,30 @@ public class LogPublisher {
 			}
 			
 			renameDoneFile(file);
+		}
+	}
+	
+	private boolean isACompleteSession(String payload) {
+		String tEndPattern = "(\\d+)\\s+T\\d{2}:\\d{2}:\\d{2}\\.\\d+\\s+Environment\\s+\\w+\\s+(\\d+)\\s+(\\d+)\\s+(.*)";
+		List<String> found = StringUtils.getFound(payload, tEndPattern, true);
+		return found.size() > 0; 
+	}
+	
+	private void diskClean(File targetFolder) {
+		File[] doneFiles = loadDoneFiles(targetFolder);
+		
+		List<File> filesToDelete = new ArrayList<File>();
+		for (File file : doneFiles) {
+			long diff = System.currentTimeMillis() - file.lastModified();
+			long interval = 14 * 24 * 60 * 60 * 1000;
+			
+			if (diff > interval) {
+				filesToDelete.add(file);
+			}
+		}
+		
+		for (File file : filesToDelete) {
+			file.delete();
 		}
 	}
 
@@ -74,10 +112,19 @@ public class LogPublisher {
 	}
 
 	public File[] loadSessions(File targetFolder) {
+		return loadFiles(targetFolder, ".log");
+	}
+	
+	public File[] loadDoneFiles(File targetFolder) {
+		return loadFiles(targetFolder, ".DONE");
+	}
+	
+	private File[] loadFiles(final File targetFolder, final String ext) {
 		return targetFolder.listFiles(new FilenameFilter() {
 			public boolean accept(File dir, String name) {
-				return name.toLowerCase().endsWith(".log");
+				return name.toLowerCase().endsWith(ext);
 			}
 		});
+		
 	}
 }

@@ -15,7 +15,7 @@ public class Main {
 	
 	private static File genTargetFolder(String logDir) {
 		if (logDir == null) {
-			logDir = "/tmp/raptor.build.tracking/logs";
+			logDir = "/var/lib/jenkins/raptor.build.tracking/logs";
 		}
 		File targetFolder = new File(logDir);
 		if (!targetFolder.exists()) {

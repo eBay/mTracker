@@ -10,7 +10,7 @@
 	<target name="deploy">
 	    
 		<copy file="${CALHelper.prj}/target/${CALHelper.prj}-${calhelper.version}.jar" 
-			  todir="${maven.lib}" 
+			  todir="${maven.lib}/ext" 
 			  verbose="true"/>
 			  
 		<copy file="${BuildProfiler.prj}/target/${BuildProfiler.prj}-${BuildProfiler.version}.jar" 
