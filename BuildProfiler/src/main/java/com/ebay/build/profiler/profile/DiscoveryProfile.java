@@ -62,7 +62,7 @@ public class DiscoveryProfile extends Profile {
 		data.append(";uname=").append(System.getProperty("user.name"));
 		
 		if (event != null) {
-			String mavenVersion = System.getProperty("maven.build.version");
+			String mavenVersion = System.getProperty("maven.version");
 			String javaVersion = System.getProperty("java.runtime.version");
 			data.append(";maven.version=").append(mavenVersion).append(";java.version=").append(javaVersion);
 		}	

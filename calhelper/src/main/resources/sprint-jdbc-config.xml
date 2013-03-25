@@ -14,13 +14,22 @@
       <property name="password" value="trackingadmin"/>
    </bean>
    -->
-   
+   <!-- 
    <bean id="dataSource" 
       class="org.springframework.jdbc.datasource.DriverManagerDataSource">
       <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
       <property name="url" value="jdbc:mysql://myfeature.vip.qa.ebay.com:3306/raptortracking"/>
       <property name="username" value="raptortracking"/>
       <property name="password" value="raptortracking"/>
+   </bean>
+    -->
+    
+    <bean id="dataSource" 
+      class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+      <property name="driverClassName" value="oracle.jdbc.OracleDriver"/>
+      <property name="url" value="jdbc:oracle:thin:@ppldb.vip.qa.ebay.com:1521:PPLDB"/>
+      <property name="username" value="raptor_build_prod"/>
+      <property name="password" value="raptor"/>
    </bean>
    
    <bean id="sessionJDBCTemplate" 
