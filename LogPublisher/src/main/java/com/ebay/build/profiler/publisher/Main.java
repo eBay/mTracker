@@ -14,18 +14,17 @@ public class Main {
 			 }
 		}
 		LogPublisher publisher = new LogPublisher();
-		publisher.process(genTargetFolder(logDir), retensionDays);
+		File targetFolder = getTargetFolder(logDir);
+		if (targetFolder.exists()) {
+			publisher.process(targetFolder, retensionDays);
+		}
 	}
 	
-	private static File genTargetFolder(String logDir) {
+	private static File getTargetFolder(String logDir) {
 		if (logDir == null) {
 			logDir = "/var/lib/jenkins/raptor.build.tracking/logs";
 		}
-		File targetFolder = new File(logDir);
-		if (!targetFolder.exists()) {
-			targetFolder.mkdirs();
-		}
-		return targetFolder;
+		return new File(logDir);
 	}
 }
 

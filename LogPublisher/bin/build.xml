@@ -38,7 +38,6 @@
 	<target name="download" unless="uptodate">		
 	    <echo message="New RaptorBuildTracking LogPublisher version found ${remote.version}"/>
 		<mkdir dir="${lib.dir}"/>
-		<mkdir dir="${logs.dir}"/>
 		<delete file="${lib.dir}/${current.jar.file}" failonerror="false"/>
 		<delete file="${lib.dir}/${key.name}" failonerror="false"/>
 		<get src="${remote.jar.fullurl}" dest="${lib.dir}/${latest.jar.file}" maxtime="120"/>
