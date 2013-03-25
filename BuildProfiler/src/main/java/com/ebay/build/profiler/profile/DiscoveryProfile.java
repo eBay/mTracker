@@ -27,10 +27,9 @@ public class DiscoveryProfile extends Profile {
 	public DiscoveryProfile(Context context, ExecutionEvent event) {
 		super(new Timer(), event, context);
 		
-		String transName= getTransactionName(event);
-		context.getData().put("build.env", transName);
+		String transName= getBuildEnvironment();
 		
-		String data = populateData(event);
+		String data = populateData();
 		
 		if (this.isInJekins()) {
 			getSession().setEnvironment(transName);
@@ -47,7 +46,7 @@ public class DiscoveryProfile extends Profile {
 		System.out.println("[INFO] Build Environment: " + context.getData().get("build.env"));
 	}
 	
-	private String populateData(ExecutionEvent event) {
+	private String populateData() {
 		StringBuilder data = new StringBuilder();
 		data.append("git.url=").append(this.getGitRepoUrl());
 		
@@ -63,7 +62,7 @@ public class DiscoveryProfile extends Profile {
 		data.append(";uname=").append(System.getProperty("user.name"));
 		
 		if (event != null) {
-			String mavenVersion = event.getSession().getSystemProperties().getProperty("maven.build.version");
+			String mavenVersion = System.getProperty("maven.build.version");
 			String javaVersion = System.getProperty("java.runtime.version");
 			data.append(";maven.version=").append(mavenVersion).append(";java.version=").append(javaVersion);
 		}	
@@ -111,20 +110,5 @@ public class DiscoveryProfile extends Profile {
 	private void exportSession() {
 		SessionExporter exporter = new SessionExporter();
 		exporter.process(this.getSession());
-	}
-	
-	private String getTransactionName(ExecutionEvent event) {
-		String transName = event.getSession().getSystemProperties().getProperty("build.env");
-		if (null != transName) {
-			return transName;
-		}
-		
-		if(System.getenv("BUILD_URL") != null) {
-			transName = "CI";
-		} else {
-			transName = "DEV";
-		}
-		
-		return transName;
 	}
 }

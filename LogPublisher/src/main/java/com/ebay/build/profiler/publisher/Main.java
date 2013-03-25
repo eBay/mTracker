@@ -6,11 +6,15 @@ public class Main {
 	
 	public static void main(String[] args) {
 		String logDir = null;
-		if (args != null && args.length == 1) {
+		int retensionDays = 14;
+		if (args != null && args.length > 0) {
 			 logDir = args[0];
+			 if (args.length == 2) {
+				 retensionDays = Integer.parseInt(args[1]);
+			 }
 		}
 		LogPublisher publisher = new LogPublisher();
-		publisher.process(genTargetFolder(logDir));
+		publisher.process(genTargetFolder(logDir), retensionDays);
 	}
 	
 	private static File genTargetFolder(String logDir) {

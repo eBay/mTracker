@@ -184,7 +184,7 @@ private void initializeCAL(String poolName, String machineName) {
 	}
 	
 	protected boolean isInJekins() {
-		return "CI".equalsIgnoreCase(System.getProperty("build.env").toString());
+		return "CI".equalsIgnoreCase(getBuildEnvironment());
 	}
 	
 	protected String endTransaction(CalTransaction transaction) {
@@ -205,4 +205,20 @@ private void initializeCAL(String poolName, String machineName) {
 		}
 		return status;
 	}
+	
+	protected String getBuildEnvironment() {
+		String transName = System.getProperty("build.env");
+		if (null != transName) {
+			return transName;
+		}
+		
+		if(System.getenv("BUILD_URL") != null) {
+			transName = "CI";
+		} else {
+			transName = "DEV";
+		}
+		
+		return transName;
+	}
+
 }

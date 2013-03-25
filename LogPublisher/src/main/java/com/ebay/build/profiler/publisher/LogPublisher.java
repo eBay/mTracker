@@ -19,10 +19,10 @@ public class LogPublisher {
 	private final LoaderProcessor loaderProcessor = new LoaderProcessor();
 	private final LineProcessor pro = new LineProcessor();
 	
-	public void process(File targetFolder) {
+	public void process(File targetFolder, int retensionDays) {
 		try {
 			System.out.println("[INFO] Cleaning up Done files older than two weeks in target folder: " + targetFolder);
-			diskClean(targetFolder);
+			diskClean(targetFolder, retensionDays);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -83,13 +83,13 @@ public class LogPublisher {
 		return found.size() > 0; 
 	}
 	
-	private void diskClean(File targetFolder) {
+	private void diskClean(File targetFolder, int retensionDays) {
 		File[] doneFiles = loadDoneFiles(targetFolder);
 		
 		List<File> filesToDelete = new ArrayList<File>();
 		for (File file : doneFiles) {
 			long diff = System.currentTimeMillis() - file.lastModified();
-			long interval = 14 * 24 * 60 * 60 * 1000;
+			long interval = retensionDays * 24 * 60 * 60 * 1000;
 			
 			if (diff > interval) {
 				filesToDelete.add(file);
