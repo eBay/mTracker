@@ -2,14 +2,14 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.ebay.build.cal</groupId>
   <artifactId>calhelper</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.1-M2_${maven.version}</version>
   <name>CAL Helper</name>
   <description>calhelper is used to initialize CAL service and provide utils methods for CAL API users.</description>
   
   <!-- Build Properties -->
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.version>3.0.4</maven.version>
+    <maven.version>3.0.5</maven.version>
   </properties>
   
    <repositories>

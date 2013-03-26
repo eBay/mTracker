@@ -12,6 +12,7 @@ public class SessionExporter {
 		File targetFile = new File(genTargetFolder(),
 				getSessionLogFileName(session));
 
+		System.out.println("[INFO] Dump build tracking session to " + targetFile);
 		FileWriter fileWriter = null;
 		try {
 			fileWriter = new FileWriter(targetFile);
