@@ -1,2 +1,4 @@
 target
 *.log
+LogPublisher/bin/lib
+LogPublisher/bin/logs

@@ -43,7 +43,7 @@ public class DiscoveryProfile extends Profile {
 		
 		System.out.println("[INFO] CAL logging Enabled: " + this.isCALEnabled());
 		System.out.println("[INFO] Running From CI: " + this.isInJekins());
-		System.out.println("[INFO] Build Environment: " + context.getData().get("build.env"));
+		System.out.println("[INFO] Build Environment: " + this.getBuildEnvironment());
 	}
 	
 	private String populateData() {
@@ -62,7 +62,7 @@ public class DiscoveryProfile extends Profile {
 		data.append(";uname=").append(System.getProperty("user.name"));
 		
 		if (event != null) {
-			String mavenVersion = System.getProperty("maven.version");
+			String mavenVersion = System.getProperty("maven.home");
 			String javaVersion = System.getProperty("java.runtime.version");
 			data.append(";maven.version=").append(mavenVersion).append(";java.version=").append(javaVersion);
 		}	

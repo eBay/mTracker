@@ -40,16 +40,15 @@
 		<mkdir dir="${lib.dir}"/>
 		<delete file="${lib.dir}/${current.jar.file}" failonerror="false"/>
 		<delete file="${lib.dir}/${key.name}" failonerror="false"/>
-		<get src="${remote.jar.fullurl}" dest="${lib.dir}/${latest.jar.file}" maxtime="120"/>
-		<get src="${remote.key.file}" dest="${lib.dir}/${key.name}" maxtime="120"/>
+		<get src="${remote.jar.fullurl}" dest="${lib.dir}/${latest.jar.file}" maxtime="180"/>
+		<get src="${remote.key.file}" dest="${lib.dir}/${key.name}" maxtime="30"/>
 	</target>
 
 	
 	<target name="publish" depends="init, download">
 	    <echo message="Raptor Build Tracking Log Publishing..."/>
 		<java jar="${lib.dir}/${latest.jar.file}" fork="true">
-		    <arg value="${logs.dir}"/>
-			<arg value="${retension.days}"/>
+		    <arg line="${logs.dir} ${retension.days}"/>			
 		</java>
 	</target>
 	
