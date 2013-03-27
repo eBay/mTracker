@@ -4,19 +4,31 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import org.sonatype.aether.util.StringUtils;
+
 import com.ebay.build.cal.model.Session;
 
 public class SessionExporter {
 
 	public void process(Session session) {
-		File targetFile = new File(genTargetFolder(),
-				getSessionLogFileName(session));
+		File targetFile = new File(genTargetFolder(), getSessionLogFileName(session));
 
 		System.out.println("[INFO] Dump build tracking session to " + targetFile);
+		
+		writeToFile(targetFile, session.toString());
+		
+		if (!StringUtils.isEmpty(session.getFullStackTrace())) {
+			File stackTraceFile = new File(genTargetFolder(), targetFile.getName() + ".stacktrace");
+			System.out.println("[INFO] Dump build tracking session stacktrace to " + stackTraceFile);
+			writeToFile(stackTraceFile, session.getFullStackTrace());
+		}
+	}
+	
+	private void writeToFile(File targetFile, String body) {
 		FileWriter fileWriter = null;
 		try {
 			fileWriter = new FileWriter(targetFile);
-			fileWriter.write(session.toString());
+			fileWriter.write(body);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		} finally {
@@ -27,8 +39,8 @@ public class SessionExporter {
 			}
 		}
 	}
-
-	protected String getSessionLogFileName(Session session) {
+	
+	private String getSessionLogFileName(Session session) {
 		StringBuffer sBuffer = new StringBuffer();
 		sBuffer.append(session.getPool().getName()).append("--").append(session.getPool().getMachine().getName());
 		sBuffer.append("--").append(session.getStartTime().getTime()).append(".log");

@@ -1,7 +1,10 @@
 package com.ebay.build.profiler.profile;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.UnknownHostException;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.maven.eventspy.EventSpy.Context;
 import org.apache.maven.execution.ExecutionEvent;
@@ -13,6 +16,8 @@ import com.ebay.kernel.calwrapper.CalTransaction;
 
 
 public class DiscoveryProfile extends Profile {
+	
+	private static final String DELIMI = "----------";
 	
 	private CalTransaction discoveryTransaction;
 	
@@ -69,6 +74,40 @@ public class DiscoveryProfile extends Profile {
 		
 		return data.toString();
 	}
+	
+	private String exp2String(Throwable t) {
+		StringWriter sw = new StringWriter();
+		PrintWriter pw = new PrintWriter(sw);
+		t.printStackTrace(pw);
+		return sw.toString();
+	}
+	
+	private String getExceptionMessages() {
+		StringBuffer messageBuffer = new StringBuffer();
+		
+		List<Throwable> ts = this.event.getSession().getResult().getExceptions();
+		
+		for (int i = 0; i < ts.size(); i++) {
+			messageBuffer.append(ts.get(i).getMessage());
+			if (i != (ts.size() - 1)) {
+				messageBuffer.append(DELIMI);
+			}
+		}
+		return messageBuffer.toString();
+	}
+	
+	private String getFullStackTrace() {
+		StringBuffer stackTraceBuffer = new StringBuffer();
+		List<Throwable> ts = this.event.getSession().getResult().getExceptions();
+		
+		for (int i = 0; i < ts.size(); i++) {
+			stackTraceBuffer.append(exp2String(ts.get(i)));
+			if (i != (ts.size() - 1)) {
+				stackTraceBuffer.append(DELIMI);
+			}
+		}
+		return stackTraceBuffer.toString();
+	}
 
 	@Override
 	public void stop() {
@@ -80,6 +119,15 @@ public class DiscoveryProfile extends Profile {
 		if (this.isInJekins()) {
 			this.getSession().setDuration(this.getElapsedTime());
 			this.getSession().setStatus(status);
+			
+			if (this.event.getSession().getResult().hasExceptions()) {
+				try {
+					this.getSession().setExceptionMessage(this.getExceptionMessages());
+					this.getSession().setFullStackTrace(this.getFullStackTrace());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 			
 			exportSession();
 			return;

@@ -24,6 +24,9 @@ public class Session extends TrackingModel {
 	
 	private Project currentProject;
 	
+	private String exceptionMessage;
+	private String fullStackTrace;
+	
 	private String payload;
 	
 	public Pool getPool() {
@@ -123,6 +126,12 @@ public class Session extends TrackingModel {
 		
 		appendTransacionEnd(sBuffer, 1, "URL Session", getStatus(), getDuration().toString(), getGoals());
 		appendTransacionEnd(sBuffer, 0, " Environment ", getEnvironment(), getStatus(), getDuration().toString(), getPayload());
+		
+		if (!StringUtils.isEmpty(this.getExceptionMessage())) {
+			appendLine(sBuffer, "-----------------EXCEPTION MESSAGE-----------------");
+			appendLine(sBuffer, this.getExceptionMessage());
+			appendLine(sBuffer, "-----------------EXCEPTION MESSAGE-----------------");
+		}
 		return sBuffer.toString();
 	}
 	
@@ -131,5 +140,29 @@ public class Session extends TrackingModel {
 	}
 	public void setPayload(String payload) {
 		this.payload = payload;
+	}
+	public String getExceptionMessage() {
+		return exceptionMessage;
+	}
+	public void setExceptionMessage(String exceptionMessage) {
+		this.exceptionMessage = exceptionMessage;
+	}
+	
+	public void addException(String msg) {
+		String pMsg = getExceptionMessage();
+		if (pMsg != null) {
+			pMsg = pMsg + "\n" + msg;
+		} else {
+			pMsg = msg;
+		}
+		setExceptionMessage(pMsg);
+	}
+
+	public String getFullStackTrace() {
+		return fullStackTrace;
+	}
+	
+	public void setFullStackTrace(String fullStackTrace) {
+		this.fullStackTrace = fullStackTrace;
 	}
 }

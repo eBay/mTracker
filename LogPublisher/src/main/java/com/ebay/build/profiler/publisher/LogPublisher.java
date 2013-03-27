@@ -32,50 +32,69 @@ public class LogPublisher {
 		}
 		for (File file : files) {
 			System.out.println("[INFO] loading the file " + file);
-			BufferedReader br = null;
-			DataInputStream in = null;
-			StringBuffer sBuffer = new StringBuffer();
-			
-			try {
-				in = new DataInputStream(new FileInputStream(file));
-				br = new BufferedReader(new InputStreamReader(in));
-
-				String sCurrentLine = null;
-				
-				while ((sCurrentLine = br.readLine()) != null) {
-					sBuffer.append(sCurrentLine);
-					sBuffer.append("\n");
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			} finally {
-				try {
-					in.close();
-				} catch (IOException ex) {
-					ex.printStackTrace();
-				}
-			}
+			String content = readFile(file);
 
 			System.out.println("[INFO] Loading sessions from file " + file);
 			
-			if (!isACompleteSession(sBuffer.toString()))	{
+			if (!isACompleteSession(content))	{
 				System.out.println("[INFO] Skipped " + file + " is not a complete session.");
 				continue;
 			}
 			
-			List<Session> sessions = pro.process(sBuffer.toString());
+			List<Session> sessions = pro.process(content);
 			System.out.println("[INFO] found " + sessions.size() + " sessions");
 			
+			File stackTraceFile = null;
 			for (Session session : sessions) {
 				System.out.println("[INFO] Store Session -- " + session.getEnvironment() + " " + session.getPool().getName() + " " +session.getStartTime());
+				if (!StringUtils.isEmpty(session.getExceptionMessage())) {
+					stackTraceFile = loadFullStackTrace(file, session);
+				}
 				loaderProcessor.process(session);
 				System.out.println("[INFO] Store Session -- " + session.getEnvironment() + " " + session.getStartTime() + " DONE!");
 			}
 			
 			renameDoneFile(file);
+			
+			if (null != stackTraceFile) {
+				renameDoneFile(stackTraceFile);
+			}
 		}
 	}
 	
+	private String readFile(File file) {
+		BufferedReader br = null;
+		DataInputStream in = null;
+		StringBuffer sBuffer = new StringBuffer();
+
+		try {
+			in = new DataInputStream(new FileInputStream(file));
+			br = new BufferedReader(new InputStreamReader(in));
+
+			String sCurrentLine = null;
+
+			while ((sCurrentLine = br.readLine()) != null) {
+				sBuffer.append(sCurrentLine);
+				sBuffer.append("\n");
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				in.close();
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		}
+		return sBuffer.toString();
+	}
+	
+	private File loadFullStackTrace(File file, Session session) {
+		File stackTraceFile = new File(file.getParent(), file.getName() + ".stacktrace");
+		session.setFullStackTrace(readFile(stackTraceFile));
+		return stackTraceFile;
+	}
+
 	private boolean isACompleteSession(String payload) {
 		String tEndPattern = "(\\d+)\\s+T\\d{2}:\\d{2}:\\d{2}\\.\\d+\\s+Environment\\s+\\w+\\s+(\\d+)\\s+(\\d+)\\s+(.*)";
 		List<String> found = StringUtils.getFound(payload, tEndPattern, true);
@@ -101,6 +120,9 @@ public class LogPublisher {
 	}
 
 	private void renameDoneFile(File file) {
+		if (!file.exists()) {
+			return;
+		}
 		File dest = new File(file.getParent(), file.getName() + ".DONE");
 		boolean success = file.renameTo(dest);
 		if (success) {

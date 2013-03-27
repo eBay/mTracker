@@ -47,6 +47,7 @@
 	
 	<target name="publish" depends="init, download">
 	    <echo message="Raptor Build Tracking Log Publishing..."/>
+		<echo message="Running ${lib.dir}/${latest.jar.file}"/>
 		<java jar="${lib.dir}/${latest.jar.file}" fork="true">
 		    <arg line="${logs.dir} ${retension.days}"/>			
 		</java>

@@ -22,6 +22,9 @@ public class LineProcessor {
 		
 		List<String> lines = Arrays.asList(payload.split("\n"));
 		Session session = null;
+		
+		boolean hasException = false;
+		
 		for (String line : lines) {
 			 
 			if (skipLine(line)) {
@@ -38,6 +41,16 @@ public class LineProcessor {
 					// no sessions left, should end the process.
 					break;
 				}
+			}
+			
+			if (catchException(line, session)) {
+				hasException = !hasException;
+				continue;
+			}
+			
+			if (hasException) {
+				session.addException(line);
+				continue;
 			}
 			
 			if (sessionStart(line, session)) {
@@ -77,6 +90,10 @@ public class LineProcessor {
 		return sessions;
 	}
 	
+	private boolean catchException(String line, Session session) {
+		return line.trim().equals("-----------------EXCEPTION MESSAGE-----------------");
+	}
+
 	protected boolean sessionEnd(String line, Session session) {
 		List<String> found = StringUtils.getFound(line, "\\d+\\s+T\\d{2}:\\d{2}:\\d{2}\\.\\d{2}\\s+URL\\s+Session\\s+(.*)\\s+(\\d+)\\s+\\[(.*)\\]", false);
 		if (found.size() == 3) {
@@ -87,6 +104,9 @@ public class LineProcessor {
 	}
 
 	protected boolean skipLine(String line) {
+		if (StringUtils.isEmpty(line)) {
+			return true;
+		}
 		String[] patterns = new String[]{"\\s+------",
 				"Label:\\s+unset;",
 				"Environment:\\s+"};

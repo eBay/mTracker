@@ -184,13 +184,10 @@ public class LineProcessorTest {
 		assertEquals(40, phase.getPlugins().get(0).getStartTime().getSeconds());
 	}
 	
-	
-	
-	@SuppressWarnings({ "resource", "deprecation" })
-	@Test
-	public void testTwoSessionsProcess() throws IOException {
+	@SuppressWarnings("resource")
+	private List<Session> getSessions(String fileName) throws IOException {
 		BufferedReader br;
-		br = new BufferedReader(new FileReader(getClass().getClassLoader().getResource("two_sessions.txt").getFile()));
+		br = new BufferedReader(new FileReader(getClass().getClassLoader().getResource(fileName).getFile()));
 		
 		String sCurrentLine = null;
 		StringBuffer sb = new StringBuffer();
@@ -200,7 +197,27 @@ public class LineProcessorTest {
 		}
 		
 		LineProcessor pro = new LineProcessor();
-		List<Session> sessions = pro.process(sb.toString());
+		return pro.process(sb.toString());
+	}
+	
+	@Test
+	public void testExceptionSession() throws IOException {
+		List<Session> sessions = getSessions("exception.log");
+		
+		assertEquals(1, sessions.size());
+		
+		Session session = sessions.get(0);
+		assertEquals("CI", session.getEnvironment());
+		assertEquals(2, session.getProjects().size());
+		assertEquals("mmao", session.getUserName());
+		assertEquals("e:\\bin\\apache-maven-3.0.5-RaptorTimeTracking\\bin\\..", session.getMavenVersion());
+		assertEquals(2066, session.getProjects().get("test3").getDuration().longValue());
+		assertTrue(session.getExceptionMessage().contains("org.apache.maven.plugins:maven-compiler-plugin:2.5:compile "));
+	}
+	
+	@Test
+	public void testTwoSessionsProcess() throws IOException {
+		List<Session> sessions = getSessions("two_sessions.txt");
 
 		//System.out.println(sb.toString());
 		assertEquals(2, sessions.size());

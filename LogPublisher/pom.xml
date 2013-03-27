@@ -4,7 +4,7 @@
 	<groupId>com.ebay.build.profiler</groupId>
 	<artifactId>LogPublisher</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0.7</version>
+	<version>1.0.8</version>
 	<name>LogPublisher</name>
 	<url>http://maven.apache.org</url>
 	
@@ -31,7 +31,7 @@
 		<dependency>
 			<groupId>com.ebay.build.cal</groupId>
 			<artifactId>calhelper</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.0.1-M2_${maven.version}</version>
 		</dependency>
 		
 	</dependencies>
