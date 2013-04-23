@@ -25,7 +25,7 @@ public class RawDataJDBCTemplate {
 	// TODO event date
 	public int create(final Plugin plugin, final int sessionID, final int projectID) {
 		final String SQL = "insert into RBT_RAW_DATA (plugin_id, session_id, " +
-				"project_id, duration, event_time) values (?, ?, ?, ?, ?)";
+				"project_id, duration, event_time, plugin_key) values (?, ?, ?, ?, ?, ?)";
 
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		jdbcTemplateObject.update(new PreparedStatementCreator() {
@@ -38,6 +38,7 @@ public class RawDataJDBCTemplate {
 				ps.setInt(3, projectID);
 				ps.setLong(4, plugin.getDuration());
 				ps.setTimestamp(5, new java.sql.Timestamp(plugin.getStartTime().getTime()));
+				ps.setString(6, plugin.getGroupId() + ":" + plugin.getArtifactId());
 
 				return ps;
 			}

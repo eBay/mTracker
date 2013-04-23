@@ -9,7 +9,7 @@
   <!-- Build Properties -->
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.version>3.0.5</maven.version>
+    <maven.version>3.0.3</maven.version>
     <calhelper.version>0.0.1-M2_${maven.version}</calhelper.version>
   </properties>
   
