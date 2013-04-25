@@ -28,7 +28,7 @@ public class PluginCountJDBCTemplate {
 			public PreparedStatement createPreparedStatement(
 					Connection connection) throws SQLException {
 				PreparedStatement ps = connection.prepareStatement(SQL, new String[]{"id"});
-				ps.setString(1, pluginKey);
+				ps.setString(1, pluginKey.trim());
 		
 				return ps;
 			}

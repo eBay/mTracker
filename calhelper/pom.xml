@@ -2,19 +2,14 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.ebay.build.cal</groupId>
   <artifactId>calhelper</artifactId>
-  <version>${core.version}-M2_${maven.version}</version>
+  <version>0.0.2-M2_${maven.version}</version>
   <name>CAL Helper</name>
   <description>calhelper is used to initialize CAL service and provide utils methods for CAL API users.</description>
   
-  
- 	<parent>
-		<groupId>com.ebay.build</groupId>
-		<artifactId>RaptorBuildTracking</artifactId>  
-		<version>${core.version}-SNAPSHOT</version>
-    </parent>
-
-  
-   <repositories>
+  <properties>
+      <maven.version>3.0.3</maven.version>
+  </properties>
+    <repositories>
   	<repository>
   		<id>eBox</id>
   		<url>http://repository.qa.ebay.com/nexus/ebox_releases/</url>

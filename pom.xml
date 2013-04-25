@@ -11,13 +11,12 @@
 	 <properties>
 		<core.version>0.0.2</core.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.version>${maven.version}</maven.version>
+		
 	</properties>
 
 	<modules>
 		<module>calhelper</module>
-		<module>BuildProfiler</module>
-		<module>LogPublisher</module>		
+		<module>BuildProfiler</module>	
 	</modules>
 
 </project>
