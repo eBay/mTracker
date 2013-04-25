@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.apache.maven.eventspy.EventSpy.Context;
 import org.apache.maven.execution.ExecutionEvent;
+import org.apache.maven.project.MavenProject;
 
 import com.ebay.build.cal.processors.ProcessHelper;
 import com.ebay.build.cal.processors.SessionExporter;
@@ -49,6 +50,22 @@ public class DiscoveryProfile extends Profile {
 		System.out.println("[INFO] CAL logging Enabled: " + this.isCALEnabled());
 		System.out.println("[INFO] Running From CI: " + this.isInJekins());
 		System.out.println("[INFO] Build Environment: " + this.getBuildEnvironment());
+	}
+	
+	private MavenProject getParentProject(final MavenProject project, final String groupId, final String artifactId) {
+		if (project == null) {
+			return null;
+		}
+		if (project.getGroupId().equals(groupId)
+				&& project.getArtifactId().equals(artifactId)){
+			return project;
+		}
+		
+		if (project.getParent()==null){
+			return null;
+		}
+			
+		return getParentProject(project.getParent(), groupId, artifactId);
 	}
 	
 	private String populateData() {
@@ -111,12 +128,23 @@ public class DiscoveryProfile extends Profile {
 
 	@Override
 	public void stop() {
-		
 		super.stop();
 		
 		String status = endTransaction(discoveryTransaction);
 		
 		if (this.isInJekins()) {
+			List<MavenProject> projects = this.event.getSession().getProjects();
+			if (projects != null && projects.size() > 0) {
+				MavenProject domainProject = getParentProject(projects.get(0), "com.ebay.raptor", "DomainParent");
+				MavenProject raptorProject = getParentProject(projects.get(0), "com.ebay.raptor", "RaptorParent");
+				if (raptorProject != null) {
+					this.getSession().setRaptorVersion(raptorProject.getVersion());
+				}
+				if (domainProject != null) {
+					this.getSession().setDomainVersion(domainProject.getVersion());
+				}
+			}
+
 			this.getSession().setDuration(this.getElapsedTime());
 			this.getSession().setStatus(status);
 			

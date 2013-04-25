@@ -1,6 +1,5 @@
 package com.ebay.build.cal.dal;
 
-import java.io.StringReader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -28,8 +27,8 @@ public class SessionJDBCTemplate {
 
 	public int create(final Session session) {
 		final String SQL = "insert into RBT_SESSION (pool_name, machine_name, user_name, environment, " +
-				"status, duration, maven_version, goals, start_time, git_url, git_branch, jekins_url, java_version, cause, full_stacktrace) " +
-				"values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				"status, duration, maven_version, goals, start_time, git_url, git_branch, jekins_url, java_version, cause, full_stacktrace, raptor_version, domain_version) " +
+				"values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		jdbcTemplateObject.update(new PreparedStatementCreator() {
@@ -53,6 +52,10 @@ public class SessionJDBCTemplate {
 				ps.setString(14, getCause(session.getExceptionMessage()));
 				
 				setFullStackTraceAsClob(15, ps, session);
+				
+				ps.setString(16, session.getRaptorVersion());
+				ps.setString(17, session.getDomainVersion());
+
 				return ps;
 			}
 		}, keyHolder);

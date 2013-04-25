@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.ebay.build</groupId>
+	<artifactId>RaptorBuildTracking</artifactId>  
+	<version>${core.version}-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>Parent Raptor Build Tracking</name>
+	<description>Build All Modules</description>
+	
+	 <properties>
+		<core.version>0.0.2</core.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.version>${maven.version}</maven.version>
+	</properties>
+
+	<modules>
+		<module>calhelper</module>
+		<module>BuildProfiler</module>
+		<module>LogPublisher</module>		
+	</modules>
+
+</project>

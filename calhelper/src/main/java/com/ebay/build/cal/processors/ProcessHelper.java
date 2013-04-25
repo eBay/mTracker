@@ -29,6 +29,12 @@ public class ProcessHelper {
 			if ("git.branch".equals(keyValue[0])) {
 				session.setGitBranch(keyValue[1]);
 			}
+			if ("raptor.version".equals(keyValue[0])) {
+				session.setRaptorVersion(keyValue[1]);
+			}
+			if ("domain.version".equals(keyValue[0])) {
+				session.setDomainVersion(keyValue[1]);
+			}
 		}
 	}
 	

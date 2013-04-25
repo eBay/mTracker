@@ -8,6 +8,12 @@
 	<name>LogPublisher</name>
 	<url>http://maven.apache.org</url>
 	
+	<parent>
+		<groupId>com.ebay.build</groupId>
+		<artifactId>RaptorBuildTracking</artifactId>  
+		<version>${core.version}-SNAPSHOT</version>
+    </parent>
+	
 	<distributionManagement>
   	<snapshotRepository>
   		<id>snapshots</id>
@@ -31,7 +37,7 @@
 		<dependency>
 			<groupId>com.ebay.build.cal</groupId>
 			<artifactId>calhelper</artifactId>
-			<version>0.0.1-M2_${maven.version}</version>
+			<version>${core.version}-M2_${maven.version}</version>
 		</dependency>
 		
 	</dependencies>

@@ -18,6 +18,8 @@ public class Session extends TrackingModel {
 	private String gitUrl;
 	private String gitBranch;
 	private String jekinsUrl; 
+	private String raptorVersion;
+	private String domainVersion;
 	
 	private String goals;
 	private Map<String, Project> projects =  new HashMap<String, Project>();
@@ -164,5 +166,23 @@ public class Session extends TrackingModel {
 	
 	public void setFullStackTrace(String fullStackTrace) {
 		this.fullStackTrace = fullStackTrace;
+	}
+	public String getRaptorVersion() {
+		return raptorVersion;
+	}
+	public void setRaptorVersion(String raptorVersion) {
+		this.raptorVersion = raptorVersion;
+		if (!this.payload.contains("raptor.version") && !StringUtils.isEmpty(this.raptorVersion)) {
+			this.payload += ";raptor.version=" + this.raptorVersion;
+		}
+	}
+	public String getDomainVersion() {
+		return domainVersion;
+	}
+	public void setDomainVersion(String domainVersion) {
+		this.domainVersion = domainVersion;
+		if (!this.payload.contains("domain.version") && !StringUtils.isEmpty(this.domainVersion)) {
+			this.payload += ";domain.version=" + this.domainVersion;
+		}
 	}
 }
