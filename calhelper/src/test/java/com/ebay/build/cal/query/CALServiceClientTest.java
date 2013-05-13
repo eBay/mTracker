@@ -5,13 +5,12 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Calendar;
 
-import org.junit.Test;
-
 import com.ebay.build.cal.query.common.CALServiceException;
-
+/* We are not using CAL as the data storage, so this test case is commented out */
+@Deprecated
 public class CALServiceClientTest {
 
-	@Test
+	//@Test
 	public void getPools() throws CALServiceException{
 		CALServiceClient client = new CALServiceClient();
 		
@@ -27,7 +26,7 @@ public class CALServiceClientTest {
 		assertTrue(response.getPools().size()>0);
 	}
 	
-	@Test
+	//@Test
 	public void getMachines() throws CALServiceException{
 		CALServiceClient client = new CALServiceClient();
 		
@@ -40,7 +39,7 @@ public class CALServiceClientTest {
 		assertTrue(response.getMachines().size()>0);	
 	}
 	
-	@Test
+	//@Test
 	public void getRawLog() throws CALServiceException {
 		CALServiceClient client = new CALServiceClient();
 		

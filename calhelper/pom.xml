@@ -6,9 +6,7 @@
   <name>CAL Helper</name>
   <description>calhelper is used to initialize CAL service and provide utils methods for CAL API users.</description>
   
-  <properties>
-      <maven.version>3.0.3</maven.version>
-  </properties>
+  
     <repositories>
   	<repository>
   		<id>eBox</id>
@@ -21,7 +19,7 @@
     <dependency>
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-core</artifactId>
-      <version>${maven.version}</version>
+      <version>3.0.3</version>
     </dependency>
     
     <!--  dependency>
