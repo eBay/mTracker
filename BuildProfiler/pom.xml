@@ -7,7 +7,6 @@
   <description>BuildProfiler is used to collect build metrics for maven builds. It gives a break up of maven build like how much each project took and how much each plugin took etc.,</description>
   
   <properties>
-      <maven.version>3.0.3</maven.version>
 	  <core.version>0.0.2</core.version>
   </properties>
   
@@ -20,11 +19,7 @@
   
   <dependencies>
   	<!-- Compile Scope Dependencies -->
-    <dependency>
-      <groupId>org.apache.maven</groupId>
-      <artifactId>maven-core</artifactId>
-      <version>${maven.version}</version>
-    </dependency>
+    
     <dependency>
       <groupId>com.ebay.build.cal</groupId>
       <artifactId>calhelper</artifactId>
