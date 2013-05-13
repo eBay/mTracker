@@ -202,22 +202,16 @@ public class LineProcessorTest {
 	
 	@Test
 	public void testExceptionSession() throws IOException {
-		List<Session> sessions = getSessions("exception.log");
-		System.out.println("=== sessions 	" + sessions.size());
+		List<Session> sessions = getSessions("exception.txt");
 		assertEquals(1, sessions.size());
 		
 		Session session = sessions.get(0);
 		assertEquals("CI", session.getEnvironment());
-		System.out.println("=== sessions 	" + session.getEnvironment());
 		assertEquals(2, session.getProjects().size());
-		System.out.println("=== sessions 	" + session.getProjects().size());
 		assertEquals("mmao", session.getUserName());
-		System.out.println("=== sessions 	" + session.getUserName());
 		assertTrue(session.getMavenVersion().equalsIgnoreCase("e:\\bin\\apache-maven-3.0.5-raptortimetracking\\bin\\.."));
 		assertEquals(2066, session.getProjects().get("test3").getDuration().longValue());
-		System.out.println("=== sessions 	" + session.getProjects().get("test3").getDuration().longValue());
 		assertTrue(session.getExceptionMessage().contains("org.apache.maven.plugins:maven-compiler-plugin:2.5:compile "));
-		System.out.println("=== sessions 	" + session.getExceptionMessage());
 	}
 	
 	@Test
