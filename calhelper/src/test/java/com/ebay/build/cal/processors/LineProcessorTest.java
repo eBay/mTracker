@@ -210,7 +210,7 @@ public class LineProcessorTest {
 		assertEquals("CI", session.getEnvironment());
 		assertEquals(2, session.getProjects().size());
 		assertEquals("mmao", session.getUserName());
-		assertEquals("e:\\bin\\apache-maven-3.0.5-RaptorTimeTracking\\bin\\..", session.getMavenVersion());
+		assertEquals("E:\\bin\\apache-maven-3.0.5-RaptorTimeTracking\\bin\\..", session.getMavenVersion());
 		assertEquals(2066, session.getProjects().get("test3").getDuration().longValue());
 		assertTrue(session.getExceptionMessage().contains("org.apache.maven.plugins:maven-compiler-plugin:2.5:compile "));
 	}
