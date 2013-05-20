@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<filters>
+	<category name="user">
+		<filter name="CompilationFailureFilter">
+			<cause
+				keyword="Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin" />
+			<cause keyword="Compilation failure" />
+		</filter>
+
+		<filter name="AntRunFilter">
+			<cause
+				keyword="Failed to execute goal org.apache.maven.plugins:maven-antrun-plugin" />
+			<cause keyword="key2" />
+		</filter>
+		<filter name="AssemblerFilter">
+			<cause
+				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
+			<cause
+				keyword="http://wiki2.arch.ebay.com/display/DevExTech/Assembler+Errors#AssemblerErrors-E" />
+		</filter>
+
+		<filter name="DeployFilter">
+			<cause
+				keyword="Failed to execute goal org.apache.maven.plugins:maven-deploy-plugin" />
+			<cause keyword="key2" />
+		</filter>
+
+		<filter name="SiteFilter">
+
+			<cause
+				keyword="Failed to execute goal org.apache.maven.plugins:maven-site-plugin" />
+		</filter>
+
+		<filter name="SonaFilter">
+			<cause keyword="Failed to execute goal org.codehaus.mojo:sonar-maven-plugin" />
+
+		</filter>
+		<filter name="TestRunFailFilter">
+			<cause
+				keyword="Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin" />
+			<cause keyword="There are test failures" />
+		</filter>
+	</category>
+	
+	<category name="system">
+	</category>
+</filters>

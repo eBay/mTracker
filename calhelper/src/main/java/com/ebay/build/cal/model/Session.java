@@ -30,6 +30,7 @@ public class Session extends TrackingModel {
 	private String fullStackTrace;
 	
 	private String payload;
+	private String category;
 	
 	public Pool getPool() {
 		return pool;
@@ -184,5 +185,11 @@ public class Session extends TrackingModel {
 		if (!this.payload.contains("domain.version") && !StringUtils.isEmpty(this.domainVersion)) {
 			this.payload += ";domain.version=" + this.domainVersion;
 		}
+	}
+	public String getCategory() {
+		return category;
+	}
+	public void setCategory(String category) {
+		this.category = category;
 	}
 }
