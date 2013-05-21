@@ -1,43 +1,61 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <filters>
 	<category name="user">
-		<filter name="CompilationFailureFilter">
+		<filter name="CompilationFailure">
 			<cause
 				keyword="Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin" />
 			<cause keyword="Compilation failure" />
 		</filter>
 
-		<filter name="AntRunFilter">
+		<filter name="AntRunFailure">
 			<cause
 				keyword="Failed to execute goal org.apache.maven.plugins:maven-antrun-plugin" />			
 		</filter>
-		<filter name="AssemblerFilter">
+		<filter name="AssemblerFailure">
 			<cause
 				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
 			<cause
 				keyword="http://wiki2.arch.ebay.com/display/DevExTech/Assembler+Errors#AssemblerErrors-E" />
 		</filter>
 
-		<filter name="DeployFilter">
+		<filter name="DeployExecutionFailure">
 			<cause
 				keyword="Failed to execute goal org.apache.maven.plugins:maven-deploy-plugin" />			
 		</filter>
 
-		<filter name="SiteFilter">
+		<filter name="SiteExecutionFailure">
 
 			<cause
 				keyword="Failed to execute goal org.apache.maven.plugins:maven-site-plugin" />
 		</filter>
 
-		<filter name="SonaFilter">
+		<filter name="SonaRunFailure">
 			<cause keyword="Failed to execute goal org.codehaus.mojo:sonar-maven-plugin" />
 
 		</filter>
-		<filter name="TestRunFailFilter">
+		<filter name="TestRunFailure">
 			<cause
 				keyword="Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin" />
 			<cause keyword="There are test failures" />
 		</filter>
+		
+		<filter name="NoTestRunFailure">
+			<cause
+				keyword="Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin" />
+			<cause keyword="No tests were executed" />
+		</filter>
+		
+		
+		<filter name="DependencyResolveFailure">
+			<cause
+				keyword="Could not resolve dependencies for project" />
+			<cause keyword="Failed to collect dependencies for" />
+		</filter>
+		
+		<filter name="ResourceNotFound">
+			<cause keyword="org.codehaus.plexus.resource.loader.ResourceNotFoundException: Could not find resource"/>
+		</filter>
+		
 	</category>
 	
 	<category name="system">
