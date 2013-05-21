@@ -1,5 +1,6 @@
 package com.ebay.build.cal.dal;
 
+import java.sql.Clob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -27,6 +28,20 @@ public class SessionMapper implements RowMapper<Session> {
 		machine.setName(rs.getString("machine_name"));
 		pool.setMachine(machine);
 		session.setPool(pool);
+		
+		Clob stacktrace = rs.getClob("full_stacktrace");
+		if (stacktrace != null) {
+			session.setFullStackTrace(stacktrace.getSubString(1,  (int) stacktrace.length()));
+		}
+		
+		session.setExceptionMessage(rs.getString("cause"));
+		session.setRaptorVersion(rs.getString("raptor_version"));
+		session.setDomainVersion(rs.getString("domain_version"));
+		session.setCategory(rs.getString("category"));
+		
+		session.setId(rs.getInt("id"));
+		
+		session.setFilter(rs.getString("filter"));
 		
 		return session;
 	}

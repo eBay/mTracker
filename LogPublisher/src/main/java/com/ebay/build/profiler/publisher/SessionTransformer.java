@@ -36,6 +36,7 @@ public class SessionTransformer {
 			for (Filter filter : this.filters) {
 				if (isMatch(session.getFullStackTrace(), filter)) {
 					session.setCategory(filter.getCategory());
+					session.setFilter(filter.getName());
 					break; // assumed that one session fits into one category
 				}
 			}

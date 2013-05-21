@@ -1,6 +1,7 @@
 package com.ebay.build.cal.processors;
 
 import java.io.File;
+import java.util.List;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -19,14 +20,21 @@ import com.ebay.build.cal.model.Session;
 public class LoaderProcessor {
 	private ApplicationContext context = null;
 	
+	private final SessionJDBCTemplate sessionJDBCTemplate; 
+	
 	public LoaderProcessor() {
-		context = new ClassPathXmlApplicationContext("sprint-jdbc-config.xml");
+		this("");
 	}
 	
 	public LoaderProcessor(String mavenHome) {
-		File conf = new File(mavenHome, "conf/spring-jdbc-config.xml");
-		System.out.println("[INFO] Loading raptor tracking db configure file... " + conf);
-		context = new FileSystemXmlApplicationContext(conf.toString());
+		if ("".equals(mavenHome)) {
+			context = new ClassPathXmlApplicationContext("sprint-jdbc-config.xml");
+		} else {
+			File conf = new File(mavenHome, "conf/spring-jdbc-config.xml");
+			System.out.println("[INFO] Loading raptor tracking db configure file... " + conf);
+			context = new FileSystemXmlApplicationContext(conf.toString());
+		}
+		sessionJDBCTemplate = (SessionJDBCTemplate) context.getBean("sessionJDBCTemplate");
 	}
 	
 	public void process(Session session) {
@@ -75,5 +83,13 @@ public class LoaderProcessor {
 	protected int loadSession(Session session) {
 		SessionJDBCTemplate sessionJDBCTemplate = (SessionJDBCTemplate) context.getBean("sessionJDBCTemplate");
 		return sessionJDBCTemplate.create(session);
+	}
+	
+	public List<Session> querySessionsWithoutCategory() {
+		return sessionJDBCTemplate.getExpSessionWithNullCategory();
+	}
+	
+	public void updateSessionCategory(Session session) {
+		sessionJDBCTemplate.updateCategory(session);
 	}
 }

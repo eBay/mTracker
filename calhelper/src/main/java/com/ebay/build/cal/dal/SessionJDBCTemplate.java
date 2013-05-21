@@ -27,8 +27,8 @@ public class SessionJDBCTemplate {
 
 	public int create(final Session session) {
 		final String SQL = "insert into RBT_SESSION (pool_name, machine_name, user_name, environment, " +
-				"status, duration, maven_version, goals, start_time, git_url, git_branch, jekins_url, java_version, cause, full_stacktrace, raptor_version, domain_version, category) " +
-				"values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				"status, duration, maven_version, goals, start_time, git_url, git_branch, jekins_url, java_version, cause, full_stacktrace, raptor_version, domain_version, category, filter) " +
+				"values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		jdbcTemplateObject.update(new PreparedStatementCreator() {
@@ -57,6 +57,7 @@ public class SessionJDBCTemplate {
 				ps.setString(17, session.getDomainVersion());
 				
 				ps.setString(18,  session.getCategory());
+				ps.setString(19,  session.getFilter());
 
 				return ps;
 			}
@@ -104,5 +105,19 @@ public class SessionJDBCTemplate {
 		jdbcTemplateObject.update(SQL, id);
 		System.out.println("Deleted Record with ID = " + id);
 		return;
+	}
+	
+	public List<Session> getExpSessionWithNullCategory() {
+		String SQL = "select * from RBT_SESSION " +
+				"where cause is not null " +
+				" and (category is null or filter is null) " +
+				" and start_time > sysdate - 1";
+		
+		return jdbcTemplateObject.query(SQL, new SessionMapper());
+	}
+	
+	public void updateCategory(Session session) {
+		String SQL = "update RBT_SESSION set category = ?,  filter = ? where id = ?";
+		jdbcTemplateObject.update(SQL, new Object[] {session.getCategory(), session.getFilter(), session.getId()});
 	}
 }

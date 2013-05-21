@@ -32,6 +32,10 @@ public class Session extends TrackingModel {
 	private String payload;
 	private String category;
 	
+	private String filter;
+	
+	private int id;
+	
 	public Pool getPool() {
 		return pool;
 	}
@@ -173,7 +177,7 @@ public class Session extends TrackingModel {
 	}
 	public void setRaptorVersion(String raptorVersion) {
 		this.raptorVersion = raptorVersion;
-		if (!this.payload.contains("raptor.version") && !StringUtils.isEmpty(this.raptorVersion)) {
+		if (!StringUtils.isEmpty(this.raptorVersion) && !this.payload.contains("raptor.version")) {
 			this.payload += ";raptor.version=" + this.raptorVersion;
 		}
 	}
@@ -182,7 +186,7 @@ public class Session extends TrackingModel {
 	}
 	public void setDomainVersion(String domainVersion) {
 		this.domainVersion = domainVersion;
-		if (!this.payload.contains("domain.version") && !StringUtils.isEmpty(this.domainVersion)) {
+		if (!StringUtils.isEmpty(this.domainVersion) && !this.payload.contains("domain.version")) {
 			this.payload += ";domain.version=" + this.domainVersion;
 		}
 	}
@@ -191,5 +195,17 @@ public class Session extends TrackingModel {
 	}
 	public void setCategory(String category) {
 		this.category = category;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getFilter() {
+		return filter;
+	}
+	public void setFilter(String filter) {
+		this.filter = filter;
 	}
 }
