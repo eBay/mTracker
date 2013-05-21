@@ -49,7 +49,6 @@
 		<filter name="DependencyResolveFailure">
 			<cause
 				keyword="Could not resolve dependencies for project" />
-			<cause keyword="Failed to collect dependencies for" />
 		</filter>
 		
 		<filter name="ResourceNotFound">
