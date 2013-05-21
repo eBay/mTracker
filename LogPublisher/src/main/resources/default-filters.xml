@@ -11,13 +11,13 @@
 			<cause
 				keyword="Failed to execute goal org.apache.maven.plugins:maven-antrun-plugin" />			
 		</filter>
-		<filter name="AssemblerFailure">
+		<filter name="AssemblerResolveWebBundleFail">
 			<cause
 				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
 			<cause
-				keyword="http://wiki2.arch.ebay.com/display/DevExTech/Assembler+Errors#AssemblerErrors-E" />
+				keyword="http://wiki2.arch.ebay.com/display/DevExTech/Assembler+Errors#AssemblerErrors-E57" />
 		</filter>
-
+		
 		<filter name="DeployExecutionFailure">
 			<cause
 				keyword="Failed to execute goal org.apache.maven.plugins:maven-deploy-plugin" />			
@@ -58,5 +58,26 @@
 	</category>
 	
 	<category name="system">
+	    <filter name="AssemblerUploadCronusPackageFail">
+			<cause
+				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
+			<cause
+				keyword="http://wiki2.arch.ebay.com/display/DevExTech/Assembler+Errors#AssemblerErrors-E102" />
+		</filter>
+		
+	    <filter name="AssemblerRetrieveClassFail">
+			<cause
+				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
+			<cause
+				keyword="http://wiki2.arch.ebay.com/display/DevExTech/Assembler+Errors#AssemblerErrors-E103" />
+		</filter>
+		
+	    <filter name="AssemblerRegisterManifestFail">
+			<cause
+				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
+			<cause
+				keyword="http://wiki2.arch.ebay.com/display/DevExTech/Assembler+Errors#AssemblerErrors-E104" />
+		</filter>
+	
 	</category>
 </filters>
