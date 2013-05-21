@@ -55,6 +55,10 @@
 			<cause keyword="org.codehaus.plexus.resource.loader.ResourceNotFoundException: Could not find resource"/>
 		</filter>
 		
+		<filter name="DependencyValidationFail">
+			<cause keyword="Dependency Validation Failed"/>
+		</filter>
+		
 	</category>
 	
 	<category name="system">
