@@ -9,8 +9,7 @@
 
 		<filter name="AntRunFilter">
 			<cause
-				keyword="Failed to execute goal org.apache.maven.plugins:maven-antrun-plugin" />
-			<cause keyword="key2" />
+				keyword="Failed to execute goal org.apache.maven.plugins:maven-antrun-plugin" />			
 		</filter>
 		<filter name="AssemblerFilter">
 			<cause
@@ -21,8 +20,7 @@
 
 		<filter name="DeployFilter">
 			<cause
-				keyword="Failed to execute goal org.apache.maven.plugins:maven-deploy-plugin" />
-			<cause keyword="key2" />
+				keyword="Failed to execute goal org.apache.maven.plugins:maven-deploy-plugin" />			
 		</filter>
 
 		<filter name="SiteFilter">
