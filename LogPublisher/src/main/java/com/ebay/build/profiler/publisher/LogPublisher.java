@@ -44,12 +44,16 @@ public class LogPublisher {
 			List<Session> sessions = pro.process(content);
 			System.out.println("[INFO] found " + sessions.size() + " sessions");
 			
+			SessionTransformer transformer = new SessionTransformer();
 			File stackTraceFile = null;
 			for (Session session : sessions) {
 				System.out.println("[INFO] Store Session -- " + session.getEnvironment() + " " + session.getPool().getName() + " " +session.getStartTime());
 				if (!StringUtils.isEmpty(session.getExceptionMessage())) {
 					stackTraceFile = loadFullStackTrace(file, session);
 				}
+
+				transformer.tranform(session);
+
 				loaderProcessor.process(session);
 				System.out.println("[INFO] Store Session -- " + session.getEnvironment() + " " + session.getStartTime() + " DONE!");
 			}

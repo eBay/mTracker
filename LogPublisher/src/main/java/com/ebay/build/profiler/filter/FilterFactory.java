@@ -65,11 +65,11 @@ public class FilterFactory {
 		try {
 			filters = unmarshal(url);
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.err.println("Can not unmarshall the remote file " + url + " Caused by " + e.getMessage());
 			try {
 				filters = unmarshal(defaultFilterList);
 			} catch (JAXBException e1) {
-				e1.printStackTrace();
+				System.err.println("Can not unmarshall the local file " + defaultFilterList + " Caused by " + e.getMessage());
 			}
 		}
 		

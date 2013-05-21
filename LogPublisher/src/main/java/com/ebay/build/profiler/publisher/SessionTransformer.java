@@ -13,18 +13,16 @@ import com.ebay.build.profiler.filter.model.Filter;
 public class SessionTransformer {
 
 	private final List<Filter> filters = new ArrayList<Filter>();
-	private final static String FILTER_LIST_IN_GIT = "";
+	private final static String FILTER_LIST_IN_GIT = "https://github.scm.corp.ebay.com/DevExTech/maven-time-tracking/raw/master/LogPublisher/src/main/resources/default-filters.xml";
 
 	public SessionTransformer() {
 		FilterFactory factory = new FilterFactory();
 		URL defaultFilterList = this.getClass().getResource("/default-filters.xml");
 		URL remoteFilterList = null;
 		try {
-			System.out.println("[INFO] SessionTransformer Local List File: " + defaultFilterList);
 			remoteFilterList = new URL(FILTER_LIST_IN_GIT);
-			System.out.println("[INFO] SessionTransformer Remote List File: " + remoteFilterList);			
 		} catch (MalformedURLException e) {
-			e.printStackTrace();
+			System.err.println("[WARNING] can not load the filter list from remote " + remoteFilterList);
 		}
 			
 		filters.addAll(factory.build(remoteFilterList, defaultFilterList));
@@ -33,14 +31,12 @@ public class SessionTransformer {
 		
 	}
 	
-	public void tranform(List<Session> sessions) {
-		for (Session session : sessions) {
-			if (session.getFullStackTrace() != null) {
-				for (Filter filter : this.filters) {
-					if (isMatch(session.getFullStackTrace(), filter)) {
-						session.setCategory(filter.getCategory());
-						break; // assumed that one session fits into one category
-					}
+	public void tranform(Session session) {
+		if (session.getFullStackTrace() != null) {
+			for (Filter filter : this.filters) {
+				if (isMatch(session.getFullStackTrace(), filter)) {
+					session.setCategory(filter.getCategory());
+					break; // assumed that one session fits into one category
 				}
 			}
 		}

@@ -27,8 +27,8 @@ public class SessionJDBCTemplate {
 
 	public int create(final Session session) {
 		final String SQL = "insert into RBT_SESSION (pool_name, machine_name, user_name, environment, " +
-				"status, duration, maven_version, goals, start_time, git_url, git_branch, jekins_url, java_version, cause, full_stacktrace, raptor_version, domain_version) " +
-				"values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				"status, duration, maven_version, goals, start_time, git_url, git_branch, jekins_url, java_version, cause, full_stacktrace, raptor_version, domain_version, category) " +
+				"values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		jdbcTemplateObject.update(new PreparedStatementCreator() {
@@ -55,6 +55,8 @@ public class SessionJDBCTemplate {
 				
 				ps.setString(16, session.getRaptorVersion());
 				ps.setString(17, session.getDomainVersion());
+				
+				ps.setString(18,  session.getCategory());
 
 				return ps;
 			}
