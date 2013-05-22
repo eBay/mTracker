@@ -59,6 +59,19 @@
 			<cause keyword="Dependency Validation Failed"/>
 		</filter>
 		
+		<filter name="SoapUITestFailure">
+			<cause keyword="Failed to execute goal eviware:maven-soapui-plugin"/>
+			<cause keyword="SoapUI Test(s) failed"/>
+		</filter>
+		
+		<filter name="MojoNotFoundFailure">
+			<cause keyword="org.apache.maven.plugin.MojoNotFoundException: Could not find goal"/>
+		</filter>
+		
+		<filter name="UnknownLifecycle">
+			<cause keyword="org.apache.maven.lifecycle.LifecyclePhaseNotFoundException: Unknown lifecycle phase"/>
+		</filter>
+		
 	</category>
 	
 	<category name="system">
@@ -81,6 +94,13 @@
 				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
 			<cause
 				keyword="http://wiki2.arch.ebay.com/display/DevExTech/Assembler+Errors#AssemblerErrors-E104" />
+		</filter>
+		
+		<filter name="OBRGen-MissingClassFail">
+			<cause
+				keyword="org.apache.maven.lifecycle.LifecycleExecutionException: Failed to execute goal com.ebay.osgi.build:obrgen-maven-plugin" />
+			<cause
+				keyword="A required class was missing" />
 		</filter>
 	
 	</category>
