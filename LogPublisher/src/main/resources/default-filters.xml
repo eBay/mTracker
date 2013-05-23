@@ -72,6 +72,28 @@
 			<cause keyword="org.apache.maven.lifecycle.LifecyclePhaseNotFoundException: Unknown lifecycle phase"/>
 		</filter>
 		
+		<filter name="ReleaseNonDependencyFailure">
+			<cause keyword="Failed to execute goal org.apache.maven.plugins:maven-release-plugin"/>
+			<cause keyword="Can't release project due to non released dependencies"/>
+		</filter>
+		
+		<filter name="ContentValidationFail">
+			<cause keyword="Failed to execute goal com.ebay.content:maven-content-plugin"/>
+			<cause keyword="content-validation (process-content-resources) on project"/>
+		</filter>
+		
+		<filter name="ReleaseFail-GIT-NoJiraID">
+			<cause keyword="Failed to execute goal org.apache.maven.plugins:maven-release-plugin"/>
+			<cause keyword="The git-commit command failed"/>
+			<cause keyword="A JIRA issue must be provided in the commit message"/>
+		</filter>
+		
+		<filter name="ReleaseFail-NonDependency">
+			<cause keyword="Failed to execute goal org.apache.maven.plugins:maven-release-plugin"/>
+			<cause keyword="Can't release project due to non released dependencies"/>			
+		</filter>
+		
+		
 	</category>
 	
 	<category name="system">
@@ -101,6 +123,13 @@
 				keyword="org.apache.maven.lifecycle.LifecycleExecutionException: Failed to execute goal com.ebay.osgi.build:obrgen-maven-plugin" />
 			<cause
 				keyword="A required class was missing" />
+		</filter>
+		
+		<filter name="JarFail-Mkdir">
+			<cause
+				keyword="Failed to execute goal org.apache.maven.plugins:maven-jar-plugin" />
+			<cause
+				keyword="java.io.IOException: Failed to create directory" />
 		</filter>
 	
 	</category>
