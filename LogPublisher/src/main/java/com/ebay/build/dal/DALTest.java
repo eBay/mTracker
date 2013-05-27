@@ -1,4 +1,4 @@
-package com.ebay.build.cal.dal;
+package com.ebay.build.dal;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -12,7 +12,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.ebay.build.cal.model.Plugin;
 import com.ebay.build.cal.model.Session;
 import com.ebay.build.cal.processors.LineProcessor;
-import com.ebay.build.cal.processors.LoaderProcessor;
+import com.ebay.build.profiler.publisher.LoaderProcessor;
 
 public class DALTest {
 	@SuppressWarnings("resource")

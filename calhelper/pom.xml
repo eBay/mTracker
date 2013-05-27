@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.ebay.build.cal</groupId>
   <artifactId>calhelper</artifactId>
-  <version>0.0.2-M2_${maven.version}</version>
+  <version>0.0.2-M2_3.0.5</version>
   <name>CAL Helper</name>
   <description>calhelper is used to initialize CAL service and provide utils methods for CAL API users.</description>
   
@@ -19,7 +19,7 @@
     <dependency>
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-core</artifactId>
-      <version>3.0.3</version>
+      <version>3.0.5</version>
     </dependency>
     
     <!--  dependency>
@@ -61,53 +61,13 @@
       <scope>test</scope>
     </dependency>
     
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-jdbc</artifactId>
-      <version>3.1.3.RELEASE</version>
-    </dependency>
-    
-    <!-- 
-    <dependency>
-      <groupId>mysql</groupId>
-      <artifactId>mysql-connector-java</artifactId>
-      <version>5.1.23</version>
-    </dependency>
-  
-   -->
-   
-    <dependency>
-      <groupId>oracle</groupId>
-      <artifactId>jdbc</artifactId>
-      <version>10.2</version>
-    </dependency>
+ 
+ 
   </dependencies>
    
 	<build>
 		<plugins>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
-				<version>1.2.1</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>exec</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<executable>java</executable>
-					<arguments>
-						<!-- argument>-Dmyproperty=myvalue</argument-->
-						<argument>-classpath</argument>
-						<!-- automatically creates the classpath using all project dependencies, 
-							also adding the project build directory -->
-						<classpath />
-						<argument>com.ebay.build.cal.processors.UpdatePluginCountList</argument>
-					</arguments>
-				</configuration>
-			</plugin>
+			
 		</plugins>
 	</build>
   

@@ -1,4 +1,4 @@
-package com.ebay.build.cal.processors;
+package com.ebay.build.profiler.publisher;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -9,8 +9,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
-import com.ebay.build.cal.dal.PluginCountJDBCTemplate;
-import com.ebay.kernel.util.FileUtils;
+import com.ebay.build.dal.PluginCountJDBCTemplate;
+import com.ebay.build.cal.query.utils.StringUtils;
 
 public class UpdatePluginCountList {
 private ApplicationContext context = null;
@@ -34,7 +34,7 @@ private ApplicationContext context = null;
 		String listContent = null;
 		try {
 			System.out.println("=====" + this.getClass().getResource("/plugin_count_list.txt"));
-			listContent = FileUtils.readFile(this.getClass().getResource("/plugin_count_list.txt").getFile(), "UTF-8");
+			listContent = StringUtils.readFile(this.getClass().getResource("/plugin_count_list.txt").getFile(), "UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		} catch (FileNotFoundException e) {

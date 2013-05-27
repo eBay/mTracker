@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.ebay.build.cal.model.Session;
 import com.ebay.build.cal.processors.LineProcessor;
-import com.ebay.build.cal.processors.LoaderProcessor;
+//import com.ebay.build.cal.processors.LoaderProcessor;
 import com.ebay.build.cal.query.CALMachine;
 import com.ebay.build.cal.query.CALPool;
 import com.ebay.build.cal.query.CALServiceClient;
@@ -22,7 +22,7 @@ public class Main {
 	private final String RAPTOR_BUILD_CAL_ENV = "raptor-build-trackingsql";
 	private final CALServiceClient client = new CALServiceClient();
 	private final LineProcessor lineProcessor = new LineProcessor();
-	private final LoaderProcessor loaderProcessor = new LoaderProcessor();
+	//private final LoaderProcessor loaderProcessor = new LoaderProcessor();
 
 	public static void main(String[] args) {
 		
@@ -53,7 +53,9 @@ public class Main {
 				List<Session> sessions = lineProcessor.process(rawLog); // TODO rename to transformer.transform()
 				for (Session session : sessions) {
 					System.out.println("     Session -- " + session.getEnvironment() + " " + session.getStartTime());
-					loaderProcessor.process(session);
+					//loaderProcessor.process(session);
+					// comment out this line due to the DAL related classes moved to LogPublisher.
+					// this class was used for CAL now should be deprecated.
 				}
 			}
 		}

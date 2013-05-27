@@ -1,4 +1,4 @@
-package com.ebay.build.cal.dal;
+package com.ebay.build.dal;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,16 +6,14 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
 import com.ebay.build.cal.model.Plugin;
-import com.ebay.build.cal.query.utils.StringUtils;
 
-public class PluginJDBCTemplate {
+public class RawDataJDBCTemplate {
 	private DataSource dataSource;
 	private JdbcTemplate jdbcTemplateObject;
 
@@ -24,8 +22,10 @@ public class PluginJDBCTemplate {
 		this.jdbcTemplateObject = new JdbcTemplate(dataSource);
 	}
 
-	public int create(final Plugin plugin) {
-		final String SQL = "insert into RBT_PLUGIN (plugin_key, group_id, artifact_id, version, phase) values (?, ?, ?, ?, ?)";
+	// TODO event date
+	public int create(final Plugin plugin, final int sessionID, final int projectID) {
+		final String SQL = "insert into RBT_RAW_DATA (plugin_id, session_id, " +
+				"project_id, duration, event_time, plugin_key) values (?, ?, ?, ?, ?, ?)";
 
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		jdbcTemplateObject.update(new PreparedStatementCreator() {
@@ -33,11 +33,12 @@ public class PluginJDBCTemplate {
 					Connection connection) throws SQLException {
 				PreparedStatement ps = connection.prepareStatement(SQL,
 						new String[] { "id" });
-				ps.setString(1, plugin.getPluginKey());
-				ps.setString(2, plugin.getGroupId());
-				ps.setString(3, plugin.getArtifactId());
-				ps.setString(4, plugin.getVersion());
-				ps.setString(5, plugin.getPhaseName());
+				ps.setInt(1, plugin.getId());
+				ps.setInt(2, sessionID);
+				ps.setInt(3, projectID);
+				ps.setLong(4, plugin.getDuration());
+				ps.setTimestamp(5, new java.sql.Timestamp(plugin.getStartTime().getTime()));
+				ps.setString(6, plugin.getGroupId() + ":" + plugin.getArtifactId());
 
 				return ps;
 			}
@@ -45,20 +46,4 @@ public class PluginJDBCTemplate {
 		
 		return keyHolder.getKey().intValue();
 	}
-	
-	public Plugin getPlugin(String pluginKey) {
-		if (StringUtils.isEmpty(pluginKey)) {
-			return null;
-		}
-		String SQL = "select * from RBT_PLUGIN where plugin_key = ?";
-		try {
-			Plugin plugin = jdbcTemplateObject.queryForObject(SQL,
-					new Object[] { pluginKey }, new PluginMapper());
-			return plugin;
-		} catch (EmptyResultDataAccessException e) {
-			// empty
-		}
-		return null;
-	}
 }
-

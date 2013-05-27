@@ -33,32 +33,32 @@
    </bean>
    
    <bean id="sessionJDBCTemplate" 
-      class="com.ebay.build.cal.dal.SessionJDBCTemplate">
+      class="com.ebay.build.dal.SessionJDBCTemplate">
       <property name="dataSource"  ref="dataSource" />    
    </bean>
       
    <bean id="projectJDBCTemplate" 
-      class="com.ebay.build.cal.dal.ProjectJDBCTemplate">
+      class="com.ebay.build.dal.ProjectJDBCTemplate">
       <property name="dataSource"  ref="dataSource" />    
    </bean>
    
    <bean id="sessionProjectJDBCTemplate" 
-      class="com.ebay.build.cal.dal.SessionProjectJDBCTemplate">
+      class="com.ebay.build.dal.SessionProjectJDBCTemplate">
       <property name="dataSource"  ref="dataSource" />    
    </bean>
    
    <bean id="pluginJDBCTemplate" 
-      class="com.ebay.build.cal.dal.PluginJDBCTemplate">
+      class="com.ebay.build.dal.PluginJDBCTemplate">
       <property name="dataSource"  ref="dataSource" />    
    </bean>
 
    <bean id="rawDataJDBCTemplate" 
-      class="com.ebay.build.cal.dal.RawDataJDBCTemplate">
+      class="com.ebay.build.dal.RawDataJDBCTemplate">
       <property name="dataSource"  ref="dataSource" />    
    </bean>
    
     <bean id="pluginCountJDBCTemplate" 
-      class="com.ebay.build.cal.dal.PluginCountJDBCTemplate">
+      class="com.ebay.build.dal.PluginCountJDBCTemplate">
       <property name="dataSource"  ref="dataSource" />    
    </bean>
 

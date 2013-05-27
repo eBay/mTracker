@@ -1,4 +1,4 @@
-package com.ebay.build.cal.dal;
+package com.ebay.build.dal;
 
 import java.sql.Clob;
 import java.sql.ResultSet;

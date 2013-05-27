@@ -1,4 +1,4 @@
-package com.ebay.build.cal.processors;
+package com.ebay.build.profiler.publisher;
 
 import java.io.File;
 import java.util.List;
@@ -7,11 +7,11 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
-import com.ebay.build.cal.dal.PluginJDBCTemplate;
-import com.ebay.build.cal.dal.ProjectJDBCTemplate;
-import com.ebay.build.cal.dal.RawDataJDBCTemplate;
-import com.ebay.build.cal.dal.SessionJDBCTemplate;
-import com.ebay.build.cal.dal.SessionProjectJDBCTemplate;
+import com.ebay.build.dal.PluginJDBCTemplate;
+import com.ebay.build.dal.ProjectJDBCTemplate;
+import com.ebay.build.dal.RawDataJDBCTemplate;
+import com.ebay.build.dal.SessionJDBCTemplate;
+import com.ebay.build.dal.SessionProjectJDBCTemplate;
 import com.ebay.build.cal.model.Phase;
 import com.ebay.build.cal.model.Plugin;
 import com.ebay.build.cal.model.Project;
@@ -28,7 +28,7 @@ public class LoaderProcessor {
 	
 	public LoaderProcessor(String mavenHome) {
 		if ("".equals(mavenHome)) {
-			context = new ClassPathXmlApplicationContext("sprint-jdbc-config.xml");
+			context = new ClassPathXmlApplicationContext("spring-jdbc-config.xml");
 		} else {
 			File conf = new File(mavenHome, "conf/spring-jdbc-config.xml");
 			System.out.println("[INFO] Loading raptor tracking db configure file... " + conf);

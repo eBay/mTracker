@@ -3,9 +3,8 @@ package com.ebay.build.cal.model;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.sonatype.aether.util.StringUtils;
-
 import com.ebay.build.cal.query.utils.DateUtils;
+import com.ebay.build.cal.query.utils.StringUtils;
 
 public class Session extends TrackingModel {
 	private Pool pool;

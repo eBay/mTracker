@@ -1,4 +1,4 @@
-package com.ebay.build.cal.dal;
+package com.ebay.build.dal;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,7 +11,7 @@ import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
-public class SessionProjectJDBCTemplate {
+public class PluginCountJDBCTemplate {
 	private DataSource dataSource;
 	private JdbcTemplate jdbcTemplateObject;
 
@@ -20,18 +20,16 @@ public class SessionProjectJDBCTemplate {
 		this.jdbcTemplateObject = new JdbcTemplate(dataSource);
 	}
 
-	public int create(final int sessionID, final int projectID) {
-		final String SQL = "insert into RBT_SESSION_PROJECT (session_id, project_id) values (?, ?)";
+	public int create(final String pluginKey) {
+		final String SQL = "insert into RBT_PLUGIN_COUNT_IN (plugin_key, last_modified_date) values (?, sysdate)";
 
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		jdbcTemplateObject.update(new PreparedStatementCreator() {
 			public PreparedStatement createPreparedStatement(
 					Connection connection) throws SQLException {
-				PreparedStatement ps = connection.prepareStatement(SQL,
-						new String[] { "id" });
-				ps.setInt(1, sessionID);
-				ps.setInt(2, projectID);
-
+				PreparedStatement ps = connection.prepareStatement(SQL, new String[]{"id"});
+				ps.setString(1, pluginKey.trim());
+		
 				return ps;
 			}
 		}, keyHolder);
@@ -39,3 +37,4 @@ public class SessionProjectJDBCTemplate {
 		return keyHolder.getKey().intValue();
 	}
 }
+

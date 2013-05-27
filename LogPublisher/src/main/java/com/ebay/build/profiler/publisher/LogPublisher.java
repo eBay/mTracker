@@ -12,7 +12,7 @@ import java.util.List;
 
 import com.ebay.build.cal.model.Session;
 import com.ebay.build.cal.processors.LineProcessor;
-import com.ebay.build.cal.processors.LoaderProcessor;
+import com.ebay.build.profiler.publisher.LoaderProcessor;
 import com.ebay.build.cal.query.utils.StringUtils;
 
 public class LogPublisher {

@@ -1,11 +1,18 @@
 package com.ebay.build.cal.query.utils;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import com.ebay.kernel.util.UnsynchronizedStringBuffer;
 
 public class StringUtils {
 	
@@ -71,5 +78,25 @@ public class StringUtils {
 				Integer.parseInt(time[2]));
 		
 		return cal2.getTime();
+	}
+	
+	public static String readFile(String fileName, String characterEncoding)
+			throws UnsupportedEncodingException, FileNotFoundException, IOException {
+			FileInputStream fis;
+			InputStreamReader isr;
+			UnsynchronizedStringBuffer sb = new UnsynchronizedStringBuffer(75000);
+			char[] buf = new char[4096];
+			int numRead;
+			fis = new FileInputStream(fileName);
+			isr = new InputStreamReader(fis, characterEncoding);
+			do {
+				numRead = isr.read(buf, 0, buf.length);
+				if (numRead > 0) {
+					sb.append(buf, 0, numRead);
+				}
+			} while (numRead >= 0);
+			isr.close();
+			fis.close();
+			return sb.toString();
 	}
 }

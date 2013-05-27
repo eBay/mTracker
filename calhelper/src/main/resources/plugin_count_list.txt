@@ -1,4 +1,3 @@
-com.github.mcheely:requirejs-maven-plugin
-com.github.searls:jasmine-maven-plugin
-org.codehaus.mojo:exec-maven-plugin
-org.apache.maven.plugins:maven-help-plugin
+com.ebay.osgi.build:ebay-manifest-plugin
+com.ebay.devex.assembler:assembler-maven-plugin
+com.ebay.devex.assembler:raptor-batch-maven-plugin
