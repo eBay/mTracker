@@ -18,6 +18,14 @@
 				keyword="http://wiki2.arch.ebay.com/display/DevExTech/Assembler+Errors#AssemblerErrors-E57" />
 		</filter>
 		
+		<filter name="AssemblerErrMkFileFail">
+			<cause
+				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
+			<cause
+				keyword="http://wiki2.arch.ebay.com/display/DevExTech/Assembler+Errors#AssemblerErrors-E10" />
+		</filter>
+		
+		
 		<filter name="DeployExecutionFailure">
 			<cause
 				keyword="Failed to execute goal org.apache.maven.plugins:maven-deploy-plugin" />			
@@ -93,7 +101,18 @@
 			<cause keyword="Can't release project due to non released dependencies"/>			
 		</filter>
 		
+		<filter name="MojoConfigError">
+			<cause keyword="org.apache.maven.plugin.PluginConfigurationException: Unable to parse configuration of mojo"/>
+		</filter>
 		
+		<filter name="MavenProcessorCompileFailure">
+			<cause keyword="Failed to execute goal org.bsc.maven:maven-processor-plugin"/>
+			<cause keyword="error during compilation"/>
+		</filter>
+		<filter name="VersionInheriteParentFailure">
+			<cause keyword="Failed to execute goal org.codehaus.mojo:versions-maven-plugin:"/>
+			<cause keyword="Project version is inherited from parent"/>
+		</filter>
 	</category>
 	
 	<category name="system">
@@ -131,6 +150,11 @@
 			<cause
 				keyword="java.io.IOException: Failed to create directory" />
 		</filter>
-	
+		
+		<filter name="NoDiskSpace">
+			<cause
+				keyword="java.io.IOException: No space left on device" />
+		</filter>
+			
 	</category>
 </filters>
