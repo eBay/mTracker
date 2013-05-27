@@ -111,7 +111,7 @@ public class SessionJDBCTemplate {
 		String SQL = "select * from RBT_SESSION " +
 				"where cause is not null " +
 				" and (category is null or filter is null) " +
-				" and start_time > sysdate - 1";
+				" and start_time > sysdate - 10";
 		
 		return jdbcTemplateObject.query(SQL, new SessionMapper());
 	}

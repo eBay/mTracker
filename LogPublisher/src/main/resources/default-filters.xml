@@ -72,6 +72,12 @@
 			<cause keyword="SoapUI Test(s) failed"/>
 		</filter>
 		
+		<filter name="SoapUIConnectionFailure">
+			<cause keyword="Failed to execute goal eviware:maven-soapui-plugin"/>
+			<cause keyword="Connection to http://www.soapui.org refused"/>
+		</filter>
+		
+		
 		<filter name="MojoNotFoundFailure">
 			<cause keyword="org.apache.maven.plugin.MojoNotFoundException: Could not find goal"/>
 		</filter>
@@ -113,6 +119,28 @@
 			<cause keyword="Failed to execute goal org.codehaus.mojo:versions-maven-plugin:"/>
 			<cause keyword="Project version is inherited from parent"/>
 		</filter>
+		
+		<filter name="WarPluginFail-nobasedir">
+			<cause keyword="Failed to execute goal org.apache.maven.plugins:maven-war-plugin"/>
+			<cause keyword="java.lang.IllegalStateException: basedir"/>
+		</filter>
+		
+		<filter name="CoberturaInstrumentFail">
+			<cause keyword="Failed to execute goal org.codehaus.mojo:cobertura-maven-plugin"/>
+			<cause keyword="Unable to instrument project."/>
+		</filter>	
+		
+		<filter name="OBRGenConflictKernelBundle">
+			<cause keyword="Failed to execute goal com.ebay.osgi.build:obrgen-maven-plugin"/>
+			<cause keyword="Conflicting with Kernel bundles:"/>
+		</filter>	
+		
+		<filter name="SOAPluginErrServiceVersion">
+			<cause keyword="Failed to execute goal com.ebay.ebox.plugins:maven-soa-plugin"/>
+			<cause keyword="Invalid Service current version"/>
+		</filter>	
+		
+		
 	</category>
 	
 	<category name="system">
@@ -154,6 +182,27 @@
 		<filter name="NoDiskSpace">
 			<cause
 				keyword="java.io.IOException: No space left on device" />
+		</filter>
+		
+		<filter name="CleanFailure">
+			<cause
+				keyword="Failed to execute goal org.apache.maven.plugins:maven-clean-plugin" />
+			<cause
+				keyword="java.io.IOException: Failed to delete" />				
+		</filter>
+		
+		<filter name="OBRGenIOFailure">
+			<cause
+				keyword="Failed to execute goal com.ebay.osgi.build:obrgen-maven-plugin" />
+			<cause
+				keyword="java.io.IOException: Destination" />				
+		</filter>
+		
+		<filter name="ResourceFail-Mkdir">
+			<cause
+				keyword="Failed to execute goal org.apache.maven.plugins:maven-resources-plugin" />
+			<cause
+				keyword="Cannot create resource output directory" />	
 		</filter>
 			
 	</category>

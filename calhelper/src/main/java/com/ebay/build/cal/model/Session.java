@@ -177,7 +177,7 @@ public class Session extends TrackingModel {
 	}
 	public void setRaptorVersion(String raptorVersion) {
 		this.raptorVersion = raptorVersion;
-		if (!StringUtils.isEmpty(this.raptorVersion) && !this.payload.contains("raptor.version")) {
+		if (!StringUtils.isEmpty(this.raptorVersion) && this.payload != null && !this.payload.contains("raptor.version")) {
 			this.payload += ";raptor.version=" + this.raptorVersion;
 		}
 	}
@@ -186,7 +186,7 @@ public class Session extends TrackingModel {
 	}
 	public void setDomainVersion(String domainVersion) {
 		this.domainVersion = domainVersion;
-		if (!StringUtils.isEmpty(this.domainVersion) && !this.payload.contains("domain.version")) {
+		if (!StringUtils.isEmpty(this.domainVersion) && this.payload != null && !this.payload.contains("domain.version")) {
 			this.payload += ";domain.version=" + this.domainVersion;
 		}
 	}
