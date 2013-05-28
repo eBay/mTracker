@@ -31,7 +31,7 @@
 		<dependency>
 			<groupId>com.ebay.build.cal</groupId>
 			<artifactId>calhelper</artifactId>
-			<version>0.0.2-M2_${maven.version}</version>
+			<version>0.0.2-M2_3.0.5</version>
 			<exclusions>
 				<exclusion>
 					 <groupId>com.ebay.kernel</groupId>
@@ -88,11 +88,13 @@
 							also adding the project build directory -->
 						<classpath />
 						<argument>com.ebay.build.profiler.publisher.Main</argument>
+						<!--
+						<argument>com.ebay.build.profiler.publisher.CategoryUpdater</argument>
+						<argument>com.ebay.build.cal.processors.UpdatePluginCountList</argument>
+						-->
 					</arguments>
 				</configuration>				
-			</plugin>
-			
-			
+			</plugin>			
 			
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
