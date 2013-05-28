@@ -13,8 +13,8 @@ public class GitUtilsTest {
 		File gitBase = currentFolder.getParentFile().getParentFile().getParentFile();
 		
 		File gitMeta = GitUtil.findGitRepository(gitBase);
-		assertEquals("maven-time-tracking", gitMeta.getName());
-		
+		assertEquals(gitBase.getName(), gitMeta.getName());
+		assertEquals(gitBase.getName(), GitUtil.findGitRepository(currentFolder).getName());
 		
 		File gitConfig = new File(new File(gitMeta,".git"), "config");
 		
