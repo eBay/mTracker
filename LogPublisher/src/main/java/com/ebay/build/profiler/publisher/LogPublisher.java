@@ -10,10 +10,9 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ebay.build.cal.model.Session;
-import com.ebay.build.cal.processors.LineProcessor;
-import com.ebay.build.profiler.publisher.LoaderProcessor;
-import com.ebay.build.cal.query.utils.StringUtils;
+import com.ebay.build.profiler.readers.LineProcessor;
+import com.ebay.build.profiler.model.Session;
+import com.ebay.build.profiler.utils.StringUtils;
 
 public class LogPublisher {
 	private final LoaderProcessor loaderProcessor = new LoaderProcessor();

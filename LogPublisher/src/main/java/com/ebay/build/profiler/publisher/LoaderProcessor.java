@@ -12,10 +12,10 @@ import com.ebay.build.dal.ProjectJDBCTemplate;
 import com.ebay.build.dal.RawDataJDBCTemplate;
 import com.ebay.build.dal.SessionJDBCTemplate;
 import com.ebay.build.dal.SessionProjectJDBCTemplate;
-import com.ebay.build.cal.model.Phase;
-import com.ebay.build.cal.model.Plugin;
-import com.ebay.build.cal.model.Project;
-import com.ebay.build.cal.model.Session;
+import com.ebay.build.profiler.model.Phase;
+import com.ebay.build.profiler.model.Plugin;
+import com.ebay.build.profiler.model.Project;
+import com.ebay.build.profiler.model.Session;
 
 public class LoaderProcessor {
 	private ApplicationContext context = null;

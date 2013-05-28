@@ -6,7 +6,7 @@ import javax.inject.Singleton;
 import org.apache.maven.eventspy.AbstractEventSpy;
 import org.apache.maven.execution.ExecutionEvent;
 
-import com.ebay.build.cal.model.Session;
+import com.ebay.build.profiler.model.Session;
 import com.ebay.build.profiler.profile.DiscoveryProfile;
 import com.ebay.build.profiler.profile.MojoProfile;
 import com.ebay.build.profiler.profile.PhaseProfile;

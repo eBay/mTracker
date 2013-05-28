@@ -1,4 +1,4 @@
-package com.ebay.build.cal.query.utils;
+package com.ebay.build.profiler.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

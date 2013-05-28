@@ -2,9 +2,8 @@ package com.ebay.build.profiler.publisher;
 
 import java.util.List;
 
-import com.ebay.build.cal.model.Session;
-import com.ebay.build.profiler.publisher.LoaderProcessor;
-import com.ebay.build.cal.query.utils.StringUtils;
+import com.ebay.build.profiler.model.Session;
+import com.ebay.build.profiler.utils.StringUtils;
 
 public class CategoryUpdater {
 

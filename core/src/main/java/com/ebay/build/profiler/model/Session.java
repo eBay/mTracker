@@ -1,10 +1,10 @@
-package com.ebay.build.cal.model;
+package com.ebay.build.profiler.model;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import com.ebay.build.cal.query.utils.DateUtils;
-import com.ebay.build.cal.query.utils.StringUtils;
+import com.ebay.build.profiler.utils.DateUtils;
+import com.ebay.build.profiler.utils.StringUtils;
 
 public class Session extends TrackingModel {
 	private Pool pool;

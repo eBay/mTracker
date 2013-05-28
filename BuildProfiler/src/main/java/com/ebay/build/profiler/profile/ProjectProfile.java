@@ -8,8 +8,8 @@ import org.apache.maven.eventspy.EventSpy.Context;
 import org.apache.maven.execution.ExecutionEvent;
 import org.apache.maven.project.MavenProject;
 
-import com.ebay.build.cal.model.Project;
-import com.ebay.build.cal.processors.ProcessHelper;
+import com.ebay.build.profiler.model.Project;
+import com.ebay.build.profiler.readers.ProcessHelper;
 import com.ebay.build.profiler.util.Timer;
 import com.ebay.kernel.calwrapper.CalTransaction;
 

@@ -11,7 +11,7 @@ import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
-import com.ebay.build.cal.model.Plugin;
+import com.ebay.build.profiler.model.Plugin;
 
 public class RawDataJDBCTemplate {
 	private DataSource dataSource;

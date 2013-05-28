@@ -1,8 +1,8 @@
-package com.ebay.build.cal.processors;
+package com.ebay.build.profiler.readers;
 
-import com.ebay.build.cal.model.Project;
-import com.ebay.build.cal.model.Session;
-import com.ebay.build.cal.query.utils.StringUtils;
+import com.ebay.build.profiler.model.Project;
+import com.ebay.build.profiler.model.Session;
+import com.ebay.build.profiler.utils.StringUtils;
 
 public class ProcessHelper {
 	

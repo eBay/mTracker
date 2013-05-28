@@ -1,4 +1,4 @@
-package com.ebay.build.cal.query.utils;
+package com.ebay.build.profiler.utils;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -11,8 +11,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import com.ebay.kernel.util.UnsynchronizedStringBuffer;
 
 public class StringUtils {
 	
@@ -84,7 +82,7 @@ public class StringUtils {
 			throws UnsupportedEncodingException, FileNotFoundException, IOException {
 			FileInputStream fis;
 			InputStreamReader isr;
-			UnsynchronizedStringBuffer sb = new UnsynchronizedStringBuffer(75000);
+			StringBuffer sb = new StringBuffer(75000);
 			char[] buf = new char[4096];
 			int numRead;
 			fis = new FileInputStream(fileName);

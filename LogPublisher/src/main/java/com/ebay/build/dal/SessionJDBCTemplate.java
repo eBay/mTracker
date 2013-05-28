@@ -14,7 +14,7 @@ import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
-import com.ebay.build.cal.model.Session;
+import com.ebay.build.profiler.model.Session;
 
 public class SessionJDBCTemplate {
 	private DataSource dataSource;

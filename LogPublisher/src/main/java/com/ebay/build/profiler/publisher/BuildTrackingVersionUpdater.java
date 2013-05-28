@@ -1,10 +1,5 @@
 package com.ebay.build.profiler.publisher;
 
-import java.io.File;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class BuildTrackingVersionUpdater {
 	

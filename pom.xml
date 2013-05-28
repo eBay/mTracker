@@ -16,6 +16,7 @@
 
 	<modules>
 		<module>calhelper</module>
+		<module>core</module>
 		<module>BuildProfiler</module>
 		<module>LogPublisher</module>	
 	</modules>

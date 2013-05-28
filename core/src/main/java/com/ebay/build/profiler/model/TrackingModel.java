@@ -1,8 +1,8 @@
-package com.ebay.build.cal.model;
+package com.ebay.build.profiler.model;
 
 import java.util.Date;
 
-import com.ebay.build.cal.query.utils.DateUtils;
+import com.ebay.build.profiler.utils.DateUtils;
 
 public abstract class TrackingModel {
 	private Date startTime;

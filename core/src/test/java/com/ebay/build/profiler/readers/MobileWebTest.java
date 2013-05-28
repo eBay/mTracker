@@ -1,4 +1,4 @@
-package com.ebay.build.cal.processors;
+package com.ebay.build.profiler.readers;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -10,7 +10,8 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.ebay.build.cal.model.Session;
+import com.ebay.build.profiler.model.Session;
+import com.ebay.build.profiler.readers.LineProcessor;
 
 public class MobileWebTest {
 	@SuppressWarnings("resource")

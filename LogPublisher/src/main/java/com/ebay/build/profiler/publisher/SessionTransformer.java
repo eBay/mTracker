@@ -5,10 +5,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ebay.build.cal.model.Session;
 import com.ebay.build.profiler.filter.FilterFactory;
 import com.ebay.build.profiler.filter.model.Cause;
 import com.ebay.build.profiler.filter.model.Filter;
+import com.ebay.build.profiler.model.Session;
 
 public class SessionTransformer {
 

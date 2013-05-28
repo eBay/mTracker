@@ -1,4 +1,4 @@
-package com.ebay.build.cal.processors;
+package com.ebay.build.profiler.readers;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -7,13 +7,13 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import com.ebay.build.cal.model.Machine;
-import com.ebay.build.cal.model.Phase;
-import com.ebay.build.cal.model.Plugin;
-import com.ebay.build.cal.model.Pool;
-import com.ebay.build.cal.model.Project;
-import com.ebay.build.cal.model.Session;
-import com.ebay.build.cal.query.utils.StringUtils;
+import com.ebay.build.profiler.model.Machine;
+import com.ebay.build.profiler.model.Phase;
+import com.ebay.build.profiler.model.Plugin;
+import com.ebay.build.profiler.model.Pool;
+import com.ebay.build.profiler.model.Project;
+import com.ebay.build.profiler.model.Session;
+import com.ebay.build.profiler.utils.StringUtils;
 
 public class LineProcessor {
 
@@ -201,7 +201,7 @@ public class LineProcessor {
 		String prjPattern = "(\\d+)\\s+T\\d{2}:\\d{2}:\\d{2}\\.\\d+\\s*Project\\s+(.*)\\s+(.*)\\s+(\\d+)\\s+(.*)";
 		List<String> found = StringUtils.getFound(line, prjPattern, false);
 		if (found.size() == 5) {
-			String id = found.get(0);
+			//String id = found.get(0);
 			String name = found.get(1);
 			String status = found.get(2);
 			String duration = found.get(3);
@@ -230,7 +230,7 @@ public class LineProcessor {
 		List<String> found = StringUtils.getFound(line, prjPattern, false);
 		
 		if (found.size() == 3) {
-			String id = found.get(0);
+			//String id = found.get(0);
 			String timeString = found.get(1);
 			String name= found.get(2).trim();
 			

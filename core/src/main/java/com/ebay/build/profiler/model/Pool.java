@@ -1,4 +1,4 @@
-package com.ebay.build.cal.model;
+package com.ebay.build.profiler.model;
 
 
 public class Pool {

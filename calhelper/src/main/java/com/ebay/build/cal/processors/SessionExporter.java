@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import org.sonatype.aether.util.StringUtils;
 
-import com.ebay.build.cal.model.Session;
+import com.ebay.build.profiler.model.Session;
 
 public class SessionExporter {
 

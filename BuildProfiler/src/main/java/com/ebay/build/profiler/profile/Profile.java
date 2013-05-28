@@ -11,9 +11,9 @@ import org.codehaus.plexus.DefaultPlexusContainer;
 import org.codehaus.plexus.component.repository.exception.ComponentLookupException;
 
 import com.ebay.build.cal.logging.CALLogger;
-import com.ebay.build.cal.model.Machine;
-import com.ebay.build.cal.model.Pool;
-import com.ebay.build.cal.model.Session;
+import com.ebay.build.profiler.model.Machine;
+import com.ebay.build.profiler.model.Pool;
+import com.ebay.build.profiler.model.Session;
 import com.ebay.build.profiler.util.GitUtil;
 import com.ebay.build.profiler.util.Timer;
 import com.ebay.kernel.calwrapper.CalTransaction;

@@ -4,9 +4,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import com.ebay.build.cal.model.Session;
-import com.ebay.build.cal.processors.LineProcessor;
-//import com.ebay.build.cal.processors.LoaderProcessor;
 import com.ebay.build.cal.query.CALMachine;
 import com.ebay.build.cal.query.CALPool;
 import com.ebay.build.cal.query.CALServiceClient;
@@ -17,6 +14,9 @@ import com.ebay.build.cal.query.GetPoolsResponse;
 import com.ebay.build.cal.query.GetRawLogRequest;
 import com.ebay.build.cal.query.GetRawLogResponse;
 import com.ebay.build.cal.query.common.CALServiceException;
+import com.ebay.build.profiler.model.Session;
+import com.ebay.build.profiler.readers.LineProcessor;
+//import com.ebay.build.cal.processors.LoaderProcessor;
 
 public class Main {
 	private final String RAPTOR_BUILD_CAL_ENV = "raptor-build-trackingsql";

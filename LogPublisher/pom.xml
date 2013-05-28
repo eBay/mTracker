@@ -27,7 +27,13 @@
 			<version>4.9</version>
 			<scope>test</scope>
 		</dependency>
-
+		
+	    <dependency>
+    		<groupId>com.ebay.build.profiler</groupId>
+      		<artifactId>core</artifactId>
+      		<version>0.0.2-M2_3.0.5</version>
+    	</dependency>
+    	<!-- 
 		<dependency>
 			<groupId>com.ebay.build.cal</groupId>
 			<artifactId>calhelper</artifactId>
@@ -47,7 +53,7 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-
+ 		-->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>

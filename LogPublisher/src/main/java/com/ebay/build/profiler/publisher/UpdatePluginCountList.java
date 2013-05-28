@@ -10,7 +10,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import com.ebay.build.dal.PluginCountJDBCTemplate;
-import com.ebay.build.cal.query.utils.StringUtils;
+import com.ebay.build.profiler.utils.StringUtils;
 
 public class UpdatePluginCountList {
 private ApplicationContext context = null;
