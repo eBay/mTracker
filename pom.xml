@@ -3,15 +3,13 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.ebay.build</groupId>
 	<artifactId>RaptorBuildTracking</artifactId>  
-	<version>${core.version}-SNAPSHOT</version>
+	<version>1.0.11-M2_3.0.5</version>
 	<packaging>pom</packaging>
 	<name>Parent Raptor Build Tracking</name>
 	<description>Build All Modules</description>
 	
-	 <properties>
-		<core.version>0.0.2</core.version>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		
+	 <properties>		
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>		
 	</properties>
 
 	<modules>

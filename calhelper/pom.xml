@@ -2,10 +2,9 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.ebay.build.cal</groupId>
   <artifactId>calhelper</artifactId>
-  <version>0.0.2-M2_3.0.5</version>
+  <version>1.0.11-M2_3.0.5</version>
   <name>CAL Helper</name>
   <description>calhelper is used to initialize CAL service and provide utils methods for CAL API users.</description>
-  
   
     <repositories>
   	<repository>
@@ -16,7 +15,7 @@
   
   <dependencies>
   	<!-- Compile Scope Dependencies -->
-    <dependency>
+	<dependency>
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-core</artifactId>
       <version>3.0.5</version>
@@ -70,11 +69,6 @@
  
  
   </dependencies>
-   
-	<build>
-		<plugins>
-			
-		</plugins>
-	</build>
+
   
 </project>
