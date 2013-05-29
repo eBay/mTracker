@@ -1,12 +1,12 @@
-package com.ebay.build.cal.processors;
+package com.ebay.build.profiler.writers;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import org.sonatype.aether.util.StringUtils;
 
 import com.ebay.build.profiler.model.Session;
+import com.ebay.build.profiler.utils.StringUtils;
 
 public class SessionExporter {
 

@@ -8,7 +8,6 @@ import org.apache.maven.plugin.MojoExecution;
 
 import com.ebay.build.profiler.model.Plugin;
 import com.ebay.build.profiler.util.Timer;
-import com.ebay.kernel.calwrapper.CalTransaction;
 
 /**
  * 
@@ -30,7 +29,7 @@ public class MojoProfile extends Profile {
 	private String pluginVersion;
 	private String pluginExecutionId;
 	
-	private CalTransaction mojoTransaction;
+	//private CalTransaction mojoTransaction;
 	
 	private Plugin plugin = new Plugin();
 
@@ -63,11 +62,11 @@ public class MojoProfile extends Profile {
 			getSession().getCurrentProject().getLastPhase().getPlugins().add(plugin);
 		}
 		
-		if(isCalInitialized()) {
-			mojoTransaction = calogger.startCALTransaction(mojoExecution.getPlugin().getId(), 
-					"Plugin",  
-					payload);
-		}
+//		if(isCalInitialized()) {
+//			mojoTransaction = calogger.startCALTransaction(mojoExecution.getPlugin().getId(), 
+//					"Plugin",  
+//					payload);
+//		}
 	}
 
 	public String getPluginGroupID() {
@@ -112,7 +111,7 @@ public class MojoProfile extends Profile {
 	public void stop() {
 		super.stop();
 		
-		String status = this.endTransaction(mojoTransaction);
+		String status = this.endTransaction();
 		
 		if (this.isInJekins()) {
 			plugin.setDuration(this.getElapsedTime());

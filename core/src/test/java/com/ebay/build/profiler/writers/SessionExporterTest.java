@@ -1,4 +1,4 @@
-package com.ebay.build.cal.processors;
+package com.ebay.build.profiler.writers;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

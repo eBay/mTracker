@@ -2,21 +2,16 @@ package com.ebay.build.profiler.profile;
 
 import java.io.File;
 import java.net.InetAddress;
-import java.net.URL;
 import java.net.UnknownHostException;
 
 import org.apache.maven.eventspy.EventSpy.Context;
 import org.apache.maven.execution.ExecutionEvent;
-import org.codehaus.plexus.DefaultPlexusContainer;
-import org.codehaus.plexus.component.repository.exception.ComponentLookupException;
 
-import com.ebay.build.cal.logging.CALLogger;
 import com.ebay.build.profiler.model.Machine;
 import com.ebay.build.profiler.model.Pool;
 import com.ebay.build.profiler.model.Session;
 import com.ebay.build.profiler.util.GitUtil;
 import com.ebay.build.profiler.util.Timer;
-import com.ebay.kernel.calwrapper.CalTransaction;
 
 /**
  * @requiresDependencyResolution runtime
@@ -27,7 +22,7 @@ public class Profile {
   protected long elapsedTime;
   protected Timer timer;
   
-  protected static CALLogger calogger;
+  //protected static CALLogger calogger;
   
   protected ExecutionEvent event;
   protected String gitRepoUrl;
@@ -44,7 +39,7 @@ public class Profile {
     this.context = c;
     
     if (context != null) {
-    	DefaultPlexusContainer container = (DefaultPlexusContainer) context.getData().get("plexus");
+    	//DefaultPlexusContainer container = (DefaultPlexusContainer) context.getData().get("plexus");
     	
     	String poolName = getAppName();
     	String machineName = "N/A";
@@ -55,18 +50,18 @@ public class Profile {
     		e.printStackTrace();
     	}
 
-    	if (calogger == null) {
-    		try {
-    			calogger = container.lookup(CALLogger.class);
-    		} catch (ComponentLookupException e) {
-    			e.printStackTrace();
-    		}
-    	}
+//    	if (calogger == null) {
+//    		try {
+//    			calogger = container.lookup(CALLogger.class);
+//    		} catch (ComponentLookupException e) {
+//    			e.printStackTrace();
+//    		}
+//    	}
 
-    	if (isCALEnabled() && !calogger.isCalInitialized()) {
-    		System.out.println("[INFO] Initializing CAL...");
-    		initializeCAL(poolName, machineName);
-    	}
+//    	if (isCALEnabled() && !calogger.isCalInitialized()) {
+//    		System.out.println("[INFO] Initializing CAL...");
+//    		initializeCAL(poolName, machineName);
+//    	}
     	
         if (getSession().getPool() == null) {
     		Pool pool = new Pool();
@@ -79,16 +74,17 @@ public class Profile {
     }
   }
 
-private void initializeCAL(String poolName, String machineName) {
-	URL calConfig = getClass().getClassLoader().getResource("cal.properties");
-	calogger.initialize(calConfig, poolName, machineName);
-}
+//private void initializeCAL(String poolName, String machineName) {
+//	URL calConfig = getClass().getClassLoader().getResource("cal.properties");
+//	calogger.initialize(calConfig, poolName, machineName);
+//}
   
   protected boolean isCalInitialized(){
-	  if (!isCALEnabled()) {
-		  return false;
-	  }
-	  return calogger != null && calogger.isCalInitialized();
+	  return false;
+//	  if (!isCALEnabled()) {
+//		  return false;
+//	  }
+//	  return calogger != null && calogger.isCalInitialized();
   }
     
   public void stop() {
@@ -176,33 +172,35 @@ private void initializeCAL(String poolName, String machineName) {
 		if (isInJekins()) {
 			return false;
 		}
-		String value = System.getProperty("cal.logging");
-		if (value == null) {
-			return true;
-		}
-		return !("off".equalsIgnoreCase(value) || "no".equalsIgnoreCase(value) || "false".equalsIgnoreCase(value));
+		return true;
+//		String value = System.getProperty("cal.logging");
+//		if (value == null) {
+//			return true;
+//		}
+//		return !("off".equalsIgnoreCase(value) || "no".equalsIgnoreCase(value) || "false".equalsIgnoreCase(value));
 	}
 	
 	protected boolean isInJekins() {
 		return "CI".equalsIgnoreCase(getBuildEnvironment());
 	}
 	
-	protected String endTransaction(CalTransaction transaction) {
+	//protected String endTransaction(CalTransaction transaction) {
+	protected String endTransaction() {
 		String status = "0";
-		Exception exception = null;
+		//Exception exception = null;
 		
 		if(event != null && event.getSession().getResult().getExceptions().size() > 0) {
 			status = "1";
-			exception = event.getException();
+			//exception = event.getException();
 		}
 		
-		if (isCALEnabled() && transaction != null) {
-			if (exception != null) {
-				calogger.endCALTransaction(transaction, status, exception);
-			} else {
-				calogger.endCALTransaction(transaction, status);
-			}
-		}
+//		if (isCALEnabled() && transaction != null) {
+//			if (exception != null) {
+//				calogger.endCALTransaction(transaction, status, exception);
+//			} else {
+//				calogger.endCALTransaction(transaction, status);
+//			}
+//		}
 		return status;
 	}
 	

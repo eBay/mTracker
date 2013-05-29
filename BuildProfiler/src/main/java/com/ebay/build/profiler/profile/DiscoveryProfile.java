@@ -10,24 +10,24 @@ import org.apache.maven.eventspy.EventSpy.Context;
 import org.apache.maven.execution.ExecutionEvent;
 import org.apache.maven.project.MavenProject;
 
-import com.ebay.build.cal.processors.SessionExporter;
 import com.ebay.build.profiler.readers.ProcessHelper;
 import com.ebay.build.profiler.util.Timer;
-import com.ebay.kernel.calwrapper.CalTransaction;
+import com.ebay.build.profiler.writers.SessionExporter;
+//import com.ebay.kernel.calwrapper.CalTransaction;
 
 
 public class DiscoveryProfile extends Profile {
 	
 	private static final String DELIMI = "----------";
 	
-	private CalTransaction discoveryTransaction;
+	//private CalTransaction discoveryTransaction;
 	
 	public DiscoveryProfile() {
 		super(new Timer());
 		
-		if(isCalInitialized()) {
-			discoveryTransaction = calogger.startCALTransaction("DEV", "Environment", "data");
-		}
+//		if(isCalInitialized()) {
+//			discoveryTransaction = calogger.startCALTransaction("DEV", "Environment", "data");
+//		}
 	}
 
 	public DiscoveryProfile(Context context, ExecutionEvent event) {
@@ -43,11 +43,11 @@ public class DiscoveryProfile extends Profile {
 			ProcessHelper.parseSessionPayLoad(data, getSession());
 		}
 	
-		if(isCalInitialized()) {
-			discoveryTransaction = calogger.startCALTransaction(transName, "Environment",  data);
-		}
+//		if(isCalInitialized()) {
+//			discoveryTransaction = calogger.startCALTransaction(transName, "Environment",  data);
+//		}
 		
-		System.out.println("[INFO] CAL logging Enabled: " + this.isCALEnabled());
+		//System.out.println("[INFO] CAL logging Enabled: " + this.isCALEnabled());
 		System.out.println("[INFO] Running From CI: " + this.isInJekins());
 		System.out.println("[INFO] Build Environment: " + this.getBuildEnvironment());
 	}
@@ -130,7 +130,7 @@ public class DiscoveryProfile extends Profile {
 	public void stop() {
 		super.stop();
 		
-		String status = endTransaction(discoveryTransaction);
+		String status = endTransaction();
 		
 		if (this.isInJekins()) {
 			List<MavenProject> projects = this.event.getSession().getProjects();
@@ -161,15 +161,15 @@ public class DiscoveryProfile extends Profile {
 			return;
 		}
 		
-		if (isCalInitialized()) {
-			try {
-				System.out.println("Stopping CAL Service...");
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			calogger.destroy();
-		}
+//		if (isCalInitialized()) {
+//			try {
+//				System.out.println("Stopping CAL Service...");
+//				Thread.sleep(1000);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+//			calogger.destroy();
+//		}
 	}
 	
 //	private void importToDB() {

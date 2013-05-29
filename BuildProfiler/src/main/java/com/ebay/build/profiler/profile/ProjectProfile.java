@@ -11,11 +11,10 @@ import org.apache.maven.project.MavenProject;
 import com.ebay.build.profiler.model.Project;
 import com.ebay.build.profiler.readers.ProcessHelper;
 import com.ebay.build.profiler.util.Timer;
-import com.ebay.kernel.calwrapper.CalTransaction;
 
 public class ProjectProfile extends Profile {
 
-	private CalTransaction projectTransaction;
+	//private CalTransaction projectTransaction;
 	private MavenProject project;
 	private List<PhaseProfile> phaseProfiles;
 	private String status;
@@ -55,9 +54,9 @@ public class ProjectProfile extends Profile {
 			getSession().setCurrentProject(p);
 		}
 		
-		if(isCalInitialized()) {
-			projectTransaction = calogger.startCALTransaction(this.projectName, "Project", this.projectId);
-		}
+//		if(isCalInitialized()) {
+//			projectTransaction = calogger.startCALTransaction(this.projectName, "Project", this.projectId);
+//		}
 	}
 	
 	public String getProjectGroupId() {
@@ -106,7 +105,7 @@ public class ProjectProfile extends Profile {
 	public void stop() {
 		super.stop();
 
-		String status = endTransaction(projectTransaction);
+		String status = endTransaction();
 		
 		if (isInJekins()) {
 			p.setDuration(this.getElapsedTime());

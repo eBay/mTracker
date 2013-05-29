@@ -10,14 +10,13 @@ import org.apache.maven.execution.ExecutionEvent;
 import com.ebay.build.profiler.model.Phase;
 import com.ebay.build.profiler.model.Project;
 import com.ebay.build.profiler.util.Timer;
-import com.ebay.kernel.calwrapper.CalTransaction;
 
 public class PhaseProfile extends Profile {
 
 	private String phaseName;
 	private List<MojoProfile> mojoProfiles;
 	
-	private CalTransaction phaseTransaction;
+	//private CalTransaction phaseTransaction;
 	
 	private Phase phase = new Phase();
 
@@ -35,9 +34,9 @@ public class PhaseProfile extends Profile {
 			project.getPhases().add(phase);
 		}
 		
-		if(isCalInitialized()) {
-			phaseTransaction = calogger.startCALTransaction(phaseName, "Phase", "");
-		}
+//		if(isCalInitialized()) {
+//			phaseTransaction = calogger.startCALTransaction(phaseName, "Phase", "");
+//		}
 	}
 
 	public void addMojoProfile(MojoProfile mojoProfile) {
@@ -56,7 +55,7 @@ public class PhaseProfile extends Profile {
 	public void stop() {
 		super.stop();
 
-		String status = endTransaction(phaseTransaction);
+		String status = endTransaction();
 		
 		if (isInJekins()) {
 			phase.setDuration(this.getElapsedTime());
