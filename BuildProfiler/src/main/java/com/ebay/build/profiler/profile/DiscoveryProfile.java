@@ -37,7 +37,7 @@ public class DiscoveryProfile extends Profile {
 		
 		String data = populateData();
 		
-		if (this.isInJekins()) {
+		if (this.isInJekins() && getSession() != null) {
 			getSession().setEnvironment(transName);
 			getSession().setStartTime(new Date(this.getTimer().getStartTime()));
 			ProcessHelper.parseSessionPayLoad(data, getSession());

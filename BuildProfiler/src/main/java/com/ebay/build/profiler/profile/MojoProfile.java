@@ -51,7 +51,7 @@ public class MojoProfile extends Profile {
 		}
 		String payload = " (" + pluginExecutionId + ")  " + configuration;
 		
-		if (this.isInJekins()) {
+		if (this.isInJekins() && getSession() != null) {
 			plugin.setGroupId(pluginGroupID);
 			plugin.setArtifactId(pluginArtifactID);
 			plugin.setVersion(pluginVersion);

@@ -27,7 +27,7 @@ public class PhaseProfile extends Profile {
 		
 		this.event = event;
 		
-		if (isInJekins()) {
+		if (isInJekins() && getSession() != null) {
 			Project project = getSession().getCurrentProject();
 			phase.setName(phaseName);
 			phase.setStartTime(new Date(this.getTimer().getStartTime()));

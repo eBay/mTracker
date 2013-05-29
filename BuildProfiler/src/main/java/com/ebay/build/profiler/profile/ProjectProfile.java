@@ -41,7 +41,7 @@ public class ProjectProfile extends Profile {
 			projectId = event.getProject().getId();
 		}
 
-		if (isInJekins()) {
+		if (isInJekins() && getSession() != null) {
 			p.setName(projectName);
 			p.setPayload(projectId);
 			p.setStartTime(new Date(this.getTimer().getStartTime()));
