@@ -24,7 +24,7 @@ public class SessionProfile extends Profile {
 			goal = event.getSession().getGoals().toString();
 		}
 
-		if (isInJekins()) {
+		if (isInJekins() && getSession() != null) {
 			getSession().setGoals(goal);
 		}
 		
