@@ -3,6 +3,7 @@ package com.ebay.build.profile;
 import org.apache.maven.model.Plugin;
 import org.apache.maven.plugin.MojoExecution;
 import org.apache.maven.project.MavenProject;
+import org.junit.Test;
 
 import com.ebay.build.profiler.profile.DiscoveryProfile;
 import com.ebay.build.profiler.profile.MojoProfile;
@@ -11,9 +12,10 @@ import com.ebay.build.profiler.profile.ProjectProfile;
 import com.ebay.build.profiler.profile.SessionProfile;
 import com.ebay.build.profiler.render.OutputRenderer;
 
-//FIXME
+
 public class LifecycleProfilerTest {
-  
+
+	@Test
   public void testSessionProfile() {
     
     SessionProfile s = new SessionProfile(null, null);
