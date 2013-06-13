@@ -22,4 +22,8 @@
       <property name="dataSource"  ref="dataSource" />    
    </bean>
       
+    <bean id="ConfigurationJDBCTemplate" 
+      class="com.ebay.build.service.config.ConfigurationJDBCTemplate">
+      <property name="dataSource"  ref="dataSource" />    
+   </bean>
 </beans>
