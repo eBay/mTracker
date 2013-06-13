@@ -6,6 +6,8 @@
     <groupId>com.ebay.build.service</groupId>
     <artifactId>build-track</artifactId>
     <packaging>jar</packaging>
+    <!-- If Run Jersey in container -->
+    <!-- <packaging>war</packaging>  -->
     <version>1.0-SNAPSHOT</version>
     <name>Build Track Service</name>
 
@@ -22,6 +24,14 @@
     </dependencyManagement>
 
     <dependencies>
+    	<!-- Run Jersey in container -->
+    	<dependency>
+            <groupId>org.glassfish.jersey.containers</groupId>
+            <artifactId>jersey-container-servlet-core</artifactId>
+            <!-- use the following artifactId if you don't need servlet 2.x compatibility -->
+            <!-- artifactId>jersey-container-servlet</artifactId -->
+        </dependency>
+        <!-- Run Jersey in standalone -->
         <dependency>
             <groupId>org.glassfish.jersey.containers</groupId>
             <artifactId>jersey-container-grizzly2-http</artifactId>
