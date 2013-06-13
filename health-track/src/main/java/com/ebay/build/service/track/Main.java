@@ -1,4 +1,4 @@
-package com.ebay.build.service.health;
+package com.ebay.build.service.track;
 
 import java.io.IOException;
 import java.net.URI;
@@ -13,7 +13,7 @@ import org.glassfish.jersey.server.ResourceConfig;
  */
 public class Main {
     // Base URI the Grizzly HTTP server will listen on
-    public static final String BASE_URI = "http://localhost:7070/myapp/";
+    public static final String BASE_URI = "http://D-SHC-00436998.corp.ebay.com:7070/myapp";
 
     /**
      * Starts Grizzly HTTP server exposing JAX-RS resources defined in this application.
@@ -22,7 +22,7 @@ public class Main {
     public static HttpServer startServer() {
         // create a resource config that scans for JAX-RS resources and providers
         // in com.ebay.build.service.health package
-        final ResourceConfig rc = new ResourceConfig().packages("com.ebay.build.service.health");
+        final ResourceConfig rc = new ResourceConfig().packages("com.ebay.build.service.track");
 
         // uncomment the following line if you want to enable
         // support for JSON on the service (you also have to uncomment

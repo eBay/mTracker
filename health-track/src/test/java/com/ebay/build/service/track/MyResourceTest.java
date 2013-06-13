@@ -1,4 +1,4 @@
-package com.ebay.build.service.health;
+package com.ebay.build.service.track;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;

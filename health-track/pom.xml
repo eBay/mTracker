@@ -4,10 +4,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.ebay.build.service</groupId>
-    <artifactId>health-track</artifactId>
+    <artifactId>track</artifactId>
     <packaging>jar</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>health-track</name>
+    <name>Build Track Service</name>
 
     <dependencyManagement>
         <dependencies>
@@ -60,6 +60,18 @@
 			<artifactId>jdbc</artifactId>
 			<version>10.2</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+			<version>2.1.7</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.3</version>
+		</dependency>
 
     </dependencies>
 
@@ -75,23 +87,6 @@
                     <target>1.6</target>
                 </configuration>
             </plugin>
-            <!-- 
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>1.2.1</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>java</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <mainClass>com.ebay.build.service.health.Main</mainClass>
-                </configuration>
-            </plugin>
-             -->
              
              <plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -109,37 +104,14 @@
 					<arguments>
 						<argument>-classpath</argument>
 						<classpath />
-						<argument>com.ebay.build.service.health.Main</argument>
+						<!-- <argument>com.ebay.build.persistent.healthcheck.scheduler.EmailSender</argument> HealthTrackScheduler--> 
+						<argument>com.ebay.build.service.track.Main</argument>
 					</arguments>
 				</configuration>				
 			</plugin>			
-            
-            
-            
-           
         </plugins>
     </build>
-    
-    <!-- 
-    <repositories>
-        <repository>
-            <id>release.maven.java.net</id>
-            <name>java.net Maven Release Repository</name>
-            <url>https://maven.java.net/content/groups/public</url>
-            <layout>default</layout>
-        </repository>
-    </repositories>
-    
-    <pluginRepositories>
-        <pluginRepository>
-            <id>snapshots.codehaus.org</id>
-            <name>Codehaus.org Snapshots Maven Repository</name>
-            <url>http://nexus.codehaus.org/snapshots</url>
-            <layout>default</layout>
-        </pluginRepository>
-    </pluginRepositories>
- 	-->
- 	
+ 
     <properties>
         <jersey.version>2.0-m13</jersey.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
