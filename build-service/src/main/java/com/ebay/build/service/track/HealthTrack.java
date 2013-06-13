@@ -16,12 +16,12 @@ import com.ebay.build.validation.util.XmlProcessor;
 @Path("/healthtrack")
 public class HealthTrack {
 	private final SimpleDateFormat actionDatePattern = new SimpleDateFormat("MM-dd-yyyy_HH-mm-ss-SSS");
-	private final File queueRoot = new File("queue");
+	private final File queueRoot = new File("/raptor.build.service/track/queue");
 	
 	public HealthTrack() {
 		if (!queueRoot.exists()) {
 			System.out.println("Making queue root: " + queueRoot);
-			queueRoot.mkdir();
+			queueRoot.mkdirs();
 		}
 	}
 

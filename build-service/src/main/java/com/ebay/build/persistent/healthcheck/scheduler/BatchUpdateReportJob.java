@@ -66,7 +66,7 @@ public class BatchUpdateReportJob implements Job {
 	}
 
 	private Collection<File> loadResultsFile() {
-		File queueRoot = new File("queue");
+		File queueRoot = new File("/raptor.build.service/track/queue");
 		System.out.println("queue root: 	" + queueRoot.getAbsolutePath());
 		Collection<File> resultFiles = FileUtils.listFiles(queueRoot, 
 				FileFilterUtils.suffixFileFilter("xml"), 
