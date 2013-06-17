@@ -29,7 +29,11 @@ public class HealthTrackScheduler {
             JobDetail emailJob = newJob(EmailSummaryPageJob.class)
                     .withIdentity("emailJob", "group1")
                     .build();
-
+            
+            JobDetail dcJob = newJob(DiskCleanJob.class)
+                    .withIdentity("diskCleanJob", "group1")
+                    .build();
+            
             // Trigger the job to run now, and then repeat every 5 minutes
 			Trigger batchUpdateTrigger = newTrigger()
 					.withIdentity("batchUpdateTrigger", "group1")
@@ -42,12 +46,21 @@ public class HealthTrackScheduler {
 					.withIdentity("emailTrigger", "group1")
 					.startNow()
 					.withSchedule(
-							simpleSchedule().withIntervalInSeconds(30)
+							simpleSchedule().withIntervalInSeconds(60 * 60 * 24)
 									.repeatForever()).build();
+			
+			Trigger dcTrigger = newTrigger()
+					.withIdentity("diskCleanTrigger", "group1")
+					.startNow()
+					.withSchedule(
+							simpleSchedule().withIntervalInSeconds(60 * 60 * 24)
+									.repeatForever()).build();
+
 
             // Tell quartz to schedule the job using our trigger
             scheduler.scheduleJob(batchUpdateJob, batchUpdateTrigger);
-            //scheduler.scheduleJob(emailJob, emailTrigger);
+            scheduler.scheduleJob(emailJob, emailTrigger);
+            scheduler.scheduleJob(dcJob, dcTrigger);
             
             // and start it off
             scheduler.start();

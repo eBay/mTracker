@@ -2,12 +2,8 @@ package com.ebay.build.persistent.healthcheck.scheduler;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.filefilter.FileFilterUtils;
-import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.springframework.context.ApplicationContext;
@@ -16,6 +12,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.ebay.build.persistent.healthcheck.ErrorItem;
 import com.ebay.build.persistent.healthcheck.HealthTrackDetailsJDBCTemplate;
 import com.ebay.build.persistent.healthcheck.HealthTrackJDBCTemplate;
+import com.ebay.build.utils.FileUtils;
 import com.ebay.build.utils.StringUtils;
 import com.ebay.build.validation.model.Level;
 import com.ebay.build.validation.model.jaxb.Category;
@@ -38,7 +35,10 @@ public class BatchUpdateReportJob implements Job {
 	
 	public void execute(JobExecutionContext context) {
 		System.out.println("Executing BatchUpdateReport...");
-		Collection<File> resultsFile = loadResultsFile();
+		File[] resultsFile = FileUtils.loadFiles(FileUtils.QUEUE_DIR, FileUtils.XML_EXT);
+		if (resultsFile == null) {
+			return;
+		}
 		System.out.println("Loaded " + resultsFile);
 		for (File resultFile : resultsFile) {
 			Results results = jaxbProcessor.unmarshal(resultFile);
@@ -47,8 +47,7 @@ public class BatchUpdateReportJob implements Job {
 			List<ErrorItem> items = parseResults(results);
         	
         	if (items.size() == 0 || results.getGitURL() == null) {
-        	//	if (items.size() == 0 || results.getGitURL() == null || results.getGitBranch() == null) {        		
-        		renameDoneFile(resultFile);
+        		FileUtils.renameDoneFile(resultFile);
 				continue;
         	}
         	try {
@@ -60,20 +59,11 @@ public class BatchUpdateReportJob implements Job {
         	} catch (Exception e) {
         		e.printStackTrace();
         	} finally {
-        		renameDoneFile(resultFile);
+        		FileUtils.renameDoneFile(resultFile);
         	}
 		}
 	}
 
-	private Collection<File> loadResultsFile() {
-		File queueRoot = new File("/raptor.build.service/track/queue");
-		System.out.println("queue root: 	" + queueRoot.getAbsolutePath());
-		Collection<File> resultFiles = FileUtils.listFiles(queueRoot, 
-				FileFilterUtils.suffixFileFilter("xml"), 
-				TrueFileFilter.INSTANCE);
-		return resultFiles;
-	}
-	
 	private List<ErrorItem> parseResults(Results results) {
     	List<ErrorItem> items = new ArrayList<ErrorItem>();
     	for (Project project : results.getProject()) {
@@ -99,17 +89,4 @@ public class BatchUpdateReportJob implements Job {
 	 private String getErrorCode(String solution) {
 		 return StringUtils.getFirstFound(solution, "#RaptorProjectHealthFAQs-(ERR-\\d+)", true);
 	 }
-	 
-	 private void renameDoneFile(File file) {
-			if (!file.exists()) {
-				return;
-			}
-			File dest = new File(file.getParent(), file.getName() + ".DONE");
-			boolean success = file.renameTo(dest);
-			if (success) {
-				System.out.println("[INFO] Rename Session LOG " + dest);
-			} else {
-				System.out.println("[WARNING] Failed rename session LOG to " + dest);
-			}
-		}
 }

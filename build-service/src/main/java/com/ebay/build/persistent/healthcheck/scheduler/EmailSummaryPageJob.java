@@ -30,7 +30,12 @@ public class EmailSummaryPageJob implements Job {
 		
 		Map<String, SummaryReport> report = processReport(modelJDBCTemplate.getSummaryReport());
 		
-		sender.sendEmail("mmao@ebay.com", "mmao@ebay.com", generateEmailBody(report));
+		String content = generateEmailBody(report);
+		if (report.isEmpty()) {
+			content = "No validation issues found in DB.";
+		}
+		
+		sender.sendEmail("mmao@ebay.com", "yunfwang@ebay.com",  content);
 	}
 	
 	private String generateEmailBody(Map<String, SummaryReport> reports) {

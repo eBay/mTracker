@@ -30,9 +30,13 @@ public class HealthTrack {
     @Produces(MediaType.TEXT_PLAIN)
     public String post(Results results) {
     	if (results.getJobName() == null) {
-    		System.out.println("ERROR: no job name provided.");
     		return "ERROR: no job name provided.";
     	}
+    	
+    	if (results.getGitURL() == null) {
+    		return "ERROR: cannot get the Git URL from the results.";
+    	}
+    			
     	String resultFileName = results.getJobName()
     			+ "_" + actionDatePattern.format(new Date()) + ".xml";
     	

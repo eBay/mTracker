@@ -114,8 +114,8 @@
 					<arguments>
 						<argument>-classpath</argument>
 						<classpath />
-						<!-- <argument>com.ebay.build.persistent.healthcheck.scheduler.EmailSender</argument> HealthTrackScheduler--> 
-						<argument>com.ebay.build.service.track.Main</argument>
+						 <argument>com.ebay.build.persistent.healthcheck.scheduler.HealthTrackScheduler</argument>  
+						<!--<argument>com.ebay.build.service.track.Main</argument>-->
 					</arguments>
 				</configuration>				
 			</plugin>			
