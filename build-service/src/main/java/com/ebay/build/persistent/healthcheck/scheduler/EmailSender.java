@@ -10,7 +10,8 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 public class EmailSender {
-	private final String MAIL_HOST = "atom.corp.ebay.com";
+	//private final String MAIL_HOST = "atom.corp.ebay.com";
+	private final String MAIL_HOST = "qa-ipmail01-d1.qa.ebay.com";
 	private final Integer MAIL_TIMEOUT = 60000;
 	
 	public void sendEmail(String to, String from, String content) {
@@ -36,7 +37,7 @@ public class EmailSender {
 		} catch (MessagingException mex) {
 			mex.printStackTrace();
 		}
-	}
+	}	
 	
 	public static void main(String[] args) {
 		EmailSender emailer = new EmailSender();

@@ -35,7 +35,8 @@ public class EmailSummaryPageJob implements Job {
 			content = "No validation issues found in DB.";
 		}
 		
-		sender.sendEmail("mmao@ebay.com", "yunfwang@ebay.com",  content);
+		sender.sendEmail("mmao@ebay.com", "mmao@ebay.com",  content);
+		System.out.println("Email sent: " + new Date());
 	}
 	
 	private String generateEmailBody(Map<String, SummaryReport> reports) {

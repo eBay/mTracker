@@ -36,7 +36,8 @@ public class BatchUpdateReportJob implements Job {
 	public void execute(JobExecutionContext context) {
 		System.out.println("Executing BatchUpdateReport...");
 		File[] resultsFile = FileUtils.loadFiles(FileUtils.QUEUE_DIR, FileUtils.XML_EXT);
-		if (resultsFile == null) {
+		if (resultsFile == null || resultsFile.length == 0) {
+			System.out.println("No result files found under " + FileUtils.QUEUE_DIR);
 			return;
 		}
 		System.out.println("Loaded " + resultsFile);
@@ -87,6 +88,6 @@ public class BatchUpdateReportJob implements Job {
     }
 	
 	 private String getErrorCode(String solution) {
-		 return StringUtils.getFirstFound(solution, "#RaptorProjectHealthFAQs-(ERR-\\d+)", true);
+		 return StringUtils.getFirstFound(solution, "#RaptorProjectHealthValidationRules-(ERR-\\d+)", true);
 	 }
 }

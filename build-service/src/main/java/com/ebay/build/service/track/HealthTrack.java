@@ -1,6 +1,7 @@
 package com.ebay.build.service.track;
 
 import java.io.File;
+import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -46,6 +47,14 @@ public class HealthTrack {
     	System.out.println("queue the result file： " + resultFile.getAbsolutePath());
     	
     	xmlProcessor.marshal(resultFile, results);
-    	return "request queued on " + resultFile.getAbsolutePath();
+    	return "request queued @ " + getHostName() + " on " + resultFile.getAbsolutePath();
+    }
+    
+    private String getHostName() {
+    	try {
+			return java.net.InetAddress.getLocalHost().getHostName();
+		} catch (UnknownHostException e) {
+		}
+    	return "";
     }
 }

@@ -21,4 +21,12 @@
         <servlet-name>Raptor Build Service</servlet-name>
         <url-pattern>/webapi/*</url-pattern>
     </servlet-mapping>
+    
+    <!-- Start up the scheduler -->
+    <!--    daily summary email -->
+    <!--    disk clean -->
+    <!--    validation track-->
+    <listener>
+      <listener-class>com.ebay.build.service.BuildServiceScheduler</listener-class>
+	</listener>
 </web-app>
