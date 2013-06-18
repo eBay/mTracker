@@ -52,6 +52,11 @@
 				keyword="Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin" />
 			<cause keyword="No tests were executed" />
 		</filter>
+		<filter name="SurefireForkFail">
+			<cause
+				keyword="Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin" />
+			<cause keyword="Error occurred in starting fork" />
+		</filter>
 		
 		
 		<filter name="DependencyResolveFailure">
@@ -140,6 +145,21 @@
 			<cause keyword="Invalid Service current version"/>
 		</filter>	
 		
+		<filter name="ShadeFail">
+			<cause keyword="Failed to execute goal org.apache.maven.plugins:maven-shade-plugin"/>
+		</filter>	
+		
+		<filter name="XtendFail">
+			<cause keyword="Failed to execute goal org.eclipse.xtend:xtend-maven-plugin"/>
+		</filter>	
+		
+		<filter name="APTFail">
+			<cause keyword="Failed to execute goal org.codehaus.mojo:apt-maven-plugin"/>
+		</filter>
+		
+		<filter name="EnforcerValidationFail">
+			<cause keyword="Failed to execute goal org.apache.maven.plugins:maven-enforcer-plugin"/>
+		</filter>
 		
 	</category>
 	
@@ -165,6 +185,13 @@
 				keyword="http://wiki2.arch.ebay.com/display/DevExTech/Assembler+Errors#AssemblerErrors-E104" />
 		</filter>
 		
+		<filter name="Assembler">
+			<cause
+				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
+			<cause
+				keyword="http://wiki2.arch.ebay.com/display/DevExTech/Assembler+Errors#AssemblerErrors-E255" />
+		</filter>
+		
 		<filter name="OBRGen-MissingClassFail">
 			<cause
 				keyword="org.apache.maven.lifecycle.LifecycleExecutionException: Failed to execute goal com.ebay.osgi.build:obrgen-maven-plugin" />
@@ -178,6 +205,14 @@
 			<cause
 				keyword="java.io.IOException: Failed to create directory" />
 		</filter>
+		
+		<filter name="JarFail-Manifest">
+			<cause
+				keyword="Failed to execute goal org.apache.maven.plugins:maven-jar-plugin" />
+			<cause
+				keyword="MANIFEST.MF does not exist" />
+		</filter>
+
 		
 		<filter name="NoDiskSpace">
 			<cause
