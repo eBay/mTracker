@@ -9,12 +9,14 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import com.ebay.build.utils.ServiceConfig;
+
 public class EmailSender {
 	//private final String MAIL_HOST = "atom.corp.ebay.com";
-	private final String MAIL_HOST = "qa-ipmail01-d1.qa.ebay.com";
-	private final Integer MAIL_TIMEOUT = 60000;
+	private final String MAIL_HOST = ServiceConfig.get("scheduler.email.host");
+	private final Integer MAIL_TIMEOUT = ServiceConfig.getInt("scheduler.email.timeout");
 	
-	public void sendEmail(String to, String from, String content) {
+	public void sendEmail(String to, String from, String content, String subject) {
 		Properties properties = System.getProperties();
 		properties.put("mail.host", MAIL_HOST);
 		properties.put("mail.timeout", MAIL_TIMEOUT);
@@ -29,7 +31,7 @@ public class EmailSender {
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(
 					to));
 
-			message.setSubject("Raptor Project Health Daily Report");
+			message.setSubject(subject);
 
 			message.setContent(content, "text/html;charset=utf-8");
 
@@ -41,6 +43,6 @@ public class EmailSender {
 	
 	public static void main(String[] args) {
 		EmailSender emailer = new EmailSender();
-		emailer.sendEmail("mmao@ebay.com", "mmao@ebay.com", "test");
+		emailer.sendEmail("mmao@ebay.com", "mmao@ebay.com", "test", "test subj");
 	}
 }

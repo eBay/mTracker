@@ -9,6 +9,8 @@ import org.quartz.Scheduler;
 import org.quartz.Trigger;
 import org.quartz.impl.StdSchedulerFactory;
 
+import com.ebay.build.utils.ServiceConfig;
+
 public class HealthTrackScheduler {
 
 	public void run() throws Exception {
@@ -30,7 +32,7 @@ public class HealthTrackScheduler {
 				.withIdentity("batchUpdateTrigger", "group1")
 				.startNow()
 				.withSchedule(
-						simpleSchedule().withIntervalInSeconds(60 * 5)
+						simpleSchedule().withIntervalInSeconds(ServiceConfig.getInt("scheduler.validation.dbpost.interval"))
 								.repeatForever()).build();
 		
 		// Trigger the job to run now, and then repeat every 24 hours
@@ -38,7 +40,7 @@ public class HealthTrackScheduler {
 				.withIdentity("emailTrigger", "group1")
 				.startNow()
 				.withSchedule(
-						simpleSchedule().withIntervalInSeconds(60 * 60 * 24)
+						simpleSchedule().withIntervalInSeconds(ServiceConfig.getInt("scheduler.email.interval"))
 								.repeatForever()).build();
 
 		// Trigger the job to run now, and then repeat every 24 hours
@@ -46,7 +48,7 @@ public class HealthTrackScheduler {
 				.withIdentity("diskCleanTrigger", "group1")
 				.startNow()
 				.withSchedule(
-						simpleSchedule().withIntervalInSeconds(60 * 60 * 24)
+						simpleSchedule().withIntervalInSeconds(ServiceConfig.getInt("scheduler.diskclean.interval"))
 								.repeatForever()).build();
 
 		// Tell quartz to schedule the job using our trigger

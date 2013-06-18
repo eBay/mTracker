@@ -13,6 +13,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.ebay.build.persistent.healthcheck.HealthTrackJDBCTemplate;
 import com.ebay.build.persistent.healthcheck.SummaryReport;
+import com.ebay.build.utils.ServiceConfig;
 
 public class EmailSummaryPageJob implements Job {
 	private ApplicationContext context = null;
@@ -35,7 +36,10 @@ public class EmailSummaryPageJob implements Job {
 			content = "No validation issues found in DB.";
 		}
 		
-		sender.sendEmail("mmao@ebay.com", "mmao@ebay.com",  content);
+		sender.sendEmail(ServiceConfig.get("scheduler.email.to"), 
+				ServiceConfig.get("scheduler.email.from"),  
+				content,
+				ServiceConfig.get("scheduler.email.subject"));
 		System.out.println("Email sent: " + new Date());
 	}
 	

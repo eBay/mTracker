@@ -11,13 +11,14 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import com.ebay.build.utils.ServiceConfig;
 import com.ebay.build.validation.model.jaxb.Results;
 import com.ebay.build.validation.util.XmlProcessor;
 
 @Path("/healthtrack")
 public class HealthTrack {
 	private final SimpleDateFormat actionDatePattern = new SimpleDateFormat("MM-dd-yyyy_HH-mm-ss-SSS");
-	private final File queueRoot = new File("/raptor.build.service/track/queue");
+	private final File queueRoot = new File(ServiceConfig.get("queue_dir"));
 	
 	public HealthTrack() {
 		if (!queueRoot.exists()) {
