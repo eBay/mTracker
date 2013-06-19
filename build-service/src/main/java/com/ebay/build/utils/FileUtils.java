@@ -9,7 +9,6 @@ public class FileUtils {
 	
 	public static final String DONE_EXT = ".DONE";
 	public static final String XML_EXT = ".xml";
-	public static final File QUEUE_DIR = new File("/raptor.build.service/track/queue");
 
 	public static void diskClean(File targetFolder, int retensionDays) {
 		File[] doneFiles = loadDoneFiles(targetFolder);

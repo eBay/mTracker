@@ -18,7 +18,7 @@ import com.ebay.build.validation.util.XmlProcessor;
 @Path("/healthtrack")
 public class HealthTrack {
 	private final SimpleDateFormat actionDatePattern = new SimpleDateFormat("MM-dd-yyyy_HH-mm-ss-SSS");
-	private final File queueRoot = new File(ServiceConfig.get("queue_dir"));
+	private final File queueRoot = new File(ServiceConfig.get("health_queue_dir"));
 	
 	public HealthTrack() {
 		if (!queueRoot.exists()) {

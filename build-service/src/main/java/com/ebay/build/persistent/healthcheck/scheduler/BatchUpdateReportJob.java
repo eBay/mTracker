@@ -13,6 +13,7 @@ import com.ebay.build.persistent.healthcheck.ErrorItem;
 import com.ebay.build.persistent.healthcheck.HealthTrackDetailsJDBCTemplate;
 import com.ebay.build.persistent.healthcheck.HealthTrackJDBCTemplate;
 import com.ebay.build.utils.FileUtils;
+import com.ebay.build.utils.ServiceConfig;
 import com.ebay.build.utils.StringUtils;
 import com.ebay.build.validation.model.Level;
 import com.ebay.build.validation.model.jaxb.Category;
@@ -26,6 +27,7 @@ public class BatchUpdateReportJob implements Job {
 	private final HealthTrackJDBCTemplate modelJDBCTemplate; 
 	private final HealthTrackDetailsJDBCTemplate detailsJDBCTemplate;
 	private final XmlProcessor jaxbProcessor = new XmlProcessor();
+	private final File QUEUE_DIR = new File(ServiceConfig.get("health_queue_dir"));
 	
 	public BatchUpdateReportJob() {
 		 context = new ClassPathXmlApplicationContext("healthtrack-sping-jdbc-config.xml");
@@ -35,9 +37,9 @@ public class BatchUpdateReportJob implements Job {
 	
 	public void execute(JobExecutionContext context) {
 		System.out.println("Executing BatchUpdateReport...");
-		File[] resultsFile = FileUtils.loadFiles(FileUtils.QUEUE_DIR, FileUtils.XML_EXT);
+		File[] resultsFile = FileUtils.loadFiles(QUEUE_DIR, FileUtils.XML_EXT);
 		if (resultsFile == null || resultsFile.length == 0) {
-			System.out.println("No result files found under " + FileUtils.QUEUE_DIR);
+			System.out.println("No result files found under " + QUEUE_DIR);
 			return;
 		}
 		System.out.println("Loaded " + resultsFile);

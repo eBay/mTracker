@@ -82,6 +82,12 @@
 			<artifactId>mail</artifactId>
 			<version>1.4.3</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>com.ebay.build.profiler</groupId>
+			<artifactId>core</artifactId>
+			<version>1.0.12</version>
+		</dependency>
 
     </dependencies>
 
@@ -115,8 +121,8 @@
 					<arguments>
 						<argument>-classpath</argument>
 						<classpath />
-						 <argument>com.ebay.build.persistent.healthcheck.scheduler.HealthTrackScheduler</argument>  
-						<!--<argument>com.ebay.build.service.track.Main</argument>-->
+							<argument>com.ebay.build.service.track.Main</argument>								   
+						<!--<argument>com.ebay.build.persistent.healthcheck.scheduler.HealthTrackScheduler</argument>-->
 					</arguments>
 				</configuration>				
 			</plugin>			
