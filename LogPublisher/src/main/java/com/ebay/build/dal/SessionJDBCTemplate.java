@@ -36,8 +36,8 @@ public class SessionJDBCTemplate {
 					Connection connection) throws SQLException {
 				PreparedStatement ps = connection.prepareStatement(SQL,
 						new String[] { "id" });
-				ps.setString(1, session.getPool().getName());
-				ps.setString(2, session.getPool().getMachine().getName());
+				ps.setString(1, session.getAppName());
+				ps.setString(2, session.getMachineName());
 				ps.setString(3, session.getUserName());
 				ps.setString(4, session.getEnvironment());
 				ps.setString(5, session.getStatus());

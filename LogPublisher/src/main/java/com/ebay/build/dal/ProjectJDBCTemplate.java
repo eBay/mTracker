@@ -22,7 +22,7 @@ public class ProjectJDBCTemplate {
 		this.jdbcTemplateObject = new JdbcTemplate(dataSource);
 	}
 
-	public int create(final Project project) {
+	public int create(final Project project, final String appName) {
 		final String SQL = "insert into RBT_PROJECT (pool_name, name, group_id, artifact_id, type, version, " +
 				"duration, status, start_time) " +
 				"values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -33,11 +33,7 @@ public class ProjectJDBCTemplate {
 					Connection connection) throws SQLException {
 				PreparedStatement ps = connection.prepareStatement(SQL,
 						new String[] { "id" });
-				String poolName = "N/A";
-				if (project.getPool() != null) {
-					poolName = project.getPool().getName();
-				}
-				ps.setString(1, poolName);
+				ps.setString(1, appName);
 				ps.setString(2, project.getName());
 				ps.setString(3, project.getGroupId());
 				ps.setString(4, project.getArtifactId());

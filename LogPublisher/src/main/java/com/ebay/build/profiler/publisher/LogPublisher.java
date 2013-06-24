@@ -46,7 +46,7 @@ public class LogPublisher {
 			SessionTransformer transformer = new SessionTransformer();
 			File stackTraceFile = null;
 			for (Session session : sessions) {
-				System.out.println("[INFO] Store Session -- " + session.getEnvironment() + " " + session.getPool().getName() + " " +session.getStartTime());
+				System.out.println("[INFO] Store Session -- " + session.getEnvironment() + " " + session.getAppName() + " " +session.getStartTime());
 				if (!StringUtils.isEmpty(session.getExceptionMessage())) {
 					stackTraceFile = loadFullStackTrace(file, session);
 				}

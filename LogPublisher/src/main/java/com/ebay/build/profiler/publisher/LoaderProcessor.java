@@ -55,7 +55,7 @@ public class LoaderProcessor {
 		RawDataJDBCTemplate rawJDBCTemplate = (RawDataJDBCTemplate) context.getBean("rawDataJDBCTemplate");
 		
 		for (Project project : session.getProjects().values()) {
-			int projectID = projectJDBCTemplate.create(project);
+			int projectID = projectJDBCTemplate.create(project, session.getAppName());
 			
 			linkSessionProject(sessionID, projectID);
 			

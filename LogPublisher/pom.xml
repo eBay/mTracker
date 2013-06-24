@@ -31,29 +31,9 @@
 	    <dependency>
     		<groupId>com.ebay.build.profiler</groupId>
       		<artifactId>core</artifactId>
-      		<version>${project.version}</version>
+      		<version>1.0.12</version>
     	</dependency>
-    	<!-- 
-		<dependency>
-			<groupId>com.ebay.build.cal</groupId>
-			<artifactId>calhelper</artifactId>
-			<version>0.0.2-M2_3.0.5</version>
-			<exclusions>
-				<exclusion>
-					 <groupId>com.ebay.kernel</groupId>
-  	 				 <artifactId>uKernelCore</artifactId>
-				</exclusion>
-				<exclusion>
-				 	<groupId>org.apache.maven</groupId>
-					<artifactId>maven-core</artifactId>      				
-				</exclusion>
-				<exclusion>
-					<groupId>com.sun.jersey</groupId>
-	  				<artifactId>jersey-client</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
- 		-->
+    	
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
@@ -93,9 +73,9 @@
 						<!-- automatically creates the classpath using all project dependencies, 
 							also adding the project build directory -->
 						<classpath />
-						<argument>com.ebay.build.profiler.publisher.CategoryUpdater</argument>
-						<!--
 						<argument>com.ebay.build.profiler.publisher.Main</argument>
+						<!--
+						<argument>com.ebay.build.profiler.publisher.CategoryUpdater</argument>
 						<argument>com.ebay.build.cal.processors.UpdatePluginCountList</argument>
 						-->
 					</arguments>

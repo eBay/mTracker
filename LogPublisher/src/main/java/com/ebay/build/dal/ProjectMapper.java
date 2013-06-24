@@ -14,7 +14,7 @@ public class ProjectMapper implements RowMapper<Project> {
 		Project project = new Project();
 		Pool pool = new Pool();
 		pool.setName(rs.getString("pool_name"));
-		project.setPool(pool);
+		//project.setPool(pool);
 		project.setName(rs.getString("name"));
 		project.setGroupId(rs.getString("group_id"));
 		project.setArtifactId(rs.getString("artifact_id"));

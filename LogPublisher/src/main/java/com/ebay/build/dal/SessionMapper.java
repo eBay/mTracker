@@ -6,8 +6,6 @@ import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
 
-import com.ebay.build.profiler.model.Machine;
-import com.ebay.build.profiler.model.Pool;
 import com.ebay.build.profiler.model.Session;
 
 public class SessionMapper implements RowMapper<Session> {
@@ -22,12 +20,8 @@ public class SessionMapper implements RowMapper<Session> {
 		session.setUserName(rs.getString("user_name"));
 		session.setStatus(rs.getString("status"));
 		session.setGoals(rs.getString("goals"));
-		Pool pool = new Pool();
-		pool.setName(rs.getString("pool_name"));
-		Machine machine = new Machine();
-		machine.setName(rs.getString("machine_name"));
-		pool.setMachine(machine);
-		session.setPool(pool);
+		session.setAppName(rs.getString("pool_name"));
+		session.setMachineName(rs.getString("machine_name"));
 		
 		Clob stacktrace = rs.getClob("full_stacktrace");
 		if (stacktrace != null) {
