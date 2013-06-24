@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-
 import com.ebay.build.profiler.model.Session;
 import com.ebay.build.profiler.utils.StringUtils;
 
@@ -42,7 +41,7 @@ public class SessionExporter {
 	
 	private String getSessionLogFileName(Session session) {
 		StringBuffer sBuffer = new StringBuffer();
-		sBuffer.append(session.getPool().getName()).append("--").append(session.getPool().getMachine().getName());
+		sBuffer.append(session.getAppName()).append("--").append(session.getMachineName());
 		sBuffer.append("--").append(session.getStartTime().getTime()).append(".log");
 		return sBuffer.toString();
 	}

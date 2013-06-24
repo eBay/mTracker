@@ -93,9 +93,9 @@
 						<!-- automatically creates the classpath using all project dependencies, 
 							also adding the project build directory -->
 						<classpath />
-						<argument>com.ebay.build.profiler.publisher.Main</argument>
-						<!--
 						<argument>com.ebay.build.profiler.publisher.CategoryUpdater</argument>
+						<!--
+						<argument>com.ebay.build.profiler.publisher.Main</argument>
 						<argument>com.ebay.build.cal.processors.UpdatePluginCountList</argument>
 						-->
 					</arguments>

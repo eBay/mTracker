@@ -1,13 +1,19 @@
 package com.ebay.build.profiler.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.ebay.build.profiler.utils.DateUtils;
 import com.ebay.build.profiler.utils.StringUtils;
 
 public class Session extends TrackingModel {
-	private Pool pool;
+	/*** 
+	 * Deprecate the Pool, use the appName for pool.getName. and use the machineName directly in session. 
+	 */
+	private String appName;
+	private String machineName;
 	
 	private String userName;
 	private String status;
@@ -23,6 +29,8 @@ public class Session extends TrackingModel {
 	private String goals;
 	private Map<String, Project> projects =  new HashMap<String, Project>();
 	
+	private List<Project> projectList = new ArrayList<Project>();
+	
 	private Project currentProject;
 	
 	private String exceptionMessage;
@@ -35,13 +43,6 @@ public class Session extends TrackingModel {
 	
 	private int id;
 	
-	public Pool getPool() {
-		return pool;
-	}
-	public void setPool(Pool pool) {
-		this.pool = pool;
-	}
-
 	public String getUserName() {
 		return userName;
 	}
@@ -119,7 +120,7 @@ public class Session extends TrackingModel {
 	public String toString() {
 		StringBuffer sBuffer = new StringBuffer();
 
-		appendLine(sBuffer, "SQLLog for " + getPool().getName() + "-MavenBuild:" + getPool().getMachine().getName());
+		appendLine(sBuffer, "SQLLog for " + getAppName() + "-MavenBuild:" + getMachineName());
 		appendLine(sBuffer, "Environment: raptor-build-tracking");
 		appendLine(sBuffer, "Start: " + DateUtils.getCALDateTimeString(getStartTime()));
 		
@@ -206,5 +207,26 @@ public class Session extends TrackingModel {
 	}
 	public void setFilter(String filter) {
 		this.filter = filter;
+	}
+	public String getAppName() {
+		return appName;
+	}
+	public void setAppName(String appName) {
+		this.appName = appName;
+	}
+	public String getMachineName() {
+		return machineName;
+	}
+	public void setMachineName(String machineName) {
+		this.machineName = machineName;
+	}
+	
+	public List<Project> getProjectList() {
+		this.projectList.addAll(this.projects.values());
+		return this.projectList;
+	}
+	
+	public void setProjectList(List<Project> prjs) {
+		this.projectList = prjs;
 	}
 }

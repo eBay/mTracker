@@ -16,8 +16,6 @@ public class PhaseProfile extends Profile {
 	private String phaseName;
 	private List<MojoProfile> mojoProfiles;
 	
-	//private CalTransaction phaseTransaction;
-	
 	private Phase phase = new Phase();
 
 	public PhaseProfile(Context c, String p, ExecutionEvent event) {
@@ -27,16 +25,12 @@ public class PhaseProfile extends Profile {
 		
 		this.event = event;
 		
-		if (isInJekins() && getSession() != null) {
+		if (getSession() != null) {
 			Project project = getSession().getCurrentProject();
 			phase.setName(phaseName);
 			phase.setStartTime(new Date(this.getTimer().getStartTime()));
 			project.getPhases().add(phase);
 		}
-		
-//		if(isCalInitialized()) {
-//			phaseTransaction = calogger.startCALTransaction(phaseName, "Phase", "");
-//		}
 	}
 
 	public void addMojoProfile(MojoProfile mojoProfile) {
@@ -57,9 +51,7 @@ public class PhaseProfile extends Profile {
 
 		String status = endTransaction();
 		
-		if (isInJekins()) {
-			phase.setDuration(this.getElapsedTime());
-			phase.setStatus(status);
-		}
+		phase.setDuration(this.getElapsedTime());
+		phase.setStatus(status);
 	}
 }

@@ -29,8 +29,6 @@ public class MojoProfile extends Profile {
 	private String pluginVersion;
 	private String pluginExecutionId;
 	
-	//private CalTransaction mojoTransaction;
-	
 	private Plugin plugin = new Plugin();
 
 	public MojoProfile(Context c, MojoExecution mojoExecution, ExecutionEvent event) {
@@ -51,7 +49,7 @@ public class MojoProfile extends Profile {
 		}
 		String payload = " (" + pluginExecutionId + ")  " + configuration;
 		
-		if (this.isInJekins() && getSession() != null) {
+		if (getSession() != null) {
 			plugin.setGroupId(pluginGroupID);
 			plugin.setArtifactId(pluginArtifactID);
 			plugin.setVersion(pluginVersion);
@@ -61,12 +59,6 @@ public class MojoProfile extends Profile {
 			plugin.setExecutionId(pluginExecutionId);
 			getSession().getCurrentProject().getLastPhase().getPlugins().add(plugin);
 		}
-		
-//		if(isCalInitialized()) {
-//			mojoTransaction = calogger.startCALTransaction(mojoExecution.getPlugin().getId(), 
-//					"Plugin",  
-//					payload);
-//		}
 	}
 
 	public String getPluginGroupID() {
@@ -113,9 +105,7 @@ public class MojoProfile extends Profile {
 		
 		String status = this.endTransaction();
 		
-		if (this.isInJekins()) {
-			plugin.setDuration(this.getElapsedTime());
-			plugin.setStatus(status);
-		}
+		plugin.setDuration(this.getElapsedTime());
+		plugin.setStatus(status);
 	}
 }

@@ -34,6 +34,7 @@ public class QueueService {
     public String post(@HeaderParam("Content-Type") String contentType, @PathParam("appname") String appName, 
     		@PathParam("jobname") String jobName, 
     		String body) {
+		System.out.println("in queue service....");
 		File appQueueFolder = new File(queueRoot, appName);
 		if (!appQueueFolder.exists()) {
 			System.out.println("Making application queue root: " + appQueueFolder);

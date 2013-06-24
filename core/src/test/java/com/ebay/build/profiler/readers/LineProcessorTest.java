@@ -2,7 +2,6 @@ package com.ebay.build.profiler.readers;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.BufferedReader;
@@ -27,8 +26,8 @@ public class LineProcessorTest {
 	public void testNewSession() {
 		Session session = processor.newSession("0 SQLLog for CalTestParent-MavenBuild:D-SHC-00436998");
 		
-		assertEquals("CalTestParent", session.getPool().getName());
-		assertEquals("D-SHC-00436998", session.getPool().getMachine().getName());
+		assertEquals("CalTestParent", session.getAppName());
+		assertEquals("D-SHC-00436998", session.getMachineName());
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -91,7 +90,8 @@ public class LineProcessorTest {
 		assertEquals("0.0.1-SNAPSHOT", project.getVersion());
 		
 		// pool not set to project
-		assertNull(project.getPool());
+		// comment out per code refactoring, project needs pool?
+		//assertNull(project.getPool());
 	}
 	
 	@Test
@@ -227,8 +227,8 @@ public class LineProcessorTest {
 		assertEquals(7693, sessions.get(0).getProjects().get("caltest").getDuration().longValue());
 		assertEquals(19533, sessions.get(0).getProjects().get("EBA For caltest").getDuration().longValue());
 		
-		assertEquals("CalTestParent", sessions.get(0).getPool().getName());
-		assertEquals("CalTestParent", sessions.get(1).getPool().getName());
+		assertEquals("CalTestParent", sessions.get(0).getAppName());
+		assertEquals("CalTestParent", sessions.get(1).getAppName());
 		
 		assertEquals("DEV", sessions.get(1).getEnvironment());
 		assertEquals(3, sessions.get(1).getProjects().size());

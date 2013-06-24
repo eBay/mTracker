@@ -12,8 +12,6 @@ public class SessionProfile extends Profile {
 	
 	private List<ProjectProfile> projectProfiles;
 	
-	//private CalTransaction sesionTransaction;
-
 	public SessionProfile(Context c, ExecutionEvent event) {
 		super(new Timer(), event, c);
 		
@@ -27,10 +25,6 @@ public class SessionProfile extends Profile {
 		if (isInJekins() && getSession() != null) {
 			getSession().setGoals(goal);
 		}
-		
-//		if(isCalInitialized()) {
-//			sesionTransaction = calogger.startCALTransaction("Session" , goal);
-//		}
 	}
 	
 	public void addProjectProfile(ProjectProfile projectProfile) {
@@ -44,7 +38,6 @@ public class SessionProfile extends Profile {
 	@Override
 	public void stop() {
 		super.stop();
-
 		endTransaction();
 	}
 }

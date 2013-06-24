@@ -14,7 +14,6 @@ import com.ebay.build.profiler.util.Timer;
 
 public class ProjectProfile extends Profile {
 
-	//private CalTransaction projectTransaction;
 	private MavenProject project;
 	private List<PhaseProfile> phaseProfiles;
 	private String status;
@@ -41,22 +40,16 @@ public class ProjectProfile extends Profile {
 			projectId = event.getProject().getId();
 		}
 
-		if (isInJekins() && getSession() != null) {
+		if (getSession() != null) {
 			p.setName(projectName);
 			p.setPayload(projectId);
 			p.setStartTime(new Date(this.getTimer().getStartTime()));
 			
 			ProcessHelper.praseProjectPayload(projectId, p);
 
-			p.setPool(getSession().getPool());
-
 			getSession().getProjects().put(projectName, p);
 			getSession().setCurrentProject(p);
 		}
-		
-//		if(isCalInitialized()) {
-//			projectTransaction = calogger.startCALTransaction(this.projectName, "Project", this.projectId);
-//		}
 	}
 	
 	public String getProjectGroupId() {
@@ -107,9 +100,7 @@ public class ProjectProfile extends Profile {
 
 		String status = endTransaction();
 		
-		if (isInJekins()) {
-			p.setDuration(this.getElapsedTime());
-			p.setStatus(status);
-		}
+		p.setDuration(this.getElapsedTime());
+		p.setStatus(status);
 	}
 }

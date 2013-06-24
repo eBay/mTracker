@@ -214,7 +214,7 @@ public class LineProcessor {
 			}
 			project.setDuration(Long.parseLong(duration));
 			project.setStatus(status);
-			project.setPool(session.getPool());
+			//project.setPool(session.getPool());
 			
 			// TODO: parsePayload here
 			project.setPayload(payload);
@@ -314,16 +314,19 @@ public class LineProcessor {
 
 		List<String> found = StringUtils.getFound(line, "\\d*\\s*SQLLog\\sfor\\s+(.*)-MavenBuild:(.*)", false);
 		
-		Pool pool = new Pool();
-		pool.setName(found.get(0));
+		//Pool pool = new Pool();
+		//pool.setName(found.get(0));
 		
-		Machine machine = new Machine();
-		machine.setName(found.get(1));
-		machine.setPool(pool);
+		session.setAppName(found.get(0));
+		session.setMachineName(found.get(1));
 		
-		pool.setMachine(machine);
+//		Machine machine = new Machine();
+//		machine.setName(found.get(1));
+//		machine.setPool(pool);
 		
-		session.setPool(pool);
+		//pool.setMachine(machine);
+		
+		//session.setPool(pool);
 		
 		return session;
 	}

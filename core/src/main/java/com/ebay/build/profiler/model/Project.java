@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Project extends TrackingModel {
-	private Pool pool;
-	
 	private String name;
 	private String groupId;
 	private String artifactId;
@@ -18,13 +16,6 @@ public class Project extends TrackingModel {
 	
 	private List<Phase> phases = new ArrayList<Phase>();
 	
-	
-	public Pool getPool() {
-		return pool;
-	}
-	public void setPool(Pool pool) {
-		this.pool = pool;
-	}
 	public String getName() {
 		return name;
 	}

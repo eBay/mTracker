@@ -7,8 +7,6 @@ import java.net.UnknownHostException;
 import org.apache.maven.eventspy.EventSpy.Context;
 import org.apache.maven.execution.ExecutionEvent;
 
-import com.ebay.build.profiler.model.Machine;
-import com.ebay.build.profiler.model.Pool;
 import com.ebay.build.profiler.model.Session;
 import com.ebay.build.profiler.util.GitUtil;
 import com.ebay.build.profiler.util.Timer;
@@ -63,14 +61,12 @@ public class Profile {
 //    		initializeCAL(poolName, machineName);
 //    	}
     	
-        if (getSession().getPool() == null) {
-    		Pool pool = new Pool();
-    		pool.setName(poolName);
-    		Machine machine = new Machine();
-    		machine.setName(machineName);
-    		pool.setMachine(machine);
-    		getSession().setPool(pool);
-        }
+    	if (getSession().getAppName() == null) {
+    		getSession().setAppName(poolName);
+    	}
+    	if (getSession().getMachineName() == null) {
+    		getSession().setMachineName(machineName);
+    	}
     }
   }
 
@@ -184,6 +180,10 @@ public class Profile {
 		return "CI".equalsIgnoreCase(getBuildEnvironment());
 	}
 	
+	protected boolean isInRIDE() {
+		return "RIDE".equalsIgnoreCase(getBuildEnvironment());
+	}
+	
 	//protected String endTransaction(CalTransaction transaction) {
 	protected String endTransaction() {
 		String status = "0";
@@ -210,8 +210,12 @@ public class Profile {
 			return transName;
 		}
 		
+		String eclipseEnv = System.getProperty("eclipse.p2.profile");
+		
 		if(System.getenv("BUILD_URL") != null) {
 			transName = "CI";
+		} else if (eclipseEnv != null) {
+			transName = eclipseEnv;
 		} else {
 			transName = "DEV";
 		}
