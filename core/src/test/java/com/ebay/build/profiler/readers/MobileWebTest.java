@@ -6,12 +6,10 @@ import static org.junit.Assert.assertNotNull;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.List;
 
 import org.junit.Test;
 
 import com.ebay.build.profiler.model.Session;
-import com.ebay.build.profiler.readers.LineProcessor;
 
 public class MobileWebTest {
 	@SuppressWarnings("resource")
@@ -28,14 +26,13 @@ public class MobileWebTest {
 		}
 		
 		LineProcessor pro = new LineProcessor();
-		List<Session> sessions = pro.process(sb.toString());
-		assertEquals(1, sessions.size());
+		Session session = pro.process(sb.toString());
 		
-		assertEquals("MobileWeb", sessions.get(0).getAppName());
+		assertEquals("MobileWeb", session.getAppName());
 		
 		//assertEquals("MobileWeb", sessions.get(0).getProjects().get("Samples Parent").getPool().getName());
 		
-		assertNotNull(sessions.get(0).getProjects().get("mweb"));
-		assertEquals("com.ebay.app.raptor", sessions.get(0).getProjects().get("mweb").getGroupId());
+		assertNotNull(session.getProjects().get("mweb"));
+		assertEquals("com.ebay.app.raptor", session.getProjects().get("mweb").getGroupId());
 	}
 }

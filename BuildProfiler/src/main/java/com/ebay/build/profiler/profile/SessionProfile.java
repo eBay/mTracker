@@ -22,7 +22,7 @@ public class SessionProfile extends Profile {
 			goal = event.getSession().getGoals().toString();
 		}
 
-		if (isInJekins() && getSession() != null) {
+		if (getSession() != null) {
 			getSession().setGoals(goal);
 		}
 	}

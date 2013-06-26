@@ -9,7 +9,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import org.junit.Test;
 
@@ -155,20 +154,19 @@ public class LineProcessorTest {
 		}
 		
 		LineProcessor pro = new LineProcessor();
-		List<Session> sessions = pro.process(sb.toString());
+		Session session = pro.process(sb.toString());
 
 		//System.out.println(sb.toString());
-		assertEquals(1, sessions.size());
 		
-		assertEquals("RIDE", sessions.get(0).getEnvironment());
-		assertEquals(3, sessions.get(0).getProjects().size());
-		assertEquals(1134, sessions.get(0).getProjects().get("Samples Parent").getDuration().longValue());
-		assertEquals(5086, sessions.get(0).getProjects().get("caltest").getDuration().longValue());
-		assertEquals(9970, sessions.get(0).getProjects().get("EBA For caltest").getDuration().longValue());
+		assertEquals("RIDE", session.getEnvironment());
+		assertEquals(3, session.getProjects().size());
+		assertEquals(1134, session.getProjects().get("Samples Parent").getDuration().longValue());
+		assertEquals(5086, session.getProjects().get("caltest").getDuration().longValue());
+		assertEquals(9970, session.getProjects().get("EBA For caltest").getDuration().longValue());
 		
-		assertEquals(8, sessions.get(0).getProjects().get("Samples Parent").getPhases().size());
+		assertEquals(8, session.getProjects().get("Samples Parent").getPhases().size());
 		
-		Phase phase = sessions.get(0).getProjects().get("Samples Parent").getPhases().get(2);
+		Phase phase = session.getProjects().get("Samples Parent").getPhases().get(2);
 		assertEquals("generate-resources", phase.getName());
 		assertEquals(98, phase.getDuration().longValue());
 		
@@ -185,7 +183,7 @@ public class LineProcessorTest {
 	}
 	
 	@SuppressWarnings("resource")
-	private List<Session> getSessions(String fileName) throws IOException {
+	private Session getSessions(String fileName) throws IOException {
 		BufferedReader br;
 		br = new BufferedReader(new FileReader(getClass().getClassLoader().getResource(fileName).getFile()));
 		
@@ -202,56 +200,14 @@ public class LineProcessorTest {
 	
 	@Test
 	public void testExceptionSession() throws IOException {
-		List<Session> sessions = getSessions("exception.txt");
-		assertEquals(1, sessions.size());
+		Session session = getSessions("exception.txt");
 		
-		Session session = sessions.get(0);
 		assertEquals("CI", session.getEnvironment());
 		assertEquals(2, session.getProjects().size());
 		assertEquals("mmao", session.getUserName());
 		assertTrue(session.getMavenVersion().equalsIgnoreCase("e:\\bin\\apache-maven-3.0.5-raptortimetracking\\bin\\.."));
 		assertEquals(2066, session.getProjects().get("test3").getDuration().longValue());
 		assertTrue(session.getExceptionMessage().contains("org.apache.maven.plugins:maven-compiler-plugin:2.5:compile "));
-	}
-	
-	@Test
-	public void testTwoSessionsProcess() throws IOException {
-		List<Session> sessions = getSessions("two_sessions.txt");
-
-		//System.out.println(sb.toString());
-		assertEquals(2, sessions.size());
-		
-		assertEquals("RIDE", sessions.get(0).getEnvironment());
-		assertEquals(3, sessions.get(0).getProjects().size());
-		assertEquals(1526, sessions.get(0).getProjects().get("Samples Parent").getDuration().longValue());
-		assertEquals(7693, sessions.get(0).getProjects().get("caltest").getDuration().longValue());
-		assertEquals(19533, sessions.get(0).getProjects().get("EBA For caltest").getDuration().longValue());
-		
-		assertEquals("CalTestParent", sessions.get(0).getAppName());
-		assertEquals("CalTestParent", sessions.get(1).getAppName());
-		
-		assertEquals("DEV", sessions.get(1).getEnvironment());
-		assertEquals(3, sessions.get(1).getProjects().size());
-		assertEquals(1169, sessions.get(1).getProjects().get("Samples Parent").getDuration().longValue());
-		assertEquals(7188, sessions.get(1).getProjects().get("caltest").getDuration().longValue());
-		assertEquals(10583, sessions.get(1).getProjects().get("EBA For caltest").getDuration().longValue());
-		
-		assertEquals(8, sessions.get(0).getProjects().get("Samples Parent").getPhases().size());
-		
-		Phase phase = sessions.get(1).getProjects().get("Samples Parent").getPhases().get(7);
-		assertEquals("package", phase.getName());
-		assertEquals(149, phase.getDuration().longValue());
-		
-		assertEquals(1, phase.getPlugins().size());
-		
-		assertEquals("org.apache.maven.plugins", phase.getPlugins().get(0).getGroupId());
-		assertEquals("maven-source-plugin", phase.getPlugins().get(0).getArtifactId());
-		assertEquals("2.1.2.ebay", phase.getPlugins().get(0).getVersion());
-		assertEquals(149, phase.getPlugins().get(0).getDuration().longValue());
-		assertEquals(Calendar.MARCH, phase.getPlugins().get(0).getStartTime().getMonth());
-		assertEquals(6, phase.getPlugins().get(0).getStartTime().getDate());
-		assertEquals(41, phase.getPlugins().get(0).getStartTime().getMinutes());
-		assertEquals(23, phase.getPlugins().get(0).getStartTime().getSeconds());
 	}
 	
 	@Test

@@ -71,7 +71,7 @@ public class HealthTrackJDBCTemplate {
 	
 	public List<SummaryReport> getSummaryReport() {
 		String SQL = "select a.job_name, a.git_url, a.git_branch, a.build_url, b.severity, count(*) as sumup  from rbt_health_track a, rbt_health_track_details b "
-				+ "where a.id = b.track_id  and last_modified_date > sysdate - 5 group by a.job_name, a.git_url, a. git_branch, a.build_url, b.severity";
+				+ "where a.id = b.track_id  and last_modified_date > sysdate - 15 group by a.job_name, a.git_url, a. git_branch, a.build_url, b.severity";
 		try {
 			List<SummaryReport> report = jdbcTemplateObject.query(SQL,
 					new Object[] { }, new SummaryReportMapper());

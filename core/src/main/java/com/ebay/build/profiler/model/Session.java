@@ -1,17 +1,12 @@
 package com.ebay.build.profiler.model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.ebay.build.profiler.utils.DateUtils;
 import com.ebay.build.profiler.utils.StringUtils;
 
 public class Session extends TrackingModel {
-	/*** 
-	 * Deprecate the Pool, use the appName for pool.getName. and use the machineName directly in session. 
-	 */
 	private String appName;
 	private String machineName;
 	
@@ -28,8 +23,6 @@ public class Session extends TrackingModel {
 	
 	private String goals;
 	private Map<String, Project> projects =  new HashMap<String, Project>();
-	
-	private List<Project> projectList = new ArrayList<Project>();
 	
 	private Project currentProject;
 	
@@ -219,14 +212,5 @@ public class Session extends TrackingModel {
 	}
 	public void setMachineName(String machineName) {
 		this.machineName = machineName;
-	}
-	
-	public List<Project> getProjectList() {
-		this.projectList.addAll(this.projects.values());
-		return this.projectList;
-	}
-	
-	public void setProjectList(List<Project> prjs) {
-		this.projectList = prjs;
 	}
 }

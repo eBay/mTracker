@@ -3,6 +3,9 @@ package com.ebay.build.profiler.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Project extends TrackingModel {
 	private String name;
 	private String groupId;

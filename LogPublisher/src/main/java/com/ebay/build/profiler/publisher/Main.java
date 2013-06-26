@@ -13,10 +13,12 @@ public class Main {
 				 retensionDays = Integer.parseInt(args[1]);
 			 }
 		}
-		LogPublisher publisher = new LogPublisher();
+		
 		File targetFolder = getTargetFolder(logDir);
+		
 		if (targetFolder.exists()) {
-			publisher.process(targetFolder, retensionDays);
+			new LogPublisher(new PublisherConfig().targetFolder(targetFolder)
+					.retensionDays(retensionDays)).publish();
 		}
 	}
 	

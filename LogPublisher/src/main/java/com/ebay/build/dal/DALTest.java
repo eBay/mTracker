@@ -51,10 +51,8 @@ public class DALTest {
 		}
 		
 		LineProcessor pro = new LineProcessor();
-		List<Session> sessions = pro.process(sb.toString());
-		for (Session session : sessions) {
-			lp.process(session);
-		}
+		Session session = pro.process(sb.toString());
+		lp.process(session);
 		
 		
 //		ProjectJDBCTemplate projectJDBCTemplate = (ProjectJDBCTemplate) context.getBean("projectJDBCTemplate");

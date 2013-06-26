@@ -7,17 +7,15 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import com.ebay.build.profiler.model.Machine;
 import com.ebay.build.profiler.model.Phase;
 import com.ebay.build.profiler.model.Plugin;
-import com.ebay.build.profiler.model.Pool;
 import com.ebay.build.profiler.model.Project;
 import com.ebay.build.profiler.model.Session;
 import com.ebay.build.profiler.utils.StringUtils;
 
-public class LineProcessor {
+public class LineProcessor implements ReaderProcessor {
 
-	public List<Session> process(String payload) {
+	public Session process(String payload) {
 		List<Session> sessions = new ArrayList<Session>();
 		
 		List<String> lines = Arrays.asList(payload.split("\n"));
@@ -87,7 +85,10 @@ public class LineProcessor {
 				continue;
 			}
 		}
-		return sessions;
+		if (sessions.size() > 0) {
+			return sessions.get(0);
+		}
+		return null;
 	}
 	
 	private boolean catchException(String line, Session session) {

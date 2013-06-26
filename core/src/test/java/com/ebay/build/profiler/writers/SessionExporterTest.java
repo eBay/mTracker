@@ -7,7 +7,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.List;
 
 import org.junit.Test;
 
@@ -30,8 +29,8 @@ public class SessionExporterTest {
 		}
 		
 		LineProcessor pro = new LineProcessor();
-		List<Session> sessions = pro.process(sb.toString());
-		return sessions.get(0);
+		Session session = pro.process(sb.toString());
+		return session;
 	}
 	
 	@Test

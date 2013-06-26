@@ -16,7 +16,7 @@ import org.apache.maven.eventspy.EventSpy.Context;
 import org.apache.maven.execution.ExecutionEvent;
 import org.apache.maven.project.MavenProject;
 import org.glassfish.jersey.client.ClientConfig;
-import org.glassfish.jersey.moxy.json.MoxyJsonFeature;
+import org.glassfish.jersey.jackson.JacksonFeature;
 
 import com.ebay.build.profiler.readers.ProcessHelper;
 import com.ebay.build.profiler.util.Timer;
@@ -40,7 +40,7 @@ public class DiscoveryProfile extends Profile {
 		
 		String data = populateData();
 		
-		if (this.isInJekins() && getSession() != null) {
+		if (getSession() != null) {
 			getSession().setEnvironment(transName);
 			getSession().setStartTime(new Date(this.getTimer().getStartTime()));
 			ProcessHelper.parseSessionPayLoad(data, getSession());
@@ -166,7 +166,7 @@ public class DiscoveryProfile extends Profile {
 	
 	private void postToQueueService() {
 		Client client = ClientBuilder.newClient(new ClientConfig());
-		client.register(MoxyJsonFeature.class);
+		client.register(JacksonFeature.class);
 
 		//String target = "http://rbuildservice.stratus.phx.qa.ebay.com/build-service/webapi/";
 		String target = "http://D-SHC-00436998:7070/myapp";
