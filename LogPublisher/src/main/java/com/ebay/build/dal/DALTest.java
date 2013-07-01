@@ -3,7 +3,6 @@ package com.ebay.build.dal;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.List;
 
 import com.ebay.build.profiler.model.Session;
 import com.ebay.build.profiler.publisher.LoaderProcessor;
