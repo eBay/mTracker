@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <filters>
 	<category name="user">
+		<filter name="DependencyResolveFailure">
+			<cause
+				keyword="Could not resolve dependencies for project" />
+		</filter>
+		<filter name="PluginDependencyResolveFailure">
+			<cause
+				keyword="org.apache.maven.plugin.PluginResolutionException" />
+			<cause
+				keyword="one of its dependencies could not be resolved" />
+		</filter>
 		<filter name="CompilationFailure">
 			<cause
 				keyword="Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin" />
-			<cause keyword="Compilation failure" />
 		</filter>
 
 		<filter name="AntRunFailure">
@@ -32,7 +41,6 @@
 		</filter>
 
 		<filter name="SiteExecutionFailure">
-
 			<cause
 				keyword="Failed to execute goal org.apache.maven.plugins:maven-site-plugin" />
 		</filter>
@@ -57,13 +65,6 @@
 				keyword="Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin" />
 			<cause keyword="Error occurred in starting fork" />
 		</filter>
-		
-		
-		<filter name="DependencyResolveFailure">
-			<cause
-				keyword="Could not resolve dependencies for project" />
-		</filter>
-		
 		<filter name="ResourceNotFound">
 			<cause keyword="org.codehaus.plexus.resource.loader.ResourceNotFoundException: Could not find resource"/>
 		</filter>
@@ -130,9 +131,9 @@
 			<cause keyword="java.lang.IllegalStateException: basedir"/>
 		</filter>
 		
-		<filter name="CoberturaInstrumentFail">
+		<filter name="CoberturaFail">
 			<cause keyword="Failed to execute goal org.codehaus.mojo:cobertura-maven-plugin"/>
-			<cause keyword="Unable to instrument project."/>
+			<!--<cause keyword="Unable to instrument project."/>-->
 		</filter>	
 		
 		<filter name="OBRGenConflictKernelBundle">
@@ -143,7 +144,12 @@
 		<filter name="SOAPluginErrServiceVersion">
 			<cause keyword="Failed to execute goal com.ebay.ebox.plugins:maven-soa-plugin"/>
 			<cause keyword="Invalid Service current version"/>
-		</filter>	
+		</filter>
+		
+		<filter name="SOAPluginErrServiceGeneration">
+			<cause keyword="Failed to execute goal com.ebay.ebox.plugins:maven-soa-plugin"/>
+			<cause keyword="Exception executing service generator facade, please make sure SOATools has been added to the project dependency list"/>
+		</filter>
 		
 		<filter name="ShadeFail">
 			<cause keyword="Failed to execute goal org.apache.maven.plugins:maven-shade-plugin"/>
@@ -159,6 +165,19 @@
 		
 		<filter name="EnforcerValidationFail">
 			<cause keyword="Failed to execute goal org.apache.maven.plugins:maven-enforcer-plugin"/>
+		</filter>
+		
+		<filter name="InvalidArtifactError">
+			<cause keyword="org.apache.maven.artifact.InvalidArtifactRTException"/>
+		</filter>
+		<filter name="BuildHelperFail">
+			<cause keyword="Failed to execute goal org.codehaus.mojo:build-helper-maven-plugin"/>
+		</filter>
+		<filter name="BundlePluginFail">
+			<cause keyword="Failed to execute goal org.apache.felix:maven-bundle-plugin"/>
+		</filter>
+		<filter name="FindbugsPluginFail">
+			<cause keyword="Failed to execute goal org.codehaus.mojo:findbugs-maven-plugin"/>
 		</filter>
 		
 	</category>
