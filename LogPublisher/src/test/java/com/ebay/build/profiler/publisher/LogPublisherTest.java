@@ -2,6 +2,7 @@ package com.ebay.build.profiler.publisher;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.net.URISyntaxException;
@@ -23,5 +24,12 @@ public class LogPublisherTest {
 		
 		assertNotNull(session);
 		assertEquals("CalTestParent", session.getAppName());
+		
+		File sessionFailFile = new File(targetFolder, "session_withexp.txt");
+		session = publisher.process(sessionFailFile);
+		assertNotNull(session);
+		assertEquals("Test3Parent", session.getAppName());
+		assertTrue(session.getExceptionMessage().contains("Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin"));
+		assertTrue(session.getFullStackTrace().contains("... 19 more"));
 	}
 }
