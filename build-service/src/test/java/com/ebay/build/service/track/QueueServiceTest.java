@@ -5,7 +5,6 @@ import static org.junit.Assert.assertTrue;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.List;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -50,12 +49,12 @@ public class QueueServiceTest {
 	     */
 	    @Test
 	    public void testGetIt() throws IOException {
-	    	List<Session> sessions = getSessions("exception.txt");
+	    	Session sessions = getSessions("exception.txt");
 	    	
 	    	Session session = new Session();
 	    	session.setEnvironment("RIDE");
 	    	
-	    	session.getProjects().putAll(sessions.get(0).getProjects());
+	    	session.getProjects().putAll(sessions.getProjects());
 	    	session.setFullStackTrace(null);
 	    	
 	    	Response response = target.path("queue/build/job1").request().post(Entity.entity(session, MediaType.APPLICATION_JSON));
@@ -63,7 +62,7 @@ public class QueueServiceTest {
 	    }
 	    
 	    @SuppressWarnings("resource")
-		private List<Session> getSessions(String fileName) throws IOException {
+		private Session getSessions(String fileName) throws IOException {
 			BufferedReader br;
 			br = new BufferedReader(new FileReader(getClass().getClassLoader().getResource(fileName).getFile()));
 			

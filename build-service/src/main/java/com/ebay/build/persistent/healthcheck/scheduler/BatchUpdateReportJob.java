@@ -12,7 +12,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.ebay.build.persistent.healthcheck.ErrorItem;
 import com.ebay.build.persistent.healthcheck.HealthTrackDetailsJDBCTemplate;
 import com.ebay.build.persistent.healthcheck.HealthTrackJDBCTemplate;
-import com.ebay.build.utils.FileUtils;
+import com.ebay.build.profiler.utils.FileUtils;
 import com.ebay.build.utils.ServiceConfig;
 import com.ebay.build.utils.StringUtils;
 import com.ebay.build.validation.model.Level;

@@ -1,16 +1,13 @@
 package com.ebay.build.profiler.publisher;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import com.ebay.build.dal.PluginCountJDBCTemplate;
-import com.ebay.build.profiler.utils.StringUtils;
+import com.ebay.build.profiler.utils.FileUtils;
 
 public class UpdatePluginCountList {
 private ApplicationContext context = null;
@@ -32,16 +29,8 @@ private ApplicationContext context = null;
 	
 	protected void execute() {
 		String listContent = null;
-		try {
-			System.out.println("=====" + this.getClass().getResource("/plugin_count_list.txt"));
-			listContent = StringUtils.readFile(this.getClass().getResource("/plugin_count_list.txt").getFile(), "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		System.out.println("=====" + this.getClass().getResource("/plugin_count_list.txt"));
+		listContent = FileUtils.readFile(new File(this.getClass().getResource("/plugin_count_list.txt").getFile()));
 		if (listContent == null) {
 			return;
 		}

@@ -1,0 +1,42 @@
+package com.ebay.build.profiler.utils;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
+import java.io.File;
+
+import org.junit.Test;
+
+public class FileUtilsTest {
+	
+	File resourceFolder = new File(this.getClass().getResource("/").getFile());
+	
+	@Test
+	public void testLoadFiles() {
+		File[] files = FileUtils.loadFiles(resourceFolder, ".xml");
+		assertNotNull(files);
+		assertEquals(1, files.length);
+		assertEquals("a.xml", files[0].getName());
+		
+		files = FileUtils.loadFiles(resourceFolder, ".DONE");
+		assertNotNull(files);
+		assertEquals(0, files.length);
+	}
+	
+	@Test
+	public void testReadFile() {
+		File[] files = FileUtils.loadFiles(resourceFolder, ".xml");
+		String contents = FileUtils.readFile(files[0]);
+		assertEquals("<a>test</a>", contents.trim());
+	}
+	
+	@Test
+	public void testDiskClean() {
+		File dc = new File(resourceFolder, "diskclean");
+		File[] files = FileUtils.loadDoneFiles(dc);
+		assertEquals(1, files.length);
+		FileUtils.diskClean(dc, 0);
+		files = FileUtils.loadDoneFiles(dc);
+		assertEquals(0, files.length);
+	}
+}
