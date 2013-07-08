@@ -20,8 +20,6 @@ public class Profile {
   protected long elapsedTime;
   protected Timer timer;
   
-  //protected static CALLogger calogger;
-  
   protected ExecutionEvent event;
   protected String gitRepoUrl;
   
@@ -37,30 +35,15 @@ public class Profile {
     this.context = c;
     
     if (context != null) {
-    	//DefaultPlexusContainer container = (DefaultPlexusContainer) context.getData().get("plexus");
     	
     	String poolName = getAppName();
     	String machineName = "N/A";
     	try {
     		machineName = InetAddress.getLocalHost().getHostName();
     	} catch (UnknownHostException e) {
-    		// TODO Auto-generated catch block
     		e.printStackTrace();
     	}
 
-//    	if (calogger == null) {
-//    		try {
-//    			calogger = container.lookup(CALLogger.class);
-//    		} catch (ComponentLookupException e) {
-//    			e.printStackTrace();
-//    		}
-//    	}
-
-//    	if (isCALEnabled() && !calogger.isCalInitialized()) {
-//    		System.out.println("[INFO] Initializing CAL...");
-//    		initializeCAL(poolName, machineName);
-//    	}
-    	
     	if (getSession().getAppName() == null) {
     		getSession().setAppName(poolName);
     	}
@@ -70,17 +53,8 @@ public class Profile {
     }
   }
 
-//private void initializeCAL(String poolName, String machineName) {
-//	URL calConfig = getClass().getClassLoader().getResource("cal.properties");
-//	calogger.initialize(calConfig, poolName, machineName);
-//}
-  
   protected boolean isCalInitialized(){
 	  return false;
-//	  if (!isCALEnabled()) {
-//		  return false;
-//	  }
-//	  return calogger != null && calogger.isCalInitialized();
   }
     
   public void stop() {
@@ -169,11 +143,6 @@ public class Profile {
 			return false;
 		}
 		return true;
-//		String value = System.getProperty("cal.logging");
-//		if (value == null) {
-//			return true;
-//		}
-//		return !("off".equalsIgnoreCase(value) || "no".equalsIgnoreCase(value) || "false".equalsIgnoreCase(value));
 	}
 	
 	protected boolean isInJekins() {
@@ -184,23 +153,13 @@ public class Profile {
 		return "RIDE".equalsIgnoreCase(getBuildEnvironment());
 	}
 	
-	//protected String endTransaction(CalTransaction transaction) {
 	protected String endTransaction() {
 		String status = "0";
-		//Exception exception = null;
 		
 		if(event != null && event.getSession().getResult().getExceptions().size() > 0) {
 			status = "1";
-			//exception = event.getException();
 		}
 		
-//		if (isCALEnabled() && transaction != null) {
-//			if (exception != null) {
-//				calogger.endCALTransaction(transaction, status, exception);
-//			} else {
-//				calogger.endCALTransaction(transaction, status);
-//			}
-//		}
 		return status;
 	}
 	

@@ -3,24 +3,36 @@ package com.ebay.build.profiler.writers;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.ebay.build.profiler.model.Session;
 import com.ebay.build.profiler.utils.StringUtils;
 
 public class SessionExporter {
 
-	public void process(Session session) {
-		File targetFile = new File(genTargetFolder(), getSessionLogFileName(session));
+	public List<File> process(Session session) {
+		return process(session, genTargetFolder());
+	}
+	
+	public List<File> process(Session session, File targetFolder) {
+		File targetFile = new File(targetFolder, getSessionLogFileName(session));
 
 		System.out.println("[INFO] Dump build tracking session to " + targetFile);
 		
+		List<File> files = new ArrayList<File>();
+
 		writeToFile(targetFile, session.toString());
+		
+		files.add(targetFile);
 		
 		if (!StringUtils.isEmpty(session.getFullStackTrace())) {
 			File stackTraceFile = new File(genTargetFolder(), targetFile.getName() + ".stacktrace");
 			System.out.println("[INFO] Dump build tracking session stacktrace to " + stackTraceFile);
 			writeToFile(stackTraceFile, session.getFullStackTrace());
+			files.add(stackTraceFile);
 		}
+		return files;
 	}
 	
 	private void writeToFile(File targetFile, String body) {
