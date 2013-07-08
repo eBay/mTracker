@@ -33,6 +33,9 @@ public class FileUtilsTest {
 	@Test
 	public void testDiskClean() {
 		File dc = new File(resourceFolder, "diskclean");
+		
+		FileUtils.renameDoneFile(new File(dc, "filestodelete.txt"));
+		
 		File[] files = FileUtils.loadDoneFiles(dc);
 		assertEquals(1, files.length);
 		FileUtils.diskClean(dc, 0);
