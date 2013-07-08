@@ -3,8 +3,12 @@ package com.ebay.build.profiler.filter;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.List;
 
 import org.junit.Test;
 
@@ -12,6 +16,7 @@ import com.ebay.build.profiler.filter.model.Category;
 import com.ebay.build.profiler.filter.model.Cause;
 import com.ebay.build.profiler.filter.model.Filter;
 import com.ebay.build.profiler.filter.model.Filters;
+import com.ebay.build.profiler.publisher.SessionTransformer;
 
 public class FilterFactoryTest {
 
@@ -81,5 +86,26 @@ public class FilterFactoryTest {
 		assertEquals(2, result.getCategory().size());
 		assertEquals(2, result.getCategory().get(1).getFilter().size());
 		assertEquals("key6", result.getCategory().get(1).getFilter().get(1).getCause().get(1).getKeyword());
+	}
+	
+	@Test
+	public void testRemoteFilter() {
+		URL remoteFilter = null;
+		try {
+			remoteFilter = new URL(SessionTransformer.FILTER_LIST_IN_GIT);
+		} catch (MalformedURLException e) {
+			fail(e.getMessage());
+		}
+		FilterFactory factory = new FilterFactory();
+		List<Filter> filters = factory.build(remoteFilter, null);
+		assertTrue(filters.size() > 0);
+	}
+	
+	@Test
+	public void testLocalFilter() {
+		URL localFilter = getClass().getClassLoader().getResource("test-filter.xml");
+		FilterFactory factory = new FilterFactory();
+		List<Filter> filters = factory.build(null, localFilter);
+		assertTrue(filters.size() > 0);
 	}
 }

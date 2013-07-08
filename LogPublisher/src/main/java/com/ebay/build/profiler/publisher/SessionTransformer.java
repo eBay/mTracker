@@ -13,7 +13,7 @@ import com.ebay.build.profiler.model.Session;
 public class SessionTransformer {
 
 	private final List<Filter> filters = new ArrayList<Filter>();
-	private final static String FILTER_LIST_IN_GIT = "https://github.scm.corp.ebay.com/DevExTech/maven-time-tracking/raw/master/LogPublisher/src/main/resources/default-filters.xml";
+	public final static String FILTER_LIST_IN_GIT = "https://github.scm.corp.ebay.com/DevExTech/maven-time-tracking/raw/master/LogPublisher/src/main/resources/default-filters.xml";
 
 	public SessionTransformer() {
 		FilterFactory factory = new FilterFactory();
