@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -84,4 +85,21 @@ public class FileUtils {
 			System.out.println("[WARNING] Failed rename session LOG to " + dest);
 		}
 	}
+	
+	public static void writeToFile(File targetFile, String body) {
+		FileWriter fileWriter = null;
+		try {
+			fileWriter = new FileWriter(targetFile);
+			fileWriter.write(body);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		} finally {
+			try {
+				fileWriter.close();
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		}
+	}
+	
 }

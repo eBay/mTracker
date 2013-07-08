@@ -1,7 +1,9 @@
 package com.ebay.build.profiler.utils;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 
@@ -34,6 +36,8 @@ public class FileUtilsTest {
 	public void testDiskClean() {
 		File dc = new File(resourceFolder, "diskclean");
 		
+		assertTrue(dc.exists());
+		
 		FileUtils.renameDoneFile(new File(dc, "filestodelete.txt"));
 		
 		File[] files = FileUtils.loadDoneFiles(dc);
@@ -41,5 +45,17 @@ public class FileUtilsTest {
 		FileUtils.diskClean(dc, 0);
 		files = FileUtils.loadDoneFiles(dc);
 		assertEquals(0, files.length);
+	}
+	
+	@Test
+	public void testWrite() {
+		File dc = new File(resourceFolder, "diskclean");
+		File file = new File(dc, "test.done");
+		assertFalse(file.exists());
+		FileUtils.writeToFile(file, "some contents");
+		assertTrue(file.exists());
+		
+		FileUtils.diskClean(dc, 0);
+		assertFalse(file.exists());
 	}
 }
