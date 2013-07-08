@@ -12,11 +12,7 @@ public class JsonProcessor implements ReaderProcessor {
 	public Session process(String payload) {
 		try {
 			return fromJson(payload);
-		} catch (JsonParseException e) {
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
