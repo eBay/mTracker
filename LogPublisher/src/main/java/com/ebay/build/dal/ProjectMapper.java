@@ -5,16 +5,12 @@ import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
 
-import com.ebay.build.profiler.model.Pool;
 import com.ebay.build.profiler.model.Project;
 
 public class ProjectMapper implements RowMapper<Project> {
 
 	public Project mapRow(ResultSet rs, int arg1) throws SQLException {
 		Project project = new Project();
-		Pool pool = new Pool();
-		pool.setName(rs.getString("pool_name"));
-		//project.setPool(pool);
 		project.setName(rs.getString("name"));
 		project.setGroupId(rs.getString("group_id"));
 		project.setArtifactId(rs.getString("artifact_id"));
