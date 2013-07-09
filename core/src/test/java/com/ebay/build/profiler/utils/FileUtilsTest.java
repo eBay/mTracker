@@ -54,8 +54,5 @@ public class FileUtilsTest {
 		assertFalse(file.exists());
 		FileUtils.writeToFile(file, "some contents");
 		assertTrue(file.exists());
-		
-		FileUtils.diskClean(dc, 0);
-		assertFalse(file.exists());
 	}
 }
