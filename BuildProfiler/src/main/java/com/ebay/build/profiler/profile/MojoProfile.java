@@ -57,7 +57,9 @@ public class MojoProfile extends Profile {
 			plugin.setStartTime(new Date(this.getTimer().getStartTime()));
 			plugin.setPayload(payload);
 			plugin.setExecutionId(pluginExecutionId);
-			getSession().getCurrentProject().getLastPhase().getPlugins().add(plugin);
+			if (getSession().getCurrentProject().getPhases().size() > 0) {
+				getSession().getCurrentProject().getLastPhase().getPlugins().add(plugin);
+			}
 		}
 	}
 
