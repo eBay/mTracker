@@ -27,14 +27,46 @@
 				keyword="http://wiki2.arch.ebay.com/display/DevExTech/Assembler+Errors#AssemblerErrors-E57" />
 		</filter>
 		
+		<filter name="AssemblerResolveWebBundleFail">
+			<cause
+				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
+			<cause
+				keyword="Failed to Resolve Web Bundle" />
+		</filter>
+		
+		<filter name="AssemblerRegPkgRefFail">
+			<cause
+				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
+			<cause
+				keyword="Unable to register package ref" />
+		</filter>
+		
+		<filter name="AssemblerWebBunldeNotFound">
+			<cause
+				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
+			<cause
+				keyword="Unable to identify the web bundle" />
+		</filter>
+		
+		<filter name="AssemblerNoPOM">
+			<cause
+				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
+			<cause
+				keyword="Goal requires a project to execute but there is no POM in this directory" />
+		</filter>
+		
+		<filter name="ReleasePluginFailed">
+			<cause
+				keyword="Failed to execute goal org.apache.maven.plugins:maven-release-plugin" />
+		</filter>
+		
 		<filter name="AssemblerErrMkFileFail">
 			<cause
 				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
 			<cause
 				keyword="http://wiki2.arch.ebay.com/display/DevExTech/Assembler+Errors#AssemblerErrors-E10" />
 		</filter>
-		
-		
+				
 		<filter name="DeployExecutionFailure">
 			<cause
 				keyword="Failed to execute goal org.apache.maven.plugins:maven-deploy-plugin" />			
@@ -76,6 +108,10 @@
 		<filter name="SoapUITestFailure">
 			<cause keyword="Failed to execute goal eviware:maven-soapui-plugin"/>
 			<cause keyword="SoapUI Test(s) failed"/>
+		</filter>
+		
+		<filter name="WADLFailure">
+			<cause keyword="com.sun.jersey.contribs:maven-wadl-plugin"/>
 		</filter>
 		
 		<filter name="SoapUIConnectionFailure">
@@ -131,6 +167,16 @@
 			<cause keyword="java.lang.IllegalStateException: basedir"/>
 		</filter>
 		
+		<filter name="WarPluginFail-updatemode">
+			<cause keyword="Failed to execute goal org.apache.maven.plugins:maven-war-plugin"/>
+			<cause keyword="pre-existing WEB-INF/web.xml if executing in update mode"/>
+		</filter>
+		
+		<filter name="WarPluginFail-filenotfound">
+			<cause keyword="Failed to execute goal org.apache.maven.plugins:maven-war-plugin"/>
+			<cause keyword="Caused by: java.io.FileNotFoundException"/>
+		</filter>
+				
 		<filter name="CoberturaFail">
 			<cause keyword="Failed to execute goal org.codehaus.mojo:cobertura-maven-plugin"/>
 			<!--<cause keyword="Unable to instrument project."/>-->
@@ -204,7 +250,7 @@
 				keyword="http://wiki2.arch.ebay.com/display/DevExTech/Assembler+Errors#AssemblerErrors-E104" />
 		</filter>
 		
-		<filter name="Assembler">
+		<filter name="Assembler-AppReg-NA">
 			<cause
 				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
 			<cause
@@ -258,6 +304,23 @@
 			<cause
 				keyword="Cannot create resource output directory" />	
 		</filter>
+		
+		<filter name="AssemblerStateHubHttp500">
+			<cause
+				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
+			<cause
+				keyword="Internal Server Error (500) - Internal Server Error" />
+		</filter>
+		
+		<filter name="AssemblerValidationURLConnTimeout">
+			<cause
+				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
+			<cause
+				keyword="Failed to validate the url" />
+			<cause
+				keyword="Connection timed out" />			
+		</filter>
+		
 			
 	</category>
 </filters>
