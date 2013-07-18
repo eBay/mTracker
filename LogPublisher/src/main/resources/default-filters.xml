@@ -27,6 +27,11 @@
 				keyword="http://wiki2.arch.ebay.com/display/DevExTech/Assembler+Errors#AssemblerErrors-E57" />
 		</filter>
 		
+		<filter name="MavenExecFail">
+			<cause
+				keyword="Failed to execute goal org.codehaus.mojo:exec-maven-plugin" />
+		</filter>
+		
 		<filter name="AssemblerResolveWebBundleFail">
 			<cause
 				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
@@ -225,6 +230,24 @@
 		<filter name="FindbugsPluginFail">
 			<cause keyword="Failed to execute goal org.codehaus.mojo:findbugs-maven-plugin"/>
 		</filter>
+
+		<filter name="KarmaPluginFail">
+			<cause keyword="Failed to execute goal com.kelveden:maven-karma-plugin"/>
+		</filter>
+		
+		<filter name="TestExitInIllegalState">
+			<cause keyword="org.apache.maven.plugins:maven-surefire-plugin"/>
+			<cause keyword="java.lang.IllegalStateException: Shutdown in progress"/>
+		</filter>
+
+		<filter name="NoPOMinTargetFolder">
+			<cause keyword="Goal requires a project to execute but there is no POM in this directory"/>
+		</filter>
+
+		<filter name="OBRGenFailedCopy2LocalOBR">
+			<cause keyword="com.ebay.osgi.build:obrgen-maven-plugin"/>
+			<cause keyword="IOException while copying the dependencies to localOBR"/>
+		</filter>
 		
 	</category>
 	
@@ -321,6 +344,11 @@
 				keyword="Connection timed out" />			
 		</filter>
 		
-			
+		<filter name="OBRGen0.1.9.1Bug">
+			<cause
+				keyword="obrgen-maven-plugin:0.1.9.1" />
+			<cause
+				keyword="String index out of range: 8" />
+		</filter>			
 	</category>
 </filters>
