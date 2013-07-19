@@ -60,6 +60,13 @@
 				keyword="Goal requires a project to execute but there is no POM in this directory" />
 		</filter>
 		
+		<filter name="AssemblerNoLocalOBR">
+			<cause
+				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
+			<cause
+				keyword="localobr doesn't exist" />
+		</filter>
+		
 		<filter name="ReleasePluginFailed">
 			<cause
 				keyword="Failed to execute goal org.apache.maven.plugins:maven-release-plugin" />
@@ -343,6 +350,13 @@
 			<cause
 				keyword="Connection timed out" />			
 		</filter>
+		
+		<filter name="AssemblerConnReset">
+			<cause
+				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
+			<cause
+				keyword="java.net.SocketException: Connection reset" />
+		</filter>		
 		
 		<filter name="OBRGen0.1.9.1Bug">
 			<cause
