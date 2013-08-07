@@ -11,6 +11,9 @@ public class StringUtilsTest {
 	@Test
 	public void testGetFirstFound() {
 		assertNull(StringUtils.getFirstFound("", "", true));
+		
+		assertEquals("https://", StringUtils.getFirstFound("https://abc.com", "(https://)", true));
+		assertEquals("http://", StringUtils.getFirstFound("http://abc.com", "(https?://)", true));
 	}
 	
 	@Test

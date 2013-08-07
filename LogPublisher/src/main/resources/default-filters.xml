@@ -99,6 +99,20 @@
 			<cause keyword="There are test failures" />
 		</filter>
 		
+		<filter name="NoTestSuiteFile">
+			<cause
+				keyword="Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin" />
+			<cause keyword="TestSetFailedException: Suite file" />
+		</filter>
+		
+		<filter name="PluginScalaFail">
+			<cause keyword="Failed to execute goal org.scala-tools:maven-scala-plugin" />
+		</filter>
+
+		<filter name="PluginCheckstyleFail">
+			<cause keyword="Failed to execute goal org.apache.maven.plugins:maven-checkstyle-plugin" />
+		</filter>
+
 		<filter name="NoTestRunFailure">
 			<cause
 				keyword="Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin" />

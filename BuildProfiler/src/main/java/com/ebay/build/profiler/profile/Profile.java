@@ -25,6 +25,8 @@ public class Profile {
   
   private Context context;
   
+  private String environment;
+  
   protected Profile(Timer timer){
 	  this.timer = timer;
   }
@@ -138,13 +140,6 @@ public class Profile {
 		return null;
 	}
 	
-	protected boolean isCALEnabled() {
-		if (isInJekins()) {
-			return false;
-		}
-		return true;
-	}
-	
 	protected boolean isInJekins() {
 		return "CI".equalsIgnoreCase(getBuildEnvironment());
 	}
@@ -164,22 +159,42 @@ public class Profile {
 	}
 	
 	protected String getBuildEnvironment() {
-		String transName = System.getProperty("build.env");
-		if (null != transName) {
-			return transName;
+		if (null != environment) {
+			return environment;
+		}
+		
+		environment = System.getProperty("build.env");
+		if (null != environment) {
+			return environment;
 		}
 		
 		String eclipseEnv = System.getProperty("eclipse.p2.profile");
 		
-		if(System.getenv("BUILD_URL") != null) {
-			transName = "CI";
+		if(isInCIEnv()) {
+			environment = "CI";
 		} else if (eclipseEnv != null) {
-			transName = eclipseEnv;
+			environment = eclipseEnv;
 		} else {
-			transName = "DEV";
+			environment = "DEV";
 		}
 		
-		return transName;
+		return environment;
 	}
-
+	
+	private boolean isInCIEnv() {
+		if (System.getenv("BUILD_URL") != null
+				|| System.getenv("JENKINS_HOME") != null 
+				|| System.getenv("HUDSON_HOME") != null) {
+			System.out.println("[INFO] BUILD_URL: " + System.getenv("BUILD_URL"));
+			System.out.println("[INFO] JENKINS_HOME: " + System.getenv("JENKINS_HOME"));
+			System.out.println("[INFO] HUDSON_HOME: " + System.getenv("HUDSON_HOME"));
+			return true;
+		}
+		String userHome = System.getenv("user.home");
+		if (userHome.contains("/var/lib/jenkins")) {
+			System.out.println("[INFO] user.home: " + System.getenv("user.home"));
+			return true;
+		}
+		return false;
+	}
 }
