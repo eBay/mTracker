@@ -94,7 +94,7 @@ public class Profile {
 			}
 		}
 		
-		String appName = "UNKNON";
+		String appName = "UNKNOWN";
 		File currentDir = new File(event.getSession().getExecutionRootDirectory());
 		
 		if(gitMeta != null && gitMeta.exists()) {
@@ -111,7 +111,8 @@ public class Profile {
 				appName = currentDir.getName();
 			}
 		}
-		System.out.println("Cal Pool Name : " + appName);
+		
+		System.out.println("Application Name: " + appName);
 				
 		return appName;
 	}
