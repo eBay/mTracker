@@ -1,4 +1,4 @@
-package com.ebay.build.profiler.profile;
+ package com.ebay.build.profiler.profile;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -35,8 +35,10 @@ public class DiscoveryProfile extends Profile {
 
 	public DiscoveryProfile(Context context, ExecutionEvent event) {
 		super(new Timer(), event, context);
-		
+	
+
 		String transName= getBuildEnvironment();
+		
 		
 		String data = populateData();
 		

@@ -192,7 +192,7 @@ public class Profile {
 			return true;
 		}
 		String userHome = System.getenv("user.home");
-		if (userHome.contains("/var/lib/jenkins")) {
+		if (userHome != null && userHome.contains("/var/lib/jenkins")) {
 			System.out.println("[INFO] user.home: " + System.getenv("user.home"));
 			return true;
 		}

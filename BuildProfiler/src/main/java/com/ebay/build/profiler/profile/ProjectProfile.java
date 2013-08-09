@@ -40,6 +40,8 @@ public class ProjectProfile extends Profile {
 			projectId = event.getProject().getId();
 		}
 
+		
+		
 		if (getSession() != null) {
 			p.setName(projectName);
 			p.setPayload(projectId);
