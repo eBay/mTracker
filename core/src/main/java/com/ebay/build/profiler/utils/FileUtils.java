@@ -14,6 +14,8 @@ import java.util.List;
 public class FileUtils {
 	public static final String DONE_EXT = ".done";
 	public static final String XML_EXT = ".xml";
+	private static final long DELETE_RETRY_SLEEP_MILLIS = 10;
+	private static final boolean ON_WINDOWS = Os.isFamily("windows");
 
 	public static String readFile(File file) {
 		BufferedReader br = null;
@@ -102,4 +104,18 @@ public class FileUtils {
 		}
 	}
 	
+    public static boolean tryHardToDelete(File f) {
+        if (!f.delete()) {
+            if (ON_WINDOWS) {
+                System.gc();
+            }
+            try {
+                Thread.sleep(DELETE_RETRY_SLEEP_MILLIS);
+            } catch (InterruptedException ex) {
+                // Ignore Exception
+            }
+            return f.delete();
+        }
+        return true;
+    }
 }
