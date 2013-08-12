@@ -1,4 +1,4 @@
-package com.ebay.build.profiler.mdda.util;
+package com.ebay.build.profiler.utils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -22,11 +22,7 @@ public class MD5Generator {
 					buf.append("0");
 				buf.append(Integer.toHexString(i));
 			}
-
-			System.out.println("result: " + buf.toString());// 32
-
 			return buf.toString();
-
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 			return null;

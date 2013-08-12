@@ -24,14 +24,14 @@ public class FileProperties {
 	}
 
 	public File getRemoteRepoCacheFile() {
-		return new File(ROOT_DIR, this.appName + "/" + REMOTE_REPO_CACHE_FILE);
+		return new File(ROOT_DIR, this.appName + File.separator + REMOTE_REPO_CACHE_FILE);
 	}
 
 	public File getRemoteRepoCacheMd5File() {
-		return new File(ROOT_DIR, this.appName + "/" + REMOTE_REPO_CACHE_MD5_FILE);
+		return new File(ROOT_DIR, this.appName + File.separator + REMOTE_REPO_CACHE_MD5_FILE);
 	}
 
 	public File getDepCacheListFile() {
-		return new File(ROOT_DIR, this.appName + "/" + DEP_CACHE_LIST_FILE);
+		return new File(ROOT_DIR, this.appName + File.separator + DEP_CACHE_LIST_FILE);
 	}
 }

@@ -13,10 +13,10 @@ import org.apache.maven.execution.ExecutionEvent;
 import org.apache.maven.project.MavenProject;
 
 import com.ebay.build.profiler.mdda.util.FileProperties;
-import com.ebay.build.profiler.mdda.util.MD5Generator;
 import com.ebay.build.profiler.mdda.util.PreDownload;
 import com.ebay.build.profiler.util.Timer;
 import com.ebay.build.profiler.utils.FileUtils;
+import com.ebay.build.profiler.utils.MD5Generator;
 
 public class SessionProfile extends Profile {
 	
@@ -78,10 +78,11 @@ public class SessionProfile extends Profile {
 		File md5File = fp.getRemoteRepoCacheMd5File();
 
 		if (md5File.exists()) {
-
 			String oldmd5 = FileUtils.readFile(md5File);
-			oldmd5 = oldmd5.replace("\n", "");
 
+			System.out.println("[INFO] MDDA Previous Settings MD5: " + oldmd5);
+			System.out.println("[INFO] MDDA Current  Settings MD5: " + md5);
+			
 			if (oldmd5.equals(md5)) {
 				settingChanged = false;
 			}
@@ -91,8 +92,7 @@ public class SessionProfile extends Profile {
 		pdProfile = new PreDownloadProfile(c, event);
 		
 		if (!settingChanged) {
-			File file2 = fp.getDepCacheListFile();
-			PreDownload.start(file2, localrepo);
+			PreDownload.start(fp.getDepCacheListFile(), localrepo);
 		} else {
 			// else , records the new md5 and repo-message,let maven build
 			// by it self

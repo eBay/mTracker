@@ -50,6 +50,7 @@ public class DiscoveryProfile extends Profile {
 	
 		System.out.println("[INFO] Running From CI: " + this.isInJekins());
 		System.out.println("[INFO] Build Environment: " + this.getBuildEnvironment());
+		System.out.println("[INFO] Application Name: " + getSession().getAppName());
 	}
 	
 	private MavenProject getParentProject(final MavenProject project, final String groupId, final String artifactId) {

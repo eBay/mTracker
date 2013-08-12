@@ -41,7 +41,7 @@ public class FileUtils {
 				ex.printStackTrace();
 			}
 		}
-		return sBuffer.toString();
+		return sBuffer.toString().trim();
 	}
 	
 	public static void diskClean(File targetFolder, int retensionDays) {
@@ -58,7 +58,7 @@ public class FileUtils {
 		
 		System.out.println("[INFO] Cleaning up " + filesToDelete.size() + " DONE files older than " + retensionDays + " days in target folder: " + targetFolder);
 		for (File file : filesToDelete) {
-			file.delete();
+			tryHardToDelete(file);
 		}
 	}
 	

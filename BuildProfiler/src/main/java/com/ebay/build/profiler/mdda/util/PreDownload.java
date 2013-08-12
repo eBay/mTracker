@@ -12,12 +12,14 @@ import com.ebay.build.profiler.mdda.bean.DArtifacts;
 public class PreDownload {
 
 	public static void start(File file, File localrepo){
-		
 		List<DArtifact> dalist = getArtifacts(file);
-				
-		makeDirectory(getFolderList(dalist, localrepo));
-	
-		ParaDownload.threaddownload(filterExistingArtifact(dalist));
+		
+		System.out.println("[INFO] MDDA Loaded " + dalist.size() + " artifacts from cache file.");
+
+		if (!dalist.isEmpty()) {
+			makeDirectory(getFolderList(dalist, localrepo));
+			ParaDownload.threaddownload(filterExistingArtifact(dalist));
+		}
 	}
 
 	private static List<DArtifact> filterExistingArtifact(List<DArtifact> dalist) {
@@ -31,14 +33,9 @@ public class PreDownload {
 	}
 
 	public static List<DArtifact> getArtifacts(File file) {
-
 		DArtifacts das = XMLConnector.unmarshal(file);
-
-		List<DArtifact> dalist = das.getDArtifactList();
-		
-		return dalist;
+		return das.getDArtifactList();
 	}
-	
 
 
 	public static Set<File> getFolderList(List<DArtifact> dalist, File localrepo) {

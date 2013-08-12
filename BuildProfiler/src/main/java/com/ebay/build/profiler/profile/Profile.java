@@ -111,8 +111,6 @@ public class Profile {
 				appName = currentDir.getName();
 			}
 		}
-		
-		System.out.println("Application Name: " + appName);
 				
 		return appName;
 	}
