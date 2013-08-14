@@ -26,7 +26,7 @@ public class ParaDownload {
     	   
     	   if(threadnum < 50){
        			
-       				MyDownThread md = new MyDownThread(artifacts.get(downloadcount));
+       				MyDownThread2 md = new MyDownThread2(artifacts.get(downloadcount));
        				
        				downloadcount++;
        				
@@ -36,48 +36,6 @@ public class ParaDownload {
        }
     }
 
-    
-    
-    static class MyDownThread extends Thread{
-    	 
-
-        
-        private DArtifact artifact;
-        
-        public MyDownThread(DArtifact a){
-     	   this.artifact = a;
-        }
-   
-      
-        @Override
- 		public void run() {
-
- 			int byteread = 0;
-
- 			URL url;
- 			File targetFile;
-
- 			try {
- 				url = new URL(this.artifact.getQuick_url());
-
- 				targetFile = artifact.generateFilePath();
- 				
- 				URLConnection conn = url.openConnection();
- 				InputStream inStream = conn.getInputStream();
- 				FileOutputStream fs = new FileOutputStream(targetFile);
- 				byte[] buffer = new byte[1024];
-
- 				while ((byteread = inStream.read(buffer)) != -1) {
- 					fs.write(buffer, 0, byteread);
- 				}
- 				inStream.close();
- 				fs.close();
-
- 			} catch (Exception e) {
- 				e.printStackTrace();
- 			}
- 		}
-     }
     
     static class MyDownThread2 extends Thread{
  
