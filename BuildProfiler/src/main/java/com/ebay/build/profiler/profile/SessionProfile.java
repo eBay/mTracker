@@ -24,8 +24,6 @@ public class SessionProfile extends Profile {
 	
 	private PreDownloadProfile pdProfile;
 
-	File localrepo = null;
-	
 	boolean settingChanged = true;
 	
 	public PreDownloadProfile getPdProfile() {
@@ -39,23 +37,6 @@ public class SessionProfile extends Profile {
 	public SessionProfile(Context c, ExecutionEvent event) {
 		super(new Timer(), event, c);
 		
-		List<MavenProject> projects = new ArrayList<MavenProject>();
-		String appName = "myappname"; 
-		
-		if (event != null) {
-			appName = getSession().getAppName();
-			ArtifactRepository lr = event.getSession().getLocalRepository();
-
-			try {
-				localrepo = new File(new URL(lr.getUrl()).toURI());
-			} catch (MalformedURLException e1) {
-				e1.printStackTrace();
-			} catch (URISyntaxException e1) {
-				e1.printStackTrace();
-			}
-			projects = event.getSession().getProjects();
-		}
-		
 		this.projectProfiles = new ArrayList<ProjectProfile>();
 
 		String goal = "";
@@ -66,13 +47,44 @@ public class SessionProfile extends Profile {
 		if (getSession() != null) {
 			getSession().setGoals(goal);
 		}
-
+		
+		if (event != null) {
+			mddaMain(event);
+		}
+	}
+	
+	private void mddaMain(ExecutionEvent event) {
+		if (!this.getConfig().isGlobalSwitch()) {
+			System.out.println("[INFO] MDDA turned off");
+			return;
+		} else {
+			System.out.println("[INFO] MDDA turned on");
+		}
+		
+		ArtifactRepository lr = event.getSession().getLocalRepository();
+		File localrepo = null;
+		try {
+			localrepo = new File(new URL(lr.getUrl()).toURI());
+		} catch (MalformedURLException e1) {
+			e1.printStackTrace();
+		} catch (URISyntaxException e1) {
+			e1.printStackTrace();
+		}
+		
+		List<MavenProject> projects = event.getSession().getProjects();
+		
 		String fullString = getRemoteRepositories(projects);
 
 		String md5 = MD5Generator.generateMd5(fullString);
 
 		// Judgment : whether the repository list has been changed
 
+		String appName = null;
+		appName = getSession().getAppName();
+		if (appName == null) {
+			System.out.println("[INFO] MDDA cannot find application name, MDDA exit.");
+			return;
+		}
 		FileProperties fp = new FileProperties(appName); 
 		
 		File md5File = fp.getRemoteRepoCacheMd5File();
@@ -89,7 +101,7 @@ public class SessionProfile extends Profile {
 		}
 
 		// if no change ,set up our accelerator
-		pdProfile = new PreDownloadProfile(c, event);
+		pdProfile = new PreDownloadProfile(event);
 		
 		if (!settingChanged) {
 			PreDownload.start(fp.getDepCacheListFile(), localrepo);

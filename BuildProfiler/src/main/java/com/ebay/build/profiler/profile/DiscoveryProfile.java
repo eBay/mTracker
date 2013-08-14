@@ -6,21 +6,14 @@ import java.net.UnknownHostException;
 import java.util.Date;
 import java.util.List;
 
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
 import org.apache.maven.eventspy.EventSpy.Context;
 import org.apache.maven.execution.ExecutionEvent;
 import org.apache.maven.project.MavenProject;
-import org.glassfish.jersey.client.ClientConfig;
-import org.glassfish.jersey.jackson.JacksonFeature;
 
 import com.ebay.build.profiler.readers.ProcessHelper;
 import com.ebay.build.profiler.util.Timer;
 import com.ebay.build.profiler.writers.SessionExporter;
+import com.ebay.build.service.client.PostSessionClient;
 //import com.ebay.kernel.calwrapper.CalTransaction;
 
 
@@ -163,28 +156,10 @@ public class DiscoveryProfile extends Profile {
 		}
 		
 		if (this.isInRIDE()) {
-			postToQueueService();
+			new PostSessionClient().queue(getSession());
 		}
 	}
 	
-	private void postToQueueService() {
-		Client client = ClientBuilder.newClient(new ClientConfig());
-		client.register(JacksonFeature.class);
-
-		//String target = "http://rbuildservice.stratus.phx.qa.ebay.com/build-service/webapi/";
-		String target = "http://D-SHC-00436998:7070/myapp";
-		String path = "/queue/build/" + getSession().getAppName();
-		Response response = client.target(target).path(path).request().post(Entity.entity(this.getSession(), 
-				MediaType.APPLICATION_JSON));
-		
-		if (response.getStatus() != 200) {
-			throw new RuntimeException("Failed : HTTP error code : "
-			     + response.getStatus() + " Response: " + response.readEntity(String.class));
-		} else {
-			System.out.println(response.readEntity(String.class));
-		}
-	}
-
 	private void exportSession() {
 		SessionExporter exporter = new SessionExporter();
 		exporter.process(this.getSession());

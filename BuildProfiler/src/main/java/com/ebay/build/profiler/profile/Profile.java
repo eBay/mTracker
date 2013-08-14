@@ -10,6 +10,7 @@ import org.apache.maven.execution.ExecutionEvent;
 import com.ebay.build.profiler.model.Session;
 import com.ebay.build.profiler.util.GitUtil;
 import com.ebay.build.profiler.util.Timer;
+import com.ebay.build.service.config.BuildServiceConfigBean;
 
 /**
  * @requiresDependencyResolution runtime
@@ -137,6 +138,13 @@ public class Profile {
 			return (Session) this.context.getData().get(Session.class.toString());
 		}
 		return null;
+	}
+	
+	protected BuildServiceConfigBean getConfig() {
+		if (this.context != null) {
+			return (BuildServiceConfigBean) this.context.getData().get(BuildServiceConfigBean.class.toString());
+		}
+		return new BuildServiceConfigBean();
 	}
 	
 	protected boolean isInJekins() {

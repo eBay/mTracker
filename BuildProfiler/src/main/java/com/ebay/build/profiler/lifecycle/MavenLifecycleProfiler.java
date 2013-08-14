@@ -25,6 +25,8 @@ import com.ebay.build.profiler.profile.PhaseProfile;
 import com.ebay.build.profiler.profile.ProjectProfile;
 import com.ebay.build.profiler.profile.SessionProfile;
 import com.ebay.build.profiler.render.OutputRenderer;
+import com.ebay.build.service.config.BuildServiceConfig;
+import com.ebay.build.service.config.BuildServiceConfigBean;
 
 /**
  * MavenLifecycleProfiler will profile the maven build.
@@ -46,6 +48,7 @@ public class MavenLifecycleProfiler extends AbstractEventSpy {
 	private DArtifacts dArtifacts;
 
 	private Session session = new Session();
+	private BuildServiceConfigBean mddaConfig;
 	
 	@Override
 	public void init(Context context) throws Exception {
@@ -59,6 +62,9 @@ public class MavenLifecycleProfiler extends AbstractEventSpy {
 		dArtifacts = new DArtifacts();		
 		
 		this.context.getData().put(session.getClass().toString(), session);
+		
+		mddaConfig = new BuildServiceConfig().get("com.ebay.build.profiler.mdda");
+		this.context.getData().put(BuildServiceConfigBean.class.toString(), mddaConfig);
 	}
 	
 	private boolean isSnapshot(DArtifact artifact) {
@@ -106,11 +112,13 @@ public class MavenLifecycleProfiler extends AbstractEventSpy {
 	@Override
 	public void onEvent(Object event) throws Exception {
 
-		if (event instanceof RepositoryEvent) {
-			RepositoryEvent re = (RepositoryEvent) event;
+		if (mddaConfig.isGlobalSwitch()) {
+			if (event instanceof RepositoryEvent) {
+				RepositoryEvent re = (RepositoryEvent) event;
 			
-			if (re.getType() == RepositoryEvent.EventType.ARTIFACT_DOWNLOADED) {
-				detectArtifactDownload(re);
+				if (re.getType() == RepositoryEvent.EventType.ARTIFACT_DOWNLOADED) {
+					detectArtifactDownload(re);
+				}
 			}
 		}
 
