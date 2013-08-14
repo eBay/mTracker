@@ -108,6 +108,7 @@ public class MavenLifecycleProfiler extends AbstractEventSpy {
 
 		if (event instanceof RepositoryEvent) {
 			RepositoryEvent re = (RepositoryEvent) event;
+			
 			if (re.getType() == RepositoryEvent.EventType.ARTIFACT_DOWNLOADED) {
 				detectArtifactDownload(re);
 			}
@@ -162,7 +163,9 @@ public class MavenLifecycleProfiler extends AbstractEventSpy {
 	public void close() throws Exception {
 		if (sessionProfile.settingChanged()) {
 			FileProperties fp = new FileProperties(session.getAppName());
-			XMLConnector.marshal(fp.getDepCacheListFile(), dArtifacts);
+			if (!dArtifacts.getDArtifactList().isEmpty()) {
+				XMLConnector.marshal(fp.getDepCacheListFile(), dArtifacts);
+			}
 		}
 	}
 

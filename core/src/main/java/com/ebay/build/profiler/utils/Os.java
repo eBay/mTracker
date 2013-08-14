@@ -2,8 +2,6 @@ package com.ebay.build.profiler.utils;
 
 import java.util.Locale;
 
-import org.apache.tools.ant.BuildException;
-
 /**
  * Condition that tests the OS type.
  *
@@ -161,7 +159,7 @@ public class Os {
      * @throws BuildException if there is an error.
      * @see Os#setFamily(String)
      */
-    public boolean eval() throws BuildException {
+    public boolean eval() throws RuntimeException {
         return isOs(family, name, arch, version);
     }
 
@@ -282,7 +280,7 @@ public class Os {
                 } else if (family.equals(FAMILY_VMS)) {
                     isFamily = OS_NAME.indexOf(FAMILY_VMS) > -1;
                 } else {
-                    throw new BuildException(
+                    throw new RuntimeException(
                         "Don\'t know how to detect os family \""
                         + family + "\"");
                 }
