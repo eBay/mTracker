@@ -128,6 +128,10 @@ public class DArtifact {
 
 		return false;
 	}
+	
+	public int hashCode() {
+		return (this.group_id + this.artifact_id + this.version + this.classifier + this.extension).hashCode(); 
+	}
 
 	public void generateUrl() {
 		quick_url = repositoryURL;

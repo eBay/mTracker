@@ -2,7 +2,9 @@ package com.ebay.build.profiler.lifecycle;
 
 
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -169,12 +171,25 @@ public class MavenLifecycleProfiler extends AbstractEventSpy {
 
 	@Override
 	public void close() throws Exception {
-		if (sessionProfile.settingChanged()) {
+		System.out.println("[INFO] MDDA collected " + dArtifacts.getDArtifactList().size() + " artifacts.");
+		if (!dArtifacts.getDArtifactList().isEmpty()) {
 			FileProperties fp = new FileProperties(session.getAppName());
-			if (!dArtifacts.getDArtifactList().isEmpty()) {
+			if (sessionProfile.settingChanged()) {
+				System.out.println("[INFO] MDDA creating a new " + fp.getDepCacheListFile().getAbsolutePath());
 				XMLConnector.marshal(fp.getDepCacheListFile(), dArtifacts);
+			} else {
+				if (fp.getDepCacheListFile().exists()) {
+					System.out.println("[INFO] MDDA updating an existing " + fp.getDepCacheListFile().getAbsolutePath());
+					DArtifacts existingArtifacts = XMLConnector.unmarshal(fp.getDepCacheListFile());
+					Set<DArtifact> artifactSet = new HashSet<DArtifact>();
+					artifactSet.addAll(existingArtifacts.getDArtifactList());
+					artifactSet.addAll(dArtifacts.getDArtifactList());
+
+					dArtifacts.getDArtifactList().clear();
+					dArtifacts.getDArtifactList().addAll(artifactSet);
+					XMLConnector.marshal(fp.getDepCacheListFile(), dArtifacts);
+				}
 			}
 		}
 	}
-
 }
