@@ -89,6 +89,8 @@ public class FileUtils {
 	}
 	
 	public static void writeToFile(File targetFile, String body) {
+		
+		
 		FileWriter fileWriter = null;
 		try {
 			fileWriter = new FileWriter(targetFile);

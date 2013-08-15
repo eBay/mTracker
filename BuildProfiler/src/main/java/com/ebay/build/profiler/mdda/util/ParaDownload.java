@@ -3,8 +3,6 @@ package com.ebay.build.profiler.mdda.util;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.List;
 
 import org.apache.commons.httpclient.HttpClient;
@@ -18,13 +16,10 @@ public class ParaDownload {
         
   
        int size = artifacts.size();
-       int threadnum = 0;
        int downloadcount = 0;
        while(downloadcount < size){		
-    	   
-    	   threadnum = MyDownThread.activeCount();
-    	   
-    	   if(threadnum < 50){
+    	    	     
+    	   if(MyDownThread2.activeCount() < 50){
        			
        				MyDownThread2 md = new MyDownThread2(artifacts.get(downloadcount));
        				
@@ -33,6 +28,9 @@ public class ParaDownload {
        				md.start();
        				 
        		}
+       }
+       while(MyDownThread2.activeCount() != 3){
+    	   
        }
     }
 
@@ -58,20 +56,29 @@ public class ParaDownload {
 	            client.executeMethod(httpGet);  
 	              
 	            InputStream in = httpGet.getResponseBodyAsStream();  
-	             
-	            FileOutputStream out = new FileOutputStream(artifact.generateFilePath());  
+	            
+	            File localfile = artifact.generateFilePath();
+	            
+	            FileOutputStream out = new FileOutputStream(localfile);  
 	             
 	            byte[] b = new byte[1024];  
 	            
 	            int len = 0;  
 	            
-	            while((len=in.read(b))!= -1){  
+	            while((len = in.read(b))!= -1){  
 	                out.write(b,0,len);  
 	            }  
 	            
 	            in.close();  
-	            out.close();  
-	              
+	            
+	            out.close(); 
+	            
+	            long size = localfile.length();
+	         
+	            if(!artifact.artifactOK(size)){
+	            	localfile.delete();
+	            }
+	               
 	        }catch (Exception e){  
 	            e.printStackTrace();  
 	        }finally{  

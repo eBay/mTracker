@@ -66,6 +66,7 @@ public class MavenLifecycleProfiler extends AbstractEventSpy {
 		this.context.getData().put(session.getClass().toString(), session);
 		
 		mddaConfig = new BuildServiceConfig().get("com.ebay.build.profiler.mdda");
+		
 		this.context.getData().put(BuildServiceConfigBean.class.toString(), mddaConfig);
 	}
 	
@@ -78,7 +79,8 @@ public class MavenLifecycleProfiler extends AbstractEventSpy {
 	private void detectArtifactDownload(RepositoryEvent re){
 		// prepare some data
 		Artifact artifact = re.getArtifact();
-
+	//	System.out.println("[KAOXIANG]"+"[PATH]   "+artifact.getFile().getAbsolutePath()+"[SIZE]   "+artifact.getFile().length());
+		
 		ArtifactRepository repo = re.getRepository();
 
 		// Construct an downloadItem
@@ -91,6 +93,7 @@ public class MavenLifecycleProfiler extends AbstractEventSpy {
 		dItem.setVersion(artifact.getVersion());
 		dItem.setClassifier(artifact.getClassifier());
 		dItem.setExtension(artifact.getExtension());
+		dItem.setSize(artifact.getFile().length());
 		dItem.generateUrl();
 
 		// filter snapshot version

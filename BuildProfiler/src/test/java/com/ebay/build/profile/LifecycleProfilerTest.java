@@ -52,6 +52,8 @@ public class LifecycleProfilerTest {
     DiscoveryProfile discoveryProfile = new DiscoveryProfile();
     discoveryProfile.setElapsedTime(500);
     
+    s.addPdProfile();
+    
     OutputRenderer r = new OutputRenderer(s, discoveryProfile);
     r.renderToScreen();
     r.renderToJSON();

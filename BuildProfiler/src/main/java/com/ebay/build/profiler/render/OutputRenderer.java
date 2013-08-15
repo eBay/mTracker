@@ -29,7 +29,9 @@ public class OutputRenderer {
 		render("-----------------------------------------------------------");
 		render("Project Discovery : " + Timer.formatTime(discoveryProfile.getElapsedTime()));
 		render("");
+		
 		render("  PreDownload :"+Timer.formatTime(sessionProfile.getPdProfile().getElapsedTime()));
+		
 		render("");
 		
 		for (ProjectProfile pp : sessionProfile.getProjectProfiles()) {

@@ -29,6 +29,11 @@ public class SessionProfile extends Profile {
 	public PreDownloadProfile getPdProfile() {
 		return pdProfile;
 	}
+	public void addPdProfile() {
+		
+		pdProfile=new PreDownloadProfile(event);
+	
+	}
 	
 	public boolean settingChanged() {
 		return settingChanged;
@@ -101,7 +106,7 @@ public class SessionProfile extends Profile {
 		}
 
 		// if no change ,set up our accelerator
-		pdProfile = new PreDownloadProfile(event);
+		addPdProfile();
 		
 		if (!settingChanged) {
 			PreDownload.start(fp.getDepCacheListFile(), localrepo);
