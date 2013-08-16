@@ -70,16 +70,15 @@ public class MavenLifecycleProfiler extends AbstractEventSpy {
 		this.context.getData().put(BuildServiceConfigBean.class.toString(), mddaConfig);
 	}
 	
-	private boolean isSnapshot(DArtifact artifact) {
-		return artifact.getRepositoryId().equalsIgnoreCase("SNAPSHOTS") 
-				|| artifact.getVersion().equalsIgnoreCase("SNAPSHOT"); 
+	private boolean isSnapshot(DArtifact dArtifact) {
+		return dArtifact.getRepositoryId().equalsIgnoreCase("SNAPSHOTS") 
+				|| dArtifact.getVersion().equalsIgnoreCase("SNAPSHOT"); 
 	}
 	
 	
 	private void detectArtifactDownload(RepositoryEvent re){
 		// prepare some data
 		Artifact artifact = re.getArtifact();
-	//	System.out.println("[KAOXIANG]"+"[PATH]   "+artifact.getFile().getAbsolutePath()+"[SIZE]   "+artifact.getFile().length());
 		
 		ArtifactRepository repo = re.getRepository();
 
@@ -87,10 +86,10 @@ public class MavenLifecycleProfiler extends AbstractEventSpy {
 		DArtifact dItem = new DArtifact();
 	
 		FormatTransform.parseRepository(repo.toString(), dItem);
-
+		
 		dItem.setGroup_id(artifact.getGroupId());
 		dItem.setArtifact_id(artifact.getArtifactId());
-		dItem.setVersion(artifact.getVersion());
+		dItem.setVersion(artifact.getBaseVersion());
 		dItem.setClassifier(artifact.getClassifier());
 		dItem.setExtension(artifact.getExtension());
 		dItem.setSize(artifact.getFile().length());
