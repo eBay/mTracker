@@ -3,8 +3,6 @@ package com.ebay.build.profiler.mdda.util;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.List;
 
 import org.apache.commons.httpclient.HttpClient;
@@ -18,15 +16,12 @@ public class ParaDownload {
         
   
        int size = artifacts.size();
-       int threadnum = 0;
        int downloadcount = 0;
        while(downloadcount < size){		
-    	   
-    	   threadnum = MyDownThread.activeCount();
-    	   
-    	   if(threadnum < 50){
+    	    	     
+    	   if(MyDownThread2.activeCount() < 50){
        			
-       				MyDownThread md = new MyDownThread(artifacts.get(downloadcount));
+       				MyDownThread2 md = new MyDownThread2(artifacts.get(downloadcount));
        				
        				downloadcount++;
        				
@@ -34,50 +29,11 @@ public class ParaDownload {
        				 
        		}
        }
+       while(MyDownThread2.activeCount() != 3){
+    	   
+       }
     }
 
-    
-    
-    static class MyDownThread extends Thread{
-    	 
-
-        
-        private DArtifact artifact;
-        
-        public MyDownThread(DArtifact a){
-     	   this.artifact = a;
-        }
-   
-      
-        @Override
- 		public void run() {
-
- 			int byteread = 0;
-
- 			URL url;
- 			File targetFile;
-
- 			try {
- 				url = new URL(this.artifact.getQuick_url());
-
- 				targetFile = artifact.generateFilePath();
- 				
- 				URLConnection conn = url.openConnection();
- 				InputStream inStream = conn.getInputStream();
- 				FileOutputStream fs = new FileOutputStream(targetFile);
- 				byte[] buffer = new byte[1024];
-
- 				while ((byteread = inStream.read(buffer)) != -1) {
- 					fs.write(buffer, 0, byteread);
- 				}
- 				inStream.close();
- 				fs.close();
-
- 			} catch (Exception e) {
- 				e.printStackTrace();
- 			}
- 		}
-     }
     
     static class MyDownThread2 extends Thread{
  
@@ -100,20 +56,29 @@ public class ParaDownload {
 	            client.executeMethod(httpGet);  
 	              
 	            InputStream in = httpGet.getResponseBodyAsStream();  
-	             
-	            FileOutputStream out = new FileOutputStream(artifact.generateFilePath());  
+	            
+	            File localfile = artifact.generateFilePath();
+	            
+	            FileOutputStream out = new FileOutputStream(localfile);  
 	             
 	            byte[] b = new byte[1024];  
 	            
 	            int len = 0;  
 	            
-	            while((len=in.read(b))!= -1){  
+	            while((len = in.read(b))!= -1){  
 	                out.write(b,0,len);  
 	            }  
 	            
 	            in.close();  
-	            out.close();  
-	              
+	            
+	            out.close(); 
+	            
+	            long size = localfile.length();
+	         
+	            if(!artifact.artifactOK(size)){
+	            	localfile.delete();
+	            }
+	               
 	        }catch (Exception e){  
 	            e.printStackTrace();  
 	        }finally{  
