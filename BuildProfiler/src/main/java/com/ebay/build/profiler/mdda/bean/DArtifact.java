@@ -122,7 +122,6 @@ public class DArtifact {
 		boolean T3 = false;
 		boolean T4 = false;
 		boolean T5 = false;
-		boolean T6 = false;
 		
 		if (this.artifact_id.equals(dItem2.artifact_id)) {
 			T1 = true;
@@ -139,11 +138,8 @@ public class DArtifact {
 		if (this.extension.equals(dItem2.extension)) {
 			T5 = true;
 		}
-		if (this.size == (dItem2.getSize())){
-			T6 = true;
-		}
 
-		if (T1 && T2 && T3 && T4 && T5 && T6) {
+		if (T1 && T2 && T3 && T4 && T5) {
 			return true;
 		}
 
