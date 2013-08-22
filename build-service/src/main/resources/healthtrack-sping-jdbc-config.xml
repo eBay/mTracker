@@ -26,4 +26,10 @@
       class="com.ebay.build.service.config.ConfigurationJDBCTemplate">
       <property name="dataSource"  ref="dataSource" />    
    </bean>
+   
+   <!-- configuration for sending mail of error report-->
+   	<bean id="ReliabilityEmailJDBCTemplate"
+   	  class="com.ebay.build.reliability.ReliabilityEmailJDBCTemplate">
+   	  <property name="dataSource"  ref="dataSource" />     
+   </bean>
 </beans>
