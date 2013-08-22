@@ -18,7 +18,7 @@ public class LifecycleProfilerTest {
 	@Test
   public void testSessionProfile() {
     
-    SessionProfile s = new SessionProfile(null, null);
+    SessionProfile s = new SessionProfile(null, null , false);
     
     ProjectProfile p0 = new ProjectProfile(null, project("g0", "a0", "v0"), null);
     p0.setElapsedTime(2323);

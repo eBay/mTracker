@@ -2,6 +2,7 @@ package com.ebay.build.profiler.lifecycle;
 
 
 
+import java.io.File;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -11,6 +12,8 @@ import javax.inject.Singleton;
 
 import org.apache.maven.eventspy.AbstractEventSpy;
 import org.apache.maven.execution.ExecutionEvent;
+import org.apache.maven.execution.MavenExecutionRequest;
+import org.apache.maven.settings.building.SettingsBuildingRequest;
 import org.sonatype.aether.RepositoryEvent;
 import org.sonatype.aether.artifact.Artifact;
 import org.sonatype.aether.repository.ArtifactRepository;
@@ -47,10 +50,16 @@ public class MavenLifecycleProfiler extends AbstractEventSpy {
 	private PhaseProfile phaseProfile;
 	private MojoProfile mojoProfile;
 	private Context context; 
-	private DArtifacts dArtifacts;
 
+	private DArtifacts preArtifacts;
+	private DArtifacts dArtifacts;
 	private Session session = new Session();
 	private BuildServiceConfigBean mddaConfig;
+	private boolean isPart1 = true;
+	private File userSettingFile;
+	private File globalSettingFile;
+	private boolean debug;
+	
 	
 	@Override
 	public void init(Context context) throws Exception {
@@ -61,7 +70,10 @@ public class MavenLifecycleProfiler extends AbstractEventSpy {
 		System.out.println( "" );
 
 		this.context = context;
+		
 		dArtifacts = new DArtifacts();		
+		
+		preArtifacts = new DArtifacts();
 		
 		this.context.getData().put(session.getClass().toString(), session);
 		
@@ -81,7 +93,7 @@ public class MavenLifecycleProfiler extends AbstractEventSpy {
 		Artifact artifact = re.getArtifact();
 		
 		ArtifactRepository repo = re.getRepository();
-
+		
 		// Construct an downloadItem
 		DArtifact dItem = new DArtifact();
 	
@@ -92,14 +104,23 @@ public class MavenLifecycleProfiler extends AbstractEventSpy {
 		dItem.setVersion(artifact.getBaseVersion());
 		dItem.setClassifier(artifact.getClassifier());
 		dItem.setExtension(artifact.getExtension());
-		dItem.setSize(artifact.getFile().length());
+		
+		if (artifact.getFile() != null) {
+			dItem.setSize(artifact.getFile().length());
+		}
+		
 		dItem.generateUrl();
 
 		// filter snapshot version
 		if (!isSnapshot(dItem)) {
 			boolean isNewItem = true;
 			// keep the download-list
-			List<DArtifact> downloadList = dArtifacts.getDArtifactList();
+			List<DArtifact> downloadList;
+			if(isPart1) {
+				downloadList = preArtifacts.getDArtifactList();
+			} else {
+				downloadList = dArtifacts.getDArtifactList();	
+			}
 			for (int i = 0; i < downloadList.size(); i++) {
 				if (downloadList.get(i).equals(dItem)) {
 					downloadList.set(i, dItem);
@@ -115,7 +136,26 @@ public class MavenLifecycleProfiler extends AbstractEventSpy {
 
 	@Override
 	public void onEvent(Object event) throws Exception {
+		
+		
+		if (event instanceof SettingsBuildingRequest) {
+			
+			SettingsBuildingRequest settingBuildingRequest = (SettingsBuildingRequest) event;
+			
+			userSettingFile = settingBuildingRequest.getUserSettingsFile();
+			
+			globalSettingFile = settingBuildingRequest.getGlobalSettingsFile();
+			
+			
+		}
+		if (event instanceof MavenExecutionRequest) {
 
+			MavenExecutionRequest mer = (MavenExecutionRequest) event;
+
+			debug = (mer.getLoggingLevel() == MavenExecutionRequest.LOGGING_LEVEL_DEBUG);
+		}
+		
+		
 		if (mddaConfig.isGlobalSwitch()) {
 			if (event instanceof RepositoryEvent) {
 				RepositoryEvent re = (RepositoryEvent) event;
@@ -131,10 +171,12 @@ public class MavenLifecycleProfiler extends AbstractEventSpy {
 			ExecutionEvent executionEvent = (ExecutionEvent) event;
 
 			if (executionEvent.getType() == ExecutionEvent.Type.ProjectDiscoveryStarted) {
-				discoveryProfile = new DiscoveryProfile(context, executionEvent);
+				discoveryProfile = new DiscoveryProfile(context, executionEvent, userSettingFile, globalSettingFile,debug);
 
 			} else if (executionEvent.getType() == ExecutionEvent.Type.SessionStarted) {
-				sessionProfile = new SessionProfile(context, executionEvent);
+				sessionProfile = new SessionProfile(context, executionEvent, debug);
+				//split the download-list into two lists
+				isPart1 = false;
 			} else if (executionEvent.getType() == ExecutionEvent.Type.SessionEnded) {
 				projectProfile.addPhaseProfile(phaseProfile);
 				
@@ -173,11 +215,22 @@ public class MavenLifecycleProfiler extends AbstractEventSpy {
 
 	@Override
 	public void close() throws Exception {
-		System.out.println("[INFO] MDDA collected " + dArtifacts.getDArtifactList().size() + " artifacts.");
+		
+		System.out.println("[INFO] MDDA collected " + preArtifacts.getDArtifactList().size() + " preArtifacts.");
+		System.out.println("[INFO] MDDA collected " + dArtifacts.getDArtifactList().size() + " dArtifacts.");
+		
+		if (!preArtifacts.getDArtifactList().isEmpty()) {
+			FileProperties fp = discoveryProfile.getFp();
+			if (discoveryProfile.XmlSettingChanged()) {
+				System.out.println("[INFO] MDDA creating a new " + fp.getPreCacheListFile().getAbsolutePath());
+				XMLConnector.marshal(fp.getPreCacheListFile(), preArtifacts);
+			}
+		}
+		
 		if (!dArtifacts.getDArtifactList().isEmpty()) {
-			FileProperties fp = new FileProperties(session.getAppName());
+			FileProperties fp = sessionProfile.getFp();
 			if (sessionProfile.settingChanged()) {
-				System.out.println("[INFO] MDDA creating a new " + fp.getDepCacheListFile().getAbsolutePath());
+				System.out.println("[INFO] MDDA creating a new " + fp.getDepCacheListFile().getAbsolutePath());			
 				XMLConnector.marshal(fp.getDepCacheListFile(), dArtifacts);
 			} else {
 				if (fp.getDepCacheListFile().exists()) {

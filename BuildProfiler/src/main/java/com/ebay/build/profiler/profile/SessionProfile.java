@@ -26,6 +26,12 @@ public class SessionProfile extends Profile {
 
 	boolean settingChanged = true;
 	
+	private FileProperties fp;
+	
+	public FileProperties getFp(){
+		return fp;
+	}
+	
 	public PreDownloadProfile getPdProfile() {
 		return pdProfile;
 	}
@@ -39,11 +45,12 @@ public class SessionProfile extends Profile {
 		return settingChanged;
 	}
 
-	public SessionProfile(Context c, ExecutionEvent event) {
+	public SessionProfile(Context c, ExecutionEvent event, boolean debug) {
 		super(new Timer(), event, c);
 		
+		
 		this.projectProfiles = new ArrayList<ProjectProfile>();
-
+		
 		String goal = "";
 		if (event != null) {
 			goal = event.getSession().getGoals().toString();
@@ -54,11 +61,12 @@ public class SessionProfile extends Profile {
 		}
 		
 		if (event != null) {
-			mddaMain(event);
+			mddaMain(event,debug);
 		}
 	}
 	
-	private void mddaMain(ExecutionEvent event) {
+	private void mddaMain(ExecutionEvent event,boolean debug) {
+		
 		if (!this.getConfig().isGlobalSwitch()) {
 			System.out.println("[INFO] MDDA turned off");
 			return;
@@ -85,12 +93,19 @@ public class SessionProfile extends Profile {
 		// Judgment : whether the repository list has been changed
 
 		String appName = null;
+		
 		appName = getSession().getAppName();
+		
+		String pathmd5 = MD5Generator.generateMd5(System.getenv().get("PWD"));
+		
 		if (appName == null) {
-			System.out.println("[INFO] MDDA cannot find application name, MDDA exit.");
-			return;
+			// TODO: resolve app name by pwd
+			// appName = System.getenv().get("PWD")
 		}
-		FileProperties fp = new FileProperties(appName); 
+		
+		appName += "-" + pathmd5;
+		
+		fp = new FileProperties(appName); 
 		
 		File md5File = fp.getRemoteRepoCacheMd5File();
 
@@ -105,16 +120,16 @@ public class SessionProfile extends Profile {
 			}
 		}
 
-		// if no change ,set up our accelerator
 		addPdProfile();
 		
+		// if no change ,set up our accelerator
 		if (!settingChanged) {
-			PreDownload.start(fp.getDepCacheListFile(), localrepo);
+			PreDownload.start(fp.getDepCacheListFile(), localrepo, debug);
 		} else {
 			// else , records the new md5 and repo-message,let maven build
 			// by it self
 			FileUtils.writeToFile(md5File, md5);
-
+			
 			File repoFile = fp.getRemoteRepoCacheFile();
 			FileUtils.writeToFile(repoFile, fullString);
 		}
@@ -122,6 +137,7 @@ public class SessionProfile extends Profile {
 	}
 	
 	private String getRemoteRepositories(List<MavenProject> projects) {
+		
 		String fullString = "";
 		for (MavenProject project : projects) {
 			// get the remoteRepo message
@@ -132,7 +148,14 @@ public class SessionProfile extends Profile {
 			fullString += projectName;
 
 			for (ArtifactRepository repository : remoteRepos) {
-				String repoContent = "    Remote Repo:\n" + repository;
+				
+				String proxymessage = "";
+				if (repository.getProxy() != null) {
+					proxymessage = repository.getProxy().getHost() + ":" + repository.getProxy().getPort();
+				} else {
+					proxymessage = "none";
+				}
+				String repoContent = "    Remote Repo:\n" + repository+"    proxy: " + proxymessage +"\n";
 				fullString += repoContent;
 			}
 		}
