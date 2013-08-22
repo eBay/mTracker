@@ -12,7 +12,7 @@ import com.ebay.build.profiler.mdda.bean.DArtifact;
 
 public class ParaDownload {
 	
-    public static void threaddownload(List<DArtifact> artifacts) {
+    public static void threaddownload(List<DArtifact> artifacts,boolean debug) {
         
   
        int size = artifacts.size();
@@ -21,7 +21,7 @@ public class ParaDownload {
     	    	     
     	   if(MyDownThread2.activeCount() < 50){
        			
-       				MyDownThread2 md = new MyDownThread2(artifacts.get(downloadcount));
+       				MyDownThread2 md = new MyDownThread2(artifacts.get(downloadcount),debug);
        				
        				downloadcount++;
        				
@@ -40,9 +40,11 @@ public class ParaDownload {
 
        
        private DArtifact artifact;
+       private boolean debug;
        
-       public MyDownThread2(DArtifact a){
+       public MyDownThread2(DArtifact a, boolean debug) {
     	   this.artifact = a;
+    	   this.debug = debug;
        }
   
      
@@ -51,7 +53,13 @@ public class ParaDownload {
 
     	   HttpClient client = new HttpClient();  
 	       
-	       GetMethod httpGet = new GetMethod(artifact.getQuick_url());  
+    	   String url = artifact.getQuick_url();
+    	   
+			if (debug) {
+				System.out.println("[MDDA] Downloading : " + url);
+			}
+	       GetMethod httpGet = new GetMethod(url);  
+	       
 	        try {  
 	            client.executeMethod(httpGet);  
 	              
@@ -78,7 +86,9 @@ public class ParaDownload {
 	            if(!artifact.artifactOK(size)){
 	            	localfile.delete();
 	            }
-	               
+				if (debug) {
+					System.out.println("[MDDA] Downloaded : " + url);
+				}
 	        }catch (Exception e){  
 	            e.printStackTrace();  
 	        }finally{  
