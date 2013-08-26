@@ -24,7 +24,7 @@ public class SessionProfile extends Profile {
 	
 	private PreDownloadProfile pdProfile;
 
-	boolean settingChanged = true;
+	private boolean settingChanged = true;
 	
 	private FileProperties fp;
 	
@@ -67,11 +67,11 @@ public class SessionProfile extends Profile {
 	
 	private void mddaMain(ExecutionEvent event,boolean debug) {
 		
-		if (!this.getConfig().isGlobalSwitch()) {
+		if (this.isMDDAEnabled()) {
+			System.out.println("[INFO] MDDA turned on");
+		} else {
 			System.out.println("[INFO] MDDA turned off");
 			return;
-		} else {
-			System.out.println("[INFO] MDDA turned on");
 		}
 		
 		ArtifactRepository lr = event.getSession().getLocalRepository();

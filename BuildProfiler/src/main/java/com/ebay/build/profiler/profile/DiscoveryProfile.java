@@ -49,7 +49,7 @@ public class DiscoveryProfile extends Profile {
 	public DiscoveryProfile(Context context, ExecutionEvent event,File userfile,File globalfile,boolean debug) {
 		super(new Timer(), event, context);
 		
-		String transName= getBuildEnvironment();
+		String transName = getBuildEnvironment();
 		
 		String data = populateData();
 		
@@ -64,14 +64,15 @@ public class DiscoveryProfile extends Profile {
 		System.out.println("[INFO] Application Name: " + getSession().getAppName());
 		
 		mddaMain(userfile, globalfile,debug);
+		
 	}
 	
 	private void mddaMain(File userfile, File globalfile, boolean debug) {
-		if (!this.getConfig().isGlobalSwitch()) {
+		if (isMDDAEnabled()) {
+			System.out.println("[INFO] MDDA pre-download turned on");
+		} else {
 			System.out.println("[INFO] MDDA pre-download turned off");
 			return;
-		} else {
-			System.out.println("[INFO] MDDA pre-download turned on");
 		}
 		
 		System.out.println("[INFO] MDDA pre-download start");

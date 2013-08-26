@@ -28,6 +28,8 @@ public class Profile {
   
   private String environment;
   
+  private boolean skipMDDA = false;
+  
   protected Profile(Timer timer){
 	  this.timer = timer;
   }
@@ -53,6 +55,8 @@ public class Profile {
     	if (getSession().getMachineName() == null) {
     		getSession().setMachineName(machineName);
     	}
+    	
+    	skipMDDA = (Boolean) context.getData().get("skipMDDA");
     }
   }
 
@@ -145,6 +149,10 @@ public class Profile {
 			return (BuildServiceConfigBean) this.context.getData().get(BuildServiceConfigBean.class.toString());
 		}
 		return new BuildServiceConfigBean();
+	}
+	
+	protected boolean isMDDAEnabled() {
+		return this.getConfig().isGlobalSwitch() && !this.skipMDDA; 
 	}
 	
 	protected boolean isInJekins() {
