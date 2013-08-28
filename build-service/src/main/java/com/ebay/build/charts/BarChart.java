@@ -89,12 +89,10 @@ public class BarChart extends ApplicationFrame {
 		// Set font of abscissa axis
 		axis.setLabelFont(new Font("Calibri", Font.BOLD, 15));
 		
-		if(imageName == "Weekly_Trend.jpeg")
-		{
-			plot = (CategoryPlot) chart.getPlot();
-			axis = (CategoryAxis)plot.getDomainAxis();
-			axis.setCategoryLabelPositions(CategoryLabelPositions.UP_45);
-		}
+		plot = (CategoryPlot) chart.getPlot();
+		axis = (CategoryAxis)plot.getDomainAxis();
+		axis.setCategoryLabelPositions(CategoryLabelPositions.UP_45);
+	
 		
 		OutputStream os = null;
 		try {

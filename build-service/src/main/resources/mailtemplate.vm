@@ -209,8 +209,8 @@
   <table style="border:1px black solid; bordercolor:#444444; width:900px; cellspacing:0; font-family:Calibri; border-collapse:collapse;">
 	<tr style="font-weight:bold;" >
 		<td>Error Code</td>
-		<td style="text-align:right;">Count</td>
-		<td style="text-align:right;">Percentage</td>
+		<td style="text-align:right; width:45px;">Count</td>
+		<td style="text-align:right; width:60px;">Percentage</td>
 		<td>Description</td>
 	</tr>
 
@@ -238,8 +238,8 @@
   <table style="border:1px black solid; bordercolor:#444444; width:900px; cellspacing:0; font-family:Calibri; border-collapse:collapse;">
 	<tr style="font-weight:bold;">
 		<td>Error Code</td>
-		<td style="text-align:right;">Count</td>
-		<td style="text-align:right;">Percentage</td>
+		<td style="text-align:right; width:45px;">Count</td>
+		<td style="text-align:right; width:60px;">Percentage</td>
 		<td>Description</td>
 	</tr>
 
