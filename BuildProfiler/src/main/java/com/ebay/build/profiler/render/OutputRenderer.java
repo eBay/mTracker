@@ -30,9 +30,10 @@ public class OutputRenderer {
 		render("Project Discovery : " + Timer.formatTime(discoveryProfile.getElapsedTime()));
 		render("");
 		
+		if(discoveryProfile.isMDDAEnabled()){
 		render("  PreDownload :"+Timer.formatTime(sessionProfile.getPdProfile().getElapsedTime()));
-		
 		render("");
+		}
 		
 		for (ProjectProfile pp : sessionProfile.getProjectProfiles()) {
 			render(pp.getProjectName() + " "
