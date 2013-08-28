@@ -1,24 +1,26 @@
-package com.ebay.build.reliability;
+package com.ebay.build.workspace;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 import javax.sql.DataSource;
 
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-public class ReliabilityEmailJDBCTemplate {
+import com.ebay.build.reliability.ErrorCode;
+import com.ebay.build.reliability.ReportInfo;
+import com.ebay.build.reliability.ReportInfoMapper;
+import com.ebay.build.utils.StringUtils;
+
+public class ServerReliabilityJDBC {
+	
 	private DataSource dataSource;
 	private JdbcTemplate jdbcTemplateObject;
-	private Map<String, ErrorCode> errorMap = new HashMap<String, ErrorCode>();
 
 	public void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;
@@ -26,13 +28,14 @@ public class ReliabilityEmailJDBCTemplate {
 	}
 
 	public ReportInfo getReportInfoBeforeDay(String day) {
-		final String SQL = "select count(*) total, count(distinct r.user_name ) users,"
-				+ " SUM( CASE WHEN r.cause is null THEN 1 ELSE 0 END) success ,"
-				+ " SUM(CASE when r.category ='user' Then 1 ELSE 0 END) usererror ,"
-				+ " SUM(CASE when r.category ='system' Then 1 ELSE 0 END) syserror,"
-				+ " Sum(CASE when r.category is null and r.cause is not null Then 1 ELSE 0 END) unknown "
-				+ " from rbt_session r where 1=1 and r.start_time > sysdate - ?"
-				+ " and r.machine_name != 'phx5qa01c-3a08'";
+		final String SQL = "select  sum(a.amount) total, " + 
+				"SUM( CASE WHEN a.caused_by = 0 Then a.amount ELSE 0 END) success , " +
+				"Sum(CASE when a.caused_by_name='System Error' Then a.amount ELSE 0 END) syserror, " +
+				"Sum(CASE when a.caused_by_name='User Error' Then a.amount ELSE 0 END) usererror, " +
+				"Sum(CASE when a.caused_by_name='Unknown Error' Then a.amount ELSE 0 END) unknown " +
+				"from statistics_ide_error_time AS a LEFT JOIN dimensional_error_code AS b ON a.error_type_id = b.id " +
+				"where a.date_dim >= DATE_ADD(CURDATE(),INTERVAL - ? DAY) " +
+				"and a.source = 'RIDE' AND a.phase_id = 6 and a.ide_name != 'RIDE Older' and a.ide_name != 'Unknown' ";
 		try {
 			ReportInfo reportInfo = jdbcTemplateObject.queryForObject(SQL,
 					new Object[] { day }, new ReportInfoMapper());
@@ -44,15 +47,15 @@ public class ReliabilityEmailJDBCTemplate {
 	}
 
 	public ReportInfo getReportInfoPeriod(String startDate, String endDate) {
-		final String SQL = "select count(*) total, count(distinct r.user_name ) users,"
-				+ "SUM( CASE WHEN r.cause is null THEN 1 ELSE 0 END) success , "
-				+ "Sum(CASE when r.category ='user' Then 1 ELSE 0 END) usererror ,"
-				+ "Sum(CASE when r.category ='system' Then 1 ELSE 0 END) syserror, "
-				+ "Sum(CASE when r.category is null and r.cause is not null Then 1 ELSE 0 END) unknown "
-				+ "from rbt_session r where 1=1 "
-				+ "and r.start_time < to_date(?, 'DD-Mon-YY') "
-				+ "and r.start_time > to_date(?, 'DD-Mon-YY') "
-				+ "and r.machine_name != 'phx5qa01c-3a08'";
+		final String SQL = "select  sum(a.amount) total, " + 
+				"SUM( CASE WHEN a.caused_by = 0 Then a.amount ELSE 0 END) success , " +
+				"Sum(CASE when a.caused_by_name='System Error' Then a.amount ELSE 0 END) syserror, " +
+				"Sum(CASE when a.caused_by_name='User Error' Then a.amount ELSE 0 END) usererror, " +
+				"Sum(CASE when a.caused_by_name='Unknown Error' Then a.amount ELSE 0 END) unknown " +
+				"from statistics_ide_error_time AS a LEFT JOIN dimensional_error_code AS b ON a.error_type_id = b.id " +
+				"where a.date_dim < date_format(?, '%Y-%c-%d') " +
+				"and a.date_dim >= date_format(?, '%Y-%c-%d') " +
+				"and a.source = 'RIDE' AND a.phase_id = 6 and a.ide_name != 'RIDE Older' and a.ide_name != 'Unknown' ";
 		try {
 			ReportInfo reportInfo = jdbcTemplateObject
 					.queryForObject(SQL, new Object[] { endDate, startDate },
@@ -65,21 +68,12 @@ public class ReliabilityEmailJDBCTemplate {
 	}
 	
 	public void setDescriptionNPercentage(List<ErrorCode> topTenError, int baseCount) {
-		if (errorMap.isEmpty()) {
-			errorMap.putAll(this.getErrorDescription());
-		}
-		
-			
 		for (ErrorCode error : topTenError) {
-		
-			ErrorCode errorDescription = errorMap.get(error.getName());
-			
-			if (errorDescription == null) {
+			if (StringUtils.isEmpty(error.getName())) {
 				error.setDescription("N/A");
 			} else {
-				error.setDescription(errorDescription.getDescription());
-			}
-			
+				error.setDescription(error.getDescription());
+			}						
 			double beforeSetDecimal = error.getCount() * 1.0
 					/ baseCount * 100;
 			DecimalFormat df = new DecimalFormat("#0.00");
@@ -90,43 +84,32 @@ public class ReliabilityEmailJDBCTemplate {
 	}
 	
 	public List<ErrorCode> getTopTenError(String errorCatagory) {
-		final String SQL = "select * from "
-				+ " (select count(*) as total, filter, count(filter) as c_filter from rbt_session r "
-				+ " where r.category= ? and r.start_time > sysdate - 30 "
-				+ " group by filter " + "order by c_filter desc) "
-				+ " where rownum <= 10";
+		final String SQL = " SELECT * FROM " + 
+				   " (SELECT sum(b.amount) as total, a.name as name, a.cause as cause" +
+				   " from dimensional_error_code a " +
+				   " LEFT JOIN statistics_ide_error_time AS b ON a.id = b.error_type_id " +
+				   " WHERE b.caused_by_name = ? " +
+				   " and b.source = 'RIDE' AND b.phase_id = 6 and b.ide_name != 'RIDE Older' and b.ide_name != 'Unknown' " +
+				   " and b.date_dim >= DATE_ADD(CURDATE(),INTERVAL - 30 DAY) " +
+				   " GROUP BY name " + 
+				   " ORDER BY total DESC) as s limit 10 ";
 		List<ErrorCode> topTenError = null;
 
 		try {
-			if ("system".equals(errorCatagory)) {
+			if ("System Error".equals(errorCatagory)) {
 				topTenError = jdbcTemplateObject
 						.query(SQL, new Object[] { errorCatagory },
-								new TopTenErrorMapper());
+								new SpaceUserErrorMapper());
 
 			}
-			else if("user".equals(errorCatagory))
+			else if("User Error".equals(errorCatagory))
 			{
 				topTenError = jdbcTemplateObject
 						.query(SQL, new Object[] { errorCatagory },
-								new TopTenErrorMapper());
+								new SpaceUserErrorMapper());
 			}
 
 			return topTenError;
-		} catch (EmptyResultDataAccessException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	public Map<String, ErrorCode> getErrorDescription() {
-		final String SQL = " select error_code, description from rbt_error_code ";
-		Map<String, ErrorCode> results = new HashMap<String, ErrorCode>();
-		try {
-			List<ErrorCode> errorDescriptionList = jdbcTemplateObject.query(SQL, new DescriptionMapper());
-			for (ErrorCode desc : errorDescriptionList) {
-				results.put(desc.getName(), desc);
-			}
-			return results;
 		} catch (EmptyResultDataAccessException e) {
 			e.printStackTrace();
 		}
@@ -154,7 +137,7 @@ public class ReliabilityEmailJDBCTemplate {
 		double[] week = new double[7];
 		
 		for (int i = 0; i < reportList.size(); i++) {
-			week[i] = Double.parseDouble(reportList.get(i).getSystemReliabilityRate());
+			week[i] = Double.valueOf(reportList.get(i).getSystemReliabilityRate());
 		}
 		return week;
 	}
@@ -176,8 +159,9 @@ public class ReliabilityEmailJDBCTemplate {
 		calendar.setTime(new Date());
 		calendar.add(calendar.DATE, 0 - previous);
 		Date date = calendar.getTime();
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-MMMM-yyyy", Locale.US);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		return sdf.format(date);
 	}
+
 
 }

@@ -15,6 +15,7 @@ import javax.mail.BodyPart;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeBodyPart;
 
+import org.jfree.data.category.CategoryDataset;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -25,41 +26,39 @@ import com.ebay.build.charts.LineChart;
 import com.ebay.build.email.MailSenderInfo;
 import com.ebay.build.email.SimpleMailSender;
 import com.ebay.build.profiler.utils.FileUtils;
+import com.ebay.build.service.BuildServiceScheduler;
 import com.ebay.build.utils.ServiceConfig;
 
 
 
 public class ReliabilityEmailJob implements Job {
 	private ApplicationContext context = null;
-	private ReliabilityEmailJDBCTemplate modelJDBCTemplate = null;
+	private ReliabilityEmailJDBCTemplate modelJDBCTemplate = null;	
 	
-	public ReliabilityEmailJob(){
-		
+	public ReliabilityEmailJob() {
+		System.out.println("[INFO]: init ReliabilityEmailJDBCTemplate bean...");
+		context = new ClassPathXmlApplicationContext("healthtrack-sping-jdbc-config.xml");
+		modelJDBCTemplate = (ReliabilityEmailJDBCTemplate) context.getBean("ReliabilityEmailJDBCTemplate");
+		System.out.println("[INFO]: finish initing ReliabilityEmailJDBCTemplate bean!");
 	}
 	
 	@Override
 	public void execute(JobExecutionContext context) throws JobExecutionException {
-		System.out.println("Executing email sender :" + new Date());
+		System.out.println("[INFO]: executing email sender of CI Build :" + new Date());
+		System.out.println("[INFO]: charting CI bulid reliability");
 		
-		emailSummaryPageJob();		
-		drawChart();		
-
+		File embeddedImage = drawChart(BuildServiceScheduler.contextPath);	
+		
+		System.out.println("[INFO]: complete to chart CI bulid reliability!");
+		System.out.println("[INFO]: generate an email...");
+		
 		SimpleMailSender sms = new SimpleMailSender();
-		sms.sendHtmlSender(getEmailContent());
-		
-		System.out.println("Email sent: " + new Date());
-
+		sms.sendHtmlSender(getEmailContent(embeddedImage, BuildServiceScheduler.contextPath));		
+		System.out.println("Email of CI bulid reliability sent: " + new Date());
 	}
 
 	
-	public void emailSummaryPageJob() {
-		context = new ClassPathXmlApplicationContext(
-				"healthtrack-sping-jdbc-config.xml");
-		modelJDBCTemplate = (ReliabilityEmailJDBCTemplate) context
-				.getBean("ReliabilityEmailJDBCTemplate");
-	}
-	
-	public void drawChart() {
+	public File drawChart(File directory) {
 		String[] columnKeys1 = { formatDay(49) + "~" + formatDay(43),
 				formatDay(42) + "~" + formatDay(36),
 				formatDay(35) + "~" + formatDay(29),
@@ -71,27 +70,30 @@ public class ReliabilityEmailJob implements Job {
 		List<ReportInfo> reportList = modelJDBCTemplate.getWeeklyReliability();
 		double[] systemReliabilityRate = modelJDBCTemplate.getWeeklySystemReliability(reportList);
 		double[] overallReliabilityRate = modelJDBCTemplate.getWeeklyOverallReliability(reportList);
-		String lineImage = "LineChart.jpeg";
-		LineChart lineChart = new LineChart("", systemReliabilityRate, overallReliabilityRate, columnKeys1, lineImage);
+
+		LineChart lineChart = new LineChart("");
+		CategoryDataset dataSet = lineChart.createDataset(systemReliabilityRate, overallReliabilityRate, columnKeys1);
+		File chartFile = lineChart.createChart(dataSet, "LineChart.jpeg", overallReliabilityRate, directory);
 		lineChart.pack();
+		return chartFile;
 	}
 
-	public String generateMailHtml() {
+	public String generateMailHtml(File directory) {
 		Map<String, ReportInfo> infoList = getReliabilityTable();
 		
-        System.out.println("[Info]: velocity initing...");
+        System.out.println("[INFO]: velocity initing...");
 		try {
 			new VelocityParse("mailtemplate.vm", 
-					infoList,
+					infoList, null,
 					getTopSystemErrorsTable(infoList.get("info_30day")),
-					getTopUserErrorsTable(infoList.get("info_30day")));
+					getTopUserErrorsTable(infoList.get("info_30day")),
+					null, null, "mail.html", directory);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		System.out.println("[Info]: velocity init completed!");
-		String mailHtml = "./html/mail.html";
-		String readHtml = FileUtils.readFile(new File(mailHtml));
+		System.out.println("[INFO]: velocity init completed!");
+		String readHtml = FileUtils.readFile(new File(directory, "html/mail.html"));
 
 		return readHtml;
 	}
@@ -99,13 +101,13 @@ public class ReliabilityEmailJob implements Job {
 
 	private List<ErrorCode> getTopSystemErrorsTable(ReportInfo info30day) {
 		List<ErrorCode> topTenSystemError = modelJDBCTemplate.getTopTenError("system");
-		modelJDBCTemplate.setDescriptionNPercentage(topTenSystemError, info30day.getSystemErrors());
+		modelJDBCTemplate.setDescriptionNPercentage(topTenSystemError, info30day.getFailedSessions());
 		return topTenSystemError;
 	}
 	
 	private List<ErrorCode> getTopUserErrorsTable(ReportInfo info30day) {
 		List<ErrorCode> topTenUserError = modelJDBCTemplate.getTopTenError("user");
-		modelJDBCTemplate.setDescriptionNPercentage(topTenUserError, info30day.getUserErrors());
+		modelJDBCTemplate.setDescriptionNPercentage(topTenUserError, info30day.getFailedSessions());
 		return topTenUserError;
 	}
 
@@ -122,36 +124,33 @@ public class ReliabilityEmailJob implements Job {
 		return infoList;
 	}
 
-	public MailSenderInfo getEmailContent() {
+	public MailSenderInfo getEmailContent(File embeddedImage, File directory) {
 		/**
 		 * set content for the mail
 		 */
 		MailSenderInfo mailInfo = new MailSenderInfo();
 		mailInfo.setMailServerHost(ServiceConfig.get("scheduler.reliability.email.host"));
 		mailInfo.setMailServerPort("25");
-		mailInfo.setValidate(true);
+		mailInfo.setValidate(false);
+		mailInfo.setDebug(false);
 
 		mailInfo.setFromAddress(ServiceConfig.get("scheduler.reliability.email.from"));
-		mailInfo.setToAddress(ServiceConfig.get("scheduler.reliability.email.to"));
+		String[] toAddresses = ServiceConfig.get("scheduler.reliability.email.to").split(";");
+		for(String address : toAddresses) {
+			address = address.trim();
+		}
+		mailInfo.setToAddresses(toAddresses);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
 		String sendDate = sdf.format(new Date());
 		mailInfo.setSubject(ServiceConfig.get("scheduler.reliability.email.subject") + " " +sendDate);
 		mailInfo.setMimepartMethod("related");
 
 		try {
-//			BodyPart bodyPart1 = new MimeBodyPart();
-//			bodyPart1.setHeader("Content-Location", "weekly_trend");
-//			FileDataSource fds1 = new FileDataSource("./images/Weekly_Trend.jpeg");
-//			bodyPart1.setDataHandler(new DataHandler(fds1));
-
-			BodyPart bodyPart2 = new MimeBodyPart();
-			bodyPart2.setHeader("Content-Location", "line_chart");
-			FileDataSource fds2 = new FileDataSource("./images/LineChart.jpeg");
-			bodyPart2.setDataHandler(new DataHandler(fds2));
-			
-
-			//mailInfo.getBodyParts().add(bodyPart1);
-			mailInfo.getBodyParts().add(bodyPart2);
+			BodyPart bodyPart = new MimeBodyPart();
+			bodyPart.setHeader("Content-Location", "line_chart");
+			FileDataSource fds = new FileDataSource(embeddedImage);
+			bodyPart.setDataHandler(new DataHandler(fds));
+			mailInfo.getBodyParts().add(bodyPart);
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		}
@@ -160,13 +159,12 @@ public class ReliabilityEmailJob implements Job {
 		 * generate mail template and send mail
 		 */
 
-		String content = generateMailHtml();
+		String content = generateMailHtml(directory);
 		mailInfo.setContent(content);
 		
 		return mailInfo;
 	}
-
-	
+		
 	// set day before current day
 	public String formatDay(int previous) {
 
@@ -177,4 +175,6 @@ public class ReliabilityEmailJob implements Job {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM", Locale.US);
 		return sdf.format(date);
 	}
+	
+
 }

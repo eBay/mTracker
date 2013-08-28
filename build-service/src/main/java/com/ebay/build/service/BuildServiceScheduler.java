@@ -1,5 +1,6 @@
 package com.ebay.build.service;
 
+import java.io.File;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -11,6 +12,17 @@ import com.ebay.build.reliability.ReliabilityEmailScheduler;
 import com.ebay.build.service.config.BuildServiceConfig;
 
 public class BuildServiceScheduler implements ServletContextListener {
+	public static File contextPath;
+	
+	public static void setContextPath(String contextPath) {
+		File outputPath = new File(contextPath);
+		
+		if (!outputPath.exists()) {
+			outputPath.mkdirs();
+		}
+		
+		BuildServiceScheduler.contextPath = outputPath.getAbsoluteFile();
+	}
 
 	@Override
 	public void contextDestroyed(ServletContextEvent arg0) {
@@ -18,14 +30,16 @@ public class BuildServiceScheduler implements ServletContextListener {
 	}
 
 	@Override
-	public void contextInitialized(ServletContextEvent arg0) {
-		System.out.println("BuildServiceScheduler init start.");
+	public void contextInitialized(ServletContextEvent contextEvent) {
+		String path = contextEvent.getServletContext().getRealPath("generated-source");
+		setContextPath(path);
+		
+		System.out.println("BuildServiceScheduler init start. output path: " + path);
 		HealthTrackScheduler healthTrackScheduler = new HealthTrackScheduler();
 		ReliabilityEmailScheduler reliabilityScheduler = new ReliabilityEmailScheduler();
 		if (isSchedulerEnabled()) {
 			try {
 				healthTrackScheduler.run();
-
 				reliabilityScheduler.run();
 
 			} catch (Exception e) {

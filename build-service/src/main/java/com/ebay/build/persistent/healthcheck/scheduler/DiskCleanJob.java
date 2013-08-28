@@ -17,7 +17,18 @@ public class DiskCleanJob  implements Job {
 	@Override
 	public void execute(JobExecutionContext context) throws JobExecutionException {
 		System.out.println("Executing disk clean...");
-		FileUtils.diskClean(new File(ServiceConfig.get("build_queue_dir")), 10);
-		FileUtils.diskClean(new File(ServiceConfig.get("health_queue_dir")), 10);
+		String buildQueuePath = ServiceConfig.get("build_queue_dir");
+		if (buildQueuePath == null) {
+			System.out.println(buildQueuePath + " is not exists.");
+		} else {
+			FileUtils.diskClean(new File(buildQueuePath), 10);
+		}
+		
+		String healthQueuePath = ServiceConfig.get("health_queue_dir");
+		if (healthQueuePath == null) {
+			System.out.println(healthQueuePath + " is not exists.");
+		} else {
+			FileUtils.diskClean(new File(healthQueuePath), 10);
+		}
 	}
 }
