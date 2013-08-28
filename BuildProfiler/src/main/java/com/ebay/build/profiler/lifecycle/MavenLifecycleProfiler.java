@@ -155,6 +155,8 @@ public class MavenLifecycleProfiler extends AbstractEventSpy {
 
 			debug = (mer.getLoggingLevel() == MavenExecutionRequest.LOGGING_LEVEL_DEBUG);
 		
+			context.getData().put("baseAdd",mer.getBaseDirectory());
+			
 			skipMDDA = mer.getUserProperties().getProperty("skipMDDA") != null;
 
 			context.getData().put("skipMDDA", skipMDDA);
