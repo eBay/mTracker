@@ -27,17 +27,28 @@ import org.jfree.ui.TextAnchor;
 
 public class LineChart extends ApplicationFrame {
 	private static final long serialVersionUID = 1L;
+	
+	private int tickUnit = 1;
+	
+	public int getTickUnit() {
+		return tickUnit;
+	}
 
-	public LineChart(final String title, double[] systemReliability, double[] overallRelibity, String[] columnKeys, String imageName) {
 
+
+	public void setTickUnit(int tickUnit) {
+		this.tickUnit = tickUnit;
+	}
+
+
+
+	public LineChart(final String title) {
 		super(title);
-		final CategoryDataset dataset = createDataset(systemReliability, overallRelibity, columnKeys);
-        createChart(dataset, imageName, overallRelibity);
 	}
 
 	
 
-    private CategoryDataset createDataset(double[] systemReliability, double[] overallRelibity, String[] columnKeys) {
+    public CategoryDataset createDataset(double[] systemReliability, double[] overallRelibity, String[] columnKeys) {
         
         // create the data set...
         final DefaultCategoryDataset dataset = new DefaultCategoryDataset(); 
@@ -53,7 +64,7 @@ public class LineChart extends ApplicationFrame {
         
     }
 
-	private JFreeChart createChart(final CategoryDataset dataset, String imageName, double[] overallRelibity) {
+	public File createChart(final CategoryDataset dataset, String imageName, double[] overallRelibity, File directory) {
 
 		// create the chart...
 		final JFreeChart chart = ChartFactory.createLineChart("", // chart
@@ -94,22 +105,28 @@ public class LineChart extends ApplicationFrame {
 		final NumberAxis numberAxis = (NumberAxis) plot.getRangeAxis();
 		numberAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
 		numberAxis.setAutoTickUnitSelection(false);
-		numberAxis.setTickUnit(new NumberTickUnit(1));
+		
+		numberAxis.setTickUnit(new NumberTickUnit(this.tickUnit));
+		
 		Arrays.sort(overallRelibity);
 		numberAxis.setLowerBound(Math.floor(overallRelibity[0]) - 5);
 		numberAxis.setUpperBound(100);	
 		
 		OutputStream os = null;
+		File file = null;
 		try {
-			String path = "./images";
-			File dirFile = new File(path);
-			if(!dirFile.exists()){
-				if(!dirFile.mkdir()){
-					throw new Exception("Directory does not exist, fail to create !");
+			System.out.println("[INFO]: Generate directory of images!");
+//			File path = new File(BuildServiceScheduler.contextPath, "images");
+			File path = new File(directory, "images");
+			if (!path.exists()) {				
+				if (!path.mkdirs()) {
+					System.out.println("Directory does not exist, fail to create !");
 				}
 			}
+			System.out.println("[INFO]: Complete generating directory of images!");
 			
-			File file = new File(path + "/" + imageName);
+			System.out.println("[INFO]: Generate corresponding images!");
+			file = new File(path, imageName);
 			if(!file.exists()){
 				if(!file.createNewFile()){
 					throw new Exception("File does not exist, fail to create !");
@@ -117,6 +134,7 @@ public class LineChart extends ApplicationFrame {
 			}
 			os = new FileOutputStream(file);		
 			ChartUtilities.writeChartAsJPEG(os, chart, 600, 400);
+			System.out.println("[INFO]: Complete generating corresponding images!");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -128,7 +146,9 @@ public class LineChart extends ApplicationFrame {
 				}
 		}
 
-		return chart;
+		return file;
 	}
+	
+
 
 }

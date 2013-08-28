@@ -15,28 +15,35 @@ import org.quartz.impl.StdSchedulerFactory;
 
 import com.ebay.build.utils.ServiceConfig;
 
-
-
-
 public class ReliabilityEmailScheduler {
 	
 	public void run() throws Exception{
 		Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
 		
-		JobDetail sendMailJob = newJob(ReliabilityEmailJob.class)
-				.withIdentity("sendMailJob", "group1").build();
+		JobDetail ciEmailJob = newJob(ReliabilityEmailJob.class)
+				.withIdentity("CIBuildReliabilityEmailJob", "group1").build();
+//		JobDetail ideEmailJob = newJob(SpaceReliabilityEmailJob.class)
+//				.withIdentity("IDEBuildReliabilityEmailJob", "group1").build();
 		
-		String string = ServiceConfig.get("scheduler.reliability.email.starttime");
-		Date date = new SimpleDateFormat("dd-MMMM-yyyy HH:mm:ss", Locale.US).parse(string);
+		String startTime = ServiceConfig.get("scheduler.reliability.email.starttime");
+		Date date = new SimpleDateFormat("dd-MMMM-yyyy HH:mm:ss", Locale.US).parse(startTime);
 		
-		Trigger sendMailTrigger = newTrigger()
-				.withIdentity("sendMailTrigger", "group1")
+		Trigger ciEmailTrigger = newTrigger()
+				.withIdentity("ciEmailTrigger", "group1")
 				.startAt(date)
 				.withSchedule(
 						simpleSchedule().withIntervalInSeconds(ServiceConfig.getInt("scheduler.reliability.email.internal"))
 						.repeatForever()).build();
 		
-		scheduler.scheduleJob(sendMailJob, sendMailTrigger);
+//		Trigger ideEmailTrigger = newTrigger()
+//				.withIdentity("ideEmailTrigger", "group1")
+//				.startAt(date)
+//				.withSchedule(
+//						simpleSchedule().withIntervalInSeconds(ServiceConfig.getInt("scheduler.reliability.email.internal"))
+//						.repeatForever()).build();
+		
+		scheduler.scheduleJob(ciEmailJob, ciEmailTrigger);
+//		scheduler.scheduleJob(ideEmailJob, ideEmailTrigger);
 		
 		scheduler.start();
 	}

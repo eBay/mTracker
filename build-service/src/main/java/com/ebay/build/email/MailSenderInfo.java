@@ -20,8 +20,8 @@ public class MailSenderInfo {
 	private String fromAddress;
 	
 	//mail recipient
-	private String toAddress;
-	
+	private String[] toAddresses;
+
 	//the user name and password of mailbox
 	private String userName;
 	private String password;
@@ -43,6 +43,8 @@ public class MailSenderInfo {
 	private String mimepartMethod;
 	
 	private List<BodyPart> bodyParts = new ArrayList<BodyPart>();
+	
+	private boolean debug = false;
 	
 
 	/**
@@ -86,13 +88,20 @@ public class MailSenderInfo {
 		this.fromAddress = fromAddress;
 	}
 
-	public String getToAddress() {
-		return toAddress;
+	public String[] getToAddresses() {
+		return toAddresses;
 	}
 
-	public void setToAddress(String toAddress) {
-		this.toAddress = toAddress;
+	public void setToAddresses(String[] toAddresses) {
+		this.toAddresses = toAddresses;
 	}
+
+
+	public void setBodyParts(List<BodyPart> bodyParts) {
+		this.bodyParts = bodyParts;
+	}
+
+
 
 	public String getUserName() {
 		return userName;
@@ -169,6 +178,18 @@ public class MailSenderInfo {
 	
 	public List<BodyPart> getBodyParts() {
 		return this.bodyParts;
+	}
+
+
+
+	public boolean isDebug() {
+		return debug;
+	}
+
+
+
+	public void setDebug(boolean debug) {
+		this.debug = debug;
 	}
 
 }

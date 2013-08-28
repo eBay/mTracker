@@ -49,7 +49,7 @@ public class DiscoveryProfile extends Profile {
 	public DiscoveryProfile(Context context, ExecutionEvent event,File userfile,File globalfile,boolean debug) {
 		super(new Timer(), event, context);
 		
-		String transName= getBuildEnvironment();
+		String transName = getBuildEnvironment();
 		
 		String data = populateData();
 		
@@ -63,15 +63,16 @@ public class DiscoveryProfile extends Profile {
 		System.out.println("[INFO] Build Environment: " + this.getBuildEnvironment());
 		System.out.println("[INFO] Application Name: " + getSession().getAppName());
 		
-		mddaMain(userfile, globalfile,debug);
+		mddaMain(userfile, globalfile,debug,context);
+		
 	}
 	
-	private void mddaMain(File userfile, File globalfile, boolean debug) {
-		if (!this.getConfig().isGlobalSwitch()) {
+	private void mddaMain(File userfile, File globalfile, boolean debug,Context context) {
+		if (isMDDAEnabled()) {
+			System.out.println("[INFO] MDDA pre-download turned on");
+		} else {
 			System.out.println("[INFO] MDDA pre-download turned off");
 			return;
-		} else {
-			System.out.println("[INFO] MDDA pre-download turned on");
 		}
 		
 		System.out.println("[INFO] MDDA pre-download start");
@@ -95,7 +96,7 @@ public class DiscoveryProfile extends Profile {
 			return;
 		}
 		
-		String pathmd5 = MD5Generator.generateMd5(System.getenv().get("PWD"));
+		String pathmd5 = MD5Generator.generateMd5(context.getData().get("baseAdd").toString());
 		
 		appName += "-" + pathmd5;
 		
@@ -108,6 +109,7 @@ public class DiscoveryProfile extends Profile {
 		fullString += FileUtils.readFile(userfile);
 	
 		String md5 = MD5Generator.generateMd5(fullString);
+		
 		
 		if (md5File.exists()) {
 		
@@ -122,7 +124,10 @@ public class DiscoveryProfile extends Profile {
 				
 				PreDownload.start(fp.getPreCacheListFile(), localrepo, debug);
 			}
-		} else {
+		} 
+		
+		if(xmlSettingChanged != false)
+		{
 			FileUtils.writeToFile(md5File, md5);
 		}
 		

@@ -17,21 +17,20 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
+
+
+
+
 public class SimpleMailSender {
 
-	/**
-	 * 
-	 * @param mailInfo
-	 *      MailSenderInfo
-	 * @return boolean
-	 */
-	public boolean sendHtmlSender(MailSenderInfo mailInfo) { 	
+	public SimpleMailSender() {
 		
+	}
+	public boolean sendHtmlSender(MailSenderInfo mailInfo) { 	
 	    Properties props = mailInfo.getProperties();
-	    
 	    //use mail pros to create a session about sending mail 
 	    Session sendMailSession = Session.getInstance(props, null);
-	    sendMailSession.setDebug(false);
+	    sendMailSession.setDebug(mailInfo.isDebug());
 	    
 	    try {
 	    	//create a mail message according to session 
@@ -44,21 +43,14 @@ public class SimpleMailSender {
 			mailMessage.setFrom(from);
 			
 			//create an address about recipients
-			Address to = new InternetAddress(mailInfo.getToAddress());			
-			mailMessage.setRecipient(Message.RecipientType.TO, to);
-			/**
-			 * if you want to send the mail to more people
-			 * this segment of code will help you
-			 */		
-			
-		   /*	
-		    InternetAddress[] adrs = new InternetAddress[toMore.length];
-			for(int i = 0; toMore.length; i++)
+			//create an address about recipients
+			int addressLength = mailInfo.getToAddresses().length;
+			InternetAddress[] adrs = new InternetAddress[addressLength];					
+			for(int i = 0; i < addressLength; i++)
 			{
-				adrs[i] = new InternetAddress(toMore[i]);
+				adrs[i] = new InternetAddress(mailInfo.getToAddresses()[i]);
 			}			
 			mailMessage.setRecipients(Message.RecipientType.TO, adrs);
-		    */
 				
 			mailMessage.setSubject(mailInfo.getSubject());
 			mailMessage.setSentDate(new Date());
@@ -82,9 +74,8 @@ public class SimpleMailSender {
 			} else {
 				mailMessage.setContent(mailInfo.getContent(), mailInfo.getContentType());
 			}
-			
-			Transport.send(mailMessage);
-			
+			System.out.println("[INFO]: ready to transport the mailmessage!");
+			Transport.send(mailMessage);			
 			return true;
 		} catch (AddressException e) {			
 			e.printStackTrace();

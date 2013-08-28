@@ -24,7 +24,7 @@ public class SessionProfile extends Profile {
 	
 	private PreDownloadProfile pdProfile;
 
-	boolean settingChanged = true;
+	private boolean settingChanged = true;
 	
 	private FileProperties fp;
 	
@@ -61,17 +61,17 @@ public class SessionProfile extends Profile {
 		}
 		
 		if (event != null) {
-			mddaMain(event,debug);
+			mddaMain(event,debug,c);
 		}
 	}
 	
-	private void mddaMain(ExecutionEvent event,boolean debug) {
+	private void mddaMain(ExecutionEvent event,boolean debug, Context context) {
 		
-		if (!this.getConfig().isGlobalSwitch()) {
+		if (this.isMDDAEnabled()) {
+			System.out.println("[INFO] MDDA turned on");
+		} else {
 			System.out.println("[INFO] MDDA turned off");
 			return;
-		} else {
-			System.out.println("[INFO] MDDA turned on");
 		}
 		
 		ArtifactRepository lr = event.getSession().getLocalRepository();
@@ -96,12 +96,13 @@ public class SessionProfile extends Profile {
 		
 		appName = getSession().getAppName();
 		
-		String pathmd5 = MD5Generator.generateMd5(System.getenv().get("PWD"));
+	
 		
 		if (appName == null) {
-			// TODO: resolve app name by pwd
-			// appName = System.getenv().get("PWD")
+			System.out.println("[INFO] MDDA cannot find application name, MDDA exit.");
+			return;
 		}
+		String pathmd5 = MD5Generator.generateMd5(context.getData().get("baseAdd").toString());
 		
 		appName += "-" + pathmd5;
 		

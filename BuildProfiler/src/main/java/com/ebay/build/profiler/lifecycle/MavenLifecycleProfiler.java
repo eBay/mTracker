@@ -59,6 +59,7 @@ public class MavenLifecycleProfiler extends AbstractEventSpy {
 	private File userSettingFile;
 	private File globalSettingFile;
 	private boolean debug;
+	private boolean skipMDDA = false;
 	
 	
 	@Override
@@ -153,10 +154,16 @@ public class MavenLifecycleProfiler extends AbstractEventSpy {
 			MavenExecutionRequest mer = (MavenExecutionRequest) event;
 
 			debug = (mer.getLoggingLevel() == MavenExecutionRequest.LOGGING_LEVEL_DEBUG);
+		
+			context.getData().put("baseAdd",mer.getBaseDirectory());
+			
+			skipMDDA = mer.getUserProperties().getProperty("skipMDDA") != null;
+
+			context.getData().put("skipMDDA", skipMDDA);
 		}
 		
 		
-		if (mddaConfig.isGlobalSwitch()) {
+		if (mddaConfig.isGlobalSwitch() && !skipMDDA) {
 			if (event instanceof RepositoryEvent) {
 				RepositoryEvent re = (RepositoryEvent) event;
 			

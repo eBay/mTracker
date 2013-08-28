@@ -1,27 +1,35 @@
 package com.ebay.build.reliability;
 
-import java.util.Date;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.io.File;
+import java.net.URISyntaxException;
 
 import org.junit.Test;
 
-import com.ebay.build.email.SimpleMailSender;
-
 public class ReliabilityEmailJobTest {
+	
 	@Test
-	public void test() {
+	public void testDrawChart() {
 		ReliabilityEmailJob job = new ReliabilityEmailJob();
-		System.out.println("[Info]: executing email sender :" + new Date());
-		System.out.println("[Info]: init the spring bean...");
-		job.emailSummaryPageJob();
-		System.out.println("[Info]: finish initing spring bean!");
-		System.out.println("[Info]: charting ...");
-		job.drawChart();
-		System.out.println("[Info]: charting completed!");
-		System.out.println("[Info]: generate an email...");
-
-		SimpleMailSender sms = new SimpleMailSender();
-		sms.sendHtmlSender(job.getEmailContent());
-		System.out.println("[Info]: email sent: " + new Date());
-
+		File file = null;
+		try {
+			file = new File(ReliabilityEmailJob.class.getResource("/").toURI());
+		} catch (URISyntaxException e) {
+			fail(e.getMessage());
+		}
+		assertNotNull(file);
+		
+		File embeddedImage = job.drawChart(file);
+		assertNotNull(embeddedImage);
+		assertTrue(embeddedImage.exists());
+		assertEquals(embeddedImage.getAbsoluteFile().getParentFile().getParentFile(), file);
+		assertTrue(embeddedImage.getAbsoluteFile().toString().endsWith("LineChart.jpeg"));
+		embeddedImage.delete();
+		assertFalse(embeddedImage.exists());
 	}
 }

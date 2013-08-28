@@ -5,8 +5,8 @@ import java.io.File;
 public class FileProperties {
 
 	public static final String ROOT_DIR = "/var/lib/jenkins/raptor.build.tracking/mdda/";
-	public static final String DEP_CACHE_LIST_FILE = "dcl.xml";
 	public static final String PRE_CACHE_LIST_FILE = "pre.xml";
+	public static final String DEP_CACHE_LIST_FILE = "dcl.xml";
 	public static final String REMOTE_REPO_CACHE_FILE = "repo.txt";
 	public static final String REMOTE_REPO_CACHE_MD5_FILE = "repo_md5.txt";
 	public static final String SETTING_XML_CACHE_MD5_FILE = "settingxml_md5.txt";
