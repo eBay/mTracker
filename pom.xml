@@ -5,7 +5,7 @@
 	<artifactId>RaptorBuildTracking</artifactId>  
 	<version>1.0.11-M2_3.0.5</version>
 	<packaging>pom</packaging>
-	<name>Parent Raptor Build Tracking</name>
+	<name>PlatformFramework:PaaS:Build:MavenTracking</name>
 	<description>Build All Modules</description>
 	
 	 <properties>		
