@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <filters>
+	<category name="exclude">
+		<filter name="TestRunFailure">
+			<cause
+				keyword="Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin" />
+			<cause keyword="There are test failures" />
+		</filter>
+		<filter name="CompilationFailure">
+			<cause
+				keyword="Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin" />
+		</filter>	
+	</category>
 	<category name="user">
 		<filter name="DependencyResolveFailure">
 			<cause
@@ -92,11 +103,6 @@
 		<filter name="SonaRunFailure">
 			<cause keyword="Failed to execute goal org.codehaus.mojo:sonar-maven-plugin" />
 
-		</filter>
-		<filter name="TestRunFailure">
-			<cause
-				keyword="Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin" />
-			<cause keyword="There are test failures" />
 		</filter>
 		
 		<filter name="NoTestSuiteFile">
