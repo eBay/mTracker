@@ -151,7 +151,7 @@ public class Profile {
 		return new BuildServiceConfigBean();
 	}
 	
-	protected boolean isMDDAEnabled() {
+	public boolean isMDDAEnabled() {
 		return this.getConfig().isGlobalSwitch() && !this.skipMDDA; 
 	}
 	

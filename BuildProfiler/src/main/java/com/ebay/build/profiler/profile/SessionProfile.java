@@ -134,6 +134,7 @@ public class SessionProfile extends Profile {
 			File repoFile = fp.getRemoteRepoCacheFile();
 			FileUtils.writeToFile(repoFile, fullString);
 		}
+		
 		pdProfile.stop();
 	}
 	
