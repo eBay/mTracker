@@ -15,6 +15,7 @@ public class FileUtilsTest {
 	
 	@Test
 	public void testLoadFiles() {
+		
 		File[] files = FileUtils.loadFiles(resourceFolder, ".xml");
 		assertNotNull(files);
 		assertEquals(1, files.length);
