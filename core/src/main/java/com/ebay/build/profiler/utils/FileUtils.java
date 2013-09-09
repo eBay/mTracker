@@ -47,6 +47,10 @@ public class FileUtils {
 	public static void diskClean(File targetFolder, int retensionDays) {
 		File[] doneFiles = loadDoneFiles(targetFolder);
 		List<File> filesToDelete = new ArrayList<File>();
+		if (doneFiles == null) {
+			System.out.println("No .done files found in folder: " + targetFolder);
+			return;
+		}
 		for (File file : doneFiles) {
 			long diff = System.currentTimeMillis() - file.lastModified();
 			long interval = retensionDays * 24 * 60 * 60 * 1000;

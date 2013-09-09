@@ -25,34 +25,21 @@ public class ReliabilityEmailJDBCTemplate {
 		this.jdbcTemplateObject = new JdbcTemplate(dataSource);
 	}
 
-	public ReportInfo getReportInfoBeforeDay(String day) {
-		final String SQL = "select count(*) total, count(distinct r.user_name ) users,"
-				+ " SUM( CASE WHEN r.cause is null THEN 1 ELSE 0 END) success ,"
-				+ " SUM(CASE when r.category ='user' Then 1 ELSE 0 END) usererror ,"
-				+ " SUM(CASE when r.category ='system' Then 1 ELSE 0 END) syserror,"
-				+ " Sum(CASE when r.category is null and r.cause is not null Then 1 ELSE 0 END) unknown "
-				+ " from rbt_session r where 1=1 and r.start_time > sysdate - ?"
-				+ " and r.machine_name != 'phx5qa01c-3a08'";
-		try {
-			ReportInfo reportInfo = jdbcTemplateObject.queryForObject(SQL,
-					new Object[] { day }, new ReportInfoMapper());
-			return reportInfo;
-		} catch (EmptyResultDataAccessException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
 	public ReportInfo getReportInfoPeriod(String startDate, String endDate) {
-		final String SQL = "select count(*) total, count(distinct r.user_name ) users,"
-				+ "SUM( CASE WHEN r.cause is null THEN 1 ELSE 0 END) success , "
-				+ "Sum(CASE when r.category ='user' Then 1 ELSE 0 END) usererror ,"
-				+ "Sum(CASE when r.category ='system' Then 1 ELSE 0 END) syserror, "
-				+ "Sum(CASE when r.category is null and r.cause is not null Then 1 ELSE 0 END) unknown "
-				+ "from rbt_session r where 1=1 "
-				+ "and r.start_time < to_date(?, 'DD-Mon-YY') "
-				+ "and r.start_time > to_date(?, 'DD-Mon-YY') "
-				+ "and r.machine_name != 'phx5qa01c-3a08'";
+		final String SQL = "select count(*) total, count(distinct r.user_name ) users, "
+				+ " SUM( CASE WHEN r.cause is null THEN 1 ELSE 0 END) success , "
+				+ " Sum(CASE when r.category ='user' Then 1 ELSE 0 END) usererror , "
+				+ " Sum(CASE when r.category ='system' Then 1 ELSE 0 END) syserror, "
+				+ " Sum(CASE when r.category ='exclude' Then 1 ELSE 0 END) exclude, " 
+				+ " Sum(CASE when r.category is null and r.cause is not null Then 1 ELSE 0 END) unknown "
+				+ " from rbt_session r "
+				+ " where r.start_time < to_date(?, 'DD-Mon-YY HH24:MI:SS') "
+				+ " and r.start_time >= to_date(?, 'DD-Mon-YY HH24:MI:SS') "
+				+ " and r.machine_name != 'phx5qa01c-3a08' "
+				+ " and r.machine_name != 'phx5qa01c-3838' " 
+				+ " and r.machine_name != 'phx5qa01c-c25c' " 
+				+ " and environment = 'CI' "
+				+ " and raptor_version like '1%' ";
 		try {
 			ReportInfo reportInfo = jdbcTemplateObject
 					.queryForObject(SQL, new Object[] { endDate, startDate },
@@ -91,8 +78,13 @@ public class ReliabilityEmailJDBCTemplate {
 	
 	public List<ErrorCode> getTopTenError(String errorCatagory) {
 		final String SQL = "select * from "
-				+ " (select count(*) as total, filter, count(filter) as c_filter from rbt_session r "
+				+ " (select filter, count(filter) as c_filter from rbt_session r "
 				+ " where r.category= ? and r.start_time > sysdate - 30 "
+				+ " and r.machine_name != 'phx5qa01c-3a08' "
+				+ " and r.machine_name != 'phx5qa01c-3838' " 
+				+ " and r.machine_name != 'phx5qa01c-c25c' " 
+				+ " and environment = 'CI' "
+				+ " and raptor_version like '1%' "
 				+ " group by filter " + "order by c_filter desc) "
 				+ " where rownum <= 10";
 		List<ErrorCode> topTenError = null;
@@ -137,13 +129,14 @@ public class ReliabilityEmailJDBCTemplate {
 		List<ReportInfo> reportList = new ArrayList<ReportInfo>();
 
 		try {
-			reportList.add(getReportInfoPeriod(previousNDays(49), previousNDays(42)));
-			reportList.add(getReportInfoPeriod(previousNDays(42), previousNDays(35)));
-			reportList.add(getReportInfoPeriod(previousNDays(35), previousNDays(28)));
-			reportList.add(getReportInfoPeriod(previousNDays(28), previousNDays(21)));
-			reportList.add(getReportInfoPeriod(previousNDays(21), previousNDays(14)));
-			reportList.add(getReportInfoPeriod(previousNDays(14), previousNDays(7)));
-			reportList.add(getReportInfoPeriod(previousNDays(7), previousNDays(0)));
+			Date date = new Date();
+			reportList.add(getReportInfoPeriod(previousNDays(49, date), previousNDays(42, date)));
+			reportList.add(getReportInfoPeriod(previousNDays(42, date), previousNDays(35, date)));
+			reportList.add(getReportInfoPeriod(previousNDays(35, date), previousNDays(28, date)));
+			reportList.add(getReportInfoPeriod(previousNDays(28, date), previousNDays(21, date)));
+			reportList.add(getReportInfoPeriod(previousNDays(21, date), previousNDays(14, date)));
+			reportList.add(getReportInfoPeriod(previousNDays(14, date), previousNDays(7, date)));
+			reportList.add(getReportInfoPeriod(previousNDays(7, date), previousNDays(0, date)));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -168,16 +161,33 @@ public class ReliabilityEmailJDBCTemplate {
 		return week;
 	}
 	
+	public Map<String, ReportInfo> generateReliabilityTable() {
+		Date date = new Date();
+		String endDate = formatDate(date);
+		ReportInfo reportList1 = getReportInfoPeriod(previousNDays(1, date), endDate);
+		ReportInfo reportList2 = getReportInfoPeriod(previousNDays(7, date), endDate);
+		ReportInfo reportList3 = getReportInfoPeriod(previousNDays(30, date), endDate);
 
-	// set day before current day
-	public String previousNDays(int previous) {
+		Map<String, ReportInfo> infoList = new HashMap<String, ReportInfo>();
+		infoList.put("info_24h", reportList1);
+		infoList.put("info_7day", reportList2);
+		infoList.put("info_30day", reportList3);
 
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(new Date());
-		calendar.add(calendar.DATE, 0 - previous);
-		Date date = calendar.getTime();
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-MMMM-yyyy", Locale.US);
-		return sdf.format(date);
+		return infoList;
 	}
 
+	// set day before current day
+	public String previousNDays(int previous, Date currentDate) {
+
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(currentDate);
+		calendar.add(calendar.DATE, 0 - previous);
+		Date date = calendar.getTime();
+		return formatDate(date);
+	}
+	
+	private String formatDate(Date date) {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yy HH:mm:ss", Locale.US);
+		return sdf.format(date);
+	}
 }

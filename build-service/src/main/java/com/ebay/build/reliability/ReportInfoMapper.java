@@ -17,7 +17,7 @@ public class ReportInfoMapper implements RowMapper<ReportInfo>{
 		reportInfo.setSystemErrors(rs.getInt("syserror"));
 		reportInfo.setUserErrors(rs.getInt("usererror"));
 		reportInfo.setUnknownErrors(rs.getInt("unknown"));
-		reportInfo.setTotalSessions(rs.getInt("total"));
+		reportInfo.setTotalSessions(rs.getInt("total") - rs.getInt("exclude"));
 		
 		return reportInfo;
 	}
