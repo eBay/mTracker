@@ -198,9 +198,9 @@ public class MavenLifecycleProfiler extends AbstractEventSpy {
 				projectProfile = new ProjectProfile(context, executionEvent.getProject(), executionEvent);
 			} else if (executionEvent.getType() == ExecutionEvent.Type.ProjectSucceeded
 					|| executionEvent.getType() == ExecutionEvent.Type.ProjectFailed) {
-		
-				if(phaseProfile!=null)
-				phaseProfile.stop();
+
+				if (phaseProfile != null)
+					phaseProfile.stop();
 				projectProfile.stop();
 				sessionProfile.addProjectProfile(projectProfile);
 			} else if (executionEvent.getType() == ExecutionEvent.Type.MojoStarted) {

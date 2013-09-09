@@ -38,7 +38,6 @@ public class ParaDownload {
     static class MyDownThread2 extends Thread{
  
 
-       
        private DArtifact artifact;
        private boolean debug;
        
@@ -46,7 +45,6 @@ public class ParaDownload {
     	   this.artifact = a;
     	   this.debug = debug;
        }
-  
      
        @Override
 		public void run() {
