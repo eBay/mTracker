@@ -42,7 +42,7 @@ public class FileUtilsTest {
 		FileUtils.renameDoneFile(new File(dc, "filestodelete.txt"));
 		
 		File[] files = FileUtils.loadDoneFiles(dc);
-		assertEquals(1, files.length);
+		assertEquals(2, files.length);
 		FileUtils.diskClean(dc, 0);
 		files = FileUtils.loadDoneFiles(dc);
 		assertEquals(0, files.length);

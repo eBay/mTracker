@@ -4,7 +4,6 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -79,7 +78,7 @@ public class ReliabilityEmailJob implements Job {
 	}
 
 	public String generateMailHtml(File directory) {
-		Map<String, ReportInfo> infoList = getReliabilityTable();
+		Map<String, ReportInfo> infoList = modelJDBCTemplate.generateReliabilityTable();
 		
         System.out.println("[INFO]: velocity initing...");
 		try {
@@ -109,19 +108,6 @@ public class ReliabilityEmailJob implements Job {
 		List<ErrorCode> topTenUserError = modelJDBCTemplate.getTopTenError("user");
 		modelJDBCTemplate.setDescriptionNPercentage(topTenUserError, info30day.getFailedSessions());
 		return topTenUserError;
-	}
-
-	private Map<String, ReportInfo> getReliabilityTable() {
-		ReportInfo reportList1 = modelJDBCTemplate.getReportInfoBeforeDay("1");
-		ReportInfo reportList2 = modelJDBCTemplate.getReportInfoBeforeDay("7");
-		ReportInfo reportList3 = modelJDBCTemplate.getReportInfoBeforeDay("30");
-
-		Map<String, ReportInfo> infoList = new HashMap<String, ReportInfo>();
-		infoList.put("info_24h", reportList1);
-		infoList.put("info_7day", reportList2);
-		infoList.put("info_30day", reportList3);
-
-		return infoList;
 	}
 
 	public MailSenderInfo getEmailContent(File embeddedImage, File directory) {

@@ -1,6 +1,7 @@
 package com.ebay.build.profiler.util;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 
@@ -18,8 +19,8 @@ public class GitUtilsTest {
 		
 		File gitConfig = new File(new File(gitMeta,".git"), "config");
 		
-		
-		assertEquals("https://github.scm.corp.ebay.com/DevExTech/maven-time-tracking", 
-				GitUtil.getRepoName(gitConfig));
+
+		assertTrue(GitUtil.getRepoName(gitConfig).startsWith("https://github.scm.corp.ebay.com/DevExTech/maven-time-tracking")); 
 	}
 }
+
