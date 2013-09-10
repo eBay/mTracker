@@ -1,7 +1,6 @@
 package com.ebay.build.alerts;
 
 import java.io.File;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -13,136 +12,103 @@ import com.mongodb.DBObject;
 
 public class Compare {
 
-
-	/**
-	 * @param args
-	 */
-	Rules rules;
-	DB db;
-	AlertResult alertResult = new AlertResult();
+	private final Rules rules;
+	private final DB db;
+	private AlertResult alertResult = new AlertResult();
 	
 	public Compare(File file, DB db) {
-
 		rules = XMLConnector.unmarshal(file);
-
 		this.db = db;
 	}
 
 	
-	public AlertResult judgeRules() {
-		
+	public AlertResult judgeRules(Condition condition) {
 		List<Rule> rulelist = rules.getRulelist();
-		
 		for(Rule rule : rulelist){
-			judgeSingleRule(rule);
+			judgeSingleRule(rule, condition);
 		}
-		
 		return alertResult;
 	}
 	
-	public void judgeSingleRule(Rule rule) {
-		
-		
+	public void judgeSingleRule(Rule rule, Condition condition) {
 		String collection = rule.getCollection();
-		
+
 		DBCollection dbc = Connector.connectCollection(db, collection);
-	
-		Date startDate = java.sql.Date.valueOf("2013-8-30");
+		DBObject totaldbo = Connector.getLastRecord(dbc, condition.getStartDate(), condition.getEndDate());
+		DBObject dbo = (DBObject) totaldbo.get("Data");
 
-		Date endDate = java.sql.Date.valueOf("2013-9-2");
-
-		DBObject totaldbo = Connector.getLastRecord(dbc, startDate, endDate);
-		
-		DBObject dbo = (DBObject)totaldbo.get("Data");
-		
 		String field = rule.getField();
-
 		String operatorStr = rule.getOperator();
-
 		int operator;
 
-		if (operatorStr.equals("lt")) {
+		if ("lt".equals(operatorStr)) {
 			operatorStr = "<";
 			operator = 0;
-		} else if (operatorStr.equals("eq")) {
+		} else if ("eq".equals(operatorStr)) {
 			operatorStr = "=";
 			operator = 1;
-		} else if (operatorStr.equals("gt")) {
+		} else if ("gt".equals(operatorStr)) {
 			operatorStr = ">";
 			operator = 2;
-		} else
+		} else {
 			operator = 3;
+		}
 
 		String thresholdStr = rule.getThreshold();
-		
-		//only support type double 
+
+		// only support type double
 		Double threshold = Double.parseDouble(thresholdStr);
-		
+
 		Set<String> keyset = dbo.keySet();
 
+		SingleResult singleResult = null;
 		for (String keyname : keyset) {
-
 			if (field.equals(keyname)) {
-
 				Object keyvalue = dbo.get(keyname);
-				double keyvaluenum = 0 ;
-				
-				if(keyvalue instanceof Integer){
-					int k1 = (Integer)keyvalue;
-					Double.parseDouble(""+k1);
-				}
-				else if(keyvalue instanceof Double){
-					keyvaluenum = (Double)keyvalue;
-				}
-				
-				SingleResult singleResult = new SingleResult(collection,keyname,keyvalue.toString(),operatorStr,thresholdStr);
-				
-				switch (operator) {
+				double keyvaluenum = 0;
 
-				
+				if (keyvalue instanceof Integer) {
+					int k1 = (Integer) keyvalue;
+					keyvaluenum = Double.parseDouble("" + k1);
+				} else if (keyvalue instanceof Double) {
+					keyvaluenum = (Double) keyvalue;
+				}
+
+				singleResult = new SingleResult(collection,
+						keyname, keyvalue.toString(), operatorStr, thresholdStr);
+
+				switch (operator) {
 				case 0:
-										
 					if (keyvaluenum < threshold) {
-						singleResult.setColor("black");		
-						
-					}
-					else{
+						singleResult.setColor("black");
+					} else {
 						singleResult.setColor("red");
-						
 					}
 					break;
-
 				case 1:
 					if (keyvalue.equals(threshold)) {
-						singleResult.setColor("black");	
-						
-					}
-					else{
+						singleResult.setColor("black");
+					} else {
 						singleResult.setColor("red");
-						
 					}
 					break;
-
 				case 2:
 					if (keyvaluenum > threshold) {
-						singleResult.setColor("black");	
-						
-					}
-					else{
+						singleResult.setColor("black");
+					} else {
 						singleResult.setColor("red");
-						
 					}
 					break;
-
 				case 3:
 				}
-
-				alertResult.getResultlist().add(singleResult);
 			}
-
+		}
+		if (singleResult != null) {
+			alertResult.getResultlist().add(singleResult);
+		} else {
+			alertResult.getResultlist().add(new SingleResult(collection,
+					field, "N/A", operatorStr, thresholdStr));
 		}
 		return;
 	}
-	
-		
 }

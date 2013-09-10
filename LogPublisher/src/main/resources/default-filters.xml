@@ -9,7 +9,21 @@
 		<filter name="CompilationFailure">
 			<cause
 				keyword="Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin" />
-		</filter>	
+		</filter>
+		<filter name="NoTestSuiteFile">
+			<cause
+				keyword="Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin" />
+			<cause keyword="TestSetFailedException: Suite file" />
+		</filter>
+		<filter name="NoTestRunFailure">
+			<cause
+				keyword="Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin" />
+			<cause keyword="No tests were executed" />
+		</filter>
+		<filter name="TestExitInIllegalState">
+			<cause keyword="org.apache.maven.plugins:maven-surefire-plugin"/>
+			<cause keyword="java.lang.IllegalStateException: Shutdown in progress"/>
+		</filter>					
 	</category>
 	<category name="user">
 		<filter name="DependencyResolveFailure">
@@ -105,12 +119,6 @@
 
 		</filter>
 		
-		<filter name="NoTestSuiteFile">
-			<cause
-				keyword="Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin" />
-			<cause keyword="TestSetFailedException: Suite file" />
-		</filter>
-		
 		<filter name="PluginScalaFail">
 			<cause keyword="Failed to execute goal org.scala-tools:maven-scala-plugin" />
 		</filter>
@@ -119,11 +127,6 @@
 			<cause keyword="Failed to execute goal org.apache.maven.plugins:maven-checkstyle-plugin" />
 		</filter>
 
-		<filter name="NoTestRunFailure">
-			<cause
-				keyword="Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin" />
-			<cause keyword="No tests were executed" />
-		</filter>
 		<filter name="SurefireForkFail">
 			<cause
 				keyword="Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin" />
@@ -262,11 +265,6 @@
 			<cause keyword="Failed to execute goal com.kelveden:maven-karma-plugin"/>
 		</filter>
 		
-		<filter name="TestExitInIllegalState">
-			<cause keyword="org.apache.maven.plugins:maven-surefire-plugin"/>
-			<cause keyword="java.lang.IllegalStateException: Shutdown in progress"/>
-		</filter>
-
 		<filter name="NoPOMinTargetFolder">
 			<cause keyword="Goal requires a project to execute but there is no POM in this directory"/>
 		</filter>
@@ -274,6 +272,11 @@
 		<filter name="OBRGenFailedCopy2LocalOBR">
 			<cause keyword="com.ebay.osgi.build:obrgen-maven-plugin"/>
 			<cause keyword="IOException while copying the dependencies to localOBR"/>
+		</filter>
+		
+		<filter name="SplitPackageValidatorFail">
+			<cause keyword="com.ebay.raptor.tools:split-package-validator"/>
+			<cause keyword="Split packages Detected! Conflicting packages logged above."/>
 		</filter>
 		
 	</category>

@@ -16,8 +16,6 @@ public class VelocityParse {
 	public VelocityParse(String templateFile, AlertResult ar) {
 		
 		try {
-			
-			
 			Velocity.init();
 			VelocityContext context = new VelocityContext();
 

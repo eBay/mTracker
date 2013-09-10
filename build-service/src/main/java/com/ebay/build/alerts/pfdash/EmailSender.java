@@ -10,30 +10,20 @@ import com.ebay.build.profiler.utils.FileUtils;
 import com.ebay.build.utils.ServiceConfig;
 
 
-
 public class EmailSender {
-	
 	AlertResult ar = null;
 	
 	public EmailSender(AlertResult ar){
-		
 		this.ar = ar;
-		
-	
 	}
+	
 	public void sendmail(){
-		
 		MailSenderInfo msinfo = getEmailContent();
-		
 		SimpleMailSender sms = new SimpleMailSender();
-
         sms.sendHtmlSender(msinfo); 
 	}
 	
-	
-	
 	public String generateMailHtml() {
-		
         System.out.println("[INFO]: velocity initing...");
 		try {
 			new VelocityParse("alert_email_template.vm", ar);
@@ -47,9 +37,6 @@ public class EmailSender {
 		return readHtml;
 	}
 
-
-	
-
 	public MailSenderInfo getEmailContent() {
 		/**
 		 * set content for the mail
@@ -62,7 +49,7 @@ public class EmailSender {
 
 		mailInfo.setFromAddress(ServiceConfig.get("scheduler.reliability.email.from"));
 		
-		String[] toAddresses = ServiceConfig.get("scheduler.reliability.email.to").split(";");
+		String[] toAddresses = ServiceConfig.get("scheduler.reliability.email.from").split(";");
 		for(String address : toAddresses) {
 			address = address.trim();
 		}
@@ -82,8 +69,4 @@ public class EmailSender {
 		
 		return mailInfo;
 	}
-		
-	
-	
-
 }

@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<Rules>
-    <Rule collection="EDEServerStartupData" field="Average" operator="lt" threshold="30.6699924468994"/>
-	<Rule collection="EDEServerStartupData" field="SystemReliability" operator="gt" threshold="67.5"/>
-</Rules>
