@@ -17,7 +17,7 @@ import com.ebay.build.utils.ServiceConfig;
 
 public class ReliabilityEmailScheduler {
 	
-	public void run() throws Exception{
+	public void run() throws Exception {
 		Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
 		
 		JobDetail ciEmailJob = newJob(ReliabilityEmailJob.class)

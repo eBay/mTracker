@@ -13,21 +13,23 @@ import org.apache.velocity.exception.ResourceNotFoundException;
 
 public class VelocityParse {
 
-	public VelocityParse(String templateFile, AlertResult ar) {
+	public VelocityParse(String templateFile, AlertResult ar, Time time, File directory) {
 		
 		try {
-			Velocity.init();
+			Velocity.init(VelocityParse.class.getResource(
+					"/velocity.properties").getFile());
 			VelocityContext context = new VelocityContext();
 
 			context.put("resultlist", ar.getResultlist());
+			context.put("time", time);
 
 			Template template = null;
 
 			try {
 				template = Velocity.getTemplate(templateFile);
 			} catch (ResourceNotFoundException rnfe) {
-				System.out.println("error : cannot find template "
-						+ templateFile + rnfe.getMessage());
+				System.out.println("error : cannot find template " + templateFile);
+				System.out.println(rnfe.getMessage());
 				rnfe.printStackTrace();
 			} catch (ParseErrorException pee) {
 				System.out.println("Syntax error in template " + templateFile
@@ -35,7 +37,7 @@ public class VelocityParse {
 			}
 
 			System.out.println("[INFO]: Velocity is ready to generate corresponding html");
-			File file = new File("./content.html");
+			File file = new File(directory, "PFDash_KPI_Alert.html");
 			if (!file.exists()) {
 				if (!file.createNewFile()) {
 					System.out.println("File does not exist, fail to create !");

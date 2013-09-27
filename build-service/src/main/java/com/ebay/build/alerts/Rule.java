@@ -18,6 +18,9 @@ public class Rule {
 
 	@XmlAttribute
 	String threshold = "";
+	
+	@XmlAttribute
+	String deltaThreshold = "";
 
 	public String getCollection() {
 		return collection;
@@ -51,6 +54,12 @@ public class Rule {
 		this.threshold = threshold;
 	}
 
+	public String getDeltaThreshold() {
+		return deltaThreshold;
+	}
 
+	public void setDeltaThreshold(String deltaThreshold) {
+		this.deltaThreshold = deltaThreshold;
+	}
 
 }

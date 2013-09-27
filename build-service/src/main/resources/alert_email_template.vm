@@ -30,6 +30,7 @@
 	
 	.textleft{
 		text-align:left;
+		padding-left:5px;
 	}
 	
 	.textcenter{
@@ -38,6 +39,7 @@
 	
 	.textright{
 		text-align:right;
+		padding-right:5px;
 	}
 	
 	#statistb
@@ -58,25 +60,79 @@
  </head>
 
  <body>
+	<div style="font-family:Calibri; font-size:15px;">
+		<strong>Generated at:</strong> $time.getSend() <br/>
+		<strong>Data time range:</strong>(UTC)$time.getQueryStart() &nbsp;~ &nbsp;	$time.getQueryEnd()
+	</div>
+	<br/>
 	<div style="text-align:center;">
-		<h1>Test Result</h1>
 		<table id="statistb" style="border-collapse:collapse;">
 			<tbody>
-				<tr style="background-color:#DFEFCF;">
-					<td class="textcenter" style="width:250px;">Collection</td>
-					<td class="textcenter" style="width:250px;">Field</td>					
-					<td class="textcenter" style="width:250px;">Current value</td>
-					<td class="textcenter" style="width:250px;">Threshold</td>
-
+				<tr style="font-weight:bold;">
+					<td class="textcenter" style="width:200px; background-color:#E9E9E9;">Collection</td>
+					<td class="textcenter" style="width:180px; background-color:#E9E9E9;">Field</td>					
+					<td class="textcenter" style="width:100px; background-color:#E9E9E9;">Current Value</td>
+					<td class="textcenter" style="width:100px; background-color:#E9E9E9;">Threshold</td>
+					<td class="textcenter" style="width:100px; background-color:#CACACA;">Out of Threshold</td>
+					<td class="textcenter" style="width:100px; background-color:#E9E9E9;">Same day in last week</td>
+					<td class="textcenter" style="width:100px; background-color:#E9E9E9;">Delta Threshold(WoW)</td>
+					<td class="textcenter" style="width:100px; background-color:#CACACA;">Out of Threshold Delta(Wow)</td>
 				</tr>
 		
 			#foreach($singleResult in ${resultlist})
+				<!-- 
 				<tr style="color:$singleResult.getColor();">
-					<td class="textleft" style="width:300px;">$singleResult.getCollection()</td>
-					<td class="textleft" style="width:300px;">$singleResult.getField()</td>
-					<td class="textright" style="width:300px;">$singleResult.getNowValue()</td>
-					<td class="textright" style="width:300px;">$singleResult.getOperator() $singleResult.getThreshold()</td>
-
+				-->
+				<tr>
+					<td class="textleft">$singleResult.getCollection()</td>
+					<td class="textleft">$singleResult.getField()</td>
+					#if($singleResult.getField() != "Performance")
+						#if($singleResult.getNowValue() == "N/A")
+							<td class="textright">$singleResult.getNowValue()</td>
+						#else
+							<td class="textright">$singleResult.getNowValue()%</td>
+						#end
+						<td class="textright">$singleResult.getOperator() $singleResult.getThreshold()%</td>
+						#if($singleResult.getOutOfThreshold() == "N/A")
+							<td class="textright" style="background-color:$singleResult.getThresholdColor();">$singleResult.getOutOfThreshold()</td>
+						#else
+							<td class="textright" style="background-color:$singleResult.getThresholdColor();">$singleResult.getOutOfThreshold()%</td>
+						#end
+						#if($singleResult.getBeforeValue() == "N/A")
+							<td class="textright">$singleResult.getBeforeValue()</td>
+						#else
+							<td class="textright">$singleResult.getBeforeValue()%</td>
+						#end
+						<td class="textright">$singleResult.getDeltaThreshold()%</td>
+						#if($singleResult.getOutOfThresholdDelta() == "N/A") 
+							<td class="textright" style="background-color:$singleResult.getThresholdDeltaColor();">$singleResult.getOutOfThresholdDelta()</td>
+						#else
+							<td class="textright" style="background-color:$singleResult.getThresholdDeltaColor();">$singleResult.getOutOfThresholdDelta()%</td>
+						#end
+					#else
+						#if($singleResult.getNowValue() == "N/A")
+							<td class="textright">$singleResult.getNowValue()</td>
+						#else
+							<td class="textright">$singleResult.getNowValue()min</td>
+						#end
+						<td class="textright">$singleResult.getOperator() $singleResult.getThreshold()min</td>
+						#if($singleResult.getOutOfThreshold() == "N/A")
+							<td class="textright" style="background-color:$singleResult.getThresholdColor();">$singleResult.getOutOfThreshold()</td>
+						#else
+							<td class="textright" style="background-color:$singleResult.getThresholdColor();">$singleResult.getOutOfThreshold()min</td>
+						#end
+						#if($singleResult.getBeforeValue() == "N/A")
+							<td class="textright">$singleResult.getBeforeValue()</td>
+						#else
+							<td class="textright">$singleResult.getBeforeValue()min</td>
+						#end
+						<td class="textright">$singleResult.getDeltaThreshold()min</td>
+						#if($singleResult.getOutOfThresholdDelta() == "N/A") 
+							<td class="textright" style="background-color:$singleResult.getThresholdDeltaColor();">$singleResult.getOutOfThresholdDelta()</td>
+						#else
+							<td class="textright" style="background-color:$singleResult.getThresholdDeltaColor();">$singleResult.getOutOfThresholdDelta()min</td>
+						#end
+					#end
 				</tr>
 			#end 
 			</tbody>

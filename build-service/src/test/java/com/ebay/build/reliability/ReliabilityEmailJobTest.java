@@ -8,11 +8,8 @@ import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.net.URISyntaxException;
-import java.util.Date;
 
 import org.junit.Test;
-
-import com.ebay.build.email.SimpleMailSender;
 
 public class ReliabilityEmailJobTest {
 	
@@ -36,20 +33,5 @@ public class ReliabilityEmailJobTest {
 		assertFalse(embeddedImage.exists());
 	}
 	
-	@Test
-	public void sendEmail() {
-		ReliabilityEmailJob emailJob = new ReliabilityEmailJob();
-		System.out.println("[INFO]: executing email sender of CI Build :" + new Date());
-		System.out.println("[INFO]: charting CI bulid reliability");
-		File directory = new File("./target/classes");
-		File embeddedImage = emailJob.drawChart(directory);	
-		
-		System.out.println("[INFO]: complete to chart CI bulid reliability!");
-		System.out.println("[INFO]: generate an email...");
-		
-		SimpleMailSender sms = new SimpleMailSender();
-		sms.sendHtmlSender(emailJob.getEmailContent(embeddedImage, directory));		
-		System.out.println("Email of CI bulid reliability sent: " + new Date());		
-	}
 }
 

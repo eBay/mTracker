@@ -1,6 +1,7 @@
 package com.ebay.build.alerts.connector;
 import java.net.UnknownHostException;
 import java.util.Date;
+import java.util.TimeZone;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
@@ -9,6 +10,7 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.Mongo;
 import com.mongodb.MongoException;
+import com.mongodb.QueryBuilder;
 //import java.sql.Date;
 
 
@@ -26,10 +28,8 @@ public class Connector {
 			return db;
 
 		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (MongoException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -42,7 +42,6 @@ public class Connector {
 			 return collection;
 
 		} catch (MongoException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -50,25 +49,26 @@ public class Connector {
 	
 	
 	public static DBObject getLastRecord(DBCollection collection, Date startDate, Date endDate) {
-
 		DBObject lastone = null;
 		try {
+			TimeZone timeZone = TimeZone.getDefault();
+			TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
 			BasicDBObject searchQuery = new BasicDBObject();
-
-			searchQuery.put("Date", new BasicDBObject("$gte", startDate).append("$lte", endDate));
-
+			QueryBuilder qb = new QueryBuilder();
+			qb.put("Date").greaterThanEquals(startDate).lessThanEquals(endDate);
+			searchQuery.putAll(qb.get());
 			DBCursor cursor = collection.find(searchQuery);
 
 			while (cursor.hasNext()) {
 	
 				lastone = cursor.next();
 			}
-
+			
+			TimeZone.setDefault(timeZone);
 		} catch (MongoException e) {
 			e.printStackTrace();
 
 		}
 		return lastone;
-
 	}
 }

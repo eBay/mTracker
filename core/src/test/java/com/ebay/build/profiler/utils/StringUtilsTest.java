@@ -3,6 +3,7 @@ package com.ebay.build.profiler.utils;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
+import java.util.Calendar;
 import java.util.List;
 
 import org.junit.Test;
@@ -22,5 +23,19 @@ public class StringUtilsTest {
 		
 		List<String> results = StringUtils.getFound("abc", "abc", true);
 		assertEquals("abc", results.get(0));
+	}
+	
+	@Test
+	public void testCalendar() {
+		Calendar c = Calendar.getInstance();
+		c.set(Calendar.HOUR_OF_DAY, 0);
+		c.set(Calendar.MINUTE, 0);
+		c.set(Calendar.SECOND, 0);
+		c.set(Calendar.MILLISECOND, 0);
+		System.out.println(c.getTime());
+		
+		c.add(Calendar.DAY_OF_MONTH, -1);
+		
+		System.out.println(c.getTime());
 	}
 }

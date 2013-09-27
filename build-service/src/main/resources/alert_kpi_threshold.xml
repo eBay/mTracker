@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Rules>
-    <Rule collection="EDEServerStartupData" field="Reliability" operator="gt" threshold="80"/>
-	<Rule collection="EDEServerStartupData" field="SystemReliability" operator="gt" threshold="85"/>
-	<Rule collection="EDEServerStartupData" field="Average" operator="lt" threshold="10"/>
+    <Rule collection="EDEServerStartupData" field="Reliability" operator="gt" threshold="80" deltaThreshold="2"/>
+	<Rule collection="EDEServerStartupData" field="SystemReliability" operator="gt" threshold="85" deltaThreshold="2"/>
+	<Rule collection="EDEServerStartupData" field="Average" operator="lt" threshold="10" deltaThreshold="1"/>
 	
-	<Rule collection="EDEWorkspaceSetupData" field="Reliability" operator="gt" threshold="80"/>
-	<Rule collection="EDEWorkspaceSetupData" field="SystemReliability" operator="gt" threshold="85"/>
-	<Rule collection="EDEWorkspaceSetupData" field="Average" operator="lt" threshold="30"/>
+	<Rule collection="EDEWorkspaceSetupData" field="Reliability" operator="gt" threshold="80" deltaThreshold="5"/>
+	<Rule collection="EDEWorkspaceSetupData" field="SystemReliability" operator="gt" threshold="85" deltaThreshold="5"/>
+	<Rule collection="EDEWorkspaceSetupData" field="Average" operator="lt" threshold="30" deltaThreshold="1"/>
 	
-	<Rule collection="ICEBuildData" field="Reliability" operator="gt" threshold="85"/>
-	<Rule collection="ICEBuildData" field="SystemReliability" operator="gt" threshold="95"/>
-	<Rule collection="ICEBuildData" field="Average" operator="lt" threshold="40"/>
+	<Rule collection="ICEBuildData" field="Reliability" operator="gt" threshold="85" deltaThreshold="5"/>
+	<Rule collection="ICEBuildData" field="SystemReliability" operator="gt" threshold="95" deltaThreshold="5"/>
+	<Rule collection="ICEBuildData" field="Average" operator="lt" threshold="40" deltaThreshold="1"/>
 
-	<Rule collection="RIDEServerStartupData" field="Reliability" operator="gt" threshold="95"/>
-	<Rule collection="RIDEServerStartupData" field="SystemReliability" operator="gt" threshold="99"/>
-	<Rule collection="RIDEServerStartupData" field="Average" operator="lt" threshold="2"/>
+	<Rule collection="RIDEServerStartupData" field="Reliability" operator="gt" threshold="95" deltaThreshold="5"/>
+	<Rule collection="RIDEServerStartupData" field="SystemReliability" operator="gt" threshold="99" deltaThreshold="5"/>
+	<Rule collection="RIDEServerStartupData" field="Average" operator="lt" threshold="2" deltaThreshold="1"/>
 
-	<Rule collection="RIDEWorkspaceSetupData" field="Reliability" operator="gt" threshold="85"/>
-	<Rule collection="RIDEWorkspaceSetupData" field="SystemReliability" operator="gt" threshold="99"/>
-	<Rule collection="RIDEWorkspaceSetupData" field="Average" operator="lt" threshold="5"/>
+	<Rule collection="RIDEWorkspaceSetupData" field="Reliability" operator="gt" threshold="85" deltaThreshold="5"/>
+	<Rule collection="RIDEWorkspaceSetupData" field="SystemReliability" operator="gt" threshold="99" deltaThreshold="5"/>
+	<Rule collection="RIDEWorkspaceSetupData" field="Average" operator="lt" threshold="5" deltaThreshold="1"/>
 	
-	<Rule collection="CIData" field="Reliability" operator="gt" threshold="90"/>
-	<Rule collection="CIData" field="SystemReliability" operator="gt" threshold="99"/>
-	<Rule collection="CIData" field="Average" operator="lt" threshold="5"/>
+	<Rule collection="CIData" field="Reliability" operator="gt" threshold="90" deltaThreshold="5"/>
+	<Rule collection="CIData" field="SystemReliability" operator="gt" threshold="99" deltaThreshold="5"/>
+	<Rule collection="CIData" field="Average" operator="lt" threshold="5" deltaThreshold="1"/>
 </Rules>
