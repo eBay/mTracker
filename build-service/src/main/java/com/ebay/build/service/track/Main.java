@@ -10,9 +10,9 @@ import javax.ws.rs.ext.Provider;
 
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
+import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.moxy.json.MoxyJsonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
-
 import org.glassfish.jersey.moxy.json.MoxyJsonConfiguration;
 
 /**
@@ -39,6 +39,7 @@ public class Main {
         //rc.addBinder(org.glassfish.jersey.media.json.JsonJaxbBinder);
         
         rc.register(MoxyJsonFeature.class);
+        rc.register(MultiPartFeature.class);
         rc.register(JsonMoxyConfigurationContextResolver.class);
 
 

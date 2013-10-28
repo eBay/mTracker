@@ -11,6 +11,7 @@ import com.ebay.build.alerts.pfdash.PfDashScheduler;
 import com.ebay.build.persistent.healthcheck.scheduler.HealthTrackScheduler;
 import com.ebay.build.reliability.ReliabilityEmailScheduler;
 import com.ebay.build.service.config.BuildServiceConfig;
+import com.ebay.build.udc.UDCSheduler;
 
 public class BuildServiceScheduler implements ServletContextListener {
 	public static File contextPath;
@@ -39,6 +40,7 @@ public class BuildServiceScheduler implements ServletContextListener {
 		HealthTrackScheduler healthTrackScheduler = new HealthTrackScheduler();
 		ReliabilityEmailScheduler reliabilityScheduler = new ReliabilityEmailScheduler();
 		PfDashScheduler pfDashScheduler = new PfDashScheduler();
+		
 		if (isSchedulerEnabled()) {
 			try {
 				healthTrackScheduler.run();
@@ -50,6 +52,16 @@ public class BuildServiceScheduler implements ServletContextListener {
 		} else {
 			System.out.println("Scheduler is disabled on this server.");
 		}
+		
+		
+		//runs in all machines.
+		UDCSheduler udcSheduler = new UDCSheduler();
+		try {
+			udcSheduler.run();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+		
 	}
 
 	public boolean isSchedulerEnabled() {

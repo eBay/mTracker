@@ -1,8 +1,9 @@
 target
 *.log
-LogPublisher/bin/lib
-LogPublisher/bin/logs
+logs/
 queue
 .settings
 .project
 .classpath
+nb-configuration.xml
+bin/

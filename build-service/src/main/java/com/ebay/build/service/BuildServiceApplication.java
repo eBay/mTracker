@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.ws.rs.ext.ContextResolver;
 import javax.ws.rs.ext.Provider;
+import org.glassfish.jersey.media.multipart.MultiPartFeature;
 
 import org.glassfish.jersey.moxy.json.MoxyJsonConfiguration;
 import org.glassfish.jersey.moxy.json.MoxyJsonFeature;
@@ -16,6 +17,7 @@ public class BuildServiceApplication extends ResourceConfig {
         packages("com.ebay.build.service");
         //register(LoggingFilter.class);
         register(MoxyJsonFeature.class);
+        register(MultiPartFeature.class);
         register(JsonMoxyConfigurationContextResolver.class);
       //  property(JsonGenerator.PRETTY_PRINTING, true);
     }

@@ -3,6 +3,7 @@ package com.ebay.build.service.track;
 import static org.junit.Assert.assertTrue;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -14,6 +15,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.glassfish.grizzly.http.server.HttpServer;
+import org.glassfish.jersey.media.multipart.FormDataMultiPart;
+import org.glassfish.jersey.media.multipart.MultiPartFeature;
+import org.glassfish.jersey.media.multipart.file.FileDataBodyPart;
 import org.glassfish.jersey.moxy.json.MoxyJsonFeature;
 import org.junit.After;
 import org.junit.Before;
@@ -34,6 +38,7 @@ public class QueueServiceTest {
 	        Client c = ClientBuilder.newClient();
 	        
 	        c.register(MoxyJsonFeature.class);
+	        c.register(MultiPartFeature.class);
 
 	        target = c.target(Main.BASE_URI);
 	    }
@@ -60,6 +65,27 @@ public class QueueServiceTest {
 	    	Response response = target.path("queue/build/job1").request().post(Entity.entity(session, MediaType.APPLICATION_JSON));
 	    	assertTrue(response.readEntity(String.class).contains("build/job1 queued"));
 	    }
+	    
+	    
+	@Test
+	public void testUploadArchive() throws IOException {
+		File zip = new File(getClass().getClassLoader()
+				.getResource("upload.zip").getFile());
+
+		final FormDataMultiPart multipart = new FormDataMultiPart();
+		FileDataBodyPart filePart = new FileDataBodyPart("udc_archive_"
+				+ zip.getName(), zip);
+		multipart.bodyPart(filePart);
+		
+
+		final Response response = target.path("queue/myApp").request()
+				.post(Entity.entity(multipart, multipart.getMediaType()));
+
+		String result=response.readEntity(String.class);
+		assertTrue(result.contains("Files: [upload.zip] queued")
+				|| result.contains("Files: [] queued"));
+	}
+	    
 	    
 	    @SuppressWarnings("resource")
 		private Session getSessions(String fileName) throws IOException {
