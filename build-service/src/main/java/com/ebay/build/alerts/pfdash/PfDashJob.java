@@ -2,10 +2,10 @@ package com.ebay.build.alerts.pfdash;
 
 import java.io.File;
 import java.net.URISyntaxException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.util.Arrays;
 import java.util.Date;
-import java.util.Locale;
+import java.util.List;
+import java.util.TimeZone;
 
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
@@ -17,6 +17,7 @@ import com.ebay.build.alerts.Condition;
 import com.ebay.build.alerts.SingleResult;
 import com.ebay.build.alerts.Time;
 import com.ebay.build.alerts.connector.Connector;
+import com.ebay.build.profiler.utils.DateUtils;
 import com.ebay.build.service.BuildServiceScheduler;
 import com.ebay.build.utils.ServiceConfig;
 import com.mongodb.DB;
@@ -27,119 +28,73 @@ public class PfDashJob implements Job {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		String location = ServiceConfig.get("pfdash.db.host");
-		int port = ServiceConfig.getInt("pfdash.db.port");
-		String dbname = ServiceConfig.get("pfdash.db.name");
-		DB db = Connector.connectDB(location, port, dbname);
-		db.slaveOk();
-
-		Date date = new Date();
-		int seconds = getMilliSecondOfDay(date);
-		Date currentStartTime = previousSeconds(date, seconds + 60 * 60 * 24);
-		Date currentEndTime = previousSeconds(date, seconds);
-		Condition current = new Condition();		
-		current.setStartDate(currentStartTime);
-		current.setEndDate(currentEndTime);
 		
-		Date previousStartTime = previousSeconds(date, seconds + 60 * 60 * 24 * 8);
-		Date previousEndTime = previousSeconds(date, seconds + 60 * 60 * 24 * 7);
-		Condition previous = new Condition();
-		previous.setStartDate(previousStartTime);
-		previous.setEndDate(previousEndTime);
-		File parentDirectory = null;
-		
-		
-		Time time = new Time();
-		time.setQueryStart(dateFormatter(currentStartTime));
-		time.setQueryEnd(dateFormatter(currentEndTime));
-		SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.US);
+		PfDashJob job = new PfDashJob();
+		File file = null;
 		try {
-			parentDirectory = new File(PfDashJob.class.getResource("/").toURI());
-			Compare com = new Compare(new File(parentDirectory,
-					"alert_kpi_threshold.xml"), db);
-			AlertResult ar = com.judgeRules(current, previous);
-			Date sendTime = new Date();
-			time.setSend(sdf.format(sendTime));
-			System.out.println("Email sentTime: " + sendTime);
-			EmailSender rlb = new EmailSender(ar, time);
-			rlb.sendmail(parentDirectory);
+			file = new File(PfDashJob.class.getResource("/").toURI());
+			job.run(file, "main");
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}
 	}
-
+	
 	@Override
 	public void execute(JobExecutionContext context)
 			throws JobExecutionException {
-		String location = ServiceConfig.get("pfdash.db.host");
+		run(BuildServiceScheduler.contextPath, "execute");	
+	}
+	
+	public void run(File file, String function) {
+		String[] location = ServiceConfig.get("pfdash.db.host").split(";");
+		List<String> locationList = Arrays.asList(location);
 		int port = ServiceConfig.getInt("pfdash.db.port");
 		String dbname = ServiceConfig.get("pfdash.db.name");
-		DB db = Connector.connectDB(location, port, dbname);
+		DB db = Connector.connectDB(locationList, port, dbname);
 		db.slaveOk();
 
 		Date date = new Date();
-		int seconds = getMilliSecondOfDay(date);
-		Date currentStartTime = previousSeconds(date, seconds + 60 * 60 * 24);
-		Date currentEndTime = previousSeconds(date, seconds);
+		Date currentStartTime = DateUtils.getUTCOneDayBack(date);
+		Date currentEndTime = DateUtils.getUTCMidnightZero(date);
 		Condition current = new Condition();		
 		current.setStartDate(currentStartTime);
 		current.setEndDate(currentEndTime);
 		
-		Date previousStartTime = previousSeconds(date, seconds + 60 * 60 * 24 * 8);
-		Date previousEndTime = previousSeconds(date, seconds + 60 * 60 * 24 * 7);
+		Date previousStartTime = DateUtils.getUTCOneWeekBack(currentStartTime);
+		Date previousEndTime = DateUtils.getUTCOneWeekBack(currentEndTime);
 		Condition previous = new Condition();
 		previous.setStartDate(previousStartTime);
 		previous.setEndDate(previousEndTime);
 		File parentDirectory = null;
 		
+		
 		Time time = new Time();
-		time.setQueryStart(dateFormatter(currentStartTime));
-		time.setQueryEnd(dateFormatter(currentEndTime));
-		SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.US);
+		TimeZone timeZone = TimeZone.getDefault();
+		TimeZone utcTimeZone = TimeZone.getTimeZone("UTC");
+		time.setQueryStart(DateUtils.getDateTimeString(currentStartTime, utcTimeZone));
+		time.setQueryEnd(DateUtils.getDateTimeString(currentEndTime, utcTimeZone));
+		boolean sendFlag = false;
 		try {
 			parentDirectory = new File(PfDashJob.class.getResource("/").toURI());
 			Compare com = new Compare(new File(parentDirectory,
 					"alert_kpi_threshold.xml"), db);
 			AlertResult ar = com.judgeRules(current, previous);
-			Date sendTime = new Date();
-			time.setSend(sdf.format(sendTime));
-			System.out.println("Email sentTime: " + sendTime);
+			time.setSend(DateUtils.getDateTimeString(date, timeZone));
+			System.out.println("Email sentTime: " + date);
 			EmailSender rlb = new EmailSender(ar, time);
 			
-			boolean sendFlag = false;
+			
 			for (SingleResult singleResult : ar.getResultlist()) {
-				if ("#FF9696".equals(singleResult.getThresholdColor()) 
-						|| !"#CACACA".equals(singleResult.getThresholdDeltaColor())) {
+				if (!"#CACACA".equals(singleResult.getColor())) {
 					sendFlag = true;
 				}
 			}
-			if (sendFlag) {			
-				rlb.sendmail(BuildServiceScheduler.contextPath);
+			if ("main".equals(function) || sendFlag && "execute".equals(function)) {			
+				rlb.sendmail(file);
 			} 
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	public static int getMilliSecondOfDay(Date currentDate) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(currentDate);
-		int hours = calendar.get(Calendar.HOUR_OF_DAY);
-		int minutes = calendar.get(Calendar.MINUTE);
-		int seconds = calendar.get(Calendar.SECOND);
-		return (hours * 60 * 60 + minutes * 60 + seconds);
-	}
-	
-	public static Date previousSeconds(Date date, int seconds) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
-		calendar.add(calendar.SECOND, -seconds);
-		date = calendar.getTime();
-		return date;
-	}
-	
-	public static String dateFormatter(Date date) {
-		SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss yyyy", Locale.US);
-		return sdf.format(date);
+		
 	}
 }

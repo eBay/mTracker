@@ -73,14 +73,14 @@ public class BuildServiceScheduler implements ServletContextListener {
 		return false;
 	}
 	
-	public String getHostName() {
+	public static String getHostName() {
 		InetAddress netAddress = null;
 		try {
 			netAddress = InetAddress.getLocalHost();
 			if (null == netAddress) {
 				return null;
 			}			
-			String name = netAddress.getHostName();
+			String name = netAddress.getCanonicalHostName();
 			return name;
 		} catch (UnknownHostException e) {
 			e.printStackTrace();

@@ -125,11 +125,10 @@ public class ReliabilityEmailJDBCTemplate {
 		return null;
 	}
 
-	public List<ReportInfo> getWeeklyReliability() {
+	public List<ReportInfo> getWeeklyReliability(Date date) {
 		List<ReportInfo> reportList = new ArrayList<ReportInfo>();
 
 		try {
-			Date date = new Date();
 			reportList.add(getReportInfoPeriod(previousNDays(49, date), previousNDays(42, date)));
 			reportList.add(getReportInfoPeriod(previousNDays(42, date), previousNDays(35, date)));
 			reportList.add(getReportInfoPeriod(previousNDays(35, date), previousNDays(28, date)));

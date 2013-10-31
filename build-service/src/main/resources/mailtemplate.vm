@@ -259,6 +259,11 @@
 	#end
   </table>
   </div>
+  <br/>
+	<div style="font-family:Calibri; font-size:15px;">
+		<strong>Host Name &nbsp;:</strong> $hostName <br/>
+		<strong>Generated at &nbsp;:</strong> $sendTime <br/>
+	</div>
 
  </body>
 </html>

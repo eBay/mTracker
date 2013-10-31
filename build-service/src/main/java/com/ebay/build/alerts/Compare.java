@@ -4,6 +4,7 @@ import java.io.File;
 import java.text.DecimalFormat;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import java.util.Set;
 
 import com.ebay.build.alerts.connector.Connector;
 import com.ebay.build.alerts.connector.XMLConnector;
+import com.ebay.build.profiler.utils.DateUtils;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
@@ -20,8 +22,8 @@ public class Compare {
 	private final Rules rules;
 	private final DB db;
 	private AlertResult alertResult = new AlertResult();
-	private final String lightRed = "#FF9696";
-	private final String lightGreen = "#E0FFA3";
+	private final String lightRed = "#FF0000";
+	private final String lightGreen = "#92D050";
 	private final String normalColor = "#CACACA";
 
 	public Compare(File file, DB db) {
@@ -35,6 +37,7 @@ public class Compare {
 			judgeSingleRule(rule, current, previous);
 		}
 
+		
 		Collections.sort(alertResult.getResultlist(), new Comparator<SingleResult>() {
 
 			@Override
@@ -43,15 +46,12 @@ public class Compare {
 				collectionMap.put("RIDEWorkspaceSetupData", 1);
 				collectionMap.put("RIDEServerStartupData", 2);
 				collectionMap.put("CIBuildData", 3);
-				collectionMap.put("EDEWorkspaceSetupData", 4);
-				collectionMap.put("EDEServerStartupData", 5);
-				collectionMap.put("ICEBuildData", 6);
 				int value1 = collectionMap.get(result1.getCollection());
 				int value2 = collectionMap.get(result2.getCollection());
 				return value1 - value2;
 			}
 		});
-
+		
 		return alertResult;
 	}
 
@@ -61,61 +61,43 @@ public class Compare {
 		if ("CIData".equals(collection)) {
 			collection = "CIBuildData";
 		}
-		DBObject totaldbo = Connector.getLastRecord(dbc, current.getStartDate(),
-				current.getEndDate());
-		DBObject previousdbo = Connector.getLastRecord(dbc, previous.getStartDate(),
-				previous.getEndDate());
+		
+		DBObject totaldbo = Connector.getLastRecord(dbc, current.getStartDate(), current.getEndDate());
+       
 		String field = rule.getField();
 		String operatorStr = rule.getOperator();
-
+		
+		Date oneWeekBack = DateUtils.getUTCOneWeekBack(current.getEndDate());
+		double movingAverage = Connector.getMovingAverage(dbc, field, oneWeekBack, current.getEndDate());
+		String flag = "";
+		if (Connector.DAYS < 7) {
+			flag = "~";
+		}
+		
 		if ("lt".equals(operatorStr)) {
 			operatorStr = "<";
+		} else if ("le".equals(operatorStr)) {
+			operatorStr = "<=";
 		} else if ("eq".equals(operatorStr)) {
 			operatorStr = "=";
 		} else if ("gt".equals(operatorStr)) {
 			operatorStr = ">";
+		} else if ("ge".equals(operatorStr)) {
+			operatorStr = ">=";
 		}
-
-		String thresholdStr = rule.getThreshold();
-		String deltaThresholdStr = rule.getDeltaThreshold();
-
+		
+		String goalStr = rule.getGoal();
+		String lowerLimit = rule.getLower();
+		String upperLimit = rule.getUpper();
 		// only support type double
-		Double threshold = Double.parseDouble(thresholdStr);
-		Double deltaThreshold = Double.parseDouble(deltaThresholdStr);
+		double lower = Double.parseDouble(lowerLimit);
+		double upper = Double.parseDouble(upperLimit);
 		DecimalFormat df = new DecimalFormat("##0.00");
 		SingleResult singleResult = null;
 
 		if (totaldbo == null) {
-			if (previousdbo == null) {
-				singleResult = new SingleResult(collection, field, "N/A", operatorStr,
-						thresholdStr, "N/A", lightRed, "N/A", deltaThresholdStr, "N/A",
-						lightRed);
-			} else {
-				DBObject previousObject = (DBObject) previousdbo.get("Data");
-				Set<String> key = previousObject.keySet();
-
-				for (String keyname : key) {
-					if (field.equals(keyname)) {
-						Object beforeKeyValue = previousObject.get(keyname);
-						double beforeKeyValueNum = 0;
-						if (beforeKeyValue instanceof Integer) {
-							int k1 = (Integer) beforeKeyValue;
-							beforeKeyValueNum = Double.parseDouble("" + k1);
-						} else if (beforeKeyValue instanceof Double) {
-							beforeKeyValueNum = (Double) beforeKeyValue;
-						}
-
-						if ("ICEBuildData".equals(collection) && "Average".equals(field)) {
-							beforeKeyValueNum = (Double) beforeKeyValue / 60;
-							beforeKeyValue = (Double) beforeKeyValue / 60;
-						}
-						singleResult = new SingleResult(collection, field, "N/A",
-								operatorStr, thresholdStr, "N/A", lightRed,
-								df.format(beforeKeyValueNum), deltaThresholdStr, "N/A",
-								lightRed);
-					}
-				}
-			}
+			singleResult = new SingleResult(collection, field, "N/A", lightRed,
+					operatorStr, goalStr, lowerLimit, upperLimit, df.format(movingAverage), flag);
 
 			if ("Average".equals(field)) {
 				singleResult.setField("Performance");
@@ -123,12 +105,12 @@ public class Compare {
 			alertResult.getResultlist().add(singleResult);
 			return;
 		}
+		
 		DBObject dbo = (DBObject) totaldbo.get("Data");
 		Set<String> keyset = dbo.keySet();
 
 		for (String keyname : keyset) {
 			if (field.equals(keyname)) {
-				double outOfThreshold;
 				Object keyvalue = dbo.get(keyname);
 				double keyvaluenum = 0;
 				if (keyvalue instanceof Integer) {
@@ -137,85 +119,29 @@ public class Compare {
 				} else if (keyvalue instanceof Double) {
 					keyvaluenum = (Double) keyvalue;
 				}
-
-				if ("ICEBuildData".equals(collection) && "Average".equals(field)) {
-					keyvaluenum = (Double) keyvalue / 60;
-					keyvalue = (Double) keyvalue / 60;
+				
+				String color = normalColor;
+				if (keyvaluenum >= lower && keyvaluenum <= upper) {
+					color = normalColor;					
+				} else if ((keyvaluenum < lower && "<=".equals(operatorStr)) || (keyvaluenum > upper && ">=".equals(operatorStr))) {
+					color = lightGreen;				
+				} else if ((keyvaluenum < lower && ">=".equals(operatorStr)) || (keyvaluenum > upper && "<=".equals(operatorStr))) {
+					color = lightRed;				
 				}
-
-				String outOfThresholdColor = null;
-				outOfThreshold = keyvaluenum - threshold;
-
-				if (">".equals(operatorStr) && (outOfThreshold < 0)
-						|| "<".equals(operatorStr) && (outOfThreshold > 0)) {
-					outOfThresholdColor = lightRed;
-				} else {
-					outOfThresholdColor = normalColor;
-				}
-
-				if (previousdbo == null) {
-					singleResult = new SingleResult(collection, keyname,
-							df.format(keyvalue), operatorStr, thresholdStr,
-							df.format(outOfThreshold), outOfThresholdColor, "N/A",
-							deltaThresholdStr, "N/A", lightRed);
-				} else {
-					DBObject previousObject = (DBObject) previousdbo.get("Data");
-					Set<String> key = previousObject.keySet();
-
-					for (String beforeKeyName : key) {
-						if (field.equals(beforeKeyName)) {
-							Object beforeKeyValue = previousObject.get(beforeKeyName);
-							double beforeKeyValueNum = 0;
-
-							if (beforeKeyValue instanceof Integer) {
-								int k1 = (Integer) beforeKeyValue;
-								beforeKeyValueNum = Double.parseDouble("" + k1);
-							} else if (beforeKeyValue instanceof Double) {
-								beforeKeyValueNum = (Double) beforeKeyValue;
-							}
-
-							if ("ICEBuildData".equals(collection)
-									&& "Average".equals(field)) {
-								beforeKeyValueNum = (Double) beforeKeyValue / 60;
-								beforeKeyValue = (Double) beforeKeyValue / 60;
-							}
-							
-							String outOfThresholdDeltaColor = null;
-							double outOfDelta = keyvaluenum - beforeKeyValueNum;
-							if (Math.abs(outOfDelta) <= deltaThreshold) {
-								outOfThresholdDeltaColor = normalColor;
-							} else {
-								if (">".equals(operatorStr) && (outOfDelta > 0)
-										|| "<".equals(operatorStr) && (outOfDelta < 0)) {
-									outOfThresholdDeltaColor = lightGreen;
-								} else if (">".equals(operatorStr) && (outOfDelta < 0)
-										|| "<".equals(operatorStr) && (outOfDelta > 0)) {
-									outOfThresholdDeltaColor = lightRed;
-								} else {
-									outOfThresholdDeltaColor = normalColor;
-								}								
-							}
-							singleResult = new SingleResult(collection, field,
-									df.format(keyvalue), operatorStr, thresholdStr,
-									df.format(outOfThreshold), outOfThresholdColor,
-									df.format(beforeKeyValue), deltaThresholdStr,
-									df.format(outOfDelta), outOfThresholdDeltaColor);
-						}
-					}
-
-				}
-
+				singleResult  = new SingleResult(collection, field, df.format(keyvaluenum), color,
+						operatorStr, goalStr, lowerLimit, upperLimit, df.format(movingAverage), flag);
 			}
 		}
-		if (singleResult == null) {
-			singleResult = new SingleResult(collection, field, "N/A", operatorStr,
-					thresholdStr, "N/A", lightRed, "N/A", deltaThresholdStr, "N/A",
-					lightRed);
+		if (singleResult == null) {			
+			singleResult = new SingleResult(collection, field, "N/A", lightRed,
+					operatorStr, goalStr, lowerLimit, upperLimit, df.format(movingAverage), flag);
 		}
+		
 		if ("Average".equals(field)) {
 			singleResult.setField("Performance");
 		}
 		alertResult.getResultlist().add(singleResult);
 		return;
 	}
+	
 }

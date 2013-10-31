@@ -106,6 +106,7 @@ public class SpaceReliabilityEmailJob implements Job {
 		Map<String, ReportInfo> infoList = getReliabilityTable();
 		Map<String, ReportInfo> ServerInfoList = getServerReliabilityTable();
 		
+		Date sendTime = new Date();
         System.out.println("[INFO]: velocity initing...");
 		try {
 			new VelocityParse("workspace.vm", infoList, ServerInfoList,
@@ -113,7 +114,7 @@ public class SpaceReliabilityEmailJob implements Job {
 					getTopUserErrorsTable(infoList.get("info_30day")),
 					getServerSystemErrorsTable(ServerInfoList.get("serverInfo_30day")),
 					getServerUserErrorsTable(ServerInfoList.get("serverInfo_30day")),
-					"server.html", directory);
+					"server.html", directory, sendTime);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

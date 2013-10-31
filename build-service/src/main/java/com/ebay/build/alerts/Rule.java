@@ -17,10 +17,13 @@ public class Rule {
 	String operator="";
 
 	@XmlAttribute
-	String threshold = "";
+	String goal = "";
 	
 	@XmlAttribute
-	String deltaThreshold = "";
+	String lower = "";
+	
+	@XmlAttribute
+	String upper = "";
 
 	public String getCollection() {
 		return collection;
@@ -46,20 +49,30 @@ public class Rule {
 		this.operator = operator;
 	}
 
-	public String getThreshold() {
-		return threshold;
+	public String getGoal() {
+		return goal;
 	}
 
-	public void setThreshold(String threshold) {
-		this.threshold = threshold;
+	public void setGoal(String goal) {
+		this.goal = goal;
 	}
 
-	public String getDeltaThreshold() {
-		return deltaThreshold;
+	public String getLower() {
+		return lower;
 	}
 
-	public void setDeltaThreshold(String deltaThreshold) {
-		this.deltaThreshold = deltaThreshold;
+	public void setLower(String lower) {
+		this.lower = lower;
 	}
+
+	public String getUpper() {
+		return upper;
+	}
+
+	public void setUpper(String upper) {
+		this.upper = upper;
+	}
+	
+	
 
 }

@@ -75,7 +75,7 @@ public class SimpleMailSender {
 				mailMessage.setContent(mailInfo.getContent(), mailInfo.getContentType());
 			}
 			System.out.println("[INFO]: ready to transport the mailmessage!");
-			Transport.send(mailMessage);			
+			Transport.send(mailMessage);	
 			return true;
 		} catch (AddressException e) {			
 			e.printStackTrace();

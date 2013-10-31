@@ -5,9 +5,6 @@ import java.util.List;
 
 public class AlertResult {
 
-	/**
-	 * @param args
-	 */
 	private List<SingleResult> resultlist = new ArrayList<SingleResult>();
 
 

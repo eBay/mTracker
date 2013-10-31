@@ -8,15 +8,14 @@
   <meta name="Description" content="">
   <style type="text/css">
   
-  table
+	table
 	{
 		border-collapse:collapse;
 		border:1px solid black;
 	}
 	
   	table th,table td
-	{
-		
+	{		
 		padding-left:5px;
 		padding-right:5px;
 		text-align:left;
@@ -31,15 +30,18 @@
 	.textleft{
 		text-align:left;
 		padding-left:5px;
+		font-family:Calibri;
 	}
 	
 	.textcenter{
 		text-align:center;
+		font-family:Calibri;
 	}
 	
 	.textright{
 		text-align:right;
 		padding-right:5px;
+		font-family:Calibri;
 	}
 	
 	#statistb
@@ -61,82 +63,130 @@
 
  <body>
 	<div style="font-family:Calibri; font-size:15px;">
-		<strong>Generated at:</strong> $time.getSend() <br/>
-		<strong>Data time range:</strong>(UTC)$time.getQueryStart() &nbsp;~ &nbsp;	$time.getQueryEnd()
+		<strong>Data time range:</strong>$time.getQueryStart() &nbsp;~ &nbsp; $time.getQueryEnd()
 	</div>
 	<br/>
-	<div style="text-align:center;">
+	<!-- result with special color-->
+	<div>
+		<table>
+			<tr>
+				<td class="textcenter" style="width:100px; background-color:#FF0000;">Worse</td>
+				<td class="textcenter" style="width:100px; background-color:#92D050;">Better</td>
+			</tr>
+		</table>
+	</div>
+	<br/>
+	<div>
 		<table id="statistb" style="border-collapse:collapse;">
 			<tbody>
+				<tr style="text-align:center;">
+					<td colspan="6" class="textcenter" style="background-color:#E9E9E9; color:#1F497D;">ALRAM - Metrics out of Measurement Allowance</td>					
+				</tr>
 				<tr style="font-weight:bold;">
 					<td class="textcenter" style="width:200px; background-color:#E9E9E9;">Collection</td>
 					<td class="textcenter" style="width:180px; background-color:#E9E9E9;">Field</td>					
-					<td class="textcenter" style="width:100px; background-color:#E9E9E9;">Current Value</td>
-					<td class="textcenter" style="width:100px; background-color:#E9E9E9;">Threshold</td>
-					<td class="textcenter" style="width:100px; background-color:#CACACA;">Out of Threshold</td>
-					<td class="textcenter" style="width:100px; background-color:#E9E9E9;">Same day in last week</td>
-					<td class="textcenter" style="width:100px; background-color:#E9E9E9;">Delta Threshold(WoW)</td>
-					<td class="textcenter" style="width:100px; background-color:#CACACA;">Out of Threshold Delta(Wow)</td>
+					<td class="textcenter" style="width:100px; background-color:#CACACA;">Current Value</td>
+					<td class="textcenter" style="width:100px; background-color:#E9E9E9;">Goal</td>
+					<td class="textcenter" style="width:140px; background-color:#E9E9E9;">Measurement Allowance</td>
+					<td class="textcenter" style="width:140px; background-color:#E9E9E9;">Moving Average (Last 7 Days)</td>
 				</tr>
 		
-			#foreach($singleResult in ${resultlist})
-				<!-- 
-				<tr style="color:$singleResult.getColor();">
-				-->
-				<tr>
-					<td class="textleft">$singleResult.getCollection()</td>
-					<td class="textleft">$singleResult.getField()</td>
-					#if($singleResult.getField() != "Performance")
-						#if($singleResult.getNowValue() == "N/A")
-							<td class="textright">$singleResult.getNowValue()</td>
+				#foreach($singleResult in ${colorResultList})
+					<tr>
+						<td class="textleft">$singleResult.getCollection()</td>
+						<td class="textleft">$singleResult.getField()</td>
+						#if($singleResult.getField() != "Performance")
+							#if($singleResult.getNowValue() == "N/A")
+								<td class="textright" style="background-color:$singleResult.getColor()">$singleResult.getNowValue()</td>
+							#else
+								<td class="textright" style="background-color:$singleResult.getColor()">$singleResult.getNowValue()%</td>
+							#end
+							<td class="textright">$singleResult.getOperator() $singleResult.getGoal()%</td>
+							<td class="textright">$singleResult.getLower()% ~ $singleResult.getUpper()%</td>
+							#if($singleResult.getMovingAverage() == "N/A")
+								<td class="textright">N/A</td>
+							#else
+								<td class="textright">$singleResult.getMovingAverage()% $singleResult.getFlag()</td>
+							#end
 						#else
-							<td class="textright">$singleResult.getNowValue()%</td>
+							#if($singleResult.getNowValue() == "N/A")
+								<td class="textright" style="background-color:$singleResult.getColor()">$singleResult.getNowValue()</td>
+							#else
+								<td class="textright" style="background-color:$singleResult.getColor()">$singleResult.getNowValue()min</td>
+							#end		
+							<td class="textright">$singleResult.getOperator() $singleResult.getGoal()min</td>
+							<td class="textright">$singleResult.getLower()min ~ $singleResult.getUpper()min</td>
+							#if($singleResult.getMovingAverage() == "N/A")
+								<td class="textright">N/A</td>
+							#else
+								<td class="textright">$singleResult.getMovingAverage()min $singleResult.getFlag()</td>
+							#end
 						#end
-						<td class="textright">$singleResult.getOperator() $singleResult.getThreshold()%</td>
-						#if($singleResult.getOutOfThreshold() == "N/A")
-							<td class="textright" style="background-color:$singleResult.getThresholdColor();">$singleResult.getOutOfThreshold()</td>
-						#else
-							<td class="textright" style="background-color:$singleResult.getThresholdColor();">$singleResult.getOutOfThreshold()%</td>
-						#end
-						#if($singleResult.getBeforeValue() == "N/A")
-							<td class="textright">$singleResult.getBeforeValue()</td>
-						#else
-							<td class="textright">$singleResult.getBeforeValue()%</td>
-						#end
-						<td class="textright">$singleResult.getDeltaThreshold()%</td>
-						#if($singleResult.getOutOfThresholdDelta() == "N/A") 
-							<td class="textright" style="background-color:$singleResult.getThresholdDeltaColor();">$singleResult.getOutOfThresholdDelta()</td>
-						#else
-							<td class="textright" style="background-color:$singleResult.getThresholdDeltaColor();">$singleResult.getOutOfThresholdDelta()%</td>
-						#end
-					#else
-						#if($singleResult.getNowValue() == "N/A")
-							<td class="textright">$singleResult.getNowValue()</td>
-						#else
-							<td class="textright">$singleResult.getNowValue()min</td>
-						#end
-						<td class="textright">$singleResult.getOperator() $singleResult.getThreshold()min</td>
-						#if($singleResult.getOutOfThreshold() == "N/A")
-							<td class="textright" style="background-color:$singleResult.getThresholdColor();">$singleResult.getOutOfThreshold()</td>
-						#else
-							<td class="textright" style="background-color:$singleResult.getThresholdColor();">$singleResult.getOutOfThreshold()min</td>
-						#end
-						#if($singleResult.getBeforeValue() == "N/A")
-							<td class="textright">$singleResult.getBeforeValue()</td>
-						#else
-							<td class="textright">$singleResult.getBeforeValue()min</td>
-						#end
-						<td class="textright">$singleResult.getDeltaThreshold()min</td>
-						#if($singleResult.getOutOfThresholdDelta() == "N/A") 
-							<td class="textright" style="background-color:$singleResult.getThresholdDeltaColor();">$singleResult.getOutOfThresholdDelta()</td>
-						#else
-							<td class="textright" style="background-color:$singleResult.getThresholdDeltaColor();">$singleResult.getOutOfThresholdDelta()min</td>
-						#end
-					#end
-				</tr>
-			#end 
+					</tr>
+				#end 
 			</tbody>
 		</table>
+	</div>
+	<br/>
+	
+	<!--result within expectations-->
+	#if(($!{normalResultList.size()}) != 0)
+		<div>
+			<table id="statistb" style="border-collapse:collapse;">
+				<tbody>
+					<tr style="text-align:center;">
+						<td colspan="6" class="textcenter" style="background-color:#E9E9E9; color:#1F497D;">INFO - Metrics within Measurement Allowance</td>					
+					</tr>
+					<tr style="font-weight:bold;">
+						<td class="textcenter" style="width:200px; background-color:#E9E9E9;">Collection</td>
+						<td class="textcenter" style="width:180px; background-color:#E9E9E9;">Field</td>					
+						<td class="textcenter" style="width:100px; background-color:#CACACA;">Current Value</td>
+						<td class="textcenter" style="width:100px; background-color:#E9E9E9;">Goal</td>
+						<td class="textcenter" style="width:140px; background-color:#E9E9E9;">Measurement Allowance</td>
+						<td class="textcenter" style="width:140px; background-color:#E9E9E9;">Moving Average (Last 7 Days)</td>
+					</tr>
+			
+					#foreach($singleResult in ${normalResultList})
+						<tr>
+							<td class="textleft">$singleResult.getCollection()</td>
+							<td class="textleft">$singleResult.getField()</td>
+							#if($singleResult.getField() != "Performance")
+								#if($singleResult.getNowValue() == "N/A")
+									<td class="textright" style="background-color:$singleResult.getColor()">$singleResult.getNowValue()</td>
+								#else
+									<td class="textright" style="background-color:$singleResult.getColor()">$singleResult.getNowValue()%</td>
+								#end
+								<td class="textright">$singleResult.getOperator() $singleResult.getGoal()%</td>
+								<td class="textright">$singleResult.getLower()% ~ $singleResult.getUpper()%</td>
+								#if($singleResult.getMovingAverage() == "N/A")
+									<td class="textright">N/A</td>
+								#else
+									<td class="textright">$singleResult.getMovingAverage()% $singleResult.getFlag()</td>
+								#end
+							#else
+								#if($singleResult.getNowValue() == "N/A")
+									<td class="textright" style="background-color:$singleResult.getColor()">$singleResult.getNowValue()</td>
+								#else
+									<td class="textright" style="background-color:$singleResult.getColor()">$singleResult.getNowValue()min</td>
+								#end		
+						        <td class="textright">$singleResult.getOperator() $singleResult.getGoal()min</td>
+								<td class="textright">$singleResult.getLower()min ~ $singleResult.getUpper()min</td>
+								#if($singleResult.getMovingAverage() == "N/A")
+									<td class="textright">N/A</td>
+								#else
+									<td class="textright">$singleResult.getMovingAverage()min $singleResult.getFlag()</td>
+								#end
+							#end
+						</tr>
+					#end 
+				</tbody>
+			</table>
+		</div>
+		<br/>
+	#end
+	<div style="font-family:Calibri; font-size:15px;">
+		<strong>Host Name &nbsp;:</strong> $hostName <br/>
+		<strong>Generated at &nbsp;:</strong> $time.getSend() <br/>
 	</div>
 
  </body>

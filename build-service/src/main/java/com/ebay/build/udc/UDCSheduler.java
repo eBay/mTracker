@@ -30,6 +30,5 @@ public class UDCSheduler {
 
         scheduler.scheduleJob(udcJob, trigger);
         scheduler.start();
-
     }
 }

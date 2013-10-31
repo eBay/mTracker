@@ -8,38 +8,43 @@ public class SingleResult {
 	
 	private String nowValue;
 	
+	private String color;
+	
 	private String operator;
 
-	private String threshold;
+	private String goal;
 	
-	private String outOfThreshold;
+	private String lower;
 	
-	private String thresholdColor;
+	private String upper;
 	
-	private String beforeValue;
+	private String movingAverage;
 	
-	private String deltaThreshold;
-		
-	private String outOfThresholdDelta;
-	
-	private String thresholdDeltaColor;
+	private String flag;
 
-	public SingleResult(String collection, String field, String nowValue, String operator, String threshold, String outOfThreshold, 
-			String thresholdColor, String beforeValue, String deltaThreshold, String outOfThresholdDelta, String thresholdDeltaColor) {
-		
+	public SingleResult() {
+		super();
+	}
+
+    
+
+	public SingleResult(String collection, String field, String nowValue, String color,
+			String operator, String goal, String lower, String upper,
+			String movingAverage, String flag) {
+		super();
 		this.collection = collection;
 		this.field = field;
 		this.nowValue = nowValue;
+		this.color = color;
 		this.operator = operator;
-		this.threshold = threshold;
-		this.outOfThreshold = outOfThreshold;
-		this.thresholdColor = thresholdColor;
-		this.beforeValue = beforeValue;
-		this.deltaThreshold = deltaThreshold;
-		this.outOfThresholdDelta = outOfThresholdDelta;
-		this.thresholdDeltaColor = thresholdDeltaColor;
+		this.goal = goal;
+		this.lower = lower;
+		this.upper = upper;
+		this.movingAverage = movingAverage;
+		this.flag = flag;
 	}
-	
+
+
 
 	public String getCollection() {
 		return collection;
@@ -65,6 +70,14 @@ public class SingleResult {
 		this.nowValue = nowValue;
 	}
 
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
 	public String getOperator() {
 		return operator;
 	}
@@ -73,61 +86,43 @@ public class SingleResult {
 		this.operator = operator;
 	}
 
-	public String getThreshold() {
-		return threshold;
+	public String getGoal() {
+		return goal;
 	}
 
-	public void setThreshold(String threshold) {
-		this.threshold = threshold;
+	public void setGoal(String goal) {
+		this.goal = goal;
 	}
 
-	public String getOutOfThreshold() {
-		return outOfThreshold;
+	public String getLower() {
+		return lower;
 	}
 
-	public void setOutOfThreshold(String outOfThreshold) {
-		this.outOfThreshold = outOfThreshold;
+	public void setLower(String lower) {
+		this.lower = lower;
 	}
 
-	public String getThresholdColor() {
-		return thresholdColor;
+	public String getUpper() {
+		return upper;
 	}
 
-	public void setThresholdColor(String thresholdColor) {
-		this.thresholdColor = thresholdColor;
+	public void setUpper(String upper) {
+		this.upper = upper;
 	}
 
-	public String getBeforeValue() {
-		return beforeValue;
+	public String getMovingAverage() {
+		return movingAverage;
 	}
 
-	public void setBeforeValue(String beforeValue) {
-		this.beforeValue = beforeValue;
+	public void setMovingAverage(String movingAverage) {
+		this.movingAverage = movingAverage;
 	}
 
-	public String getDeltaThreshold() {
-		return deltaThreshold;
+	public String getFlag() {
+		return flag;
 	}
 
-	public void setDeltaThreshold(String deltaThreshold) {
-		this.deltaThreshold = deltaThreshold;
+	public void setFlag(String flag) {
+		this.flag = flag;
 	}
-
-	public String getOutOfThresholdDelta() {
-		return outOfThresholdDelta;
-	}
-
-	public void setOutOfThresholdDelta(String outOfThresholdDelta) {
-		this.outOfThresholdDelta = outOfThresholdDelta;
-	}
-
-	public String getThresholdDeltaColor() {
-		return thresholdDeltaColor;
-	}
-
-	public void setThresholdDeltaColor(String thresholdDeltaColor) {
-		this.thresholdDeltaColor = thresholdDeltaColor;
-	}
-
-		
 }

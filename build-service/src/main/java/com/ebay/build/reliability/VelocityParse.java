@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -14,6 +15,8 @@ import org.apache.velocity.app.Velocity;
 import org.apache.velocity.exception.ParseErrorException;
 import org.apache.velocity.exception.ResourceNotFoundException;
 
+import com.ebay.build.service.BuildServiceScheduler;
+
 public class VelocityParse {
 
 	public VelocityParse(String templateFile, Map<String, ReportInfo> infoList,
@@ -22,7 +25,7 @@ public class VelocityParse {
 			List<ErrorCode> topTenUserErrors,
 			List<ErrorCode> serverSystemErrors,
 			List<ErrorCode> serverUserErrors, String htmlFile,
-			File directory) {
+			File directory, Date sendTime) {
 
 		try {
 			Velocity.init(VelocityParse.class.getResource(
@@ -46,11 +49,13 @@ public class VelocityParse {
 			}
 			context.put("topTenSystemErrors", topTenSystemErrors);
 			context.put("topTenUserErrors", topTenUserErrors);
+			context.put("hostName", BuildServiceScheduler.getHostName());
 			if (serverSystemErrors != null && serverUserErrors != null) {
 				context.put("ServerSystemErrors", serverSystemErrors);
 				context.put("ServerUserErrors", serverUserErrors);
 			}
-
+			
+			context.put("sendTime", sendTime);
 			Template template = null;
 
 			try {
@@ -77,7 +82,7 @@ public class VelocityParse {
 					System.out.println("File does not exist, fail to create !");
 				}
 			}
-
+			
 			BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
 					new FileOutputStream(file), "utf-8"));
 			if (template != null)
@@ -85,7 +90,7 @@ public class VelocityParse {
 			writer.flush();
 			writer.close();
 			System.out.println("[INFO]: Complete generating corresponding html");
-
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

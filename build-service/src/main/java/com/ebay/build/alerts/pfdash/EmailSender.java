@@ -52,7 +52,7 @@ public class EmailSender {
 
 		mailInfo.setFromAddress(ServiceConfig.get("scheduler.email.from"));
 		
-		String[] toAddresses = ServiceConfig.get("scheduler.email.to").split(";");
+		String[] toAddresses = ServiceConfig.get("scheduler.reliability.email.to").split(";");
 		for(String address : toAddresses) {
 			address = address.trim();
 		}
