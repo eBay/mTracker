@@ -9,6 +9,8 @@ import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.GetMethod;
 
 import com.ebay.build.profiler.mdda.bean.DArtifact;
+import com.ebay.build.profiler.utils.FileUtils;
+import com.ebay.build.profiler.utils.MD5Generator;
 
 public class ParaDownload {
 	
@@ -83,10 +85,21 @@ public class ParaDownload {
 	         
 	            if(!artifact.artifactOK(size)){
 	            	localfile.delete();
-	            }
-				if (debug) {
+	            	System.out.println("[MDDA] Downloading failed due to size not match,  : " + url);
+	            } else if (debug) {
 					System.out.println("[MDDA] Downloaded : " + url);
 				}
+	            
+	            if (localfile.exists()) {
+	            	File sha1File = new File(localfile.getParent(), localfile.getName() + ".sha1");
+	            	if (!sha1File.exists()) {
+	            		String jarMD5 = MD5Generator.createMessageDisgestChecksum(localfile, "SHA1");
+	            		FileUtils.writeToFile(sha1File, jarMD5);
+	            	}
+	            	if (debug && sha1File.exists()) {
+	            		System.out.println("[MDDA] SHA1 generated for artifacts: " + localfile);
+	            	}
+	            }
 	        }catch (Exception e){  
 	            e.printStackTrace();  
 	        }finally{  
