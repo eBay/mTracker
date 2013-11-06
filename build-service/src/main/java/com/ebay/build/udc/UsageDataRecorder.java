@@ -142,8 +142,7 @@ public class UsageDataRecorder extends Thread
                 info.setUser(userName);
                 info.setIdeType(record.getIdeType());
                 if(!StringUtils.isEmpty(record.getSessionId())){
-                	
-                	info.setSessionId(Long.parseLong(record.getSessionId()));
+                	info.setSessionId(record.getSessionId());
                 }
                 info.setIdeVersion(record.getIdeVersion());
                 info.setKind(record.getKind());
