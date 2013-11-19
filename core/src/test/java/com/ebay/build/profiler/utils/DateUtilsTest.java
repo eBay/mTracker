@@ -6,6 +6,7 @@ import java.util.Calendar;
 
 import org.junit.Test;
 
+
 public class DateUtilsTest {
 	@Test
 	public void testGetCALDateTimeString() {
@@ -25,4 +26,5 @@ public class DateUtilsTest {
 		assertEquals("08-05-2011 16:00:00", 
 				DateUtils.getCALDateTimeString(DateUtils.getAnHourBack(cal.getTime()).getTime()));
 	}
+
 }

@@ -1,6 +1,0 @@
-"IDE_TYPE","IDE_VERSION","SESSION_ID","KIND","WHAT","DESCRIPTION","BUNDLE_ID","BUNDLE_VERSION","WHEN","DURATION","SIZE","QUANTITY","EXCEPTION","PROPERTIES","SESSION_PROPERTIES"
-"RIDE","2.0.0",,"buildevent","buildWorkspace","aaaaa","com.ebay.test","200111111","1382582655922","1000","1000","1000","Error stack trace","$$name=chandler",
-"RIDE","2.0.0",,"buildevent","buildWorkspace","bbbbb","com.ebay.test","200111111","1382582655922","1000","1000","1000","Error stack trace","$$name=chandler",
-"RIDE","2.0.0","5","buildevent","buildWorkspace","111","com.ebay.test2","200111111","1382582655922","0","0","0",,"","config_spec=element * v3_data_source,"
-"RIDE","2.0.0","5","buildevent","buildWorkspace","222","com.ebay.test2","200111111","1382582655922","0","0","0",,"",
-"RIDE","2.0.0","5","buildevent","buildWorkspace","333","com.ebay.test2","200111111","1382582655922","0","0","0",,"",
