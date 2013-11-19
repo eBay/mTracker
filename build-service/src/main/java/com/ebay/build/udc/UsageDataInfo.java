@@ -31,7 +31,7 @@ public class UsageDataInfo
 
     private String 			   ideType;
     private String 			   ideVersion;
-    private long 			   sessionId;
+    private String 			   sessionId;
     private String             host;
     private String             user;
     private String             kind;
@@ -275,11 +275,11 @@ public class UsageDataInfo
 		this.ideVersion = ideVersion;
 	}
 
-	public long getSessionId() {
+	public String getSessionId() {
 		return sessionId;
 	}
 
-	public void setSessionId(long sessionId) {
+	public void setSessionId(String sessionId) {
 		this.sessionId = sessionId;
 	}
 
