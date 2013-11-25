@@ -7,6 +7,12 @@ import java.util.Properties;
 
 import javax.mail.BodyPart;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+
+import com.ebay.build.validator.CronExpression;
+import com.ebay.build.validator.EmailArray;
+
 
 
 
@@ -17,9 +23,13 @@ public class MailSenderInfo {
 	private String mailServerPort = "25";
 	
 	//mail sender 
+	@NotEmpty
+	@Email
 	private String fromAddress;
 	
 	//mail recipient
+	@NotEmpty
+	@EmailArray
 	private String[] toAddresses;
 
 	//the user name and password of mailbox
@@ -45,7 +55,9 @@ public class MailSenderInfo {
 	private List<BodyPart> bodyParts = new ArrayList<BodyPart>();
 	
 	private boolean debug = false;
-	
+		
+	@CronExpression
+	private String cronExpression;
 
 	/**
 	 * 
@@ -192,4 +204,15 @@ public class MailSenderInfo {
 		this.debug = debug;
 	}
 
+
+	public String getCronExpression() {
+		return cronExpression;
+	}
+
+
+
+	public void setCronExpression(String cronExpression) {
+		this.cronExpression = cronExpression;
+	}
+	
 }

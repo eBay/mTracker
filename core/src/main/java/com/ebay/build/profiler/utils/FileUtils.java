@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class FileUtils {
 	public static final String DONE_EXT = ".done";
@@ -25,7 +27,7 @@ public class FileUtils {
 		try {
 			in = new DataInputStream(new FileInputStream(file));
 			br = new BufferedReader(new InputStreamReader(in));
-
+			
 			String sCurrentLine = null;
 
 			while ((sCurrentLine = br.readLine()) != null) {
@@ -44,6 +46,52 @@ public class FileUtils {
 		return sBuffer.toString().trim();
 	}
 	
+	public static String modifyPropertyFile(File file, Map<String, String> map) {
+		BufferedReader br = null;
+		DataInputStream in = null;
+		StringBuffer sBuffer = new StringBuffer();
+
+		try {
+			in = new DataInputStream(new FileInputStream(file));
+			br = new BufferedReader(new InputStreamReader(in));
+
+			String sCurrentLine = null;
+			Set<String> keySet = map.keySet();
+			while ((sCurrentLine = br.readLine()) != null) {
+				boolean containKey = false;
+				
+				if (sCurrentLine.startsWith("#")) {
+					sBuffer.append(sCurrentLine);
+					sBuffer.append("\n");
+					continue;
+				} 
+				
+				for (String key : keySet) {
+					if (sCurrentLine.contains(key)) {
+						containKey = true;
+						sBuffer.append(key + "=" + map.get(key));
+						sBuffer.append("\n");
+						break;
+					}
+				}	
+				
+				if (!containKey) {
+					sBuffer.append(sCurrentLine);
+					sBuffer.append("\n");
+				}			
+				
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				in.close();
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		}
+		return sBuffer.toString().trim();
+	}
 	public static void diskClean(File targetFolder, int retensionDays) {
 		File[] doneFiles = loadDoneFiles(targetFolder);
 		List<File> filesToDelete = new ArrayList<File>();

@@ -6,6 +6,8 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.Test;
 
@@ -55,5 +57,21 @@ public class FileUtilsTest {
 		assertFalse(file.exists());
 		FileUtils.writeToFile(file, "some contents");
 		assertTrue(file.exists());
+	}
+	
+	@Test
+	public void testModifyPropertyFile() {
+		
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("scheduler.email.from", "xiaobao@from.com");
+		map.put("scheduler.reliability.email.to", "xiaobao@to.com");
+		map.put("scheduler.pfdash.time", "0 24/2 11 * * ?");
+		System.out.println(resourceFolder);
+		File file = new File(resourceFolder,"application.properties");
+		String unmodified = FileUtils.readFile(file);
+		String body = FileUtils.modifyPropertyFile(file, map);
+		FileUtils.writeToFile(file, body);
+		String modified = FileUtils.readFile(file);
+		assertFalse(unmodified.equals(modified));		
 	}
 }
