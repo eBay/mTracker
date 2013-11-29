@@ -1,10 +1,17 @@
 <project name="raptor build tracking log publisher" default="publish" basedir=".">
     
+	<property environment="env"/>    
+	
+	<property name="MailLogger.mailhost" value="atom.corp.ebay.com"/>
+	<property name="MailLogger.from" value="mmao@ebay.com"/>
+	<property name="MailLogger.success.notify" value="false"/>
+	<property name="MailLogger.failure.to" value="mmao@ebay.com"/>
+	<property name="MailLogger.failure.subject" value="LogPublisher failed on ${env.COMPUTERNAME}."/>
+	
 	<property name="maven.repo.baseurl" value="http://nxraptor.qa.ebay.com/content/repositories/releases/com/ebay/build/profiler/LogPublisher"/>
 										     
 	<property name="git.repo.baseurl" value="https://github.scm.corp.ebay.com/DevExTech/maven-time-tracking/raw/master/LogPublisher/bin/"/>
-	
-	
+		
 	<property name="lib.dir" value="${basedir}/lib"/>
 	<property name="logs.dir" value="${basedir}/logs"/>
 	
@@ -14,43 +21,62 @@
 	
 	<property name="key.name" value="LogPublisher-Jar-KEY"/>
 	
-	<target name="init">
-		<loadresource property="remote.version" failonerror="false">
-		  <url url="${git.repo.baseurl}LogPublisher-Jar-KEY"/>
-		</loadresource>
-		
+	<property name="staging.dir" value="${lib.dir}/staging"/>
+	
+	<target name="init.local">
+		<mkdir dir="${staging.dir}"/>
 		<loadresource property="local.version" failonerror="false">
 		  <file file="${lib.dir}/${key.name}"/>
 		</loadresource>
+		
+		<property name="current.jar.file" value="${jar.prefix}-${local.version}-${jar.postfix}"/>
+	</target>
+	
+	<target name="init" depends="init.local">
+		<loadresource property="remote.version" failonerror="false">
+		  <url url="${git.repo.baseurl}LogPublisher-Jar-KEY"/>
+		</loadresource>		
 
 		<condition property="uptodate">
 			<equals arg1="${local.version}" arg2="${remote.version}" casesensitive="false" trim="true"/>
 		</condition>
-		
-		<property name="current.jar.file" value="${jar.prefix}-${local.version}-${jar.postfix}"/>
+				
 		<property name="latest.jar.file" value="${jar.prefix}-${remote.version}-${jar.postfix}"/>
 		
 		<property name="remote.jar.fullurl" value="${maven.repo.baseurl}/${remote.version}/${latest.jar.file}"/>
-		<property name="remote.key.file" value="${git.repo.baseurl}/${key.name}"/>
-		
+		<property name="remote.key.file" value="${git.repo.baseurl}/${key.name}"/>		
 	</target>
 
 	<target name="download" unless="uptodate">		
 	    <echo message="New RaptorBuildTracking LogPublisher version found ${remote.version}"/>
-		<mkdir dir="${lib.dir}"/>
+		
+		<get src="${remote.jar.fullurl}" dest="${staging.dir}/${latest.jar.file}" maxtime="180"/>
+		<get src="${remote.key.file}" dest="${staging.dir}/${key.name}" maxtime="30"/>
+		
+		<condition property="download.success">
+			<and>
+			    <available file="${staging.dir}/${latest.jar.file}"/>
+				<available file="${staging.dir}/${key.name}"/>
+			</and>
+		</condition>
+	</target>
+	
+	<target name="install" if="download.success">
 		<delete file="${lib.dir}/${current.jar.file}" failonerror="false"/>
 		<delete file="${lib.dir}/${key.name}" failonerror="false"/>
-		<get src="${remote.jar.fullurl}" dest="${lib.dir}/${latest.jar.file}" maxtime="180"/>
-		<get src="${remote.key.file}" dest="${lib.dir}/${key.name}" maxtime="30"/>
-	</target>
 
+		<move file="${staging.dir}/${latest.jar.file}" tofile="${lib.dir}/${latest.jar.file}"/>
+		<move file="${staging.dir}/${key.name}" tofile="${lib.dir}/${key.name}"/>
+	</target>
 	
-	<target name="publish" depends="init, download">
+	<target name="publish" depends="init.local">
 	    <echo message="Raptor Build Tracking Log Publishing..."/>
-		<echo message="Running ${lib.dir}/${latest.jar.file}"/>
-		<java jar="${lib.dir}/${latest.jar.file}" fork="true">
+		<echo message="Running ${lib.dir}/${current.jar.file}"/>
+		<java jar="${lib.dir}/${current.jar.file}" fork="true">
 		    <arg line="${logs.dir} ${retension.days}"/>			
 		</java>
 	</target>
+	
+	<target name="upgrade" depends="init, download, install"/>	
 	
 </project>
