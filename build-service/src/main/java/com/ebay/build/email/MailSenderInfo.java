@@ -10,8 +10,8 @@ import javax.mail.BodyPart;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import com.ebay.build.validator.CronExpression;
-import com.ebay.build.validator.EmailArray;
+import com.ebay.build.service.web.CronExpression;
+import com.ebay.build.service.web.EmailArray;
 
 
 

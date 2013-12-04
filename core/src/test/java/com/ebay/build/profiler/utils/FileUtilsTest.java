@@ -44,11 +44,12 @@ public class FileUtilsTest {
 		FileUtils.renameDoneFile(new File(dc, "filestodelete.txt"));
 		
 		File[] files = FileUtils.loadDoneFiles(dc);
-		assertEquals(2, files.length);
+		assertEquals(1, files.length);
 		FileUtils.diskClean(dc, 0);
 		files = FileUtils.loadDoneFiles(dc);
 		assertEquals(0, files.length);
 	}
+	
 	
 	@Test
 	public void testWrite() {
@@ -60,17 +61,17 @@ public class FileUtilsTest {
 	}
 	
 	@Test
-	public void testModifyPropertyFile() {
+	public void testModifyProperty() {
 		
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("scheduler.email.from", "xiaobao@from.com");
 		map.put("scheduler.reliability.email.to", "xiaobao@to.com");
 		map.put("scheduler.pfdash.time", "0 24/2 11 * * ?");
+		map.put("newkey", "newvalue");
 		System.out.println(resourceFolder);
 		File file = new File(resourceFolder,"application.properties");
 		String unmodified = FileUtils.readFile(file);
-		String body = FileUtils.modifyPropertyFile(file, map);
-		FileUtils.writeToFile(file, body);
+		FileUtils.modifyPropertyFile(file, map);
 		String modified = FileUtils.readFile(file);
 		assertFalse(unmodified.equals(modified));		
 	}

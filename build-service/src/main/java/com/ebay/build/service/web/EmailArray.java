@@ -1,4 +1,4 @@
-package com.ebay.build.validator;
+package com.ebay.build.service.web;
 
 import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 import static java.lang.annotation.ElementType.CONSTRUCTOR;
@@ -14,13 +14,15 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
+
+
 @Documented
-@Constraint(validatedBy = {CronExpressionValidator.class})
+@Constraint(validatedBy = {EmailArrayValidator.class} )
 @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
 @Retention(RetentionPolicy.RUNTIME)
-
-public @interface CronExpression {
-	String message() default "Cron expression is not valid!";
+public @interface EmailArray {
+	
+	String message() default "Email address is invalid!";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

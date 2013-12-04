@@ -15,6 +15,6 @@ public class SessionTransformerTest {
 		transformer.tranform(session);
 		
 		assertEquals("CompilationFailure", session.getFilter());
-		assertEquals("user", session.getCategory());
+		assertEquals("exclude", session.getCategory());
 	}
 }

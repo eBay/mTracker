@@ -11,7 +11,7 @@
 </head>
 <body>
 <h2>Mail Information Configuration</h2>
-	<form:form method="POST" action="display" commandName="mailInfo">
+	<form:form id="mailInfoForm" method="POST" action="display" commandName="mailInfo">
 		<table>
 			<tr>
 				<td><form:label path="fromAddress">From</form:label></td>
@@ -21,8 +21,11 @@
 			</tr>
 			<tr>
 				<td><form:label path="toAddresses">To</form:label></td>
-				<td><form:input path="toAddresses" /> 
-					<form:errors path="toAddresses" class="error"></form:errors>
+				<td><form:input path="toAddresses" /> 				
+					<c:if test="${not validated}">		
+						<span>please use comma to separate more email addresses</span>						
+					</c:if>					
+					<form:errors path="toAddresses" class="error"></form:errors>										
 				</td>
 			</tr>
 			<tr>

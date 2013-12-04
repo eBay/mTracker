@@ -1,4 +1,4 @@
-package com.ebay.build.validator;
+package com.ebay.build.service.web;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -20,16 +20,10 @@ public class EmailArrayValidator implements
 		boolean valid = true;
 		Pattern pattern;
 		Matcher matcher;
-	
-//		final String EMAIL_PATTERN = 
-//				"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-//				+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 		
 		final String EMAIL_PATTERN = 
 				"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-				+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})"
-				+ "(;\\s*[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" 
-				+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,}))*$";
+				+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 						
 		pattern = Pattern.compile(EMAIL_PATTERN);
 
