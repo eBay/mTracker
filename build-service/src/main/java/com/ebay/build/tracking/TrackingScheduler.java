@@ -1,18 +1,15 @@
 package com.ebay.build.tracking;
 
-import com.ebay.build.persistent.healthcheck.scheduler.BatchUpdateReportJob;
-import com.ebay.build.persistent.healthcheck.scheduler.DiskCleanJob;
-import com.ebay.build.persistent.healthcheck.scheduler.EmailSummaryPageJob;
-import com.ebay.build.utils.ServiceConfig;
+import static org.quartz.CronScheduleBuilder.cronSchedule;
+import static org.quartz.JobBuilder.newJob;
+import static org.quartz.TriggerBuilder.newTrigger;
+
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
 import org.quartz.Trigger;
 import org.quartz.impl.StdSchedulerFactory;
 
-import static org.quartz.CronScheduleBuilder.cronSchedule;
-import static org.quartz.JobBuilder.newJob;
-import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
-import static org.quartz.TriggerBuilder.newTrigger;
+import com.ebay.build.utils.ServiceConfig;
 
 public class TrackingScheduler {
 

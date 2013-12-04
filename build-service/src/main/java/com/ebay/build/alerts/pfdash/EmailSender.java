@@ -24,13 +24,13 @@ public class EmailSender {
 		this.time = time;
 	}
 	
-	public void sendmail(String description, boolean warning) {
+	public void sendMail(String description, boolean warning) {
 		MailSenderInfo msinfo = getEmailContent(description, warning);
 		SimpleMailSender sms = new SimpleMailSender();
         sms.sendHtmlSender(msinfo); 
 	}
 	
-	public void sendmail(File directory, boolean warning){
+	public void sendMail(File directory, boolean warning){
 		MailSenderInfo msinfo = getEmailContent(directory, warning);
 		SimpleMailSender sms = new SimpleMailSender();
         sms.sendHtmlSender(msinfo); 

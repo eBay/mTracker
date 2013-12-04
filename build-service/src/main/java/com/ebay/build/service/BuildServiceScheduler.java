@@ -11,7 +11,6 @@ import com.ebay.build.alerts.pfdash.PfDashScheduler;
 import com.ebay.build.persistent.healthcheck.scheduler.HealthTrackScheduler;
 import com.ebay.build.reliability.ReliabilityEmailScheduler;
 import com.ebay.build.service.config.BuildServiceConfig;
-import com.ebay.build.tracking.BatchUpdateDurationJob;
 import com.ebay.build.tracking.TrackingScheduler;
 import com.ebay.build.udc.UDCSheduler;
 
@@ -52,7 +51,8 @@ public class BuildServiceScheduler implements ServletContextListener {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else {
+		}
+		else {
 			System.out.println("Scheduler is disabled on this server.");
             // TODO:
             //      we enable this on the standby server,

@@ -22,7 +22,7 @@
 			<tr>
 				<td><form:label path="toAddresses">To</form:label></td>
 				<td><form:input path="toAddresses" /> 				
-					<c:if test="${not validated}">		
+					<c:if test="${not validateSuccess}">		
 						<span>please use comma to separate more email addresses</span>						
 					</c:if>					
 					<form:errors path="toAddresses" class="error"></form:errors>										

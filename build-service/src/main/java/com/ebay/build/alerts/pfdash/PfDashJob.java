@@ -97,12 +97,12 @@ public class PfDashJob implements Job {
 				}
 			}
 			
-			rlb.sendmail(file, warning);			
+			rlb.sendMail(file, warning);			
 		} catch (Exception e) {
 			e.printStackTrace();
 			String trace = ExceptionUtils.getStackTrace(e);	
 			rlb = new EmailSender();
-			rlb.sendmail(trace, warning);
+			rlb.sendMail(trace, warning);
 			System.out.println("[INFO]: Fail to send pfDash alert email, and an exception email has been send. ");
 		}
 		

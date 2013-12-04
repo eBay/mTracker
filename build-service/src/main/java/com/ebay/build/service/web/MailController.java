@@ -30,20 +30,20 @@ public class MailController {
 	@RequestMapping(value = "/configuration", method = RequestMethod.GET)
 	public String setMailInfo(ModelMap model, HttpSession session) {
 		MailSenderInfo sessionInfo = (MailSenderInfo) session.getAttribute("mailInfo"); 
-		boolean validated = false;
+		boolean validateSuccess = false;
 		if (sessionInfo == null) {
 			model.put("mailInfo", new MailSenderInfo());
 		} else {
-			validated = (Boolean) session.getAttribute("validated");
-			if (validated) {
+			validateSuccess = (Boolean) session.getAttribute("validateSuccess");
+			if (validateSuccess) {
 				model.put("mailInfo", sessionInfo);
 				model.put("org.springframework.validation.BindingResult.mailInfo", session.getAttribute("result"));
-				model.put("validated", true);
+				model.put("validateSuccess", true);
 				session.removeAttribute("result");
 				session.removeAttribute("mailInfo");
-				session.removeAttribute("validated");
+				session.removeAttribute("validateSuccess");
 			} else {	
-				model.remove("validated");
+				model.remove("validateSuccess");
 				model.put("mailInfo", new MailSenderInfo());
 			}
 		}
@@ -57,7 +57,7 @@ public class MailController {
 			model.put("mailInfo", mailInfo);
 			session.setAttribute("mailInfo", mailInfo);
 			session.setAttribute("result", result);
-			session.setAttribute("validated", true);
+			session.setAttribute("validateSuccess", true);
 			return "redirect:/mail/configuration";
 			
 		}

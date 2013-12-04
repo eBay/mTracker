@@ -1,20 +1,16 @@
 package com.ebay.build.tracking.jdbc;
 
 
-import com.ebay.build.profiler.model.Session;
-import com.ebay.build.tracking.jdbc.DurationObject;
-import oracle.jdbc.OraclePreparedStatement;
-import org.springframework.jdbc.core.BatchPreparedStatementSetter;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCreator;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
-
-import javax.sql.DataSource;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
+
+import javax.sql.DataSource;
+
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
+import org.springframework.jdbc.core.JdbcTemplate;
+
+import com.ebay.build.profiler.model.Session;
 
 public class SessionJDBCTemplate {
 	private DataSource dataSource;
