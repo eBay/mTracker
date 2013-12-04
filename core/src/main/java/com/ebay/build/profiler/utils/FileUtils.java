@@ -53,10 +53,15 @@ public class FileUtils {
 			HashSet<String> keySet = new HashSet<String>();
 			
 			for (String line : originalContent) {
+				if (line.trim().startsWith("#")) {
+					postContent.add(line);
+					continue;
+				}
+						
 				String key = line.split("=")[0];
 				keySet.add(key);
 				
-				if (line.trim().startsWith("#") || !map.containsKey(key)) {
+				if (!map.containsKey(key)) {
 					postContent.add(line);
 				} else {
 					postContent.add(key + "=" + map.get(key));
