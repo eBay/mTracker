@@ -74,9 +74,9 @@ public class BatchUpdateDurationJob implements Job {
                 buildDuration = session.getDuration() - totalExcludedPluginDuration;
             }
 
-            System.out.println("Updating " + session.getId() + "  --> " );
-            System.out.println("                  download duration    " + session.getDuration() + " - " + totalPluginDuration + " = " + downloadDuration);
-            System.out.println("                  build duration    " + session.getDuration() + " - " + totalExcludedPluginDuration + " = " + buildDuration);
+            //System.out.println("Updating " + session.getId() + "  --> " );
+            //System.out.println("                  download duration    " + session.getDuration() + " - " + totalPluginDuration + " = " + downloadDuration);
+            //System.out.println("                  build duration    " + session.getDuration() + " - " + totalExcludedPluginDuration + " = " + buildDuration);
 
             DurationObject d1 = new DurationObject();
             d1.setSessionId(session.getId());

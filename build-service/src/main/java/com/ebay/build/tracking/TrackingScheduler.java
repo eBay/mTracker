@@ -17,6 +17,7 @@ import static org.quartz.TriggerBuilder.newTrigger;
 public class TrackingScheduler {
 
 	public void run() throws Exception {
+        System.out.println("[INFO] Running TrackingScheduler...   ");
 		// Grab the Scheduler instance from the Factory
 		Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
 
