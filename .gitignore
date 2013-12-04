@@ -6,3 +6,4 @@ queue
 .project
 .classpath
 nb-configuration.xml
+.idea

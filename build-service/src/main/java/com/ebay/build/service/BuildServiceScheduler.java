@@ -11,6 +11,8 @@ import com.ebay.build.alerts.pfdash.PfDashScheduler;
 import com.ebay.build.persistent.healthcheck.scheduler.HealthTrackScheduler;
 import com.ebay.build.reliability.ReliabilityEmailScheduler;
 import com.ebay.build.service.config.BuildServiceConfig;
+import com.ebay.build.tracking.BatchUpdateDurationJob;
+import com.ebay.build.tracking.TrackingScheduler;
 import com.ebay.build.udc.UDCSheduler;
 
 public class BuildServiceScheduler implements ServletContextListener {
@@ -40,6 +42,7 @@ public class BuildServiceScheduler implements ServletContextListener {
 		HealthTrackScheduler healthTrackScheduler = new HealthTrackScheduler();
 		ReliabilityEmailScheduler reliabilityScheduler = new ReliabilityEmailScheduler();
 		PfDashScheduler pfDashScheduler = new PfDashScheduler();
+        TrackingScheduler tScheduler = new TrackingScheduler();
 		
 		if (isSchedulerEnabled()) {
 			try {
@@ -51,8 +54,15 @@ public class BuildServiceScheduler implements ServletContextListener {
 			}
 		} else {
 			System.out.println("Scheduler is disabled on this server.");
-		}
-		
+            // TODO:
+            //      we enable this on the standby server,
+            //      this is for test purpose, should be moved to the if block
+            try {
+                tScheduler.run();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 		
 		//runs in all machines.
 		UDCSheduler udcSheduler = new UDCSheduler();

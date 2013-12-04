@@ -25,8 +25,21 @@ public class PreDownload {
 		System.out.println("[INFO] MDDA Loaded " + dalist.size() + " artifacts from cache file.");
 
 		if (!dalist.isEmpty()) {
-			makeDirectory(getFolderList(dalist, localrepo));
-			ParaDownload.threaddownload(filterExistingArtifact(dalist), debug);
+			Set<File> dirs = getFolderList(dalist, localrepo);
+			makeDirectory(dirs);
+			List<DArtifact> artifacts2Download = filterExistingArtifact(dalist);
+			
+			if (debug) {
+				System.out.println("[DEBUG] MDDA made directories: " + dirs);
+				System.out.println("[DEBUG] MDDA " + artifacts2Download.size() + " artifacts to download.");				
+			}
+			
+			if (artifacts2Download.size() > 0) {
+				if (debug) {
+					System.out.println("[DEBUG] MDDA start downloading...");
+				}
+				ParaDownload.threaddownload(artifacts2Download, debug);
+			}
 		}
 	}
 
