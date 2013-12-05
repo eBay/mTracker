@@ -8,11 +8,12 @@ import java.util.Set;
 
 import com.ebay.build.profiler.mdda.bean.DArtifact;
 import com.ebay.build.profiler.mdda.bean.DArtifacts;
+import com.ebay.build.profiler.mdda.http.DownloadExecutor;
 
 public class PreDownload {
 
-	public static void start(File file, File localrepo,boolean debug){
-		
+	public static void start(File file, File localrepo,boolean debug) {
+		long startTime = System.currentTimeMillis();
 		List<DArtifact> dalist;
 		
 		if (file.exists()) {
@@ -25,8 +26,10 @@ public class PreDownload {
 		System.out.println("[INFO] MDDA Loaded " + dalist.size() + " artifacts from cache file.");
 
 		if (!dalist.isEmpty()) {
+			
 			Set<File> dirs = getFolderList(dalist, localrepo);
 			makeDirectory(dirs);
+			
 			List<DArtifact> artifacts2Download = filterExistingArtifact(dalist);
 			
 			if (debug) {
@@ -36,11 +39,20 @@ public class PreDownload {
 			
 			if (artifacts2Download.size() > 0) {
 				if (debug) {
-					System.out.println("[DEBUG] MDDA start downloading...");
+					System.out.println("[DEBUG] MDDA start downloading " + artifacts2Download.size() + " artifacts...");
 				}
-				ParaDownload.threaddownload(artifacts2Download, debug);
+				
+				DownloadExecutor de = new DownloadExecutor(artifacts2Download, debug);
+				de.run();
+				
+//				MultithreadArtifactsDownloader downloader = new MultithreadArtifactsDownloader(artifacts2Download, debug);
+//				downloader.run();
+				
+				//ParaDownload.threaddownload(artifacts2Download, debug);
 			}
 		}
+		
+		System.out.println("[MDDA] Total time for pre downloading " + (System.currentTimeMillis() - startTime));
 	}
 
 	private static List<DArtifact> filterExistingArtifact(List<DArtifact> dalist) {
@@ -53,13 +65,13 @@ public class PreDownload {
 		return results;
 	}
 
-	public static List<DArtifact> getArtifacts(File file) {
+	private static List<DArtifact> getArtifacts(File file) {
 		DArtifacts das = XMLConnector.unmarshal(file);
 		return das.getDArtifactList();
 	}
 
 
-	public static Set<File> getFolderList(List<DArtifact> dalist, File localrepo) {
+	private static Set<File> getFolderList(List<DArtifact> dalist, File localrepo) {
 		Set<File> folderlist = new HashSet<File>();
 		
 		for (DArtifact artifact : dalist) {
@@ -72,11 +84,16 @@ public class PreDownload {
 	
 
 	// TODO use ANT mkdir util method.
-	public static void makeDirectory(Set<File> folderlist) {
+	private static void makeDirectory(Set<File> folderlist) {
 		for (File folder : folderlist) {
 			if (!folder.exists()) {
 				folder.mkdirs();
 			}
 		}
+	}
+	
+	public static void main(String[] args) {
+		PreDownload.start(new File("E:/var/lib/jenkins/raptor.build.tracking/mdda/claw-1fe8d8e598f0ad4c673ca1246c42d96c/dcl.xml"), 
+				new File("E:/var/lib/jenkins/raptor.build.tracking/mdda/claw-1fe8d8e598f0ad4c673ca1246c42d96c/repo"), true);
 	}
 }
