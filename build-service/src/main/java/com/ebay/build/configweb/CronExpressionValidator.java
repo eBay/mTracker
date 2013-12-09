@@ -1,4 +1,4 @@
-package com.ebay.build.service.web;
+package com.ebay.build.configweb;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

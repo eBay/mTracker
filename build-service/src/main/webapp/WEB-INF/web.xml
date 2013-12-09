@@ -16,16 +16,20 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	
+	<servlet-mapping>
+		<servlet-name>Raptor Build Service</servlet-name>
+		<url-pattern>/webapi/*</url-pattern>
+	</servlet-mapping>
+	
+	<!--
 	<servlet>
 		<servlet-name>mvc-dispatcher</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+	
 
-	<servlet-mapping>
-		<servlet-name>Raptor Build Service</servlet-name>
-		<url-pattern>/webapi/*</url-pattern>
-	</servlet-mapping>
+	
 	
 	<servlet-mapping>
 		<servlet-name>mvc-dispatcher</servlet-name>
@@ -46,16 +50,26 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>/WEB-INF/mvc-dispatcher-servlet.xml</param-value>
 	</context-param> 
+	-->
 
 	<!-- Start up the scheduler -->
 	<!-- daily summary email -->
 	<!-- disk clean -->
 	<!-- validation track -->
+	
+	
+	<context-param>
+        <param-name>quartz:wait-on-shutdown</param-name>
+        <param-value>true</param-value>
+    </context-param>
+	  
 	<listener>
 		<listener-class>com.ebay.build.service.BuildServiceScheduler</listener-class>
 	</listener> 
 	
+	<!--
  	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
+	-->
 </web-app>

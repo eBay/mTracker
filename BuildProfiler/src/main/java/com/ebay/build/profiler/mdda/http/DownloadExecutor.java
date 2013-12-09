@@ -16,7 +16,7 @@ import com.ebay.build.profiler.mdda.bean.DArtifact;
 
 public class DownloadExecutor {
 	
-	private final static int MAX_THREAD_COUNT = 20;
+	private final static int MAX_THREAD_COUNT = 30;
 	private final List<DArtifact> artifacts;
 	private final boolean debug;
 	

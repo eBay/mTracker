@@ -36,15 +36,15 @@ public class ArtifactGet implements Callable<Integer> {
 		
 		this.url = artifact.getQuick_url();
  	   
-		if (debug) {
-			System.out.println("[MDDA] Downloading : " + url);
-		}
-		
 		this.httpget = new HttpGet(url);
 	}
 
 	public Integer call() throws Exception {
 		try {
+			if (debug) {
+				System.out.println("[MDDA] Downloading : " + url);
+			}
+			
 			CloseableHttpResponse response = httpClient.execute(httpget, context);
 			
 			File localfile = artifact.generateFilePath();

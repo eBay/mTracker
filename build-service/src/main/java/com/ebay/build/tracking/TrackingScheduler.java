@@ -32,6 +32,7 @@ public class TrackingScheduler {
 
 		// and start it off
 		scheduler.start();
+		System.out.println("[INFO] TrackingScheduler started.");
 	}
 
 	public static void main(String[] args) {

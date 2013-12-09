@@ -20,6 +20,7 @@ public class BuildServiceApplication extends ResourceConfig {
         register(MultiPartFeature.class);
         register(JsonMoxyConfigurationContextResolver.class);
       //  property(JsonGenerator.PRETTY_PRINTING, true);
+        System.out.println("Build Service Application Constructed.");
     }
     
     @Provider

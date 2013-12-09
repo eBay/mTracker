@@ -1,29 +1,7 @@
-package com.ebay.build.service.web;
-
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-
-import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.beans.propertyeditors.StringArrayPropertyEditor;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
-import com.ebay.build.email.MailSenderInfo;
-import com.ebay.build.profiler.utils.FileUtils;
+package com.ebay.build.configweb;
 
 
+/*
 @Controller
 @RequestMapping("/mail")
 public class MailController {
@@ -97,3 +75,4 @@ public class MailController {
 	}
 
 }
+*/

@@ -20,6 +20,7 @@ import org.quartz.impl.StdSchedulerFactory;
 public class UDCSheduler {
 
     public void run() throws Exception {
+    	System.out.println("[INFO] Running UDCSheduler...   ");
         Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
         JobDetail udcJob = newJob(UDCJob.class)
                 .withIdentity("udcJob", "group3").build();
@@ -30,5 +31,6 @@ public class UDCSheduler {
 
         scheduler.scheduleJob(udcJob, trigger);
         scheduler.start();
+        System.out.println("[INFO] UDCSheduler started.");
     }
 }

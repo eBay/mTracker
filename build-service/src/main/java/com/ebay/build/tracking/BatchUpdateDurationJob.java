@@ -12,6 +12,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -29,7 +30,7 @@ public class BatchUpdateDurationJob implements Job {
 	}
 	
 	public void execute(JobExecutionContext context) {
-		System.out.println("Executing BatchUpdateDuration...");
+		System.out.println("[INFO] " + new Date() + " Start executing BatchUpdateDurationJob...");
         long startRunningTime = System.currentTimeMillis();
 
         Calendar startDate = Calendar.getInstance();
@@ -44,7 +45,12 @@ public class BatchUpdateDurationJob implements Job {
 
         System.out.println("Date Range: " + startDateString + "   ~   " + endDateString);
 
-        List<Session> sessions = sessionJDBCTemplate.getSessionWithoutDod(startDateString, endDateString);
+        List<Session> sessions = new ArrayList<Session>();
+        try {
+        	sessions = sessionJDBCTemplate.getSessionWithoutDod(startDateString, endDateString);
+        } catch (Exception e) {
+        	System.out.println("[ERROR] No sessions fetched due to: " + e.getMessage());
+        }
         System.out.println("Loaded " + sessions.size() + " sessions");
 
         String sessionsSQL = "select id from RBT_SESSION " + " where status = 0 and duration_build is null and duration_download is null "
@@ -85,10 +91,12 @@ public class BatchUpdateDurationJob implements Job {
 
             durations.add(d1);
         }
-
-        System.out.println("============ batch updated: " + durations.size());
-        sessionJDBCTemplate.batchUpdateDuration(durations);
+        if (!durations.isEmpty()) {
+        	System.out.println("============ batch updated: " + durations.size());
+        	sessionJDBCTemplate.batchUpdateDuration(durations);
+        }
         System.out.println("[INFO] Total Time: " + (System.currentTimeMillis() - startRunningTime) + " ms.");
+        System.out.println("[INFO] End executing BatchUpdateDurationJob...");
 	}
 
     public static void main(String[] args) {

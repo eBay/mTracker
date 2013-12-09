@@ -38,12 +38,12 @@ public class BuildServiceScheduler implements ServletContextListener {
 		setContextPath(path);
 		
 		System.out.println("BuildServiceScheduler init start. output path: " + path);
-		HealthTrackScheduler healthTrackScheduler = new HealthTrackScheduler();
-		ReliabilityEmailScheduler reliabilityScheduler = new ReliabilityEmailScheduler();
-		PfDashScheduler pfDashScheduler = new PfDashScheduler();
-        TrackingScheduler tScheduler = new TrackingScheduler();
 		
 		if (isSchedulerEnabled()) {
+			HealthTrackScheduler healthTrackScheduler = new HealthTrackScheduler();
+			ReliabilityEmailScheduler reliabilityScheduler = new ReliabilityEmailScheduler();
+			PfDashScheduler pfDashScheduler = new PfDashScheduler();
+
 			try {
 				healthTrackScheduler.run();
 				reliabilityScheduler.run();
@@ -54,6 +54,8 @@ public class BuildServiceScheduler implements ServletContextListener {
 		}
 		else {
 			System.out.println("Scheduler is disabled on this server.");
+			
+			TrackingScheduler tScheduler = new TrackingScheduler();
             // TODO:
             //      we enable this on the standby server,
             //      this is for test purpose, should be moved to the if block
@@ -76,9 +78,16 @@ public class BuildServiceScheduler implements ServletContextListener {
 
 	public boolean isSchedulerEnabled() {
 		String serverHostName = getHostName();
-		String siteService = new BuildServiceConfig().get("com.ebay.build.reliability.email.scheduler").getSite();
-		if (serverHostName.equals(siteService)) {
-			return true;
+		if (serverHostName == null) {
+			return false;
+		} 
+		try {
+			String siteService = new BuildServiceConfig().get("com.ebay.build.reliability.email.scheduler").getSite();
+			if (serverHostName.equals(siteService)) {
+				return true;
+			}
+		} catch (Exception e) {
+			System.out.println("Build Service Scheduler can not access Raptor Build Service due to " + e.getMessage());
 		}
 		return false;
 	}

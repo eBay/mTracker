@@ -2,7 +2,7 @@
     
 	<property environment="env"/>    
 	
-	<property name="MailLogger.mailhost" value="atom.corp.ebay.com"/>
+	<property name="MailLogger.mailhost" value="qa-ipmail01-d1.qa.ebay.com"/>
 	<property name="MailLogger.from" value="mmao@ebay.com"/>
 	<property name="MailLogger.success.notify" value="false"/>
 	<property name="MailLogger.failure.to" value="mmao@ebay.com"/>
@@ -10,7 +10,9 @@
 	
 	<property name="maven.repo.baseurl" value="http://nxraptor.qa.ebay.com/content/repositories/releases/com/ebay/build/profiler/LogPublisher"/>
 										     
-	<property name="git.repo.baseurl" value="https://github.scm.corp.ebay.com/DevExTech/maven-time-tracking/raw/master/LogPublisher/bin/"/>
+	<property name="git.repo.baseurl" value="https://github.scm.corp.ebay.com/DevExTech/maven-time-tracking/raw/master/LogPublisher/bin"/>
+	
+	<property name="rbservice.baseurl" value="http://rbuildservice.stratus.qa.ebay.com/build-service"/>
 		
 	<property name="lib.dir" value="${basedir}/lib"/>
 	<property name="logs.dir" value="${basedir}/logs"/>
@@ -32,11 +34,21 @@
 		<property name="current.jar.file" value="${jar.prefix}-${local.version}-${jar.postfix}"/>
 	</target>
 	
-	<target name="init" depends="init.local">
+	<target name="get.key.from.rbservice">
+		<echo message="Fetching KEY file from -> ${rbservice.baseurl}"/>
 		<loadresource property="remote.version" failonerror="false">
-		  <url url="${git.repo.baseurl}LogPublisher-Jar-KEY"/>
+		  <url url="${rbservice.baseurl}/${key.name}"/>
+		</loadresource>
+	</target>
+	
+	<target name="get.key.from.git" unless="remote.version">
+		<echo message="Fetching KEY file from -> ${git.repo.baseurl}"/>
+		<loadresource property="remote.version" failonerror="false">
+		  <url url="${git.repo.baseurl}/${key.name}"/>
 		</loadresource>		
-
+	</target>
+	
+	<target name="init" depends="init.local, get.key.from.rbservice, get.key.from.git">
 		<condition property="uptodate">
 			<equals arg1="${local.version}" arg2="${remote.version}" casesensitive="false" trim="true"/>
 		</condition>

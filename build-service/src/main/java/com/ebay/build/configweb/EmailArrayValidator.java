@@ -1,4 +1,4 @@
-package com.ebay.build.service.web;
+package com.ebay.build.configweb;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

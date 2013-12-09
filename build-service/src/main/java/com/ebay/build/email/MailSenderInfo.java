@@ -7,11 +7,8 @@ import java.util.Properties;
 
 import javax.mail.BodyPart;
 
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotEmpty;
-
-import com.ebay.build.service.web.CronExpression;
-import com.ebay.build.service.web.EmailArray;
+import com.ebay.build.configweb.CronExpression;
+import com.ebay.build.configweb.EmailArray;
 
 
 
@@ -23,12 +20,12 @@ public class MailSenderInfo {
 	private String mailServerPort = "25";
 	
 	//mail sender 
-	@NotEmpty
-	@Email
+	//@NotEmpty
+	//@Email
 	private String fromAddress;
 	
 	//mail recipient
-	@NotEmpty
+	//@NotEmpty
 	@EmailArray
 	private String[] toAddresses;
 

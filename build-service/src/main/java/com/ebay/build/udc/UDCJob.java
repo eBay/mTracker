@@ -7,6 +7,7 @@ package com.ebay.build.udc;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,7 +33,7 @@ public class UDCJob implements Job {
 
     @Override
     public void execute(JobExecutionContext jec) throws JobExecutionException {
-        System.out.println("Executing UDC Job...");
+    	System.out.println("[INFO] " + new Date() + " Start executing UDCJob...");
         
         File csvDest = new File(QUEUE_DIR, "csv");
         if (!csvDest.exists()) {
@@ -80,5 +81,6 @@ public class UDCJob implements Job {
         } else {
             System.out.println("No csv records found under " + csvDest);
         }
+        System.out.println("[INFO] End executing UDCJob...");
     }
 }
