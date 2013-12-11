@@ -34,7 +34,7 @@ public class BatchUpdateDurationJob implements Job {
         long startRunningTime = System.currentTimeMillis();
 
         Calendar startDate = Calendar.getInstance();
-        startDate.add(Calendar.DAY_OF_MONTH, -3);
+        startDate.add(Calendar.DAY_OF_MONTH, -5);
 
         Calendar endDate = Calendar.getInstance();
         endDate.add(Calendar.DAY_OF_MONTH, 1);
@@ -52,6 +52,10 @@ public class BatchUpdateDurationJob implements Job {
         	System.out.println("[ERROR] No sessions fetched due to: " + e.getMessage());
         }
         System.out.println("Loaded " + sessions.size() + " sessions");
+        
+        if (sessions.size() == 0) {
+        	return;
+        }
 
         String sessionsSQL = "select id from RBT_SESSION " + " where status = 0 and duration_build is null and duration_download is null "
                 + " and start_time > to_date('" + startDateString + "', 'DD-Mon-YY HH24:Mi') "
@@ -74,10 +78,12 @@ public class BatchUpdateDurationJob implements Job {
             }
 
             int totalExcludedPluginDuration = 0;
-            long buildDuration = 0;
+            long buildDuration = session.getDuration();
             if (totalExcludedPluginDurationMap.get(session.getId()) != null) {
                 totalExcludedPluginDuration = totalExcludedPluginDurationMap.get(session.getId());
                 buildDuration = session.getDuration() - totalExcludedPluginDuration;
+            } else if (totalPluginDuration == 0) {
+            	buildDuration = 0;
             }
 
             //System.out.println("Updating " + session.getId() + "  --> " );
