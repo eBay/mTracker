@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <filters>
 	<category name="exclude">
+		<filter name="ScalaTestRunFailure">
+			<cause
+				keyword="org.scalatest:scalatest-maven-plugin" />
+			<cause keyword="There are test failures" />
+		</filter>
+	
 		<filter name="TestRunFailure">
 			<cause
 				keyword="Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin" />
@@ -23,7 +29,25 @@
 		<filter name="TestExitInIllegalState">
 			<cause keyword="org.apache.maven.plugins:maven-surefire-plugin"/>
 			<cause keyword="java.lang.IllegalStateException: Shutdown in progress"/>
-		</filter>					
+		</filter>		
+		
+		<filter name="LSPCodeGenFail">
+			<cause keyword="com.ebay.lsp.build:code-gen-plugin"/>
+		</filter>
+		<filter name="TestClassMissing">
+			<cause keyword="org.apache.maven.plugins:maven-surefire-plugin"/>
+			<cause keyword="A required class was missing while executing"/>
+		</filter>
+		<filter name="ContentPluginFail">
+			<cause keyword="com.ebay.content:maven-content-plugin"/>
+		</filter>
+		<filter name="ErrorForkTest">
+			<cause keyword="org.apache.maven.plugins:maven-surefire-plugin"/>
+			<cause keyword="Error while executing forked tests"/>
+		</filter>
+		<filter name="EnunciateFail">
+			<cause keyword="org.codehaus.enunciate:maven-enunciate-plugin"/>
+		</filter>
 	</category>
 	<category name="user">
 		<filter name="DependencyResolveFailure">
@@ -279,6 +303,33 @@
 			<cause keyword="Split packages Detected! Conflicting packages logged above."/>
 		</filter>
 		
+		<filter name="JSExistedWithError">
+			<cause keyword="com.github.mcheely:requirejs-maven-plugin"/>
+			<cause keyword=".js exited with an error"/>
+		</filter>
+		
+		<filter name="CoreDomainUsageException">
+			<cause keyword="com.ebay.osgi.build:obrgen-maven-plugin"/>
+			<cause keyword="Resolving-build-failures-due-to-Core-Domain-Usage-Exception"/>
+		</filter>
+		
+		<filter name="AssemblerGenericMissAppName">
+			<cause keyword="com.ebay.devex.assembler:assembler-maven-plugin"/>
+			<cause keyword="You must specify applicationName for Generic stack"/>
+		</filter>
+		
+		<filter name="AssemblerMissMenifest">
+			<cause keyword="com.ebay.devex.assembler:assembler-maven-plugin"/>
+			<cause keyword="Unable to find the MANIFEST.MF file"/>
+		</filter>		
+		
+		<filter name="AssemblerNotEBAProjectError">
+			<cause
+				keyword="com.ebay.devex.assembler:assembler-maven-plugin" />
+			<cause
+				keyword="project type is not eba." />
+		</filter>
+		
 	</category>
 	
 	<category name="system">
@@ -381,11 +432,39 @@
 				keyword="java.net.SocketException: Connection reset" />
 		</filter>		
 		
-		<filter name="OBRGen0.1.9.1Bug">
+		<filter name="OBRGen0.1.9.XBug">
 			<cause
-				keyword="obrgen-maven-plugin:0.1.9.1" />
+				keyword="obrgen-maven-plugin:0.1.9." />
 			<cause
 				keyword="String index out of range: 8" />
-		</filter>			
+		</filter>
+					
+		<filter name="AssemblerCoSServiceNA">
+			<cause
+				keyword="com.ebay.devex.assembler:assembler-maven-plugin" />
+			<cause
+				keyword="Service Unavailable" />
+			<cause
+				keyword="com.ebay.dtdeploy.assembler.common.util.CoSRestClient" />			
+		</filter>
+		<filter name="DepsListGenNPE">
+			<cause
+				keyword="com.ebay.osgi.build:deps-list-gen-plugin" />
+			<cause
+				keyword="java.lang.NullPointerException" />
+		</filter>
+		<filter name="OBRGenStringIdxOutOfRange">
+			<cause
+				keyword="com.ebay.osgi.build:deps-list-gen-plugin" />
+			<cause
+				keyword="java.lang.StringIndexOutOfBoundsException" />
+		</filter>		
+		<filter name="OBRGenNPE">
+			<cause
+				keyword="com.ebay.osgi.build:obrgen-maven-plugin" />
+			<cause
+				keyword="java.lang.NullPointerException" />
+		</filter>
+		
 	</category>
 </filters>
