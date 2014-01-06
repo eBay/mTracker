@@ -4,21 +4,31 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import com.ebay.build.profiler.model.Session;
 import com.ebay.build.profiler.utils.FileUtils;
 
 public abstract class AbstractPublisher implements Publisher {
 	private PublisherConfig config;
 	private SessionTransformer transformer = new SessionTransformer();
-	protected final LoaderProcessor loaderProcessor = new LoaderProcessor();
+
 	
+	private final ApplicationContext applicationContext;
+	private final LoaderProcessor loaderProcessor;
+	
+	private final List<SessionErrorCollector> errors = new ArrayList<SessionErrorCollector>();
 	 
 	public AbstractPublisher() {
-		this.config = new PublisherConfig();
+		this(new PublisherConfig());
 	}
 	
 	public AbstractPublisher(PublisherConfig config) {
 		this.config = config;
+		
+		applicationContext = new ClassPathXmlApplicationContext("spring-jdbc-config.xml");
+		loaderProcessor = applicationContext.getBean("loaderProcessor", LoaderProcessor.class);
 	}
 	
 	public void preProcess() {
@@ -32,13 +42,20 @@ public abstract class AbstractPublisher implements Publisher {
 		}
 	}
 	
-	public void postProcess(List<File> files) {
+	public void postProcess(List<File> files, List<File> failedFiles) {
 		System.out.println("[INFO] ------------------");
 		System.out.println("[INFO] " + getClass().getSimpleName() + " Postprocess");
 		System.out.println("[INFO] ------------------");
-		for (File file : files) {
-			FileUtils.renameDoneFile(file);
-		}
+//		for (File file : files) {
+//			FileUtils.renameDoneFile(file);
+//		}
+//		
+//		for (File file : failedFiles) {
+//			FileUtils.renameFailedFile(file);
+//		}
+		
+		//TODO email the errors here
+		System.out.println(errors);
 	}
 	
 	public void publish() {
@@ -54,10 +71,12 @@ public abstract class AbstractPublisher implements Publisher {
 		}
 		
 		List<File> filesDone = new ArrayList<File>();
+		List<File> failedFiles = new ArrayList<File>();
 		
 		for (File file : files) {
 			Session session = process(file);
 			if (null == session) {
+				FileUtils.renameFailedFile(file);
 				continue;
 			}
 			transformer.tranform(session);
@@ -65,22 +84,26 @@ public abstract class AbstractPublisher implements Publisher {
 			System.out.println("[INFO] Store Session -- "
 					+ session.getEnvironment() + " " + session.getAppName()
 					+ " " + session.getStartTime());
-
+			
+			SessionErrorCollector error = new SessionErrorCollector(session);
 			try {
-				loaderProcessor.process(session);
+				loaderProcessor.process(session, error);
 			} catch(Exception e) {
-				System.out.println("[ERROR] store session failed " + session.getAppName());
+				System.out.println("[ERROR] Store session failed " + session.getAppName());
+				System.out.println("[ERROR] Exception: " + e.getMessage());
+				error.setErrorMessage(e.getMessage());
+				errors.add(error);
+				FileUtils.renameFailedFile(file);
 				continue;
 			} finally {
 				System.out.println("[INFO] Store Session -- "
 						+ session.getEnvironment() + " " + session.getStartTime()
 						+ " DONE!");
 			}
-			
-			filesDone.add(file);
+			FileUtils.renameDoneFile(file);
 		}		
 		
-		postProcess(filesDone);
+		postProcess(filesDone, failedFiles);
 	}
 	
 	public Session process(File file) {

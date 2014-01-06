@@ -16,7 +16,7 @@ public interface Publisher {
 	void preProcess();
 	boolean isValidSession(String content);
 	Session process(File file);
-	void postProcess(List<File> files);
+	void postProcess(List<File> files, List<File> failedFiles);
 	
 	void publish();
 }

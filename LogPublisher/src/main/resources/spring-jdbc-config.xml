@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-    xsi:schemaLocation="http://www.springframework.org/schema/beans
-    classpath:org/springframework/beans/factory/xml/spring-beans-3.0.xsd ">
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+    classpath:org/springframework/beans/factory/xml/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/tx 
+    classpath:org/springframework/transaction/config/spring-tx-3.0.xsd
+    http://www.springframework.org/schema/context
+    classpath:org/springframework/context/config/spring-context-3.1.xsd">
 
    <!-- Initialization for data source -->
    <!-- 
@@ -23,6 +29,36 @@
       <property name="password" value="raptortracking"/>
    </bean>
     -->
+    
+     
+    <context:annotation-config/>
+	<tx:annotation-driven  transaction-manager="transactionManager"/>
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	<bean id="loaderProcessor" class="com.ebay.build.profiler.publisher.LoaderProcessor">  		
+  		<property name="sessionJDBCTemplate" ref="sessionJDBCTemplate"></property>
+  		<property name="projectJDBCTemplate" ref="projectJDBCTemplate"></property>
+  		<property name="pluginJDBCTemplate" ref="pluginJDBCTemplate"></property>
+  		<property name="rawDataJDBCTemplate" ref="rawDataJDBCTemplate"></property>
+  		<property name="sessionProjectJDBCTemplate" ref="sessionProjectJDBCTemplate"></property>
+	</bean>
+	 
+	 <!-- 
+	 <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+  		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+		
+	<bean id="sessionLoadDao" class="com.ebay.build.profiler.publisher.SessionLoadDao">
+  		<property name="platformTransactionManager" ref="transactionManager"></property>
+  		<property name="sessionJDBCTemplate" ref="sessionJDBCTemplate"></property>
+  		<property name="projectJDBCTemplate" ref="projectJDBCTemplate"></property>
+  		<property name="pluginJDBCTemplate" ref="pluginJDBCTemplate"></property>
+  		<property name="rawDataJDBCTemplate" ref="rawDataJDBCTemplate"></property>
+  		<property name="sessionProjectJDBCTemplate" ref="sessionProjectJDBCTemplate"></property>
+	</bean>
+	 -->
     
     <bean id="dataSource" 
       class="org.springframework.jdbc.datasource.DriverManagerDataSource">

@@ -15,6 +15,7 @@ import java.util.Map;
 
 public class FileUtils {
 	public static final String DONE_EXT = ".done";
+	public static final String FAIL_EXT = ".fail";
 	public static final String XML_EXT = ".xml";
 	private static final long DELETE_RETRY_SLEEP_MILLIS = 10;
 	private static final boolean ON_WINDOWS = Os.isFamily("windows");
@@ -118,17 +119,25 @@ public class FileUtils {
 		
 	}
 	
-	public static void renameDoneFile(File file) {
+	public static void renameFile(File file, String ext) {
 		if (!file.exists()) {
 			return;
 		}
-		File dest = new File(file.getParent(), file.getName() + DONE_EXT);
+		File dest = new File(file.getParent(), file.getName() + ext);
 		boolean success = file.renameTo(dest);
 		if (success) {
 			System.out.println("[INFO] Rename Session LOG " + dest);
 		} else {
 			System.out.println("[WARNING] Failed rename session LOG to " + dest);
 		}
+	}
+	
+	public static void renameDoneFile(File file) {
+		renameFile(file, DONE_EXT);
+	}
+	
+	public static void renameFailedFile(File file) {
+		renameFile(file, FAIL_EXT);
 	}
 	
 	public static void writeToFile(File targetFile, String body) {

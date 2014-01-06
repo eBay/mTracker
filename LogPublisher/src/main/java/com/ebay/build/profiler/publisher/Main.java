@@ -5,7 +5,7 @@ import java.io.File;
 public class Main {
 	
 	public static void main(String[] args) {
-		String logDir = null;
+		String logDir = "F:\\var\\lib\\jenkins\\raptor.build.tracking\\logs";
 		int retensionDays = 14;
 		if (args != null && args.length > 0) {
 			 logDir = args[0];

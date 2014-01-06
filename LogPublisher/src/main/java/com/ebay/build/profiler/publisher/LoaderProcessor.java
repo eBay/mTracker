@@ -1,11 +1,11 @@
 package com.ebay.build.profiler.publisher;
 
-import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.context.support.FileSystemXmlApplicationContext;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ebay.build.dal.PluginJDBCTemplate;
 import com.ebay.build.dal.ProjectJDBCTemplate;
@@ -17,72 +17,108 @@ import com.ebay.build.profiler.model.Plugin;
 import com.ebay.build.profiler.model.Project;
 import com.ebay.build.profiler.model.Session;
 
+@Transactional
 public class LoaderProcessor {
-	private ApplicationContext context = null;
+	//private ApplicationContext context = null;
 	
-	private final SessionJDBCTemplate sessionJDBCTemplate; 
+	private PluginJDBCTemplate pluginJDBCTemplate ;
+	private ProjectJDBCTemplate projectJDBCTemplate ;
+	private RawDataJDBCTemplate rawJDBCTemplate ;
+	private SessionJDBCTemplate sessionJDBCTemplate; 
+	private SessionProjectJDBCTemplate sessionProjectJDBCTemplate;
+	private final Map<String, Plugin> pluginCache = new HashMap<String, Plugin>();
 	
 	public LoaderProcessor() {
 		this("");
 	}
 	
 	public LoaderProcessor(String mavenHome) {
-		if ("".equals(mavenHome)) {
-			context = new ClassPathXmlApplicationContext("spring-jdbc-config.xml");
-		} else {
-			File conf = new File(mavenHome, "conf/spring-jdbc-config.xml");
-			System.out.println("[INFO] Loading raptor tracking db configure file... " + conf);
-			context = new FileSystemXmlApplicationContext(conf.toString());
-		}
-		sessionJDBCTemplate = (SessionJDBCTemplate) context.getBean("sessionJDBCTemplate");
+//		if (!"".equals(mavenHome)) {
+//			File conf = new File(mavenHome, "conf/spring-jdbc-config.xml");
+//			System.out.println("[INFO] Loading raptor tracking db configure file... " + conf);
+//			context = new FileSystemXmlApplicationContext(conf.toString());
+//		}
 	}
 	
-	public void process(Session session) {
+	public void setSessionJDBCTemplate(SessionJDBCTemplate jdbcTemplate) {
+		this.sessionJDBCTemplate = jdbcTemplate;
+	}
+	
+	public void setProjectJDBCTemplate(ProjectJDBCTemplate template) {
+		this.projectJDBCTemplate = template;
+	}
+	
+	public void setPluginJDBCTemplate(PluginJDBCTemplate template) {
+		this.pluginJDBCTemplate = template;
+	}
+	
+	public void setRawDataJDBCTemplate(RawDataJDBCTemplate template) {
+		this.rawJDBCTemplate = template;
+	}
+	
+	public void setSessionProjectJDBCTemplate(SessionProjectJDBCTemplate template) {
+		this.sessionProjectJDBCTemplate = template;
+	}
+	
+	public void process(Session session, SessionErrorCollector errorCollector) {
 		
 		int sessionID = loadSession(session);
 		
+		System.out.println("**** Transaction Start Session ID " + sessionID + "****");
+		if (errorCollector != null) {
+			errorCollector.setSessionID(sessionID + "");
+		}
+		
 		if (sessionID < 0) {
-			// TODO throw exception, fail the db transaction.
+			throw new RuntimeException("Session id can not be < 0");	
 		}
 		
 		loadProjects(session, sessionID);
-		
+		System.out.println("**** Transaction End Session ID " + sessionID + "****");
 	}
 	
 	protected void loadProjects(Session session, int sessionID) {
-		PluginJDBCTemplate pluginJDBCTemplate = (PluginJDBCTemplate) context.getBean("pluginJDBCTemplate");
-		ProjectJDBCTemplate projectJDBCTemplate = (ProjectJDBCTemplate) context.getBean("projectJDBCTemplate");
-		RawDataJDBCTemplate rawJDBCTemplate = (RawDataJDBCTemplate) context.getBean("rawDataJDBCTemplate");
-		
 		for (Project project : session.getProjects().values()) {
 			int projectID = projectJDBCTemplate.create(project, session.getAppName());
+			System.out.println("Project ID: " + projectID + " Name: " + project.getName());
 			
 			linkSessionProject(sessionID, projectID);
 			
+			List<Plugin> batchInsertPlugins = new ArrayList<Plugin>();
 			for (Phase phase : project.getPhases()) {
 				for (Plugin plugin : phase.getPlugins()) {
-					System.out.println("Project " + project.getName() + " Plugin " + plugin.getPluginKey());
-					Plugin dbPlugin = pluginJDBCTemplate.getPlugin(plugin.getPluginKey());
+					Plugin dbPlugin = pluginCache.get(plugin.getPluginKey());
+					if (dbPlugin == null) {
+						dbPlugin = pluginJDBCTemplate.getPlugin(plugin.getPluginKey());
+						System.out.println("   Plugin " + plugin.getPluginKey() + " loaded from DB. [" + dbPlugin.getId() + "]");
+					} else {
+						System.out.println("   Plugin " + plugin.getPluginKey() + " loaded from CACHE. [" + dbPlugin.getId() + "]");
+					}
+					
 					if (dbPlugin == null) {
 						int pluginDBId = pluginJDBCTemplate.create(plugin);
+						System.out.println("    Plugin " + plugin.getPluginKey() + " not exists, created a NEW plugin " + pluginDBId);
 						plugin.setId(pluginDBId);
 					} else {
 						plugin.setId(dbPlugin.getId());
 					}
-					rawJDBCTemplate.create(plugin, sessionID, projectID);
+					if (!pluginCache.keySet().contains(plugin.getPluginKey())) {
+						pluginCache.put(plugin.getPluginKey(), plugin);
+					}
+					//rawJDBCTemplate.create(plugin, sessionID, projectID);
 				}
+				batchInsertPlugins.addAll(phase.getPlugins());
 			}
+			rawJDBCTemplate.batchInsert(batchInsertPlugins, sessionID, projectID);
 		}
 	}
 
 	protected void linkSessionProject(int sessionID, int projectID) {
-		SessionProjectJDBCTemplate spTemplate = (SessionProjectJDBCTemplate) context.getBean("sessionProjectJDBCTemplate");
-		spTemplate.create(sessionID, projectID);
+		this.sessionProjectJDBCTemplate.create(sessionID, projectID);
 	}
 
 	protected int loadSession(Session session) {
-		SessionJDBCTemplate sessionJDBCTemplate = (SessionJDBCTemplate) context.getBean("sessionJDBCTemplate");
-		return sessionJDBCTemplate.create(session);
+		return this.sessionJDBCTemplate.create(session);
 	}
 	
 	public List<Session> querySessionsWithoutCategory() {

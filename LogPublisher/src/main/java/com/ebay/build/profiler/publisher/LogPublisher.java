@@ -32,8 +32,8 @@ public class LogPublisher extends AbstractPublisher {
 		return session;
 	}
 	
-	public void postProcess(List<File> files) {
-		super.postProcess(files);
+	public void postProcess(List<File> files, List<File> failedFiles) {
+		super.postProcess(files, failedFiles);
 		
 		for (File file : files) {
 			File stackTraceFile = new File(file.getParent(), file.getName() + ".stacktrace");
@@ -41,6 +41,14 @@ public class LogPublisher extends AbstractPublisher {
 				FileUtils.renameDoneFile(stackTraceFile);
 			}
 		}
+		
+		for (File file : failedFiles) {
+			File stackTraceFile = new File(file.getParent(), file.getName() + ".stacktrace");
+			if (stackTraceFile.exists()) {
+				FileUtils.renameFailedFile(stackTraceFile);
+			}
+		}
+
 	}
 	
 	private File loadFullStackTrace(File file, Session session) {

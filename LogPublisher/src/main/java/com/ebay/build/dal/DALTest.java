@@ -51,7 +51,7 @@ public class DALTest {
 		
 		LineProcessor pro = new LineProcessor();
 		Session session = pro.process(sb.toString());
-		lp.process(session);
+		lp.process(session, null);
 		
 		
 //		ProjectJDBCTemplate projectJDBCTemplate = (ProjectJDBCTemplate) context.getBean("projectJDBCTemplate");
