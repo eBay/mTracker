@@ -224,14 +224,17 @@ public class MavenLifecycleProfiler extends AbstractEventSpy {
 
 	@Override
 	public void close() throws Exception {
-		
-		System.out.println("[INFO] MDDA collected " + preArtifacts.getDArtifactList().size() + " preArtifacts.");
-		System.out.println("[INFO] MDDA collected " + dArtifacts.getDArtifactList().size() + " dArtifacts.");
+		if (this.debug) {
+			System.out.println("[INFO] MDDA collected " + preArtifacts.getDArtifactList().size() + " preArtifacts.");
+			System.out.println("[INFO] MDDA collected " + dArtifacts.getDArtifactList().size() + " dArtifacts.");
+		}
 		
 		if (!preArtifacts.getDArtifactList().isEmpty()) {
 			FileProperties fp = discoveryProfile.getFp();
 			if (discoveryProfile.XmlSettingChanged()) {
-				System.out.println("[INFO] MDDA creating a new " + fp.getPreCacheListFile().getAbsolutePath());
+				if (debug) {
+					System.out.println("[INFO] MDDA creating a new " + fp.getPreCacheListFile().getAbsolutePath());
+				}
 				XMLConnector.marshal(fp.getPreCacheListFile(), preArtifacts);
 			}
 		}
@@ -239,11 +242,15 @@ public class MavenLifecycleProfiler extends AbstractEventSpy {
 		if (!dArtifacts.getDArtifactList().isEmpty()) {
 			FileProperties fp = sessionProfile.getFp();
 			if (sessionProfile.settingChanged()) {
-				System.out.println("[INFO] MDDA creating a new " + fp.getDepCacheListFile().getAbsolutePath());			
+				if (debug) {
+					System.out.println("[INFO] MDDA creating a new " + fp.getDepCacheListFile().getAbsolutePath());
+				}
 				XMLConnector.marshal(fp.getDepCacheListFile(), dArtifacts);
 			} else {
 				if (fp.getDepCacheListFile().exists()) {
-					System.out.println("[INFO] MDDA updating an existing " + fp.getDepCacheListFile().getAbsolutePath());
+					if (debug) {
+						System.out.println("[INFO] MDDA updating an existing " + fp.getDepCacheListFile().getAbsolutePath());
+					}
 					DArtifacts existingArtifacts = XMLConnector.unmarshal(fp.getDepCacheListFile());
 					Set<DArtifact> artifactSet = new HashSet<DArtifact>();
 					artifactSet.addAll(existingArtifacts.getDArtifactList());
