@@ -208,7 +208,11 @@ public class MavenLifecycleProfiler extends AbstractEventSpy {
 						.getLifecyclePhase();
 				if (phaseProfile == null) {
 					phaseProfile = new PhaseProfile(context, phase, executionEvent);
-				} else if (!phaseProfile.getPhase().equals(phase)) {
+				} else if (phase == null) {
+					phaseProfile.stop();
+					projectProfile.addPhaseProfile(phaseProfile);
+					phaseProfile = new PhaseProfile(context, "default", executionEvent);
+				} else if (!phase.equals(phaseProfile.getPhase())) {
 					phaseProfile.stop();
 					projectProfile.addPhaseProfile(phaseProfile);
 					phaseProfile = new PhaseProfile(context, phase, executionEvent);

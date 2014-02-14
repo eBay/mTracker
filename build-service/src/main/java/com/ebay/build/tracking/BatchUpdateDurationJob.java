@@ -57,34 +57,29 @@ public class BatchUpdateDurationJob implements Job {
         	return;
         }
 
+        // and machine_name = 'phx8b03c-c761' 
         String sessionsSQL = "select id from RBT_SESSION " + " where status = 0 and duration_build is null and duration_download is null "
                 + " and start_time > to_date('" + startDateString + "', 'DD-Mon-YY HH24:Mi') "
                 + " and start_time < to_date('" + endDateString + "', 'DD-Mon-YY HH24:Mi')";
 
         Map<Integer, Integer> totalPluginDurationMap = rawJDBCTemplate.getMapTotalDuration(sessionsSQL);
-        Map<Integer, Integer> totalExcludedPluginDurationMap = rawJDBCTemplate.getMapExcludedPluginDuration(sessionsSQL);
+        Map<Integer, Integer> totalIncludedPluginDurationMap = rawJDBCTemplate.getMapIncludedPluginDuration(sessionsSQL);
 
         System.out.println(totalPluginDurationMap);
-        System.out.println(totalExcludedPluginDurationMap);
+        System.out.println(totalIncludedPluginDurationMap);
 
         List<DurationObject> durations = new ArrayList<DurationObject>();
 
         for (Session session : sessions) {
-            int totalPluginDuration = 0;
             long downloadDuration = 0;
             if (totalPluginDurationMap.get(session.getId()) != null) {
-                totalPluginDuration = totalPluginDurationMap.get(session.getId());
-                downloadDuration = session.getDuration() - totalPluginDuration;
+                downloadDuration = session.getDuration() - totalPluginDurationMap.get(session.getId());
             }
 
-            int totalExcludedPluginDuration = 0;
-            long buildDuration = session.getDuration();
-            if (totalExcludedPluginDurationMap.get(session.getId()) != null) {
-                totalExcludedPluginDuration = totalExcludedPluginDurationMap.get(session.getId());
-                buildDuration = session.getDuration() - totalExcludedPluginDuration;
-            } else if (totalPluginDuration == 0) {
-            	buildDuration = 0;
-            }
+            long buildDuration = 0;
+            if (totalIncludedPluginDurationMap.get(session.getId()) != null) {
+            	buildDuration = totalIncludedPluginDurationMap.get(session.getId());
+            } 
 
             //System.out.println("Updating " + session.getId() + "  --> " );
             //System.out.println("                  download duration    " + session.getDuration() + " - " + totalPluginDuration + " = " + downloadDuration);

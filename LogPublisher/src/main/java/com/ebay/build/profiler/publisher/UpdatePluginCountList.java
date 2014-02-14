@@ -1,6 +1,8 @@
 package com.ebay.build.profiler.publisher;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -13,7 +15,7 @@ public class UpdatePluginCountList {
 private ApplicationContext context = null;
 	
 	public UpdatePluginCountList() {
-		context = new ClassPathXmlApplicationContext("sprint-jdbc-config.xml");
+		context = new ClassPathXmlApplicationContext("spring-jdbc-config.xml");
 	}
 	
 	public UpdatePluginCountList(String mavenHome) {
@@ -34,10 +36,29 @@ private ApplicationContext context = null;
 		if (listContent == null) {
 			return;
 		}
-		System.out.println(listContent);
+		//System.out.println(listContent);
 		PluginCountJDBCTemplate pluginCountJDBCTemplate = (PluginCountJDBCTemplate) context.getBean("pluginCountJDBCTemplate");
+		List<String> itemInFile = new ArrayList<String>();
+		List<String> existedList = pluginCountJDBCTemplate.getIncludedPlugins();
 		for (String item : listContent.split("\n")) {
-			pluginCountJDBCTemplate.create(item);
+			if (!existedList.contains(item.trim())) {
+				System.out.println("Inserted: " + item);
+				pluginCountJDBCTemplate.create(item);
+			} else {
+				System.out.println("=====" + item + " existed");
+			}
+			itemInFile.add(item);
+		}
+		
+		System.out.println(existedList);
+		
+		for (String existItem : existedList) {
+			if (!itemInFile.contains(existItem)) {
+				System.out.println("deleting " + existItem);
+				pluginCountJDBCTemplate.delete(existItem);
+			} else {
+				System.out.println("required " + existItem);
+			}
 		}
 	}
 }
