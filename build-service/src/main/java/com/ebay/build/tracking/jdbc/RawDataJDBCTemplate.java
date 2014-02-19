@@ -55,8 +55,8 @@ public class RawDataJDBCTemplate {
 		return durationMap;
 	}
 	
-	public Map<Integer, Integer> getMapIncludedPluginDuration(String sessionSQL) {
-		final String SQL = "select r.session_id, sum(r.duration) sum_of_duration from rbt_raw_data r where r.plugin_key in (select plugin_key from rbt_plugin_count_in) " 
+	public Map<Integer, Integer> getMapIncludedPluginDuration(String sessionSQL, String keyList) {
+		final String SQL = "select r.session_id, sum(r.duration) sum_of_duration from rbt_raw_data r where r.plugin_key in (" + keyList + ") " 
 				+ " and session_id in (" + sessionSQL + ")"
 				+ " group by session_id ";
 		List<Map<String, Object>> results = jdbcTemplateObject.queryForList(SQL, new Object[] {});
