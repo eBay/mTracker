@@ -3,9 +3,14 @@ package com.ebay.build.dal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -35,6 +40,32 @@ public class PluginCountJDBCTemplate {
 		}, keyHolder);
 		
 		return keyHolder.getKey().intValue();
+	}
+	
+	public List<String> getIncludedPlugins() {
+		String SQL = "select plugin_key from rbt_plugin_count_in";
+		List<String> resutls = new ArrayList<String>();
+		try {
+			List<Map<String, Object>> rows = jdbcTemplateObject.queryForList(SQL);
+			Iterator<Map<String, Object>> it = rows.iterator();  
+			while(it.hasNext()) {  
+			    Map<String, Object> userMap = (Map<String, Object>) it.next(); 
+			    resutls.add(((String) userMap.get("plugin_key")).trim());  
+			}  
+			return resutls;
+		} catch (EmptyResultDataAccessException e) {
+			// empty
+		}
+		return resutls;
+	}
+
+	public void delete(String existItem) {
+		String SQL = "delete from rbt_plugin_count_in where plugin_key = ?";
+		try {
+			jdbcTemplateObject.update(SQL, existItem);
+		} catch (EmptyResultDataAccessException e) {
+			// empty
+		}
 	}
 }
 

@@ -55,4 +55,17 @@ public class RawDataJDBCTemplate {
 		return durationMap;
 	}
 	
+	public Map<Integer, Integer> getMapIncludedPluginDuration(String sessionSQL, String keyList) {
+		final String SQL = "select r.session_id, sum(r.duration) sum_of_duration from rbt_raw_data r where r.plugin_key in (" + keyList + ") " 
+				+ " and session_id in (" + sessionSQL + ")"
+				+ " group by session_id ";
+		List<Map<String, Object>> results = jdbcTemplateObject.queryForList(SQL, new Object[] {});
+		
+		Map<Integer, Integer> durationMap = new HashMap<Integer, Integer>();
+		for (Map<String, Object> m : results) {
+			durationMap.put(((BigDecimal)m.get("session_id")).intValue(),  ((BigDecimal)m.get("sum_of_duration")).intValue());
+		} 
+		return durationMap;
+	}
+	
 }

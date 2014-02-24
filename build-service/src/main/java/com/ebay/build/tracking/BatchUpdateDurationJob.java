@@ -21,7 +21,7 @@ public class BatchUpdateDurationJob implements Job {
 	private ApplicationContext context = null;
     private final SessionJDBCTemplate sessionJDBCTemplate;
     private final RawDataJDBCTemplate rawJDBCTemplate;
-    private final SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-MMM-yy 00:00");
+    private final SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-MMM-yy 00:00");    
 
 	public BatchUpdateDurationJob() {
 		 context = new ClassPathXmlApplicationContext("tracking-spring-jdbc-config.xml");
@@ -45,9 +45,47 @@ public class BatchUpdateDurationJob implements Job {
 
         System.out.println("Date Range: " + startDateString + "   ~   " + endDateString);
 
-        List<Session> sessions = new ArrayList<Session>();
+        updateRaptorAssemblerDuration(startDateString, endDateString);
+        updateRaptorBuildDuration(startDateString, endDateString);
+
+        System.out.println("[INFO] Total Time: " + (System.currentTimeMillis() - startRunningTime) + " ms.");
+        System.out.println("[INFO] End executing BatchUpdateDurationJob...");
+	}
+	
+	private String getBuildSQLClaus(String startDateString, String endDateString) {
+		return " status = 0 and duration_build is null and duration_download is null "
+                + " and start_time > to_date('" + startDateString + "', 'DD-Mon-YY HH24:Mi') "
+                + " and start_time < to_date('" + endDateString + "', 'DD-Mon-YY HH24:Mi')"
+                + " and goals not like 'com.ebay.devex.assembler:assembler-maven-plugin:%:deploy%'" 
+                + " and goals not like 'com.ebay.raptor.build:assembler-maven-plugin:%:deploy%'"
+                + " and goals not like 'assembler:deploy'";
+	}
+	
+	private String getAssemblerSQLClaus(String startDateString, String endDateString) {
+		return " status = 0 and duration_build is null and duration_download is null "
+                + " and start_time > to_date('" + startDateString + "', 'DD-Mon-YY HH24:Mi') "
+                + " and start_time < to_date('" + endDateString + "', 'DD-Mon-YY HH24:Mi')"
+                + " and (goals like 'com.ebay.devex.assembler:assembler-maven-plugin:%:deploy%' or " 
+                + "      goals like 'com.ebay.raptor.build:assembler-maven-plugin:%:deploy%' or "
+                + "      goals like 'assembler:deploy')";
+	}	
+	
+	private void updateRaptorBuildDuration(String startDateString, String endDateString) {
+		System.out.println("===== Batch updating build duration =====");
+		updateDuration(getBuildSQLClaus(startDateString, endDateString), 
+				"select plugin_key from rbt_plugin_count_in");
+	}
+	
+	private void updateRaptorAssemblerDuration(String startDateString, String endDateString) {
+		System.out.println("===== Batch updating assembler duration =====");
+		updateDuration(getAssemblerSQLClaus(startDateString, endDateString), 
+				"'com.ebay.devex.assembler:assembler-maven-plugin', 'com.ebay.raptor.build:assembler-maven-plugin'");
+	}
+	
+	private void updateDuration(String sqlClaus, String pluginKeyList) {
+		List<Session> sessions = new ArrayList<Session>();
         try {
-        	sessions = sessionJDBCTemplate.getSessionWithoutDod(startDateString, endDateString);
+        	sessions = sessionJDBCTemplate.getSessionWithoutDod(sqlClaus);
         } catch (Exception e) {
         	System.out.println("[ERROR] No sessions fetched due to: " + e.getMessage());
         }
@@ -56,39 +94,30 @@ public class BatchUpdateDurationJob implements Job {
         if (sessions.size() == 0) {
         	return;
         }
-
-        String sessionsSQL = "select id from RBT_SESSION " + " where status = 0 and duration_build is null and duration_download is null "
-                + " and start_time > to_date('" + startDateString + "', 'DD-Mon-YY HH24:Mi') "
-                + " and start_time < to_date('" + endDateString + "', 'DD-Mon-YY HH24:Mi')";
+		String sessionsSQL = "select id from RBT_SESSION " + " where " + sqlClaus;
 
         Map<Integer, Integer> totalPluginDurationMap = rawJDBCTemplate.getMapTotalDuration(sessionsSQL);
-        Map<Integer, Integer> totalExcludedPluginDurationMap = rawJDBCTemplate.getMapExcludedPluginDuration(sessionsSQL);
+        Map<Integer, Integer> totalIncludedPluginDurationMap = rawJDBCTemplate.getMapIncludedPluginDuration(sessionsSQL, pluginKeyList);
 
         System.out.println(totalPluginDurationMap);
-        System.out.println(totalExcludedPluginDurationMap);
+        System.out.println(totalIncludedPluginDurationMap);
 
         List<DurationObject> durations = new ArrayList<DurationObject>();
 
         for (Session session : sessions) {
-            int totalPluginDuration = 0;
             long downloadDuration = 0;
             if (totalPluginDurationMap.get(session.getId()) != null) {
-                totalPluginDuration = totalPluginDurationMap.get(session.getId());
-                downloadDuration = session.getDuration() - totalPluginDuration;
+                downloadDuration = session.getDuration() - totalPluginDurationMap.get(session.getId());
             }
 
-            int totalExcludedPluginDuration = 0;
-            long buildDuration = session.getDuration();
-            if (totalExcludedPluginDurationMap.get(session.getId()) != null) {
-                totalExcludedPluginDuration = totalExcludedPluginDurationMap.get(session.getId());
-                buildDuration = session.getDuration() - totalExcludedPluginDuration;
-            } else if (totalPluginDuration == 0) {
-            	buildDuration = 0;
-            }
+            long buildDuration = 0;
+            if (totalIncludedPluginDurationMap.get(session.getId()) != null) {
+            	buildDuration = totalIncludedPluginDurationMap.get(session.getId());
+            } 
 
-            //System.out.println("Updating " + session.getId() + "  --> " );
-            //System.out.println("                  download duration    " + session.getDuration() + " - " + totalPluginDuration + " = " + downloadDuration);
-            //System.out.println("                  build duration    " + session.getDuration() + " - " + totalExcludedPluginDuration + " = " + buildDuration);
+            System.out.println("Updating " + session.getId() + "  --> " );
+            System.out.println("                  download duration    " + downloadDuration);
+            System.out.println("                  build duration    " + buildDuration);
 
             DurationObject d1 = new DurationObject();
             d1.setSessionId(session.getId());
@@ -100,9 +129,7 @@ public class BatchUpdateDurationJob implements Job {
         if (!durations.isEmpty()) {
         	System.out.println("============ batch updated: " + durations.size());
         	sessionJDBCTemplate.batchUpdateDuration(durations);
-        }
-        System.out.println("[INFO] Total Time: " + (System.currentTimeMillis() - startRunningTime) + " ms.");
-        System.out.println("[INFO] End executing BatchUpdateDurationJob...");
+        }				
 	}
 
     public static void main(String[] args) {

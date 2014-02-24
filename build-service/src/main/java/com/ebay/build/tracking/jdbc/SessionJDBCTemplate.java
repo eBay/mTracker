@@ -21,12 +21,9 @@ public class SessionJDBCTemplate {
 		this.jdbcTemplateObject = new JdbcTemplate(dataSource);
 	}
 
-	public List<Session> getSessionWithoutDod(String startDate, String endDate) {
-		String SQL = "select * from RBT_SESSION " + " where status = 0 and duration_build is null and duration_download is null "				
-				+ " and start_time > to_date('" + startDate + "', 'DD-Mon-YY HH24:Mi') "
-				+ " and start_time < to_date('" + endDate + "', 'DD-Mon-YY HH24:Mi') ";
-
-		return jdbcTemplateObject.query(SQL, new SessionMapper());
+	public List<Session> getSessionWithoutDod(String claus) {
+		return jdbcTemplateObject.query("select * from RBT_SESSION " + " where " + claus, 
+				new SessionMapper());
 	}
 	
 	public void updateDownloadDuration(Session session, Long downloadDuration, Long buildDuration) {

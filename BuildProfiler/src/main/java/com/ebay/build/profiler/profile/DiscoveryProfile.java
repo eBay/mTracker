@@ -223,6 +223,12 @@ public class DiscoveryProfile extends Profile {
 			if (domainProject != null) {
 				this.getSession().setDomainVersion(domainProject.getVersion());
 			}
+			if (raptorProject == null || domainProject == null) {
+				raptorProject = getParentProject(projects.get(0), "com.ebay.raptor", "RaptorPlatform");
+				if (raptorProject != null) {
+					this.getSession().setRaptorVersion(raptorProject.getVersion());
+				}
+			}
 		}
 
 		this.getSession().setDuration(this.getElapsedTime());
