@@ -45,8 +45,8 @@ public class BatchUpdateDurationJob implements Job {
 
         System.out.println("Date Range: " + startDateString + "   ~   " + endDateString);
 
-        updateRaptorBuildDuration(startDateString, endDateString);
         updateRaptorAssemblerDuration(startDateString, endDateString);
+        updateRaptorBuildDuration(startDateString, endDateString);
 
         System.out.println("[INFO] Total Time: " + (System.currentTimeMillis() - startRunningTime) + " ms.");
         System.out.println("[INFO] End executing BatchUpdateDurationJob...");
@@ -56,24 +56,28 @@ public class BatchUpdateDurationJob implements Job {
 		return " status = 0 and duration_build is null and duration_download is null "
                 + " and start_time > to_date('" + startDateString + "', 'DD-Mon-YY HH24:Mi') "
                 + " and start_time < to_date('" + endDateString + "', 'DD-Mon-YY HH24:Mi')"
-                + " and (goals not like 'com.ebay.devex.assembler:assembler-maven-plugin:%:deploy' or " 
-                + "      goals not like 'com.ebay.raptor.build:assembler-maven-plugin:%:deploy')";
+                + " and goals not like 'com.ebay.devex.assembler:assembler-maven-plugin:%:deploy%'" 
+                + " and goals not like 'com.ebay.raptor.build:assembler-maven-plugin:%:deploy%'"
+                + " and goals not like 'assembler:deploy'";
 	}
 	
 	private String getAssemblerSQLClaus(String startDateString, String endDateString) {
 		return " status = 0 and duration_build is null and duration_download is null "
                 + " and start_time > to_date('" + startDateString + "', 'DD-Mon-YY HH24:Mi') "
                 + " and start_time < to_date('" + endDateString + "', 'DD-Mon-YY HH24:Mi')"
-                + " and (goals like 'com.ebay.devex.assembler:assembler-maven-plugin:%:deploy' or " 
-                + "      goals like 'com.ebay.raptor.build:assembler-maven-plugin:%:deploy')";
+                + " and (goals like 'com.ebay.devex.assembler:assembler-maven-plugin:%:deploy%' or " 
+                + "      goals like 'com.ebay.raptor.build:assembler-maven-plugin:%:deploy%' or "
+                + "      goals like 'assembler:deploy')";
 	}	
 	
 	private void updateRaptorBuildDuration(String startDateString, String endDateString) {
+		System.out.println("===== Batch updating build duration =====");
 		updateDuration(getBuildSQLClaus(startDateString, endDateString), 
 				"select plugin_key from rbt_plugin_count_in");
 	}
 	
 	private void updateRaptorAssemblerDuration(String startDateString, String endDateString) {
+		System.out.println("===== Batch updating assembler duration =====");
 		updateDuration(getAssemblerSQLClaus(startDateString, endDateString), 
 				"'com.ebay.devex.assembler:assembler-maven-plugin', 'com.ebay.raptor.build:assembler-maven-plugin'");
 	}
