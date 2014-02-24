@@ -3,6 +3,7 @@ package com.ebay.build.udc.dao;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,9 +23,10 @@ public class UDCJDBCTemplate {
 
     private DataSource dataSource;
     private JdbcTemplate jdbcTemplateObject;
-    private static final String STMT_INSERT = "insert into "
-            + ServiceConfig.get("udc.table.usagedata.name")
-            + " (IDEType, IDEVersion, SessionId, Host, UserName, Kind, What, Description, BundleId, BundleVersion, AccessTime, Duration, Size_, Quantity, Exception, Properties) values "
+    private String udcTable;
+    
+    private static final String STMT_INSERT = "insert into {0} "
+            + "(IDEType, IDEVersion, SessionId, Host, UserName, Kind, What, Description, BundleId, BundleVersion, AccessTime, Duration, Size_, Quantity, Exception, Properties) values "
             + "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String STMT_INSERT_SESSION = "insert into "
             + ServiceConfig.get("udc.table.session.name")
@@ -43,8 +45,12 @@ public class UDCJDBCTemplate {
         return dataSource;
     }
     
+ 
+    public void setUdcTable(String udcTable) {
+		this.udcTable = udcTable;
+	}
 
-    public JdbcTemplate getJdbcTemplate() {
+	public JdbcTemplate getJdbcTemplate() {
 		return jdbcTemplateObject;
 	}
 
@@ -114,8 +120,10 @@ public class UDCJDBCTemplate {
             });
 
         }
+        
 
-        return jdbcTemplateObject.batchUpdate(STMT_INSERT,
+		String sql = MessageFormat.format(STMT_INSERT, udcTable);
+        return jdbcTemplateObject.batchUpdate(sql,
                 new BatchPreparedStatementSetter() {
             @Override
             public void setValues(PreparedStatement ps, int i)

@@ -22,7 +22,7 @@ public class UDCDataCollectorTest {
 				"D-SHC-00436909_wecai_1382582655937.csv");
 		File file = new File(url.getFile());
 
-		UsageDataDaoJDBCImpl dao = new UsageDataDaoJDBCImpl();
+		UsageDataDaoJDBCImpl dao = new UsageDataDaoJDBCImpl("");
 		int size = dao.getJdbcTemplate().queryForInt(SELECT_COUNT);
 
 		new UsageDataRecorder(Arrays.asList(file), dao).run();

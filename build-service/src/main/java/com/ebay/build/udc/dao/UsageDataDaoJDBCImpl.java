@@ -5,6 +5,7 @@ package com.ebay.build.udc.dao;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -16,40 +17,38 @@ import com.ebay.build.udc.UsageDataInfo;
  */
 public class UsageDataDaoJDBCImpl implements IUsageDataDao {
 
-    private ApplicationContext context = null;
-    private  UDCJDBCTemplate udcJdbc = null;
+	private ApplicationContext context = null;
+	private UDCJDBCTemplate udcJdbc = null;
 
-    public UsageDataDaoJDBCImpl() {
-        super();
+	public UsageDataDaoJDBCImpl(String type) {
+		super();
 
-        System.out.println("[INFO]: init UDCJDBCTemplate bean...");
-        context = new ClassPathXmlApplicationContext(
-                "udc-sping-jdbc-config.xml");
-        udcJdbc = (UDCJDBCTemplate) context.getBean("UDCJDBCTemplate");
-        System.out.println("[INFO]: finish initing UDCJDBCTemplate bean!");
+		String templateName = StringUtils.isEmpty(type) ? "UDCJDBCTemplate" : "UDCJDBCTemplate_" + type;
+		System.out.println("[INFO]: init " + templateName + " bean...");
+		context = new ClassPathXmlApplicationContext("udc-sping-jdbc-config.xml");
 
-    }
-    
-    
-    public JdbcTemplate getJdbcTemplate() {
+		udcJdbc = (UDCJDBCTemplate) context.getBean(templateName);
+		System.out.println("[INFO]: finish initing " + templateName + " bean!");
+
+	}
+
+	public JdbcTemplate getJdbcTemplate() {
 		return udcJdbc.getJdbcTemplate();
 	}
 
+	@Override
+	public int[] insertUsageData(List<UsageDataInfo> infos) throws DaoException {
+
+		if (infos == null) {
+			return new int[0];
+		}
+
+		return udcJdbc.create(infos);
+
+	}
 
 	@Override
-    public int[] insertUsageData(List<UsageDataInfo> infos) throws DaoException {
-
-        if (infos == null) {
-            return new int[0];
-        }
-
-        return udcJdbc.create(infos);
-
-    }
-
-	@Override
-	public List<UsageDataInfo> queryUsageData(UsageDataInfo data)
-			throws DaoException {
-		 return udcJdbc.query(data);
+	public List<UsageDataInfo> queryUsageData(UsageDataInfo data) throws DaoException {
+		return udcJdbc.query(data);
 	}
 }
