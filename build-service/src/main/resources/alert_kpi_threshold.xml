@@ -10,5 +10,5 @@
 	
 	<Rule collection="CIData" field="Reliability" operator="ge" goal="90" lower="90" upper="100"/>
 	<Rule collection="CIData" field="SystemReliability" operator="ge" goal="99" lower="99" upper="100"/>
-	<Rule collection="CIData" field="Average" operator="le" goal="3" lower="0" upper="5"/>
+	<Rule collection="CIData" field="AverageBuild" operator="le" goal="3" lower="0" upper="5"/>
 </Rules>
