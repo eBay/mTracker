@@ -29,18 +29,35 @@ private ApplicationContext context = null;
 		upcl.execute();
 	}
 	
-	protected void execute() {
-		String listContent = null;
-		System.out.println("=====" + this.getClass().getResource("/plugin_count_list.txt"));
-		listContent = FileUtils.readFile(new File(this.getClass().getResource("/plugin_count_list.txt").getFile()));
-		if (listContent == null) {
-			return;
-		}
-		//System.out.println(listContent);
-		PluginCountJDBCTemplate pluginCountJDBCTemplate = (PluginCountJDBCTemplate) context.getBean("pluginCountJDBCTemplate");
+	protected List<String> getStringListFromFile(String filename) {
 		List<String> itemInFile = new ArrayList<String>();
-		List<String> existedList = pluginCountJDBCTemplate.getIncludedPlugins();
+		String listContent = FileUtils.readFile(new File(this.getClass().getResource(filename).getFile()));
+		if (listContent == null) {
+			return itemInFile;
+		}
+		
 		for (String item : listContent.split("\n")) {
+			itemInFile.add(item.trim());
+		}
+		return itemInFile;
+	}
+	
+	protected void compareWithAltusDB(PluginCountJDBCTemplate pluginCountJDBCTemplate) {
+		List<String> itemInFile = getStringListFromFile("/machine_name.txt");
+		System.out.println("");
+		List<String> itemInDB = pluginCountJDBCTemplate.getRaptor2CIMachines();
+		itemInFile.removeAll(itemInDB);
+		
+		for (String item : itemInFile) {
+			System.out.println(item);
+		}
+	}
+	
+	protected void insertPlugins(PluginCountJDBCTemplate pluginCountJDBCTemplate) {
+		List<String> itemInFile = getStringListFromFile("/plugin_count_list.txt");
+		List<String> existedList = pluginCountJDBCTemplate.getIncludedPlugins();
+		
+		for (String item : itemInFile) {
 			if (!existedList.contains(item.trim())) {
 				System.out.println("Inserted: " + item);
 				pluginCountJDBCTemplate.create(item);
@@ -60,5 +77,13 @@ private ApplicationContext context = null;
 				System.out.println("required " + existItem);
 			}
 		}
+	}
+	
+	protected void execute() {
+		PluginCountJDBCTemplate pluginCountJDBCTemplate = (PluginCountJDBCTemplate) context.getBean("pluginCountJDBCTemplate");
+		
+		insertPlugins(pluginCountJDBCTemplate);
+		compareWithAltusDB(pluginCountJDBCTemplate);
+		
 	}
 }

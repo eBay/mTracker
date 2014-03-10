@@ -58,6 +58,27 @@ public class PluginCountJDBCTemplate {
 		}
 		return resutls;
 	}
+	
+	public List<String> getRaptor2CIMachines() {
+		String SQL = "select machine_name from rbt_session where raptor_version like '2.0.0%' group by machine_name";
+		List<String> resutls = new ArrayList<String>();
+		try {
+			List<Map<String, Object>> rows = jdbcTemplateObject.queryForList(SQL);
+			Iterator<Map<String, Object>> it = rows.iterator();  
+			while(it.hasNext()) {  
+			    Map<String, Object> userMap = (Map<String, Object>) it.next();
+			    String machineName = ((String) userMap.get("machine_name")).trim();
+			    if (!machineName.endsWith(".stratus.phx.qa.ebay.com")) {
+			    	machineName += ".stratus.phx.qa.ebay.com";
+			    }
+			    resutls.add(machineName);  
+			}  
+			return resutls;
+		} catch (EmptyResultDataAccessException e) {
+			// empty
+		}
+		return resutls;
+	}
 
 	public void delete(String existItem) {
 		String SQL = "delete from rbt_plugin_count_in where plugin_key = ?";

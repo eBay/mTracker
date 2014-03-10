@@ -99,7 +99,7 @@ public class Compare {
 			singleResult = new SingleResult(collection, field, "N/A", lightRed,
 					operatorStr, goalStr, lowerLimit, upperLimit, df.format(movingAverage), flag);
 
-			if ("Average".equals(field)) {
+			if ("AverageBuild".equals(field)) {
 				singleResult.setField("Performance");
 			}
 			alertResult.getResultlist().add(singleResult);
@@ -137,7 +137,7 @@ public class Compare {
 					operatorStr, goalStr, lowerLimit, upperLimit, df.format(movingAverage), flag);
 		}
 		
-		if ("Average".equals(field)) {
+		if ("AverageBuild".equals(field)) {
 			singleResult.setField("Performance");
 		}
 		alertResult.getResultlist().add(singleResult);
