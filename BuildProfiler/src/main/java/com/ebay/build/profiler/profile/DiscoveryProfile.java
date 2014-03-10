@@ -63,75 +63,75 @@ public class DiscoveryProfile extends Profile {
 		System.out.println("[INFO] Build Environment: " + this.getBuildEnvironment());
 		System.out.println("[INFO] Application Name: " + getSession().getAppName());
 		
-		mddaMain(userfile, globalfile,debug,context);
+		//mddaMain(userfile, globalfile,debug,context);
 		
 	}
 	
-	private void mddaMain(File userfile, File globalfile, boolean debug,Context context) {
-		if (isMDDAEnabled()) {
-			System.out.println("[INFO] MDDA pre-download turned on");
-		} else {
-			System.out.println("[INFO] MDDA pre-download turned off");
-			return;
-		}
-		
-		System.out.println("[INFO] MDDA pre-download start");
-	
-		ArtifactRepository lr = event.getSession().getLocalRepository();
-		File localrepo = null;
-		
-		try {
-			localrepo = new File(new URL(lr.getUrl()).toURI());
-		} catch (MalformedURLException e1) {
-			e1.printStackTrace();
-		} catch (URISyntaxException e1) {
-			e1.printStackTrace();
-		}
-		
-		String appName = null;
-		appName = getSession().getAppName();
-		
-		if (appName == null) {
-			System.out.println("[INFO] MDDA cannot find application name, MDDA exit.");
-			return;
-		}
-		
-		String pathmd5 = MD5Generator.generateMd5(context.getData().get("baseAdd").toString());
-		
-		appName += "-" + pathmd5;
-		
-		fp = new FileProperties(appName); 
-		
-		File md5File = fp.getSettingXMLCacheMd5File();
-		
-		String fullString = FileUtils.readFile(globalfile);
-		
-		fullString += FileUtils.readFile(userfile);
-	
-		String md5 = MD5Generator.generateMd5(fullString);
-		
-		
-		if (md5File.exists()) {
-		
-			String oldmd5 = FileUtils.readFile(md5File);
-
-			System.out.println("[INFO] MDDA Previous Settings MD5: " + oldmd5);
-			System.out.println("[INFO] MDDA Current  Settings MD5: " + md5);
-			
-			if(oldmd5.equals(md5)) {
-				
-				xmlSettingChanged = false;
-				
-				PreDownload.start(fp.getPreCacheListFile(), localrepo, debug);
-			}
-		} 
-		
-		if(xmlSettingChanged != false)
-		{
-			FileUtils.writeToFile(md5File, md5);
-		}
-		
-	}
+//	private void mddaMain(File userfile, File globalfile, boolean debug,Context context) {
+//		if (isMDDAEnabled()) {
+//			System.out.println("[INFO] MDDA pre-download turned on");
+//		} else {
+//			System.out.println("[INFO] MDDA pre-download turned off");
+//			return;
+//		}
+//		
+//		System.out.println("[INFO] MDDA pre-download start");
+//	
+//		ArtifactRepository lr = event.getSession().getLocalRepository();
+//		File localrepo = null;
+//		
+//		try {
+//			localrepo = new File(new URL(lr.getUrl()).toURI());
+//		} catch (MalformedURLException e1) {
+//			e1.printStackTrace();
+//		} catch (URISyntaxException e1) {
+//			e1.printStackTrace();
+//		}
+//		
+//		String appName = null;
+//		appName = getSession().getAppName();
+//		
+//		if (appName == null) {
+//			System.out.println("[INFO] MDDA cannot find application name, MDDA exit.");
+//			return;
+//		}
+//		
+//		String pathmd5 = MD5Generator.generateMd5(context.getData().get("baseAdd").toString());
+//		
+//		appName += "-" + pathmd5;
+//		
+//		fp = new FileProperties(appName); 
+//		
+//		File md5File = fp.getSettingXMLCacheMd5File();
+//		
+//		String fullString = FileUtils.readFile(globalfile);
+//		
+//		fullString += FileUtils.readFile(userfile);
+//	
+//		String md5 = MD5Generator.generateMd5(fullString);
+//		
+//		
+//		if (md5File.exists()) {
+//		
+//			String oldmd5 = FileUtils.readFile(md5File);
+//
+//			System.out.println("[INFO] MDDA Previous Settings MD5: " + oldmd5);
+//			System.out.println("[INFO] MDDA Current  Settings MD5: " + md5);
+//			
+//			if(oldmd5.equals(md5)) {
+//				
+//				xmlSettingChanged = false;
+//				
+//				PreDownload.start(fp.getPreCacheListFile(), localrepo, debug);
+//			}
+//		} 
+//		
+//		if(xmlSettingChanged != false)
+//		{
+//			FileUtils.writeToFile(md5File, md5);
+//		}
+//		
+//	}
 
 	private MavenProject getParentProject(final MavenProject project, final String groupId, final String artifactId) {
 		if (project == null) {

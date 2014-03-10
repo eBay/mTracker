@@ -28,7 +28,7 @@ public class Profile {
   
   private String environment;
   
-  private boolean skipMDDA = false;
+  //private boolean skipMDDA = false;
   
   protected Profile(Timer timer){
 	  this.timer = timer;
@@ -56,7 +56,7 @@ public class Profile {
     		getSession().setMachineName(machineName);
     	}
     	
-    	skipMDDA = (Boolean) context.getData().get("skipMDDA");
+    	//skipMDDA = (Boolean) context.getData().get("skipMDDA");
     }
   }
 
@@ -151,9 +151,9 @@ public class Profile {
 		return new BuildServiceConfigBean();
 	}
 	
-	public boolean isMDDAEnabled() {
-		return this.getConfig().isGlobalSwitch() && !this.skipMDDA; 
-	}
+//	public boolean isMDDAEnabled() {
+//		return this.getConfig().isGlobalSwitch() && !this.skipMDDA; 
+//	}
 	
 	protected boolean isInJekins() {
 		return "CI".equalsIgnoreCase(getBuildEnvironment());
