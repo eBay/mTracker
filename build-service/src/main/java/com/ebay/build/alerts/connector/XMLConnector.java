@@ -10,36 +10,34 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
-import com.ebay.build.alerts.Rules;
-
 
 public class XMLConnector {
 
-	public static void marshal(File reportFile, Rules rules) {
+	public static<T> void marshal(File reportFile, T obj, Class<T> theClass) {
 		try {
 			JAXBContext jc;
 
-			jc = JAXBContext.newInstance(Rules.class);
+			jc = JAXBContext.newInstance(theClass);
 			Marshaller marshaller = jc.createMarshaller();
 			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-			marshaller.marshal(rules, reportFile);
+			marshaller.marshal(obj, reportFile);
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public static Rules unmarshal(File reportFile) {
+	public static<T> T unmarshal(File reportFile, Class<T> theClass) {
 		JAXBContext jc;
 		try {
-			jc = JAXBContext.newInstance(Rules.class);
+			jc = JAXBContext.newInstance(theClass);
 			Unmarshaller u = jc.createUnmarshaller();
-			return (Rules) u.unmarshal(new FileInputStream(reportFile));
+			return (T) u.unmarshal(new FileInputStream(reportFile));
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		return new Rules();
+		return null;
 	}
 	
 }

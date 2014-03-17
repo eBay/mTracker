@@ -13,6 +13,7 @@ import java.util.Set;
 import com.ebay.build.alerts.connector.Connector;
 import com.ebay.build.alerts.connector.XMLConnector;
 import com.ebay.build.profiler.utils.DateUtils;
+import com.ebay.build.utils.StringUtils;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
@@ -27,7 +28,7 @@ public class Compare {
 	private final String normalColor = "#CACACA";
 
 	public Compare(File file, DB db) {
-		rules = XMLConnector.unmarshal(file);
+		rules = XMLConnector.unmarshal(file, Rules.class);
 		this.db = db;
 	}
 
@@ -43,9 +44,15 @@ public class Compare {
 			@Override
 			public int compare(SingleResult result1, SingleResult result2) {
 				Map<String, Integer> collectionMap = new HashMap<String, Integer>();
-				collectionMap.put("RIDEWorkspaceSetupData", 1);
-				collectionMap.put("RIDEServerStartupData", 2);
-				collectionMap.put("CIBuildData", 3);
+				collectionMap.put("RIDEWorkspaceSetup", 1);
+				collectionMap.put("RIDEServerStartup", 2);
+				collectionMap.put("CIBuild", 3);
+				collectionMap.put("CIBuild2", 4);
+				collectionMap.put("SRPBenchmark1", 5);
+				collectionMap.put("SRPBenchmark2", 6);
+				collectionMap.put("CIAssembly", 7);
+				collectionMap.put("CIAssembly2", 8);
+				collectionMap.put("SRPDev1", 9);
 				int value1 = collectionMap.get(result1.getCollection());
 				int value2 = collectionMap.get(result2.getCollection());
 				return value1 - value2;
@@ -58,8 +65,9 @@ public class Compare {
 	public void judgeSingleRule(Rule rule, Condition current, Condition previous) {
 		String collection = rule.getCollection();
 		DBCollection dbc = Connector.connectCollection(db, collection);
-		if ("CIData".equals(collection)) {
-			collection = "CIBuildData";
+		
+		if (!StringUtils.isEmpty(rule.getCollectionPresentName())) {
+			collection =  rule.getCollectionPresentName();
 		}
 		
 		DBObject totaldbo = Connector.getLastRecord(dbc, current.getStartDate(), current.getEndDate());
@@ -99,8 +107,8 @@ public class Compare {
 			singleResult = new SingleResult(collection, field, "N/A", lightRed,
 					operatorStr, goalStr, lowerLimit, upperLimit, df.format(movingAverage), flag);
 
-			if ("AverageBuild".equals(field)) {
-				singleResult.setField("Performance");
+			if (!StringUtils.isEmpty(rule.getFieldPresentName())) {
+				singleResult.setField(rule.getFieldPresentName());
 			}
 			alertResult.getResultlist().add(singleResult);
 			return;
@@ -137,8 +145,8 @@ public class Compare {
 					operatorStr, goalStr, lowerLimit, upperLimit, df.format(movingAverage), flag);
 		}
 		
-		if ("AverageBuild".equals(field)) {
-			singleResult.setField("Performance");
+		if (!StringUtils.isEmpty(rule.getFieldPresentName())) {
+			singleResult.setField(rule.getFieldPresentName());
 		}
 		alertResult.getResultlist().add(singleResult);
 		return;

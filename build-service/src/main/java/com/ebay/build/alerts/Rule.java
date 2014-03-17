@@ -24,6 +24,28 @@ public class Rule {
 	
 	@XmlAttribute
 	String upper = "";
+	
+	@XmlAttribute
+	String collectionPresentName = "";
+	
+	@XmlAttribute
+	String fieldPresentName = "";
+
+	public String getCollectionPresentName() {
+		return collectionPresentName;
+	}
+
+	public void setCollectionPresentName(String collectionPresentName) {
+		this.collectionPresentName = collectionPresentName;
+	}
+
+	public String getFieldPresentName() {
+		return fieldPresentName;
+	}
+
+	public void setFieldPresentName(String fieldPresentName) {
+		this.fieldPresentName = fieldPresentName;
+	}
 
 	public String getCollection() {
 		return collection;

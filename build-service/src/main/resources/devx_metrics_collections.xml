@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<collections>
+   	<collection name="RIDEServerStartupData">
+   		<field name="SystemReliability"/>
+   		<field name="Reliability"/>
+   		<field name="Average"/>
+   	</collection>
+   	 
+   	<collection name="RIDEWorkspaceSetupData">
+   		<field name="SystemReliability"/>
+   		<field name="Reliability"/>
+   		<field name="Average"/>
+   	</collection>
+   	
+   	<collection name="CIData">
+   		<field name="SystemReliability"/>
+   		<field name="Reliability"/>
+   		<field name="AverageDownload"/>
+   		<field name="AveragePureBuild"/>
+   		<field name="AverageBuild"/>
+   	</collection>
+   	
+   	<collection name="CIAssemblerData">
+   		<field name="SystemReliability"/>
+   		<field name="Reliability"/>
+   		<field name="AverageDownload"/>
+   		<field name="AveragePureBuild"/>
+   		<field name="AverageBuild"/>
+   	</collection>
+   	
+   	<collection name="CIAssembler2Data">
+   		<field name="SystemReliability"/>
+   		<field name="Reliability"/>
+   		<field name="AverageDownload"/>
+   		<field name="AveragePureBuild"/>
+   		<field name="AverageBuild"/>
+   	</collection>   	
+   	
+   	<collection name="CI2Data">
+   		<field name="SystemReliability"/>
+   		<field name="Reliability"/>
+   		<field name="AverageDownload"/>
+   		<field name="AveragePureBuild"/>
+   		<field name="AverageBuild"/>
+   	</collection>
+   	
+   	<collection name="SRPBenchmark1Data">
+   		<field name="DownloadTime"/>
+   		<field name="PureBuildTime"/>
+   		<field name="AssemblyDuration"/>
+   	</collection>
+   	
+   	<collection name="SRPBenchmark2Data">
+   		<field name="DownloadTime"/>
+   		<field name="PureBuildTime"/>
+   		<field name="AssemblyDuration"/>
+   	</collection>
+	
+   	<collection name="SRPDev1Data">
+   		<field name="DownloadTime"/>
+   		<field name="PureBuildTime"/>
+   		<field name="AssemblyDuration"/>
+   	</collection>
+</collections>
