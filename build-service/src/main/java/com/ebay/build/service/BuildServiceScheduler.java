@@ -7,6 +7,7 @@ import java.net.UnknownHostException;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import com.ebay.build.alerts.devx.DevxScheduler;
 import com.ebay.build.alerts.pfdash.PfDashScheduler;
 import com.ebay.build.persistent.healthcheck.scheduler.HealthTrackScheduler;
 import com.ebay.build.reliability.ReliabilityEmailScheduler;
@@ -43,11 +44,13 @@ public class BuildServiceScheduler implements ServletContextListener {
 			HealthTrackScheduler healthTrackScheduler = new HealthTrackScheduler();
 			ReliabilityEmailScheduler reliabilityScheduler = new ReliabilityEmailScheduler();
 			PfDashScheduler pfDashScheduler = new PfDashScheduler();
+			DevxScheduler devxScheduler = new DevxScheduler();
 
 			try {
 				healthTrackScheduler.run();
 				reliabilityScheduler.run();
 				pfDashScheduler.run();
+				devxScheduler.run();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

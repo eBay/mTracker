@@ -9,7 +9,6 @@ import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Set;
-import java.util.TimeZone;
 
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
@@ -20,7 +19,6 @@ import org.quartz.JobExecutionException;
 
 import com.ebay.build.alerts.AlertEmail;
 import com.ebay.build.alerts.Condition;
-import com.ebay.build.alerts.Time;
 import com.ebay.build.alerts.connector.Connector;
 import com.ebay.build.alerts.connector.XMLConnector;
 import com.ebay.build.profiler.utils.DateUtils;
@@ -86,13 +84,12 @@ public class DevxReportJob implements Job {
 		return 0;
 	}
 	
-	private void velocityParse(String templateFile, ValueRetriever retriever, Time time, File directory) {
+	private void velocityParse(String templateFile, ValueRetriever retriever, File directory) {
 		try {
 			Velocity.init(DevxReportJob.class.getResource("/velocity.properties").getFile());
 			VelocityContext context = new VelocityContext();
 
 			context.put("valueRetriever", retriever);
-			context.put("time", time);
 			context.put("hostName", BuildServiceScheduler.getHostName());
 
 			Template template = Velocity.getTemplate(templateFile);
@@ -125,11 +122,6 @@ public class DevxReportJob implements Job {
 		current.setStartDate(currentStartTime);
 		current.setEndDate(currentEndTime);
 	
-		Time time = new Time();
-		TimeZone timeZone = TimeZone.getDefault();
-		TimeZone utcTimeZone = TimeZone.getTimeZone("UTC");
-		time.setQueryStart(DateUtils.getDateTimeString(currentStartTime, utcTimeZone));
-		time.setQueryEnd(DateUtils.getDateTimeString(currentEndTime, utcTimeZone));
 		try {
 			
 			DB db = Connector.connectDB(Arrays.asList(ServiceConfig.get("pfdash.db.host").split(";")), 
@@ -156,10 +148,8 @@ public class DevxReportJob implements Job {
 				}
 			}
 			
-			time.setSend(DateUtils.getDateTimeString(date, timeZone));
-			
 			System.out.println("Generating result page under folder:" + targetDir);
-			velocityParse("devx_metrics.vm", new ValueRetriever(collections), time, targetDir);
+			velocityParse("devx_metrics.vm", new ValueRetriever(collections), targetDir);
 			
 			String htmlContent = FileUtils.readFile(new File(targetDir, HTML_CACHE_FILE));
 			

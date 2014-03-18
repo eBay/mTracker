@@ -179,7 +179,7 @@
 	<td colspan="2"  style="width:130px; background-color:#E9E9E9;"> <span style="font-weight:bold">Metrics</span></td>
 	<td style="width:145px; background-color:#E9E9E9;"><span style="font-weight:bold">2.X Benchmark CI </span></td>
 	<td style="width:145px; background-color:#E9E9E9;"><span style="font-weight:bold">1.X Benchmark CI </span></td>
-	<td style="width:145px; background-color:#E9E9E9;"><span style="font-weight:bold">Raptor 1.X </span></td>
+	<td style="width:145px; background-color:#E9E9E9;"><span style="font-weight:bold">1.X SRP Team CI </span></td>
  </tr>
   <tr>
 	<td  rowspan=3>Performance</td>
@@ -202,9 +202,5 @@
   </tr> 
   </table>
   
-  <div style="font-family:Calibri; font-size:15px;margin-top:20px">
-		<strong>Host Name &nbsp;:</strong> $hostName <br/>
-		<strong>Generated at &nbsp;:</strong> $time.getSend() <br/>
-  </div>
  </body>
 </html>
