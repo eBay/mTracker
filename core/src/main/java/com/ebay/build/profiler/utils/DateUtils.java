@@ -108,7 +108,11 @@ public class DateUtils {
 	}
 	
 	public static String getDateTimeString(Date date, TimeZone timeZone) {	
-		SimpleDateFormat dateFormatter = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.US);
+		return getDateTimeString(date, "EEE MMM dd HH:mm:ss z yyyy", timeZone);
+	}
+	
+	public static String getDateTimeString(Date date, String pattern, TimeZone timeZone) {	
+		SimpleDateFormat dateFormatter = new SimpleDateFormat(pattern, Locale.US);
 		dateFormatter.setTimeZone(timeZone);
 		return dateFormatter.format(date);
 	}
