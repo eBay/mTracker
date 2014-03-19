@@ -44,15 +44,15 @@ public class Compare {
 			@Override
 			public int compare(SingleResult result1, SingleResult result2) {
 				Map<String, Integer> collectionMap = new HashMap<String, Integer>();
-				collectionMap.put("RIDEWorkspaceSetup", 1);
-				collectionMap.put("RIDEServerStartup", 2);
-				collectionMap.put("CIBuild", 3);
+				collectionMap.put("RIDEWorkspaceSetup1", 1);
+				collectionMap.put("RIDEServerStartup1", 2);
+				collectionMap.put("CIBuild1", 3);
 				collectionMap.put("CIBuild2", 4);
-				collectionMap.put("SRPBenchmark1", 5);
-				collectionMap.put("SRPBenchmark2", 6);
-				collectionMap.put("CIAssembly", 7);
+				collectionMap.put("SRPBenchmarkCI1", 5);
+				collectionMap.put("SRPBenchmarkCI2", 6);
+				collectionMap.put("CIAssembly1", 7);
 				collectionMap.put("CIAssembly2", 8);
-				collectionMap.put("SRPDev1", 9);
+				collectionMap.put("SRPTeamCI1", 9);
 				int value1 = collectionMap.get(result1.getCollection());
 				int value2 = collectionMap.get(result2.getCollection());
 				return value1 - value2;
@@ -105,7 +105,7 @@ public class Compare {
 
 		if (totaldbo == null) {
 			singleResult = new SingleResult(collection, field, "N/A", lightRed,
-					operatorStr, goalStr, lowerLimit, upperLimit, df.format(movingAverage), flag);
+					operatorStr, goalStr, lowerLimit, upperLimit, "N/A", flag);
 
 			if (!StringUtils.isEmpty(rule.getFieldPresentName())) {
 				singleResult.setField(rule.getFieldPresentName());
@@ -142,7 +142,7 @@ public class Compare {
 		}
 		if (singleResult == null) {			
 			singleResult = new SingleResult(collection, field, "N/A", lightRed,
-					operatorStr, goalStr, lowerLimit, upperLimit, df.format(movingAverage), flag);
+					operatorStr, goalStr, lowerLimit, upperLimit, "N/A", flag);
 		}
 		
 		if (!StringUtils.isEmpty(rule.getFieldPresentName())) {

@@ -52,7 +52,7 @@
 		padding-top:5px;
 		padding-bottom:4px;
 		padding-left:10px;
-		font-family:Calibri; font-size:17px
+		font-family:Calibri; font-size:15px
 	}
 		
 
@@ -62,13 +62,13 @@
  <body>	
 	
 	<div style="font-family:Calibri; width:790px;font-size:14px;background-color:#663366">
-		<h1><font color="white">RIDE(Raptor 1.x)</font></h1>
+		<h2><font color="white">RIDE(Raptor 1.x)</font></h2>
 	</div>
   <table id="statistb">
   <tr>
-	<td colspan="2" style="width:200px; background-color:#E9E9E9;"> <span style="font-weight:bold">Metrics</span></td>
-	<td style="width:255px; background-color:#E9E9E9;"><span style="font-weight:bold">Worksapce Setup</span></td>
-	<td style="width:255px; background-color:#E9E9E9;"><span style="font-weight:bold">Server Startup</span></td>
+	<td colspan="2" style="width:285px; background-color:#E9E9E9;"> <span style="font-weight:bold">Metrics</span></td>
+	<td style="width:212px; background-color:#E9E9E9;"><span style="font-weight:bold">Worksapce Setup</span></td>
+	<td style="width:213px; background-color:#E9E9E9;"><span style="font-weight:bold">Server Startup</span></td>
 
   </tr>
   <tr>
@@ -89,11 +89,18 @@
   </tr>
   </table>
 
+<div>
+<pre style="font-family:Calibri; width:790px;font-size:12px">
+<b>Notes:</b>
+* RIDE for Raptor 2.0 GA (RIDE 5.0) has basic telemetry instrumented (mainly usage adoption related), more advanced telemetry instrumentation are working in progress and targeted for Raptor 2.1 (RIDE 5.1).
+</pre>
+</div>
+
   	<div style="font-family:Calibri; width:790px;font-size:14px;background-color:#663366">
-		<h1><font color="white">Raptor CI Build & Assembly</font></h1>
+		<h2><font color="white">Raptor CI Build & Assembly</font></h2>
 	</div>
 	  	<div style="font-family:Calibri; width:680px;font-size:12px">
-		<h1><font >Build</font></h1>
+		<h3><font >Build</font></h3>
 	</div>
 	  <table>
   <tr>
@@ -120,7 +127,7 @@
 	<td class="textright">$valueRetriever.getValue("CIData", "AverageDownload") </td>
   </tr>
     <tr>
-	<td >Pure Build Time</td>
+	<td >Build Execution Time</td>
 	<td class="textright">$valueRetriever.getValue("CI2Data", "AveragePureBuild") </td>
 	<td class="textright">$valueRetriever.getValue("CIData", "AveragePureBuild") </td>
   </tr>
@@ -132,7 +139,7 @@
   </table>
 
   	  	<div style="font-family:Calibri; width:680px;font-size:12px">
-		<h1><font >Assembly</font></h1>
+		<h3><font >Assembly</font></h3>
 	</div>
 	  <table>
   <tr>
@@ -159,7 +166,7 @@
 	<td class="textright">$valueRetriever.getValue("CIAssemblerData", "AverageDownload") </td>
   </tr>
     <tr>
-	<td >Pure Assembly Time</td>
+	<td >Assembly Execution Time</td>
 	<td class="textright">$valueRetriever.getValue("CIAssembler2Data", "AveragePureBuild") </td>
 	<td class="textright">$valueRetriever.getValue("CIAssemblerData", "AveragePureBuild") </td>
 
@@ -171,7 +178,7 @@
   </tr>
   </table>
   	<div style="font-family:Calibri; width:680px;font-size:12px">
-		<h1><font >SRP</font></h1>
+		<h3><font >SRP</font></h3>
 	</div>
 	<table>
 
@@ -182,25 +189,39 @@
 	<td style="width:145px; background-color:#E9E9E9;"><span style="font-weight:bold">1.X SRP Team CI </span></td>
  </tr>
   <tr>
-	<td  rowspan=3>Performance</td>
+	<td  rowspan=4>Performance</td>
 	<td>Dependency Download Time</td>
 	<td class="textright">$valueRetriever.getValue("SRPBenchmark2Data", "DownloadTime") </td>
 	<td class="textright">$valueRetriever.getValue("SRPBenchmark1Data", "DownloadTime") </td>
 	<td class="textright">$valueRetriever.getValue("SRPDev1Data", "DownloadTime") </td>
   </tr>
   <tr>
-	<td>Pure Build Time</td>
+	<td>Build Execution Time</td>
 	<td class="textright">$valueRetriever.getValue("SRPBenchmark2Data", "PureBuildTime") </td>
 	<td class="textright">$valueRetriever.getValue("SRPBenchmark1Data", "PureBuildTime") </td>
 	<td class="textright">$valueRetriever.getValue("SRPDev1Data", "PureBuildTime") </td>
   </tr>
    <tr>
-	<td>Pure Assembly Time</td>
+	<td>Assembly Execution Time</td>
     <td class="textright">$valueRetriever.getValue("SRPBenchmark2Data", "AssemblyDuration") </td>
 	<td class="textright">$valueRetriever.getValue("SRPBenchmark1Data", "AssemblyDuration") </td>
 	<td class="textright">$valueRetriever.getValue("SRPDev1Data", "AssemblyDuration") </td>
   </tr> 
+   <tr>
+	<td>Total Build Time</td>
+    <td class="textright">$valueRetriever.getValue("SRPBenchmark2Data", "TotalBuildTime") </td>
+	<td class="textright">$valueRetriever.getValue("SRPBenchmark1Data", "TotalBuildTime") </td>
+	<td class="textright">$valueRetriever.getValue("SRPDev1Data", "TotalBuildTime") </td>
+  </tr> 
+  
   </table>
   
+  <div >
+<pre style="font-family:Calibri; width:790px;font-size:12px">
+<b>Notes:</b>
+* SRP benchmark CI's were setup by DevX team using SRP code base for active investigating and tuning performance w/o impacting SRP team
+* SRP team has not started the migration to Raptor 2.X hence no 2.X SRP Team CI
+</pre>
+</div>
  </body>
 </html>

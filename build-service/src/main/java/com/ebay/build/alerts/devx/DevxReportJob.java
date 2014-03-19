@@ -139,12 +139,25 @@ public class DevxReportJob implements Job {
 			
 			for (Collection collection : collections.getCollections()) {
 				DBObject dbo = getDataObjFromDB(db, collection.getName(), current);
+				double total = 0;
 				for (Field field : collection.getFields()) {
-					if (dbo != null) { 
+					if (dbo != null) {
+						if (collection.getName().contains("SRP")) {
+							total += this.getValueFromDataObj(dbo, field.getName());
+						}
 						field.setValue(Math.round(this.getValueFromDataObj(dbo, field.getName())*100.0)/100.0);
 					} else {
+						if (collection.getName().contains("SRP")) {
+							total = -1;
+						}
 						field.setValue(-1);
 					}
+				}
+				if (collection.getName().contains("SRP")) {
+					Field f = new Field();
+					f.setName("TotalBuildTime");
+					f.setValue(Math.round(total*100.0)/100.0);
+					collection.getFields().add(f);
 				}
 			}
 			

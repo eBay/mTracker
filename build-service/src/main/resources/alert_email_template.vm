@@ -62,9 +62,7 @@
  </head>
 
  <body>
-	<div style="font-family:Calibri; font-size:15px;">
-		<strong>Data time range:</strong>$time.getQueryStart() &nbsp;~ &nbsp; $time.getQueryEnd()
-	</div>
+	
 	<br/>
 	<!-- result with special color-->
 	<div>
@@ -187,10 +185,6 @@
 		</div>
 		<br/>
 	#end
-	<div style="font-family:Calibri; font-size:15px;">
-		<strong>Host Name &nbsp;:</strong> $hostName <br/>
-		<strong>Generated at &nbsp;:</strong> $time.getSend() <br/>
-	</div>
 
  </body>
 </html>

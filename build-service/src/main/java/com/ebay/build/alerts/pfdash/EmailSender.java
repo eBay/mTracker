@@ -1,12 +1,15 @@
 package com.ebay.build.alerts.pfdash;
 
 import java.io.File;
+import java.util.Date;
+import java.util.TimeZone;
 
 import com.ebay.build.alerts.AlertResult;
 import com.ebay.build.alerts.Time;
 import com.ebay.build.alerts.VelocityParse;
 import com.ebay.build.email.MailSenderInfo;
 import com.ebay.build.email.SimpleMailSender;
+import com.ebay.build.profiler.utils.DateUtils;
 import com.ebay.build.profiler.utils.FileUtils;
 import com.ebay.build.utils.ServiceConfig;
 
@@ -55,7 +58,8 @@ public class EmailSender {
 		 * set content for the mail
 		 */
 		MailSenderInfo mailInfo = getEmailBasicInfo(warning);		
-		mailInfo.setSubject(ServiceConfig.get("pfdash.alert.email.subject"));
+		mailInfo.setSubject(ServiceConfig.get("pfdash.alert.email.subject") + " for " 
+				+ DateUtils.getDateTimeString(DateUtils.getOneDayBack(new Date()), "yyyy-MM-dd", TimeZone.getDefault()));
 						
 		/**
 		 * generate mail template and send mail
