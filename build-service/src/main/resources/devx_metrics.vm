@@ -12,6 +12,7 @@
 	{
 		border-collapse:collapse;
 		border:1px solid black;
+		width: 60%
 	}
 	
   	table th,table td

@@ -73,7 +73,7 @@
 			<cause
 				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
 			<cause
-				keyword="http://wiki2.arch.ebay.com/display/DevExTech/Assembler+Errors#AssemblerErrors-E57" />
+				keyword="http://wiki2.arch.ebay.com/display/DevExTech/Assembler+Errors#AssemblerErrors-E57." />
 		</filter>
 		
 		<filter name="MavenExecFail">
@@ -88,12 +88,7 @@
 				keyword="Failed to Resolve Web Bundle" />
 		</filter>
 		
-		<filter name="AssemblerRegPkgRefFail">
-			<cause
-				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
-			<cause
-				keyword="Unable to register package ref" />
-		</filter>
+		
 		
 		<filter name="AssemblerWebBunldeNotFound">
 			<cause
@@ -125,7 +120,7 @@
 			<cause
 				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
 			<cause
-				keyword="http://wiki2.arch.ebay.com/display/DevExTech/Assembler+Errors#AssemblerErrors-E10" />
+				keyword="http://wiki2.arch.ebay.com/display/DevExTech/Assembler+Errors#AssemblerErrors-E10." />
 		</filter>
 				
 		<filter name="DeployExecutionFailure">
@@ -333,34 +328,6 @@
 	</category>
 	
 	<category name="system">
-	    <filter name="AssemblerUploadCronusPackageFail">
-			<cause
-				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
-			<cause
-				keyword="http://wiki2.arch.ebay.com/display/DevExTech/Assembler+Errors#AssemblerErrors-E102" />
-		</filter>
-		
-	    <filter name="AssemblerRetrieveClassFail">
-			<cause
-				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
-			<cause
-				keyword="http://wiki2.arch.ebay.com/display/DevExTech/Assembler+Errors#AssemblerErrors-E103" />
-		</filter>
-		
-	    <filter name="AssemblerRegisterManifestFail">
-			<cause
-				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
-			<cause
-				keyword="http://wiki2.arch.ebay.com/display/DevExTech/Assembler+Errors#AssemblerErrors-E104" />
-		</filter>
-		
-		<filter name="Assembler-AppReg-NA">
-			<cause
-				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
-			<cause
-				keyword="http://wiki2.arch.ebay.com/display/DevExTech/Assembler+Errors#AssemblerErrors-E255" />
-		</filter>
-		
 		<filter name="OBRGen-MissingClassFail">
 			<cause
 				keyword="org.apache.maven.lifecycle.LifecycleExecutionException: Failed to execute goal com.ebay.osgi.build:obrgen-maven-plugin" />
@@ -381,7 +348,6 @@
 			<cause
 				keyword="MANIFEST.MF does not exist" />
 		</filter>
-
 		
 		<filter name="NoDiskSpace">
 			<cause
@@ -409,29 +375,6 @@
 				keyword="Cannot create resource output directory" />	
 		</filter>
 		
-		<filter name="AssemblerStateHubHttp500">
-			<cause
-				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
-			<cause
-				keyword="Internal Server Error (500) - Internal Server Error" />
-		</filter>
-		
-		<filter name="AssemblerValidationURLConnTimeout">
-			<cause
-				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
-			<cause
-				keyword="Failed to validate the url" />
-			<cause
-				keyword="Connection timed out" />			
-		</filter>
-		
-		<filter name="AssemblerConnReset">
-			<cause
-				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
-			<cause
-				keyword="java.net.SocketException: Connection reset" />
-		</filter>		
-		
 		<filter name="OBRGen0.1.9.XBug">
 			<cause
 				keyword="obrgen-maven-plugin:0.1.9." />
@@ -439,14 +382,7 @@
 				keyword="String index out of range: 8" />
 		</filter>
 					
-		<filter name="AssemblerCoSServiceNA">
-			<cause
-				keyword="com.ebay.devex.assembler:assembler-maven-plugin" />
-			<cause
-				keyword="Service Unavailable" />
-			<cause
-				keyword="com.ebay.dtdeploy.assembler.common.util.CoSRestClient" />			
-		</filter>
+		
 		<filter name="DepsListGenNPE">
 			<cause
 				keyword="com.ebay.osgi.build:deps-list-gen-plugin" />
@@ -466,5 +402,66 @@
 				keyword="java.lang.NullPointerException" />
 		</filter>
 		
+	</category>
+	
+	<category name="external">
+	 	<filter name="AssemblerUploadCronusPackageFail">
+			<cause
+				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
+			<cause
+				keyword="http://wiki2.arch.ebay.com/display/DevExTech/Assembler+Errors#AssemblerErrors-E102." />
+		</filter>
+		<filter name="AssemblerRetrieveClassFail">
+			<cause
+				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
+			<cause
+				keyword="http://wiki2.arch.ebay.com/display/DevExTech/Assembler+Errors#AssemblerErrors-E103." />
+		</filter>
+		<filter name="AssemblerRegisterManifestFail">
+			<cause
+				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
+			<cause
+				keyword="http://wiki2.arch.ebay.com/display/DevExTech/Assembler+Errors#AssemblerErrors-E104." />
+		</filter>
+		<filter name="Assembler-AppReg-NA">
+			<cause
+				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
+			<cause
+				keyword="http://wiki2.arch.ebay.com/display/DevExTech/Assembler+Errors#AssemblerErrors-E255." />
+		</filter>
+		<filter name="AssemblerStateHubHttp500">
+			<cause
+				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
+			<cause
+				keyword="Internal Server Error (500) - Internal Server Error" />
+		</filter>
+		<filter name="AssemblerValidationURLConnTimeout">
+			<cause
+				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
+			<cause
+				keyword="Failed to validate the url" />
+			<cause
+				keyword="Connection timed out" />			
+		</filter>
+				<filter name="AssemblerConnReset">
+			<cause
+				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
+			<cause
+				keyword="java.net.SocketException: Connection reset" />
+		</filter>
+		<filter name="AssemblerCoSServiceNA">
+			<cause
+				keyword="com.ebay.devex.assembler:assembler-maven-plugin" />
+			<cause
+				keyword="Service Unavailable" />
+			<cause
+				keyword="com.ebay.dtdeploy.assembler.common.util.CoSRestClient" />			
+		</filter>
+		<filter name="AssemblerRegPkgRefFail">
+			<cause
+				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
+			<cause
+				keyword="Unable to register package ref" />
+		</filter>
 	</category>
 </filters>
