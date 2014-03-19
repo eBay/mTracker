@@ -12,35 +12,35 @@
 	<Rule collection="CIData" field="SystemReliability" operator="ge" goal="99" lower="99" upper="100" collectionPresentName="CIBuild1" fieldPresentName="System Reliability"/>
 	<Rule collection="CIData" field="AverageBuild" operator="le" goal="3" lower="0" upper="5" collectionPresentName="CIBuild1" fieldPresentName="Total Build Time"/>
 	<Rule collection="CIData" field="AverageDownload" operator="le" goal="1" lower="0" upper="1" collectionPresentName="CIBuild1" fieldPresentName="Dependency Download Time"/>
-	<Rule collection="CIData" field="AveragePureBuild" operator="le" goal="2" lower="0" upper="3" collectionPresentName="CIBuild1" fieldPresentName="Pure Build Time"/>
+	<Rule collection="CIData" field="AveragePureBuild" operator="le" goal="2" lower="0" upper="3" collectionPresentName="CIBuild1" fieldPresentName="Build Execution Time"/>
 
 	<Rule collection="CI2Data" field="Reliability" operator="ge" goal="90" lower="90" upper="100" collectionPresentName="CIBuild2" fieldPresentName="Overall Reliability"/>
 	<Rule collection="CI2Data" field="SystemReliability" operator="ge" goal="99" lower="99" upper="100" collectionPresentName="CIBuild2" fieldPresentName="System Reliability"/>
 	<Rule collection="CI2Data" field="AverageBuild" operator="le" goal="1.5" lower="0" upper="2" fieldPresentName="Total Build Time" collectionPresentName="CIBuild2"/>
 	<Rule collection="CI2Data" field="AverageDownload" operator="le" goal="0.5" lower="0" upper="1" fieldPresentName="Dependency Download Time" collectionPresentName="CIBuild2"/>
-	<Rule collection="CI2Data" field="AveragePureBuild" operator="le" goal="1" lower="0" upper="1" fieldPresentName="Pure Build Time" collectionPresentName="CIBuild2"/>
+	<Rule collection="CI2Data" field="AveragePureBuild" operator="le" goal="1" lower="0" upper="1" fieldPresentName="Build Execution Time" collectionPresentName="CIBuild2"/>
 	
 	<Rule collection="SRPBenchmark1Data" field="DownloadTime" operator="le" goal="0.3" lower="0.3" upper="0.5" fieldPresentName="Dependency Download Time" collectionPresentName="SRPBenchmarkCI1"/>
-	<Rule collection="SRPBenchmark1Data" field="PureBuildTime" operator="le" goal="1.5" lower="1.5" upper="3" fieldPresentName="Pure Build Time" collectionPresentName="SRPBenchmarkCI1"/>
-	<Rule collection="SRPBenchmark1Data" field="AssemblyDuration" operator="le" goal="0.5" lower="0.5" upper="1" fieldPresentName="Pure Assembly Time" collectionPresentName="SRPBenchmarkCI1"/>
+	<Rule collection="SRPBenchmark1Data" field="PureBuildTime" operator="le" goal="1.5" lower="1.5" upper="3" fieldPresentName="Build Execution Time" collectionPresentName="SRPBenchmarkCI1"/>
+	<Rule collection="SRPBenchmark1Data" field="AssemblyDuration" operator="le" goal="0.5" lower="0.5" upper="1" fieldPresentName="Assembly Execution Time" collectionPresentName="SRPBenchmarkCI1"/>
 
 	<Rule collection="SRPBenchmark2Data" field="DownloadTime" operator="le" goal="0.2" lower="0.2" upper="0.5" fieldPresentName="Dependency Download Time" collectionPresentName="SRPBenchmarkCI2"/>
-	<Rule collection="SRPBenchmark2Data" field="PureBuildTime" operator="le" goal="1" lower="1" upper="1.5" fieldPresentName="Pure Build Time" collectionPresentName="SRPBenchmarkCI2"/>
-	<Rule collection="SRPBenchmark2Data" field="AssemblyDuration" operator="le" goal="3" lower="0" upper="5" fieldPresentName="Pure Assembly Time" collectionPresentName="SRPBenchmarkCI2"/>
+	<Rule collection="SRPBenchmark2Data" field="PureBuildTime" operator="le" goal="1" lower="1" upper="1.5" fieldPresentName="Build Execution Time" collectionPresentName="SRPBenchmarkCI2"/>
+	<Rule collection="SRPBenchmark2Data" field="AssemblyDuration" operator="le" goal="3" lower="0" upper="5" fieldPresentName="Assembly Execution Time" collectionPresentName="SRPBenchmarkCI2"/>
 
 	<Rule collection="SRPDev1Data" field="DownloadTime" operator="le" goal="0.3" lower="0.3" upper="0.5" fieldPresentName="Dependency Download Time" collectionPresentName="SRPTeamCI1"/>
-	<Rule collection="SRPDev1Data" field="PureBuildTime" operator="le" goal="1.5" lower="2" upper="4" fieldPresentName="Pure Build Time" collectionPresentName="SRPTeamCI1"/>
-	<Rule collection="SRPDev1Data" field="AssemblyDuration" operator="le" goal="0.5" lower="0.5" upper="1" fieldPresentName="Pure Assembly Time" collectionPresentName="SRPTeamCI1"/>
+	<Rule collection="SRPDev1Data" field="PureBuildTime" operator="le" goal="1.5" lower="2" upper="4" fieldPresentName="Build Execution Time" collectionPresentName="SRPTeamCI1"/>
+	<Rule collection="SRPDev1Data" field="AssemblyDuration" operator="le" goal="0.5" lower="0.5" upper="1" fieldPresentName="Assembly Execution Time" collectionPresentName="SRPTeamCI1"/>
 
 	<Rule collection="CIAssemblerData" field="Reliability" operator="ge" goal="90" lower="90" upper="100" collectionPresentName="CIAssembly1" fieldPresentName="Overall Reliability"/>
 	<Rule collection="CIAssemblerData" field="SystemReliability" operator="ge" goal="99" lower="99" upper="100" collectionPresentName="CIAssembly1" fieldPresentName="System Reliability"/>
 	<Rule collection="CIAssemblerData" field="AverageBuild" operator="le" goal="0.51" lower="0" upper="1.2" fieldPresentName="Total Assembly Time" collectionPresentName="CIAssembly1"/>
 	<Rule collection="CIAssemblerData" field="AverageDownload" operator="le" goal="0.01" lower="0" upper="0.10" fieldPresentName="Dependency Download Time" collectionPresentName="CIAssembly1"/>
-	<Rule collection="CIAssemblerData" field="AveragePureBuild" operator="le" goal="0.5" lower="0" upper="1" fieldPresentName="Pure Assembly Time" collectionPresentName="CIAssembly1"/>
+	<Rule collection="CIAssemblerData" field="AveragePureBuild" operator="le" goal="0.5" lower="0" upper="1" fieldPresentName="Assembly Execution Time" collectionPresentName="CIAssembly1"/>
 
 	<Rule collection="CIAssembler2Data" field="Reliability" operator="ge" goal="90" lower="90" upper="100" collectionPresentName="CIAssembly2" fieldPresentName="Overall Reliability"/>
 	<Rule collection="CIAssembler2Data" field="SystemReliability" operator="ge" goal="99" lower="99" upper="100" collectionPresentName="CIAssembly2" fieldPresentName="System Reliability"/>
 	<Rule collection="CIAssembler2Data" field="AverageBuild" operator="le" goal="0.51" lower="0" upper="1" fieldPresentName="Total Assembly Time" collectionPresentName="CIAssembly2"/>
 	<Rule collection="CIAssembler2Data" field="AverageDownload" operator="le" goal="0.01" lower="0" upper="0.10" fieldPresentName="Dependency Download Time" collectionPresentName="CIAssembly2"/>
-	<Rule collection="CIAssembler2Data" field="AveragePureBuild" operator="le" goal="0.5" lower="0" upper="0.8" fieldPresentName="Pure Assembly Time" collectionPresentName="CIAssembly2"/>
+	<Rule collection="CIAssembler2Data" field="AveragePureBuild" operator="le" goal="0.5" lower="0" upper="0.8" fieldPresentName="Assembly Execution Time" collectionPresentName="CIAssembly2"/>
 </Rules>

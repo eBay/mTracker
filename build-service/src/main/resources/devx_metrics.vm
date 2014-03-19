@@ -209,7 +209,7 @@
 	<td class="textright">$valueRetriever.getValue("SRPDev1Data", "AssemblyDuration") </td>
   </tr> 
    <tr>
-	<td>Total Build Time</td>
+	<td>Total</td>
     <td class="textright">$valueRetriever.getValue("SRPBenchmark2Data", "TotalBuildTime") </td>
 	<td class="textright">$valueRetriever.getValue("SRPBenchmark1Data", "TotalBuildTime") </td>
 	<td class="textright">$valueRetriever.getValue("SRPDev1Data", "TotalBuildTime") </td>
