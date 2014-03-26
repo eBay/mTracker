@@ -124,10 +124,10 @@ public class SessionJDBCTemplate {
 	
 	public int[] batchUpdateAssemblyBreakdown(final List<AssemblyBreakdown> durations) {
 		int[] updateCounts = jdbcTemplateObject.batchUpdate(
-				"update RBT_SESSION set duration_assembly_package= duration_build - ?, duration_assembly_upload = ?, duration_assembly_service = ? where jekins_url = ? and goals like 'com.ebay.raptor.build:assembler-maven-plugin:%:deploy' and status = 0",
+				"update RBT_SESSION set duration_assembly_package = ?, duration_assembly_upload = ?, duration_assembly_service = ? where jekins_url = ? and goals like 'com.ebay.raptor.build:assembler-maven-plugin:%:deploy' and status = 0",
 				new BatchPreparedStatementSetter() {
 					public void setValues(PreparedStatement ps, int i) throws SQLException {
-						ps.setInt(1, durations.get(i).getUploadDuration() + durations.get(i).getServiceDuration());
+						ps.setInt(1, durations.get(i).getPackageDuration());
 						ps.setInt(2, durations.get(i).getUploadDuration());
 						ps.setInt(3, durations.get(i).getServiceDuration());
 						ps.setString(4, durations.get(i).getJenkinsUrl());
