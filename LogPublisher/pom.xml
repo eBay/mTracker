@@ -125,8 +125,8 @@
 			 -->
 	    <!-- DEPLOY the JAR into NXRaptor
 	    *******************
-	    mvn deploy:deploy-file -DgroupId=com.ebay.build.profiler -DartifactId=LogPublisher -Dversion=1.0.11 -Dclassifier=jar-with-dependencies 
-	                            -Durl=http://nxraptor.qa.ebay.com/content/repositories/releases -Dfile=LogPublisher-1.0.11-jar-with-dependencies.jar 
+	    mvn deploy:deploy-file -DgroupId=com.ebay.build.profiler -DartifactId=LogPublisher -Dversion=1.0.12 -Dclassifier=jar-with-dependencies 
+	                            -Durl=http://nxraptor.qa.ebay.com/content/repositories/releases -Dfile=LogPublisher-1.0.12-jar-with-dependencies.jar 
 	                            -DgeneratePom=false -DrepositoryId=releases
 	    *******************
 	     -->
