@@ -90,7 +90,9 @@ public class LoaderProcessor {
 					Plugin dbPlugin = pluginCache.get(plugin.getPluginKey());
 					if (dbPlugin == null) {
 						dbPlugin = pluginJDBCTemplate.getPlugin(plugin.getPluginKey());
-						System.out.println("   Plugin " + plugin.getPluginKey() + " loaded from DB. [" + dbPlugin.getId() + "]");
+						if (dbPlugin != null) {
+							System.out.println("   Plugin " + plugin.getPluginKey() + " loaded from DB. [" + dbPlugin.getId() + "]");
+						}
 					} else {
 						System.out.println("   Plugin " + plugin.getPluginKey() + " loaded from CACHE. [" + dbPlugin.getId() + "]");
 					}

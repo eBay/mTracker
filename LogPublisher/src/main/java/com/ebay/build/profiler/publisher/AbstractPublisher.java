@@ -14,8 +14,7 @@ public abstract class AbstractPublisher implements Publisher {
 	private PublisherConfig config;
 	private SessionTransformer transformer = new SessionTransformer();
 
-	
-	private final ApplicationContext applicationContext;
+	protected final ApplicationContext applicationContext;
 	private final LoaderProcessor loaderProcessor;
 	
 	private final List<SessionErrorCollector> errors = new ArrayList<SessionErrorCollector>();
@@ -89,6 +88,7 @@ public abstract class AbstractPublisher implements Publisher {
 			try {
 				loaderProcessor.process(session, error);
 			} catch(Exception e) {
+				e.printStackTrace();
 				System.out.println("[ERROR] Store session failed " + session.getAppName());
 				System.out.println("[ERROR] Exception: " + e.getMessage());
 				error.setErrorMessage(e.getMessage());

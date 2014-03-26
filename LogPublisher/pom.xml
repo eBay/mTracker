@@ -4,7 +4,7 @@
 	<groupId>com.ebay.build.profiler</groupId>
 	<artifactId>LogPublisher</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0.11-jar-with-dependencies</version>
+	<version>1.0.12-jar-with-dependencies</version>
 	<name>LogPublisher</name>
 	<url>http://maven.apache.org</url>
 	
@@ -86,9 +86,9 @@
 						<!-- automatically creates the classpath using all project dependencies, 
 							also adding the project build directory -->
 						<classpath />
-						<argument>com.ebay.build.profiler.publisher.UpdatePluginCountList</argument>
-						<!--
 						<argument>com.ebay.build.profiler.publisher.CategoryUpdater</argument>
+						<!--
+						<argument>com.ebay.build.profiler.publisher.UpdatePluginCountList</argument>
 						<argument>com.ebay.build.profiler.publisher.Main</argument>
 						
 						

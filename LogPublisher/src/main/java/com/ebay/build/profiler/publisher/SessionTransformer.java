@@ -4,11 +4,13 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import com.ebay.build.profiler.filter.FilterFactory;
 import com.ebay.build.profiler.filter.model.Cause;
 import com.ebay.build.profiler.filter.model.Filter;
 import com.ebay.build.profiler.model.Session;
+import com.ebay.build.profiler.utils.StringUtils;
 
 public class SessionTransformer {
 
@@ -44,15 +46,17 @@ public class SessionTransformer {
 	}
 
 	protected boolean isMatch(String fullstack, Filter filter) {
-		List<String> keywords = new ArrayList<String>();
-
 		for (Cause cause : filter.getCause()) {
-			keywords.add(cause.getKeyword());
-		}
-
-		for (String keyword : keywords) {
-			if (!fullstack.contains(keyword)) {
-				return false;
+			if (!StringUtils.isEmpty(cause.getKeyword())) {
+				if (!fullstack.contains(cause.getKeyword())) {
+					return false;
+				}
+			}
+			if (!StringUtils.isEmpty(cause.getPattern())) {
+				if (!Pattern.compile(cause.getPattern(), Pattern.DOTALL).matcher(fullstack).matches()) {
+				//if (StringUtils.isEmpty(StringUtils.getFirstFound(fullstack, cause.getPattern(), true))) {
+					return false;
+				}
 			}
 		}
 		return true;

@@ -44,6 +44,11 @@
   		<property name="rawDataJDBCTemplate" ref="rawDataJDBCTemplate"></property>
   		<property name="sessionProjectJDBCTemplate" ref="sessionProjectJDBCTemplate"></property>
 	</bean>
+	
+	
+	<bean id="assemblyLogLoader" class="com.ebay.build.profiler.publisher.AssemblyLogLoader">  		
+  		<property name="sessionJDBCTemplate" ref="sessionJDBCTemplate"></property>
+	</bean>
 	 
 	 <!-- 
 	 <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">

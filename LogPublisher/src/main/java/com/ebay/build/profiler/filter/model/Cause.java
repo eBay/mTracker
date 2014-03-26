@@ -8,6 +8,10 @@ import javax.xml.bind.annotation.XmlAttribute;
 public class Cause {
 	@XmlAttribute
 	private String keyword;
+	
+	@XmlAttribute
+	private String pattern;
+
 
 	public String getKeyword() {
 		return keyword;
@@ -17,4 +21,11 @@ public class Cause {
 		this.keyword = keyword;
 	}
 	
+	public String getPattern() {
+		return this.pattern;
+	}
+	
+	public void setPattern(String p) {
+		this.pattern = p;
+	}
 }

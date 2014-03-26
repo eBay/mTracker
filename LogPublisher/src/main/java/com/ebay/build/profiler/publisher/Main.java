@@ -17,8 +17,11 @@ public class Main {
 		File targetFolder = getTargetFolder(logDir);
 		
 		if (targetFolder.exists()) {
-			new LogPublisher(new PublisherConfig().targetFolder(targetFolder)
-					.retensionDays(retensionDays)).publish();
+			PublisherConfig config = new PublisherConfig().targetFolder(targetFolder).retensionDays(retensionDays);
+			new LogPublisher(config).publish();
+			System.out.println("======= LogPubliser DONE =======");
+			new AssemblyLogPublisher(config).publish();
+			System.out.println("======= Assembly Log Publisher DONE =======");
 		}
 	}
 	
