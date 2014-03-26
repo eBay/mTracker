@@ -30,6 +30,9 @@ public class Rule {
 	
 	@XmlAttribute
 	String fieldPresentName = "";
+	
+	@XmlAttribute
+	String link = "";
 
 	public String getCollectionPresentName() {
 		return collectionPresentName;
@@ -95,6 +98,12 @@ public class Rule {
 		this.upper = upper;
 	}
 	
+	public String getLink() {
+		return this.link;
+	}
 	
+	public void setLink(String l) {
+		this.link = l;
+	}
 
 }

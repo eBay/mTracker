@@ -84,15 +84,14 @@
 					<tr style="font-weight:bold;">
 						<td class="textcenter" style="width:200px; background-color:#E9E9E9;">Collection</td>
 						<td class="textcenter" style="width:180px; background-color:#E9E9E9;">Field</td>					
-						<td class="textcenter" style="width:100px; background-color:#CACACA;">Current Value</td>
-						<td class="textcenter" style="width:100px; background-color:#E9E9E9;">Goal</td>
+						<td class="textcenter" style="width:100px; background-color:#CACACA;">Current Value</td>						
 						<td class="textcenter" style="width:140px; background-color:#E9E9E9;">Measurement Allowance</td>
 						<td class="textcenter" style="width:140px; background-color:#E9E9E9;">Moving Average (Last 7 Days)</td>
 					</tr>
 			
 					#foreach($singleResult in ${colorResultList})
 						<tr>
-							<td class="textleft">$singleResult.getCollection()</td>
+							<td class="textleft"><a href="$singleResult.getLink()" target="_blank">$singleResult.getCollection()</a></td>
 							<td class="textleft">$singleResult.getField()</td>
 							#if($singleResult.getField().contains("Reliability"))
 								#if($singleResult.getNowValue() == "N/A")
@@ -100,7 +99,7 @@
 								#else
 									<td class="textright" style="background-color:$singleResult.getColor()">$singleResult.getNowValue()%</td>
 								#end
-								<td class="textright">$singleResult.getOperator() $singleResult.getGoal()%</td>
+								
 								<td class="textright">$singleResult.getLower()% ~ $singleResult.getUpper()%</td>
 								#if($singleResult.getMovingAverage() == "N/A")
 									<td class="textright">N/A</td>
@@ -112,8 +111,7 @@
 									<td class="textright" style="background-color:$singleResult.getColor()">$singleResult.getNowValue()</td>
 								#else
 									<td class="textright" style="background-color:$singleResult.getColor()">$singleResult.getNowValue()min</td>
-								#end		
-								<td class="textright">$singleResult.getOperator() $singleResult.getGoal()min</td>
+								#end										
 								<td class="textright">$singleResult.getLower()min ~ $singleResult.getUpper()min</td>
 								#if($singleResult.getMovingAverage() == "N/A")
 									<td class="textright">N/A</td>
@@ -141,23 +139,21 @@
 					<tr style="font-weight:bold;">
 						<td class="textcenter" style="width:200px; background-color:#E9E9E9;">Collection</td>
 						<td class="textcenter" style="width:180px; background-color:#E9E9E9;">Field</td>					
-						<td class="textcenter" style="width:100px; background-color:#CACACA;">Current Value</td>
-						<td class="textcenter" style="width:100px; background-color:#E9E9E9;">Goal</td>
+						<td class="textcenter" style="width:100px; background-color:#CACACA;">Current Value</td>						
 						<td class="textcenter" style="width:140px; background-color:#E9E9E9;">Measurement Allowance</td>
 						<td class="textcenter" style="width:140px; background-color:#E9E9E9;">Moving Average (Last 7 Days)</td>
 					</tr>
 			
 					#foreach($singleResult in ${normalResultList})
 						<tr>
-							<td class="textleft">$singleResult.getCollection()</td>
+							<td class="textleft"><a href="$singleResult.getLink()" target="_blank">$singleResult.getCollection()</a></td>
 							<td class="textleft">$singleResult.getField()</td>
 							#if($singleResult.getField().contains("Reliability"))
 								#if($singleResult.getNowValue() == "N/A")
 									<td class="textright" style="background-color:$singleResult.getColor()">$singleResult.getNowValue()</td>
 								#else
 									<td class="textright" style="background-color:$singleResult.getColor()">$singleResult.getNowValue()%</td>
-								#end
-								<td class="textright">$singleResult.getOperator() $singleResult.getGoal()%</td>
+								#end								
 								<td class="textright">$singleResult.getLower()% ~ $singleResult.getUpper()%</td>
 								#if($singleResult.getMovingAverage() == "N/A")
 									<td class="textright">N/A</td>
@@ -169,8 +165,7 @@
 									<td class="textright" style="background-color:$singleResult.getColor()">$singleResult.getNowValue()</td>
 								#else
 									<td class="textright" style="background-color:$singleResult.getColor()">$singleResult.getNowValue()min</td>
-								#end		
-						        <td class="textright">$singleResult.getOperator() $singleResult.getGoal()min</td>
+								#end						        
 								<td class="textright">$singleResult.getLower()min ~ $singleResult.getUpper()min</td>
 								#if($singleResult.getMovingAverage() == "N/A")
 									<td class="textright">N/A</td>

@@ -4,12 +4,22 @@
    		<field name="SystemReliability"/>
    		<field name="Reliability"/>
    		<field name="Average"/>
+   		<field name="SuccessEvents"/>
+   		<field name="UserErrorEvents"/>
+   		<field name="SystemErrorEvents"/>
+   		<field name="TotalErrorEvents"/>
+   		<field name="TotalEvents"/>
    	</collection>
    	 
    	<collection name="RIDEWorkspaceSetupData">
    		<field name="SystemReliability"/>
    		<field name="Reliability"/>
    		<field name="Average"/>
+   		<field name="SuccessEvents"/>
+   		<field name="UserErrorEvents"/>
+   		<field name="SystemErrorEvents"/>
+   		<field name="TotalErrorEvents"/>
+   		<field name="TotalEvents"/>
    	</collection>
    	
    	<collection name="CIData">
@@ -18,6 +28,11 @@
    		<field name="AverageDownload"/>
    		<field name="AveragePureBuild"/>
    		<field name="AverageBuild"/>
+   		<field name="SuccessEvents"/>
+   		<field name="UserErrorEvents"/>
+   		<field name="SystemErrorEvents"/>
+   		<field name="TotalErrorEvents"/>
+   		<field name="TotalEvents"/>
    	</collection>
    	
    	<collection name="CIAssemblerData">
@@ -26,6 +41,12 @@
    		<field name="AverageDownload"/>
    		<field name="AveragePureBuild"/>
    		<field name="AverageBuild"/>
+   		<field name="SuccessEvents"/>
+   		<field name="UserErrorEvents"/>
+   		<field name="SystemErrorEvents"/>
+   		<field name="ExternalErrorEvents"/>
+   		<field name="TotalErrorEvents"/>
+   		<field name="TotalEvents"/>
    	</collection>
    	
    	<collection name="CIAssembler2Data">
@@ -34,6 +55,12 @@
    		<field name="AverageDownload"/>
    		<field name="AveragePureBuild"/>
    		<field name="AverageBuild"/>
+		<field name="SuccessEvents"/>
+   		<field name="UserErrorEvents"/>
+   		<field name="SystemErrorEvents"/>
+   		<field name="ExternalErrorEvents"/>
+   		<field name="TotalErrorEvents"/>
+   		<field name="TotalEvents"/>   		
    	</collection>   	
    	
    	<collection name="CI2Data">
@@ -42,6 +69,11 @@
    		<field name="AverageDownload"/>
    		<field name="AveragePureBuild"/>
    		<field name="AverageBuild"/>
+		<field name="SuccessEvents"/>
+   		<field name="UserErrorEvents"/>
+   		<field name="SystemErrorEvents"/>
+   		<field name="TotalErrorEvents"/>
+   		<field name="TotalEvents"/>   		
    	</collection>
    	
    	<collection name="SRPBenchmark1Data">

@@ -79,7 +79,7 @@ public class Compare {
 		double movingAverage = Connector.getMovingAverage(dbc, field, oneWeekBack, current.getEndDate());
 		String flag = "";
 		if (Connector.DAYS < 7) {
-			flag = "~";
+			//flag = "~";
 		}
 		
 		if ("lt".equals(operatorStr)) {
@@ -109,6 +109,9 @@ public class Compare {
 
 			if (!StringUtils.isEmpty(rule.getFieldPresentName())) {
 				singleResult.setField(rule.getFieldPresentName());
+			}
+			if (!StringUtils.isEmpty(rule.getLink())) {
+				singleResult.setLink(rule.getLink());
 			}
 			alertResult.getResultlist().add(singleResult);
 			return;
@@ -147,6 +150,10 @@ public class Compare {
 		
 		if (!StringUtils.isEmpty(rule.getFieldPresentName())) {
 			singleResult.setField(rule.getFieldPresentName());
+		}
+		
+		if (!StringUtils.isEmpty(rule.getLink())) {
+			singleResult.setLink(rule.getLink());
 		}
 		alertResult.getResultlist().add(singleResult);
 		return;

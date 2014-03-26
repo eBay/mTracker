@@ -18,6 +18,8 @@ public class ValueRetriever {
 						} else {
 							if (field.getName().contains("Reliability")) {
 								return field.getValue() + "%";
+							} else if (field.getName().contains("Events")) {
+								return (int) field.getValue() + "";
 							} else {
 								return field.getValue() + " min";
 							}

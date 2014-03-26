@@ -67,24 +67,51 @@
 	</div>
   <table id="statistb">
   <tr>
-	<td colspan="2" style="width:285px; background-color:#E9E9E9;"> <span style="font-weight:bold">Metrics</span></td>
+	<td colspan="3" style="width:285px; background-color:#E9E9E9;"> <span style="font-weight:bold">Metrics</span></td>
 	<td style="width:212px; background-color:#E9E9E9;"><span style="font-weight:bold">Worksapce Setup</span></td>
 	<td style="width:213px; background-color:#E9E9E9;"><span style="font-weight:bold">Server Startup</span></td>
 
   </tr>
   <tr>
-	<td rowspan="2" >Reliability</td>
-	<td>Overall Reliability</td>
+  	<td rowspan="7" >Reliability</td>
+	<td colspan="2">Overall Reliability</td>
 	<td class="textright">$valueRetriever.getValue("RIDEWorkspaceSetupData", "Reliability")</td>
 	<td class="textright">$valueRetriever.getValue("RIDEServerStartupData", "Reliability")</td>
   </tr>
   <tr>
-	<td>System Reliability</td>
+	<td colspan="2">System Reliability</td>
 	<td class="textright">$valueRetriever.getValue("RIDEWorkspaceSetupData", "SystemReliability")</td>
 	<td class="textright">$valueRetriever.getValue("RIDEServerStartupData", "SystemReliability")</td>
   </tr>
+   <tr>
+	<td colspan="2">Total Count</td>
+	<td class="textright">$valueRetriever.getValue("RIDEWorkspaceSetupData", "TotalEvents")</td>
+	<td class="textright">$valueRetriever.getValue("RIDEServerStartupData", "TotalEvents")</td>
+  </tr> 
   <tr>
-	<td colspan="2">Performance</td>
+	<td colspan="2">Success Count</td>
+	<td class="textright">$valueRetriever.getValue("RIDEWorkspaceSetupData", "SuccessEvents")</td>
+	<td class="textright">$valueRetriever.getValue("RIDEServerStartupData", "SuccessEvents")</td>
+  </tr>
+   <tr>
+	<td  colspan="2" >Failed Count</td>
+	<td class="textright">$valueRetriever.getValue("RIDEWorkspaceSetupData", "TotalErrorEvents")</td>
+	<td class="textright">$valueRetriever.getValue("RIDEServerStartupData", "TotalErrorEvents")</td>
+  </tr>
+   <tr>
+    <td rowspan="2"></td>
+	<td  >System Errors</td>
+	<td class="textright">$valueRetriever.getValue("RIDEWorkspaceSetupData", "SystemErrorEvents")</td>
+	<td class="textright">$valueRetriever.getValue("RIDEServerStartupData", "SystemErrorEvents")</td>
+  </tr> 
+   <tr>
+	<td >User Errors</td>
+	<td class="textright">$valueRetriever.getValue("RIDEWorkspaceSetupData", "UserErrorEvents")</td>
+	<td class="textright">$valueRetriever.getValue("RIDEServerStartupData", "UserErrorEvents")</td>
+  </tr>  
+  
+  <tr>
+	<td colspan="3">Performance</td>
 	<td class="textright">$valueRetriever.getValue("RIDEWorkspaceSetupData", "Average") </td>
 	<td class="textright">$valueRetriever.getValue("RIDEServerStartupData", "Average") </td>
   </tr>
@@ -105,35 +132,62 @@
 	</div>
 	  <table>
   <tr>
-	<td colspan="2" style="width:200px; background-color:#E9E9E9;"> <span style="font-weight:bold">Metrics</span></td>
+	<td colspan="3" style="width:200px; background-color:#E9E9E9;"> <span style="font-weight:bold">Metrics</span></td>
 	<td style="width:215px; background-color:#E9E9E9;"><span style="font-weight:bold">Raptor 2.X</span></td>
 	<td style="width:215px; background-color:#E9E9E9;"><span style="font-weight:bold">Raptor 1.X</span></td>
 
   </tr>
   <tr>
-	<td rowspan="2" >Reliability</td>
-	<td>Overall Reliability</td>
+	<td rowspan="7" >Reliability</td>
+	<td colspan="2">Overall Reliability</td>
 	<td class="textright">$valueRetriever.getValue("CI2Data", "Reliability")</td>
 	<td class="textright">$valueRetriever.getValue("CIData", "Reliability")</td>
   </tr>
-  <tr>
-	<td>System Reliability</td>
+    <tr>
+	<td colspan="2">System Reliability</td>
 	<td class="textright">$valueRetriever.getValue("CI2Data", "SystemReliability")</td>
 	<td class="textright">$valueRetriever.getValue("CIData", "SystemReliability")</td>
   </tr>
+   <tr>
+	<td colspan="2">Total Count</td>
+	<td class="textright">$valueRetriever.getValue("CI2Data", "TotalEvents")</td>
+	<td class="textright">$valueRetriever.getValue("CIData", "TotalEvents")</td>
+  </tr> 
+  <tr>
+	<td colspan="2">Success Count</td>
+	<td class="textright">$valueRetriever.getValue("CI2Data", "SuccessEvents")</td>
+	<td class="textright">$valueRetriever.getValue("CIData", "SuccessEvents")</td>
+  </tr>
+   <tr>
+	<td  colspan="2" >Failed Count</td>
+	<td class="textright">$valueRetriever.getValue("CI2Data", "TotalErrorEvents")</td>
+	<td class="textright">$valueRetriever.getValue("CIData", "TotalErrorEvents")</td>
+  </tr>
+   <tr>
+    <td rowspan="2"></td>
+	<td  >System Errors</td>
+	<td class="textright">$valueRetriever.getValue("CI2Data", "SystemErrorEvents")</td>
+	<td class="textright">$valueRetriever.getValue("CIData", "SystemErrorEvents")</td>
+  </tr> 
+   <tr>
+	<td >User Errors</td>
+	<td class="textright">$valueRetriever.getValue("CI2Data", "UserErrorEvents")</td>
+	<td class="textright">$valueRetriever.getValue("CIData", "UserErrorEvents")</td>
+  </tr>  
+ 
   <tr>
 	<td rowspan="3" >Performance</td>
-	<td>Dependency Download Time</td>
+	<td colspan="2">Dependency Download Time</td>
 	<td class="textright">$valueRetriever.getValue("CI2Data", "AverageDownload") </td>
 	<td class="textright">$valueRetriever.getValue("CIData", "AverageDownload") </td>
   </tr>
     <tr>
-	<td >Build Execution Time</td>
+	<td colspan="2" >Build Execution Time</td>
 	<td class="textright">$valueRetriever.getValue("CI2Data", "AveragePureBuild") </td>
 	<td class="textright">$valueRetriever.getValue("CIData", "AveragePureBuild") </td>
   </tr>
-     <tr>
-	<td >Total Build Time</td>
+  <tr>
+	<td colspan="2">Total Build Time</td>
 	<td class="textright">$valueRetriever.getValue("CI2Data", "AverageBuild") </td>
 	<td class="textright">$valueRetriever.getValue("CIData", "AverageBuild") </td>
   </tr>
@@ -144,36 +198,70 @@
 	</div>
 	  <table>
   <tr>
-	<td colspan="2" style="width:200px; background-color:#E9E9E9;"> <span style="font-weight:bold">Metrics</span></td>
+	<td colspan="3" style="width:200px; background-color:#E9E9E9;"> <span style="font-weight:bold">Metrics</span></td>
 	<td style="width:215px; background-color:#E9E9E9;"><span style="font-weight:bold">Raptor 2.X</span></td>
 	<td style="width:215px; background-color:#E9E9E9;"><span style="font-weight:bold">Raptor 1.X</span></td>
 
   </tr>
   <tr>
-	<td rowspan="2" >Reliability</td>
-	<td>Overall Reliability</td>
+	<td rowspan="8" >Reliability</td>
+	<td colspan="2">Overall Reliability</td>
 	<td class="textright">$valueRetriever.getValue("CIAssembler2Data", "Reliability")</td>
 	<td class="textright">$valueRetriever.getValue("CIAssemblerData", "Reliability")</td>
   </tr>
   <tr>
-	<td>System Reliability</td>
+	<td colspan="2">System Reliability</td>
 	<td class="textright">$valueRetriever.getValue("CIAssembler2Data", "SystemReliability")</td>
 	<td class="textright">$valueRetriever.getValue("CIAssemblerData", "SystemReliability")</td>
   </tr>
+     <tr>
+	<td colspan="2">Total Count</td>
+	<td class="textright">$valueRetriever.getValue("CIAssembler2Data", "TotalEvents")</td>
+	<td class="textright">$valueRetriever.getValue("CIAssemblerData", "TotalEvents")</td>
+  </tr> 
+  <tr>
+	<td colspan="2">Success Count</td>
+	<td class="textright">$valueRetriever.getValue("CIAssembler2Data", "SuccessEvents")</td>
+	<td class="textright">$valueRetriever.getValue("CIAssemblerData", "SuccessEvents")</td>
+  </tr>
+   <tr>
+	<td  colspan="2" >Failed Count</td>
+	<td class="textright">$valueRetriever.getValue("CIAssembler2Data", "TotalErrorEvents")</td>
+	<td class="textright">$valueRetriever.getValue("CIAssemblerData", "TotalErrorEvents")</td>
+  </tr>
+   <tr>
+    <td rowspan="3"></td>
+	<td  >System Errors</td>
+	<td class="textright">$valueRetriever.getValue("CIAssembler2Data", "SystemErrorEvents")</td>
+	<td class="textright">$valueRetriever.getValue("CIAssemblerData", "SystemErrorEvents")</td>
+  </tr> 
+   <tr>
+
+	<td >User Errors</td>
+	<td class="textright">$valueRetriever.getValue("CIAssembler2Data", "UserErrorEvents")</td>
+	<td class="textright">$valueRetriever.getValue("CIAssemblerData", "UserErrorEvents")</td>
+  </tr> 
+    <tr>
+
+	<td >External Service Errors</td>
+	<td class="textright">$valueRetriever.getValue("CIAssembler2Data", "ExternalErrorEvents")</td>
+	<td class="textright">$valueRetriever.getValue("CIAssemblerData", "ExternalErrorEvents")</td>
+  </tr>    
+
   <tr>
 	<td rowspan="3" >Performance</td>
-	<td>Dependency Download Time</td>
+	<td colspan="2">Dependency Download Time</td>
 	<td class="textright">$valueRetriever.getValue("CIAssembler2Data", "AverageDownload") </td>
 	<td class="textright">$valueRetriever.getValue("CIAssemblerData", "AverageDownload") </td>
   </tr>
     <tr>
-	<td >Assembly Execution Time</td>
+	<td colspan="2">Assembly Execution Time</td>
 	<td class="textright">$valueRetriever.getValue("CIAssembler2Data", "AveragePureBuild") </td>
 	<td class="textright">$valueRetriever.getValue("CIAssemblerData", "AveragePureBuild") </td>
 
   </tr>
      <tr>
-	<td >Total Assembly Time</td>
+	<td colspan="2">Total Assembly Time</td>
 	<td class="textright">$valueRetriever.getValue("CIAssembler2Data", "AverageBuild") </td>
 	<td class="textright">$valueRetriever.getValue("CIAssemblerData", "AverageBuild") </td>
   </tr>

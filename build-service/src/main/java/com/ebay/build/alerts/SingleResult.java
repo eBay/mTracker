@@ -21,6 +21,8 @@ public class SingleResult {
 	private String movingAverage;
 	
 	private String flag;
+	
+	private String link;
 
 	public SingleResult() {
 		super();
@@ -125,4 +127,13 @@ public class SingleResult {
 	public void setFlag(String flag) {
 		this.flag = flag;
 	}
+
+	public String getLink() {
+		return link;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
+	}
+	
 }
