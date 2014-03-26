@@ -50,6 +50,93 @@
 		</filter>
 	</category>
 	<category name="user">
+		<!-- Raptor-2.x filters-->
+		<filter name="ERROR_USE_NONRECOMMENDED_V3ARTIFACT">
+			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E4[^0-9].*" />
+		</filter>
+		<filter name="INVALID_CONFIGURATION_VARIABLE">
+			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E23[^0-9].*" />
+		</filter>
+		<filter name="INVALID_VERSION">
+			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E24[^0-9].*" />
+		</filter>
+		<filter name="XML_READ_ERROR">
+			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E25[^0-9].*" />
+		</filter>
+		<filter name="MISSING_XML_SCHEMA">
+			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E26[^0-9].*" />
+		</filter>
+		<filter name="XML_VALIDATION_ERROR">
+			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E27[^0-9].*" />
+		</filter>
+		<filter name="FILE_DOES_NOT_EXIST">
+			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E29[^0-9].*" />
+		</filter>		
+		<filter name="INVALID_TARGETOS">
+			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E33[^0-9].*" />
+		</filter>
+		<filter name="INVALID_PACKAGE_NAME">
+			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E36[^0-9].*" />
+		</filter>
+		<filter name="INVALID_PARAMETER">
+			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E37[^0-9].*" />
+		</filter>
+		<filter name="INVALID_APPROVAL_ID">
+			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E38[^0-9].*" />
+		</filter>		
+		<filter name="INVALID_COS">
+			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E39[^0-9].*" />
+		</filter>
+		<filter name="INVALID_MANIFEST_NAME">
+			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E40[^0-9].*" />
+		</filter>
+		<filter name="INVALID_MANIFEST_VERSIONS">
+			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E41[^0-9].*" />
+		</filter>	
+		<filter name="INVALID_MANIFEST_INPUTS">
+			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E42[^0-9].*" />
+		</filter>			
+		<filter name="INVALID_PACKAGE_REF_INPUTS">
+			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E43[^0-9].*" />
+		</filter>
+		<filter name="PACKAGE_DOES_NOT_EXIST">
+			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E44[^0-9].*" />
+		</filter>
+		<filter name="ERROR_VERIFYING_PACKAGE_REF">
+			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E45[^0-9].*" />
+		</filter>				
+		<filter name="PACKAGE_ALREADY_EXISTS">
+			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E46[^0-9].*" />
+		</filter>
+		<filter name="CANNOT_PARSE_CRONUS_INI_PARAM">
+			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E60[^0-9].*" />
+		</filter>
+		<filter name="ERROR_DO_NOT_OVERRIDE_FILES">
+			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E61[^0-9].*" />
+		</filter>
+		<filter name="MISSING_CRONUS_PROPERTIES_NAMES">
+			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E62[^0-9].*" />
+		</filter>		
+		<filter name="ERROR_DEPENDENCY_CONFLICTION">
+			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E63[^0-9].*" />
+		</filter>
+		<filter name="ERROR_DEPENDENCY_CYCLE">
+			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E64[^0-9].*" />
+		</filter>	
+		<filter name="RAPTOR_APP_DOES_NOT_EXIST">
+			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E66[^0-9].*" />
+		</filter>	
+		<filter name="APP_NAME_DOES_NOT_EXIST">
+			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E67[^0-9].*" />
+		</filter>
+		<filter name="APP_NAME_NOT_REGISTERED">
+			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E108[^0-9].*" />
+		</filter>
+		<filter name="INVALID_STACK_NAME">
+			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E104[^0-9].*" />
+		</filter>
+
+		<!-- Raptor-1.x filters-->
 		<filter name="DependencyResolveFailure">
 			<cause
 				keyword="Could not resolve dependencies for project" />
@@ -328,6 +415,38 @@
 	</category>
 	
 	<category name="system">
+		<!-- Raptor-2.x filters-->
+		<filter name="ERROR_CREATE_FILE_OR_DIRECTORY">
+			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E10[^0-9].*" />
+		</filter>
+		<filter name="ERROR_PROCESSING_ARCHIVE">
+			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E11[^0-9].*" />
+		</filter>
+		<filter name="ERROR_DELETE_FILE_OR_DIRECTORY">
+			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E12[^0-9].*" />
+		</filter>
+		<filter name="ERROR_FILE_DOWNLOAD">
+			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E14[^0-9].*" />
+		</filter>
+		<filter name="INVALID_URL">
+			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E18[^0-9].*" />
+		</filter>
+		<filter name="INVALID_URL_CONTENT">
+			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E21[^0-9].*" />
+		</filter>
+		<filter name="INVALID_FILENAME">
+			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E28[^0-9].*" />
+		</filter>
+		<filter name="ERROR_FILE_IO">
+			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E30[^0-9].*" />
+		</filter>		
+		<filter name="INTERNAL_ERROR">
+			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E31[^0-9].*" />
+		</filter>			
+
+		
+		
+		<!-- Raptor-1.x filters-->
 		<filter name="OBRGen-MissingClassFail">
 			<cause
 				keyword="org.apache.maven.lifecycle.LifecycleExecutionException: Failed to execute goal com.ebay.osgi.build:obrgen-maven-plugin" />
@@ -401,10 +520,40 @@
 			<cause
 				keyword="java.lang.NullPointerException" />
 		</filter>
-		
+
 	</category>
 	
 	<category name="external">
+		<!-- Raptor-2.x filters-->
+		<filter name="CERTIFICATE_ERROR">
+			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E34[^0-9].*" />
+		</filter>
+		<filter name="APP_REGSERVICE_ERROR_CONSUMER_ID">
+			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E100[^0-9].*" />
+		</filter>
+		<filter name="MANIFEST_REGISTRATION_ERROR">
+			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E101[^0-9].*" />
+		</filter>		
+		<filter name="UPLOAD_ERROR">
+			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E102[^0-9].*" />
+		</filter>
+		<filter name="ERROR_READING_COS_INFO">
+			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E103[^0-9].*" />
+		</filter>
+		<filter name="ERROR_REGISTERING_MANIFEST">
+			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E104[^0-9].*" />
+		</filter>
+		<filter name="ERROR_REGISTERING_PACKAGE_REF">
+			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E105[^0-9].*" />
+		</filter>	
+		<filter name="STATEHUB_SERVICE_ERROR">
+			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E106[^0-9].*" />
+		</filter>
+		<filter name="PAYPAL_SERVICE_ERROR">
+			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E121[^0-9].*" />
+		</filter>
+
+		<!-- Raptor-1.x filters-->
 	 	<filter name="AssemblerUploadCronusPackageFail">
 			<cause
 				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
