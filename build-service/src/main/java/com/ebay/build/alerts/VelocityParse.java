@@ -17,7 +17,7 @@ import com.ebay.build.service.BuildServiceScheduler;
 
 public class VelocityParse {
 
-	public VelocityParse(String templateFile, AlertResult ar, Time time, File directory) {
+	public VelocityParse(String templateFile, AlertResult ar, Time time, File directory, String dateString) {
 		
 		try {
 			Velocity.init(VelocityParse.class.getResource(
@@ -37,6 +37,7 @@ public class VelocityParse {
 			context.put("colorResultList", colorResultList);
 			context.put("time", time);
 			context.put("hostName", BuildServiceScheduler.getHostName());
+			context.put("pfdashDataViewService", "http://kappa-3-18666.stratus.dev.ebay.com:8080/dashsvcs/rest/dataviews/sqls/" + dateString);
 
 			Template template = null;
 

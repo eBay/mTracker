@@ -38,6 +38,10 @@
 		font-family:Calibri;
 	}
 	
+	body{
+		font-family:Calibri;
+	}
+	
 	.textright{
 		text-align:right;
 		padding-right:5px;
@@ -65,14 +69,6 @@
 	
 	<br/>
 	<!-- result with special color-->
-	<div>
-		<table>
-			<tr>
-				<td class="textcenter" style="width:100px; background-color:#FF0000;">Worse</td>
-				<td class="textcenter" style="width:100px; background-color:#92D050;">Better</td>
-			</tr>
-		</table>
-	</div>
 	<br/>
 	#if(($!{colorResultList.size()}) != 0)
 		<div>
@@ -180,6 +176,8 @@
 		</div>
 		<br/>
 	#end
-
+	<div>
+		<a href="$pfdashDataViewService">PFDash Data Viewer</a>  (<a href='https://chrome.google.com/webstore/detail/jsonview/chklaanhfefbnpoihckbnefhakgolnmc' target='_blank'>JSONView</a> required on Chrome)
+	</div>
  </body>
 </html>

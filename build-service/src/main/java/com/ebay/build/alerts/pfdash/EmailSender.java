@@ -39,10 +39,10 @@ public class EmailSender {
         sms.sendHtmlSender(msinfo); 
 	}
 	
-	public String generateMailHtml(File directory) {
+	public String generateMailHtml(File directory, String dateString) {
         System.out.println("[INFO]: Velocity initing...");
 		try {
-			new VelocityParse("alert_email_template.vm", ar, time, directory);
+			new VelocityParse("alert_email_template.vm", ar, time, directory, dateString);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -57,15 +57,15 @@ public class EmailSender {
 		/**
 		 * set content for the mail
 		 */
+		String dateString = DateUtils.getDateTimeString(DateUtils.getOneDayBack(new Date()), "yyyy-MM-dd", TimeZone.getDefault());
 		MailSenderInfo mailInfo = getEmailBasicInfo(warning);		
-		mailInfo.setSubject(ServiceConfig.get("pfdash.alert.email.subject") + " for " 
-				+ DateUtils.getDateTimeString(DateUtils.getOneDayBack(new Date()), "yyyy-MM-dd", TimeZone.getDefault()));
+		mailInfo.setSubject(ServiceConfig.get("pfdash.alert.email.subject") + " for " + dateString);
 						
 		/**
 		 * generate mail template and send mail
 		 */
 		
-		String content = generateMailHtml(directory);
+		String content = generateMailHtml(directory, dateString);
 		mailInfo.setContent(content);
 		
 		return mailInfo;
