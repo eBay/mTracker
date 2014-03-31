@@ -48,6 +48,13 @@
 		<filter name="EnunciateFail">
 			<cause keyword="org.codehaus.enunciate:maven-enunciate-plugin"/>
 		</filter>
+		<filter name="SiteExecutionFailure">
+			<cause
+				keyword="Failed to execute goal org.apache.maven.plugins:maven-site-plugin" />
+		</filter>
+		<filter name="FindbugsPluginFail">
+			<cause keyword="Failed to execute goal org.codehaus.mojo:findbugs-maven-plugin"/>
+		</filter>
 	</category>
 	<category name="user">
 		<!-- Raptor-2.x filters-->
@@ -215,11 +222,6 @@
 				keyword="Failed to execute goal org.apache.maven.plugins:maven-deploy-plugin" />			
 		</filter>
 
-		<filter name="SiteExecutionFailure">
-			<cause
-				keyword="Failed to execute goal org.apache.maven.plugins:maven-site-plugin" />
-		</filter>
-
 		<filter name="SonaRunFailure">
 			<cause keyword="Failed to execute goal org.codehaus.mojo:sonar-maven-plugin" />
 
@@ -362,9 +364,6 @@
 		</filter>
 		<filter name="BundlePluginFail">
 			<cause keyword="Failed to execute goal org.apache.felix:maven-bundle-plugin"/>
-		</filter>
-		<filter name="FindbugsPluginFail">
-			<cause keyword="Failed to execute goal org.codehaus.mojo:findbugs-maven-plugin"/>
 		</filter>
 
 		<filter name="KarmaPluginFail">
