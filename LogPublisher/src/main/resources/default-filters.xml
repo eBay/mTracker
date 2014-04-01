@@ -61,6 +61,9 @@
 		<filter name="ERROR_USE_NONRECOMMENDED_V3ARTIFACT">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E4[^0-9].*" />
 		</filter>
+		<filter name="INVALID_URL">
+			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E18[^0-9].*" />
+		</filter>
 		<filter name="INVALID_CONFIGURATION_VARIABLE">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E23[^0-9].*" />
 		</filter>
@@ -139,11 +142,111 @@
 		<filter name="APP_NAME_NOT_REGISTERED">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E108[^0-9].*" />
 		</filter>
-		<filter name="INVALID_STACK_NAME">
-			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E104[^0-9].*" />
-		</filter>
 
 		<!-- Raptor-1.x filters-->
+		<filter name="ERROR_USE_NONRECOMMENDED_V3ARTIFACT">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E4[^0-9].*" />
+		</filter>
+		<filter name="ERROR_PROCESSING_CONFIGURATION">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E13[^0-9].*" />
+		</filter>
+		<filter name="BAD_APPLICATION_MF">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E15[^0-9].*" />
+		</filter>
+		<filter name="MISSING_APPLICATION_MF">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E16[^0-9].*" />
+		</filter>
+		<filter name="BAD_MANIFEST">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E17[^0-9].*" />
+		</filter>
+		<filter name="INVALID_URL">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E18[^0-9].*" />
+		</filter>
+		<filter name="INVALID_URL_CONTENT">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E21[^0-9].*" />
+		</filter>
+		<filter name="INVALID_CONFIGURATION_VARIABLE">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E23[^0-9].*" />
+		</filter>
+		<filter name="INVALID_VERSION">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E24[^0-9].*" />
+		</filter>
+		<filter name="XML_READ_ERROR">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E25[^0-9].*" />
+		</filter>
+		<filter name="MISSING_XML_SCHEMA">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E26[^0-9].*" />
+		</filter>
+		<filter name="XML_VALIDATION_ERROR">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E27[^0-9].*" />
+		</filter>
+		<filter name="FILE_DOES_NOT_EXIST">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E29[^0-9].*" />
+		</filter>
+		<filter name="INVALID_TARGETOS">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E33[^0-9].*" />
+		</filter>
+		<filter name="MISSING_LOCALOBR">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E35[^0-9].*" />
+		</filter>
+		<filter name="INVALID_PACKAGE_NAME">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E36[^0-9].*" />
+		</filter>
+		<filter name="INVALID_PARAMETER">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E37[^0-9].*" />
+		</filter>
+		<filter name="INVALID_APPROVAL_ID">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E38[^0-9].*" />
+		</filter>
+		<filter name="INVALID_COS">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E39[^0-9].*" />
+		</filter>
+		<filter name="INVALID_MANIFEST_NAME">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E40[^0-9].*" />
+		</filter>
+		<filter name="INVALID_MANIFEST_VERSIONS">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E41[^0-9].*" />
+		</filter>
+		<filter name="INVALID_MANIFEST_INPUTS">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E42[^0-9].*" />
+		</filter>
+		<filter name="INVALID_PACKAGE_REF_INPUTS">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E43[^0-9].*" />
+		</filter>
+		<filter name="PACKAGE_DOES_NOT_EXIST">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E44[^0-9].*" />
+		</filter>
+		<filter name="ERROR_VERIFYING_PACKAGE_REF">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E45[^0-9].*" />
+		</filter>
+		<filter name="PACKAGE_ALREADY_EXISTS">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E46[^0-9].*" />
+		</filter>
+		<filter name="CANNOT_IDENTIFY_WEB_BUNDLE">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E53[^0-9].*" />
+		</filter>
+		<filter name="CANNOT_RESOLVE_WEB_BUNDLE">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E54[^0-9].*" />
+		</filter>
+		<filter name="CANNOT_FIND_WEBCONTEXT">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E55[^0-9].*" />
+		</filter>
+		<filter name="MISSING_MANIFEST_MF">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E56[^0-9].*" />
+		</filter>
+		<filter name="ERROR_INITIALIZING_CONFIG">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E57[^0-9].*" />
+		</filter>
+		<filter name="CANNOT_PARSE_CRONUS_INI_PARAM">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E60[^0-9].*" />
+		</filter>
+		<filter name="ERROR_DO_NOT_OVERRIDE_FILES">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E61[^0-9].*" />
+		</filter>
+		<filter name="APP_NAME_NOT_REGISTERED">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E108[^0-9].*" />
+		</filter>
+
 		<filter name="DependencyResolveFailure">
 			<cause
 				keyword="Could not resolve dependencies for project" />
@@ -163,32 +266,10 @@
 			<cause
 				keyword="Failed to execute goal org.apache.maven.plugins:maven-antrun-plugin" />			
 		</filter>
-		<filter name="AssemblerResolveWebBundleFail">
-			<cause
-				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
-			<cause
-				keyword="http://wiki2.arch.ebay.com/display/DevExTech/Assembler+Errors#AssemblerErrors-E57." />
-		</filter>
 		
 		<filter name="MavenExecFail">
 			<cause
 				keyword="Failed to execute goal org.codehaus.mojo:exec-maven-plugin" />
-		</filter>
-		
-		<filter name="AssemblerResolveWebBundleFail">
-			<cause
-				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
-			<cause
-				keyword="Failed to Resolve Web Bundle" />
-		</filter>
-		
-		
-		
-		<filter name="AssemblerWebBunldeNotFound">
-			<cause
-				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
-			<cause
-				keyword="Unable to identify the web bundle" />
 		</filter>
 		
 		<filter name="AssemblerNoPOM">
@@ -198,23 +279,9 @@
 				keyword="Goal requires a project to execute but there is no POM in this directory" />
 		</filter>
 		
-		<filter name="AssemblerNoLocalOBR">
-			<cause
-				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
-			<cause
-				keyword="localobr doesn't exist" />
-		</filter>
-		
 		<filter name="ReleasePluginFailed">
 			<cause
 				keyword="Failed to execute goal org.apache.maven.plugins:maven-release-plugin" />
-		</filter>
-		
-		<filter name="AssemblerErrMkFileFail">
-			<cause
-				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
-			<cause
-				keyword="http://wiki2.arch.ebay.com/display/DevExTech/Assembler+Errors#AssemblerErrors-E10." />
 		</filter>
 				
 		<filter name="DeployExecutionFailure">
@@ -397,11 +464,6 @@
 		<filter name="AssemblerGenericMissAppName">
 			<cause keyword="com.ebay.devex.assembler:assembler-maven-plugin"/>
 			<cause keyword="You must specify applicationName for Generic stack"/>
-		</filter>
-		
-		<filter name="AssemblerMissMenifest">
-			<cause keyword="com.ebay.devex.assembler:assembler-maven-plugin"/>
-			<cause keyword="Unable to find the MANIFEST.MF file"/>
 		</filter>		
 		
 		<filter name="AssemblerNotEBAProjectError">
@@ -427,9 +489,6 @@
 		<filter name="ERROR_FILE_DOWNLOAD">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E14[^0-9].*" />
 		</filter>
-		<filter name="INVALID_URL">
-			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E18[^0-9].*" />
-		</filter>
 		<filter name="INVALID_URL_CONTENT">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E21[^0-9].*" />
 		</filter>
@@ -446,6 +505,34 @@
 		
 		
 		<!-- Raptor-1.x filters-->
+		<filter name="ERROR_READ_FILE_OR_DIRECTORY">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E9[^0-9].*" />
+		</filter>
+		<filter name="ERROR_CREATE_FILE_OR_DIRECTORY">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E10[^0-9].*" />
+		</filter>
+		<filter name="ERROR_PROCESSING_ARCHIVE">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E11[^0-9].*" />
+		</filter>
+		<filter name="ERROR_DELETE_FILE_OR_DIRECTORY">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E12[^0-9].*" />
+		</filter>
+		<filter name="ERROR_FILE_DOWNLOAD">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E14[^0-9].*" />
+		</filter>
+		<filter name="HOSTNAME_ERROR">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E20[^0-9].*" />
+		</filter>
+		<filter name="INVALID_FILENAME">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E28[^0-9].*" />
+		</filter>
+		<filter name="ERROR_FILE_IO">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E30[^0-9].*" />
+		</filter>
+		<filter name="INTERNAL_ERROR">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E31[^0-9].*" />
+		</filter>
+
 		<filter name="OBRGen-MissingClassFail">
 			<cause
 				keyword="org.apache.maven.lifecycle.LifecycleExecutionException: Failed to execute goal com.ebay.osgi.build:obrgen-maven-plugin" />
@@ -553,63 +640,42 @@
 		</filter>
 
 		<!-- Raptor-1.x filters-->
-	 	<filter name="AssemblerUploadCronusPackageFail">
-			<cause
-				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
-			<cause
-				keyword="http://wiki2.arch.ebay.com/display/DevExTech/Assembler+Errors#AssemblerErrors-E102." />
+		<filter name="CERTIFICATE_ERROR">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E34[^0-9].*" />
 		</filter>
-		<filter name="AssemblerRetrieveClassFail">
-			<cause
-				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
-			<cause
-				keyword="http://wiki2.arch.ebay.com/display/DevExTech/Assembler+Errors#AssemblerErrors-E103." />
+		<filter name="APP_REGSERVICE_ERROR_CONSUMER_ID">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E100[^0-9].*" />
 		</filter>
-		<filter name="AssemblerRegisterManifestFail">
-			<cause
-				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
-			<cause
-				keyword="http://wiki2.arch.ebay.com/display/DevExTech/Assembler+Errors#AssemblerErrors-E104." />
+		<filter name="MANIFEST_REGISTRATION_ERROR">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E101[^0-9].*" />
 		</filter>
-		<filter name="Assembler-AppReg-NA">
-			<cause
-				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
-			<cause
-				keyword="http://wiki2.arch.ebay.com/display/DevExTech/Assembler+Errors#AssemblerErrors-E255." />
+		<filter name="UPLOAD_ERROR">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E102[^0-9].*" />
 		</filter>
+		<filter name="ERROR_REGISTERING_MANIFEST">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E104[^0-9].*" />
+		</filter>
+		<filter name="ERROR_REGISTERING_PACKAGE_REF">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E105[^0-9].*" />
+		</filter>
+		<filter name="STATEHUB_SERVICE_ERROR">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E106[^0-9].*" />
+		</filter>
+		<filter name="UNKNOWN">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E255[^0-9].*" />
+		</filter>
+
 		<filter name="AssemblerStateHubHttp500">
 			<cause
 				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
 			<cause
 				keyword="Internal Server Error (500) - Internal Server Error" />
 		</filter>
-		<filter name="AssemblerValidationURLConnTimeout">
-			<cause
-				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
-			<cause
-				keyword="Failed to validate the url" />
-			<cause
-				keyword="Connection timed out" />			
-		</filter>
-				<filter name="AssemblerConnReset">
+		<filter name="AssemblerConnReset">
 			<cause
 				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
 			<cause
 				keyword="java.net.SocketException: Connection reset" />
-		</filter>
-		<filter name="AssemblerCoSServiceNA">
-			<cause
-				keyword="com.ebay.devex.assembler:assembler-maven-plugin" />
-			<cause
-				keyword="Service Unavailable" />
-			<cause
-				keyword="com.ebay.dtdeploy.assembler.common.util.CoSRestClient" />			
-		</filter>
-		<filter name="AssemblerRegPkgRefFail">
-			<cause
-				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
-			<cause
-				keyword="Unable to register package ref" />
 		</filter>
 	</category>
 </filters>
