@@ -1,5 +1,6 @@
 package com.ebay.build.profiler.publisher;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.context.ApplicationContext;
@@ -17,14 +18,18 @@ public class CategoryUpdater {
 		List<Session> sessions = processor.querySessionsWithoutCategory();
 		SessionTransformer transformer = new SessionTransformer();
 		
+		List<Session> batchUpdates = new ArrayList<Session>();
 		for (Session session : sessions) {
 			transformer.tranform(session);
 			if (!StringUtils.isEmpty(session.getCategory())) {
 				System.out.println("Updating " + session.getId() + "  --> " + session.getCategory());
-				processor.updateSessionCategory(session);
+				//processor.updateSessionCategory(session);
+				batchUpdates.add(session);
 			} else {
 				System.out.println("NO category " + session.getId());
 			}
 		}
+		processor.batchUpdateSessionCategory(batchUpdates);
+		System.out.println("DONE!");
 	}
 }

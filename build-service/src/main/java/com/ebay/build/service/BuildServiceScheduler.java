@@ -9,8 +9,6 @@ import javax.servlet.ServletContextListener;
 
 import com.ebay.build.alerts.devx.DevxScheduler;
 import com.ebay.build.alerts.pfdash.PfDashScheduler;
-import com.ebay.build.persistent.healthcheck.scheduler.HealthTrackScheduler;
-import com.ebay.build.reliability.ReliabilityEmailScheduler;
 import com.ebay.build.service.config.BuildServiceConfig;
 import com.ebay.build.tracking.TrackingScheduler;
 import com.ebay.build.udc.UDCSheduler;
@@ -41,14 +39,14 @@ public class BuildServiceScheduler implements ServletContextListener {
 		System.out.println("BuildServiceScheduler init start. output path: " + path);
 		
 		if (isSchedulerEnabled()) {
-			HealthTrackScheduler healthTrackScheduler = new HealthTrackScheduler();
-			ReliabilityEmailScheduler reliabilityScheduler = new ReliabilityEmailScheduler();
+//			HealthTrackScheduler healthTrackScheduler = new HealthTrackScheduler();
+//			ReliabilityEmailScheduler reliabilityScheduler = new ReliabilityEmailScheduler();
 			PfDashScheduler pfDashScheduler = new PfDashScheduler();
 			DevxScheduler devxScheduler = new DevxScheduler();
 
 			try {
-				healthTrackScheduler.run();
-				reliabilityScheduler.run();
+				//healthTrackScheduler.run();
+				//reliabilityScheduler.run();
 				pfDashScheduler.run();
 				devxScheduler.run();
 			} catch (Exception e) {

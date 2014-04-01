@@ -130,4 +130,8 @@ public class LoaderProcessor {
 	public void updateSessionCategory(Session session) {
 		sessionJDBCTemplate.updateCategory(session);
 	}
+	
+	public void batchUpdateSessionCategory(List<Session> sessions) {
+		sessionJDBCTemplate.batchUpdateCategory(sessions);
+	}
 }

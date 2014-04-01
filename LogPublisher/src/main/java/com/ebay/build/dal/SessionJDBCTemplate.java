@@ -122,6 +122,23 @@ public class SessionJDBCTemplate {
 		jdbcTemplateObject.update(SQL, new Object[] {session.getCategory(), session.getFilter(), session.getId()});
 	}
 	
+	public int[] batchUpdateCategory(final List<Session> sessions) {
+		int[] updateCounts = jdbcTemplateObject.batchUpdate(
+				"update RBT_SESSION set category = ?,  filter = ? where id = ?",
+				new BatchPreparedStatementSetter() {
+					public void setValues(PreparedStatement ps, int i) throws SQLException {
+						ps.setString(1, sessions.get(i).getCategory());
+						ps.setString(2, sessions.get(i).getFilter());
+						ps.setInt(3, sessions.get(i).getId());
+					}
+
+					public int getBatchSize() {
+						return sessions.size();
+					}
+				});
+		return updateCounts;
+	}
+	
 	public int[] batchUpdateAssemblyBreakdown(final List<AssemblyBreakdown> durations) {
 		int[] updateCounts = jdbcTemplateObject.batchUpdate(
 				"update RBT_SESSION set duration_assembly_package = ?, duration_assembly_upload = ?, duration_assembly_service = ? where jekins_url = ? and goals like 'com.ebay.raptor.build:assembler-maven-plugin:%:deploy' and status = 0",
