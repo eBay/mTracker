@@ -37,7 +37,7 @@ public class VelocityParse {
 			context.put("colorResultList", colorResultList);
 			context.put("time", time);
 			context.put("hostName", BuildServiceScheduler.getHostName());
-			context.put("pfdashDataViewService", "http://kappa-3-18666.stratus.dev.ebay.com:8080/dashsvcs/rest/dataviews/sqls/" + dateString);
+			context.put("pfdashDataViewService", "http://pfdash/dashsvcs/rest/dataviews/sqls/" + dateString);
 
 			Template template = null;
 
