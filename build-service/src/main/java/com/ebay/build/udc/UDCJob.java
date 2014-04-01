@@ -88,10 +88,8 @@ public class UDCJob implements Job {
 					System.out.println("Processing files: " + ArrayUtils.toString(csvFiles));
 					new UsageDataRecorder(Arrays.asList(csvFiles), new UsageDataDaoJDBCImpl(type)).start();
 				} catch (Exception e) {
-					System.err.println("Process");
-				} finally {
-					// FileUtils.renameDoneFile(resultFile);
-				}
+					e.printStackTrace();
+				} 
 			} else {
 				System.out.println("No csv records found under " + csvDest);
 			}

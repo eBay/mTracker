@@ -4,10 +4,10 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -69,20 +69,11 @@ public class UDCJDBCTemplate {
 		}
 
 		if (props.size() > 0) {
-			List<String> list = jdbcTemplateObject.queryForList(
-					STMT_QUERY_SESSION, String.class);
-			List<String> duplicate = new ArrayList<String>();
-			for (String key : props.keySet()) {
-				if (list.contains(key)) {
-					duplicate.add(key);
-					LoggerFactory.getLogger(getClass()).warn(
-							"Skipping insert to DB as session id already exists in DB, id:"
-									+ key);
-				}
-			}
-
-			for (String key : duplicate) {
-				props.remove(key);
+			List<String> existIds = jdbcTemplateObject.queryForList(getQuerySessionSql(props.keySet()), String.class);
+			for (String id : existIds) {
+				LoggerFactory.getLogger(getClass()).warn(
+						"Skipping insert to DB as session id already exists in DB, id:" + id);
+				props.remove(id);
 
 			}
 		}
@@ -92,11 +83,16 @@ public class UDCJDBCTemplate {
     }
 
 
-    	
-        
-    
 
-    public int[] create(final List<UsageDataInfo> infos) {
+	private String getQuerySessionSql(Set<String> keySet) {
+		StringBuffer sql= new StringBuffer(STMT_QUERY_SESSION +" where ");
+		for (String id : keySet) {
+			sql.append(" id='" + id + "' or");
+		}
+		return StringUtils.removeEnd(sql.toString(), "or");
+	}
+
+	public int[] create(final List<UsageDataInfo> infos) {
         final Map<String, String> props = extractSessionProperties(infos);
         final String[] keys = (String[]) props.keySet().toArray(new String[0]);
 
