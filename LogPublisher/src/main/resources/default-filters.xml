@@ -55,6 +55,9 @@
 		<filter name="FindbugsPluginFail">
 			<cause keyword="Failed to execute goal org.codehaus.mojo:findbugs-maven-plugin"/>
 		</filter>
+		<filter name="FindbugsExcludeXMLNotFound">
+			<cause keyword="ResourceNotFoundException: Could not find resource 'findbugsExclude.xml'."/>
+		</filter>
 	</category>
 	<category name="user">
 		<!-- Raptor-2.x filters-->
