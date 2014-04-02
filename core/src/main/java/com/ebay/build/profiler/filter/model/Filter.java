@@ -13,6 +13,9 @@ public class Filter {
 	@XmlAttribute
 	private String name;
 	
+	@XmlAttribute
+	private String description;
+	
 	private String category;
 
 	@XmlElement(name="cause")
@@ -28,6 +31,14 @@ public class Filter {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description= description;
 	}
 
 	public String getCategory() {

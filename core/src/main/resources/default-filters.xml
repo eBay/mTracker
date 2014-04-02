@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <filters>
 	<category name="exclude">
-		<filter name="ScalaTestRunFailure" description="this is a test">
+		<filter name="ScalaTestRunFailure" description="">
 			<cause
 				keyword="org.scalatest:scalatest-maven-plugin" />
 			<cause keyword="There are test failures" />
 		</filter>
 	
-		<filter name="TestRunFailure">
+		<filter name="TestRunFailure" description="There are test failures">
 			<cause
 				keyword="Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin" />
 			<cause keyword="There are test failures" />
 		</filter>
-		<filter name="CompilationFailure">
+		<filter name="CompilationFailure" description="Failed to compile the project">
 			<cause
 				keyword="Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin" />
 		</filter>
@@ -48,7 +48,7 @@
 		<filter name="EnunciateFail">
 			<cause keyword="org.codehaus.enunciate:maven-enunciate-plugin"/>
 		</filter>
-		<filter name="SiteExecutionFailure">
+		<filter name="SiteExecutionFailure" description="Failed to generate the site, one reason is generation page failed.">
 			<cause
 				keyword="Failed to execute goal org.apache.maven.plugins:maven-site-plugin" />
 		</filter>
@@ -250,11 +250,11 @@
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E108[^0-9].*" />
 		</filter>
 
-		<filter name="DependencyResolveFailure">
+		<filter name="DependencyResolveFailure" description="Could not resolve dependencies for project">
 			<cause
 				keyword="Could not resolve dependencies for project" />
 		</filter>
-		<filter name="PluginDependencyResolveFailure">
+		<filter name="PluginDependencyResolveFailure" description="One of its dependencies could not be resolved for plugin.">
 			<cause
 				keyword="org.apache.maven.plugin.PluginResolutionException" />
 			<cause
@@ -265,7 +265,7 @@
 				keyword="Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin" />
 		</filter>
 
-		<filter name="AntRunFailure">
+		<filter name="AntRunFailure" description="Failed to execute goal org.apache.maven.plugins:maven-antrun-plugin">
 			<cause
 				keyword="Failed to execute goal org.apache.maven.plugins:maven-antrun-plugin" />			
 		</filter>
@@ -287,12 +287,12 @@
 				keyword="Failed to execute goal org.apache.maven.plugins:maven-release-plugin" />
 		</filter>
 				
-		<filter name="DeployExecutionFailure">
+		<filter name="DeployExecutionFailure" description="Failed to deploy the artifact to Maven Repository">
 			<cause
 				keyword="Failed to execute goal org.apache.maven.plugins:maven-deploy-plugin" />			
 		</filter>
 
-		<filter name="SonaRunFailure">
+		<filter name="SonaRunFailure" description="Failed to execute goal org.codehaus.mojo:sonar-maven-plugin">
 			<cause keyword="Failed to execute goal org.codehaus.mojo:sonar-maven-plugin" />
 
 		</filter>
@@ -314,7 +314,7 @@
 			<cause keyword="org.codehaus.plexus.resource.loader.ResourceNotFoundException: Could not find resource"/>
 		</filter>
 		
-		<filter name="DependencyValidationFail">
+		<filter name="DependencyValidationFail" description="Dependency Validation Failed">
 			<cause keyword="Dependency Validation Failed"/>
 		</filter>
 		
@@ -346,7 +346,7 @@
 			<cause keyword="Can't release project due to non released dependencies"/>
 		</filter>
 		
-		<filter name="ContentValidationFail">
+		<filter name="ContentValidationFail" description="content-validation (process-content-resources) on project failed">
 			<cause keyword="Failed to execute goal com.ebay.content:maven-content-plugin"/>
 			<cause keyword="content-validation (process-content-resources) on project"/>
 		</filter>
@@ -562,7 +562,7 @@
 				keyword="java.io.IOException: No space left on device" />
 		</filter>
 		
-		<filter name="CleanFailure">
+		<filter name="CleanFailure" description="Unable to clean the files">
 			<cause
 				keyword="Failed to execute goal org.apache.maven.plugins:maven-clean-plugin" />
 			<cause
@@ -674,7 +674,7 @@
 			<cause
 				keyword="Internal Server Error (500) - Internal Server Error" />
 		</filter>
-		<filter name="AssemblerConnReset">
+		<filter name="AssemblerConnReset" description="Failed upload the package, may caused by cronus repo is not stable">
 			<cause
 				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
 			<cause

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,9 @@ import com.ebay.build.profiler.filter.model.Filter;
 import com.ebay.build.profiler.filter.model.Filters;
 
 public class FilterFactory {
-	public void marshal(File reportFile,  Filters filters){
+	public final static String FILTER_LIST_IN_GIT = "https://github.scm.corp.ebay.com/DevExTech/maven-time-tracking/raw/master/core/src/main/resources/default-filters.xml";
+	
+	private void marshal(File reportFile,  Filters filters){
 		try {
 			JAXBContext jc;
 		
@@ -31,7 +34,7 @@ public class FilterFactory {
 		}	
 	}
 	
-	public Filters unmarshal(File reportFile) {
+	private Filters unmarshal(File reportFile) {
 		JAXBContext jc;
 		try {
 			jc = JAXBContext.newInstance(Filters.class);
@@ -45,21 +48,21 @@ public class FilterFactory {
 		return new Filters();
 	}
 	
-	public Filters unmarshal(InputStream is) throws JAXBException {
+	private Filters unmarshal(InputStream is) throws JAXBException {
 		JAXBContext jc;
 		jc = JAXBContext.newInstance(Filters.class);
 		Unmarshaller u = jc.createUnmarshaller();
 		return (Filters) u.unmarshal(is);
 	}
 	
-	public Filters unmarshal(URL aURL) throws JAXBException {
+	private Filters unmarshal(URL aURL) throws JAXBException {
 		JAXBContext jc;
 		jc = JAXBContext.newInstance(Filters.class);
 		Unmarshaller u = jc.createUnmarshaller();
 		return (Filters) u.unmarshal(aURL);
 	}
 	
-	public List<Filter> build(URL url, URL defaultFilterList) {
+	private List<Filter> build(URL url, URL defaultFilterList) {
 		Filters filters = new Filters();
 
 		try {
@@ -82,5 +85,17 @@ public class FilterFactory {
 			}
 		}
 		return results;
+	}
+	
+	public List<Filter> getFilters() {
+		URL defaultFilterList = this.getClass().getResource("/default-filters.xml");
+		URL remoteFilterList = null;
+		try {
+			remoteFilterList = new URL(FILTER_LIST_IN_GIT);
+		} catch (MalformedURLException e) {
+			System.err.println("[WARNING] can not load the filter list from remote " + remoteFilterList);
+		}
+				
+		return build(remoteFilterList, defaultFilterList);
 	}
 }
