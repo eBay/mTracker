@@ -16,7 +16,6 @@ import com.ebay.build.profiler.filter.model.Category;
 import com.ebay.build.profiler.filter.model.Cause;
 import com.ebay.build.profiler.filter.model.Filter;
 import com.ebay.build.profiler.filter.model.Filters;
-import com.ebay.build.profiler.publisher.SessionTransformer;
 
 public class FilterFactoryTest {
 
@@ -92,7 +91,7 @@ public class FilterFactoryTest {
 	public void testRemoteFilter() {
 		URL remoteFilter = null;
 		try {
-			remoteFilter = new URL(SessionTransformer.FILTER_LIST_IN_GIT);
+			remoteFilter = new URL(FilterFactory.FILTER_LIST_IN_GIT);
 		} catch (MalformedURLException e) {
 			fail(e.getMessage());
 		}

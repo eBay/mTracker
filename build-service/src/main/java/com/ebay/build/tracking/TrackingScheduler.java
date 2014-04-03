@@ -19,16 +19,24 @@ public class TrackingScheduler {
 		Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
 
 		// define the job and tie it to our BatchUpdateReportJob class
-		JobDetail batchUpdateJob = newJob(BatchUpdateDurationJob.class)
+		JobDetail batchUpdateDurationJob = newJob(BatchUpdateDurationJob.class)
 				.withIdentity("batchUpdateDurationJob", "group1").build();
+		
+		JobDetail batchUpdateCategoryJob = newJob(BatchUpdateCategoryJob.class)
+				.withIdentity("batchUpdateCategoryJob", "group1").build();
 
     	// Trigger the job to run now, and then repeat every 24 hours
-        Trigger dcTrigger = newTrigger()
+        Trigger budTrigger = newTrigger()
                 .withIdentity("batchUpdateDurationTrig", "group1")
                 .withSchedule(cronSchedule(ServiceConfig.get("scheduler.batchUpdateDuration.time"))).build();
+        
+        Trigger bucTrigger = newTrigger()
+                .withIdentity("batchUpdateCategoryTrig", "group1")
+                .withSchedule(cronSchedule(ServiceConfig.get("scheduler.batchUpdateCategory.time"))).build();
 
 		// Tell quartz to schedule the job using our trigger
-		scheduler.scheduleJob(batchUpdateJob, dcTrigger);
+		scheduler.scheduleJob(batchUpdateDurationJob, budTrigger);
+		scheduler.scheduleJob(batchUpdateCategoryJob, bucTrigger);
 
 		// and start it off
 		scheduler.start();

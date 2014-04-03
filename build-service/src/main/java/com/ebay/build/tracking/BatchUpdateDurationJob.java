@@ -4,6 +4,7 @@ import com.ebay.build.profiler.model.Session;
 import com.ebay.build.tracking.jdbc.DurationObject;
 import com.ebay.build.tracking.jdbc.RawDataJDBCTemplate;
 import com.ebay.build.tracking.jdbc.SessionJDBCTemplate;
+
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.springframework.context.ApplicationContext;

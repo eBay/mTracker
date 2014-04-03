@@ -47,4 +47,35 @@ public class SessionJDBCTemplate {
 				});
 		return updateCounts;
 	}
+	
+	public List<Session> getExpSessionWithNullCategory() {
+		String SQL = "select * from RBT_SESSION " +
+				"where status = 1 and cause is not null " +
+				" and (category is null or filter is null) " +
+				" and start_time > sysdate - 10";
+		
+		return jdbcTemplateObject.query(SQL, new SessionMapper());
+	}
+	
+	public void updateCategory(Session session) {
+		String SQL = "update RBT_SESSION set category = ?,  filter = ? where id = ?";
+		jdbcTemplateObject.update(SQL, new Object[] {session.getCategory(), session.getFilter(), session.getId()});
+	}
+	
+	public int[] batchUpdateCategory(final List<Session> sessions) {
+		int[] updateCounts = jdbcTemplateObject.batchUpdate(
+				"update RBT_SESSION set category = ?,  filter = ? where id = ?",
+				new BatchPreparedStatementSetter() {
+					public void setValues(PreparedStatement ps, int i) throws SQLException {
+						ps.setString(1, sessions.get(i).getCategory());
+						ps.setString(2, sessions.get(i).getFilter());
+						ps.setInt(3, sessions.get(i).getId());
+					}
+
+					public int getBatchSize() {
+						return sessions.size();
+					}
+				});
+		return updateCounts;
+	}
 }

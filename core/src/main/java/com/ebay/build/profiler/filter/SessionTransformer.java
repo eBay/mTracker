@@ -1,10 +1,9 @@
-package com.ebay.build.profiler.publisher;
+package com.ebay.build.profiler.filter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import com.ebay.build.profiler.filter.FilterFactory;
 import com.ebay.build.profiler.filter.model.Cause;
 import com.ebay.build.profiler.filter.model.Filter;
 import com.ebay.build.profiler.model.Session;
