@@ -61,192 +61,189 @@
 	</category>
 	<category name="user">
 		<!-- Raptor-2.x filters-->
-		<filter name="ERROR_USE_NONRECOMMENDED_V3ARTIFACT">
+		<filter name="ERROR_USE_NONRECOMMENDED_V3ARTIFACT" description="Use non-recommended V3 artifact">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E4[^0-9].*" />
 		</filter>
-		<filter name="INVALID_URL">
+		<filter name="INVALID_URL" description="Invalid URL">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E18[^0-9].*" />
 		</filter>
-		<filter name="INVALID_CONFIGURATION_VARIABLE">
+		<filter name="INVALID_CONFIGURATION_VARIABLE" description="Invalid configuration variable">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E23[^0-9].*" />
 		</filter>
-		<filter name="INVALID_VERSION">
+		<filter name="INVALID_VERSION" description="Version not valid">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E24[^0-9].*" />
 		</filter>
-		<filter name="XML_READ_ERROR">
+		<filter name="XML_READ_ERROR" description="XML read error">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E25[^0-9].*" />
 		</filter>
-		<filter name="MISSING_XML_SCHEMA">
+		<filter name="MISSING_XML_SCHEMA" description="XML schema missing">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E26[^0-9].*" />
 		</filter>
-		<filter name="XML_VALIDATION_ERROR">
+		<filter name="XML_VALIDATION_ERROR" description="XML validation error">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E27[^0-9].*" />
 		</filter>
-		<filter name="FILE_DOES_NOT_EXIST">
+		<filter name="FILE_DOES_NOT_EXIST" description="File not exists">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E29[^0-9].*" />
 		</filter>		
-		<filter name="INVALID_TARGETOS">
+		<filter name="INVALID_TARGETOS" description="Invalid target OS">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E33[^0-9].*" />
 		</filter>
-		<filter name="INVALID_PACKAGE_NAME">
+		<filter name="INVALID_PACKAGE_NAME" description="Invalid CRONUS package name">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E36[^0-9].*" />
 		</filter>
-		<filter name="INVALID_PARAMETER">
+		<filter name="INVALID_PARAMETER" description="Invalid parameters">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E37[^0-9].*" />
 		</filter>
-		<filter name="INVALID_APPROVAL_ID">
+		<filter name="INVALID_APPROVAL_ID" description="Empty approval Id">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E38[^0-9].*" />
 		</filter>		
-		<filter name="INVALID_COS">
+		<filter name="INVALID_COS" description="Invalid COS">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E39[^0-9].*" />
 		</filter>
-		<filter name="INVALID_MANIFEST_NAME">
+		<filter name="INVALID_MANIFEST_NAME" description="Invalid manifest name">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E40[^0-9].*" />
 		</filter>
-		<filter name="INVALID_MANIFEST_VERSIONS">
+		<filter name="INVALID_MANIFEST_VERSIONS" description="Invalid manifest version">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E41[^0-9].*" />
 		</filter>	
-		<filter name="INVALID_MANIFEST_INPUTS">
+		<filter name="INVALID_MANIFEST_INPUTS" description="Invalid manifest inputs">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E42[^0-9].*" />
 		</filter>			
-		<filter name="INVALID_PACKAGE_REF_INPUTS">
+		<filter name="INVALID_PACKAGE_REF_INPUTS" description="Package external id is null">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E43[^0-9].*" />
 		</filter>
-		<filter name="PACKAGE_DOES_NOT_EXIST">
+		<filter name="PACKAGE_DOES_NOT_EXIST" description="Package not exists">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E44[^0-9].*" />
 		</filter>
-		<filter name="ERROR_VERIFYING_PACKAGE_REF">
+		<filter name="ERROR_VERIFYING_PACKAGE_REF" description="Error verifying package reference">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E45[^0-9].*" />
 		</filter>				
-		<filter name="PACKAGE_ALREADY_EXISTS">
+		<filter name="PACKAGE_ALREADY_EXISTS" description="Package already exists">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E46[^0-9].*" />
 		</filter>
-		<filter name="CANNOT_PARSE_CRONUS_INI_PARAM">
+		<filter name="CANNOT_PARSE_CRONUS_INI_PARAM" description="Cannot parse cronus.ini file parameter">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E60[^0-9].*" />
 		</filter>
-		<filter name="ERROR_DO_NOT_OVERRIDE_FILES">
+		<filter name="ERROR_DO_NOT_OVERRIDE_FILES" description="Having DO-NOT-OVERRIDE configuration files in application configuration">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E61[^0-9].*" />
 		</filter>
-		<filter name="MISSING_CRONUS_PROPERTIES_NAMES">
+		<filter name="MISSING_CRONUS_PROPERTIES_NAMES" description="Some cronus package properties are missing">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E62[^0-9].*" />
 		</filter>		
-		<filter name="ERROR_DEPENDENCY_CONFLICTION">
+		<filter name="ERROR_DEPENDENCY_CONFLICTION" description="There are dependency conflictions">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E63[^0-9].*" />
 		</filter>
-		<filter name="ERROR_DEPENDENCY_CYCLE">
+		<filter name="ERROR_DEPENDENCY_CYCLE" description="There are dependency cycles">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E64[^0-9].*" />
 		</filter>	
-		<filter name="RAPTOR_APP_DOES_NOT_EXIST">
+		<filter name="RAPTOR_APP_DOES_NOT_EXIST" description="Unable to find raptor_app.xml">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E66[^0-9].*" />
 		</filter>	
-		<filter name="APP_NAME_DOES_NOT_EXIST">
+		<filter name="APP_NAME_DOES_NOT_EXIST" description="Unable to parse the appName in the raptor_app.xml">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E67[^0-9].*" />
 		</filter>
-		<filter name="APP_NAME_NOT_REGISTERED">
+		<filter name="APP_NAME_NOT_REGISTERED" description="appName is not registered in the App Registration Service">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E108[^0-9].*" />
 		</filter>
 
 		<!-- Raptor-1.x filters-->
-		<filter name="ERROR_USE_NONRECOMMENDED_V3ARTIFACT">
+		<filter name="ERROR_USE_NONRECOMMENDED_V3ARTIFACT" description="Use non-recommended V3 artifact">
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E4[^0-9].*" />
 		</filter>
-		<filter name="ERROR_PROCESSING_CONFIGURATION">
-			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E13[^0-9].*" />
-		</filter>
-		<filter name="BAD_APPLICATION_MF">
+		<filter name="BAD_APPLICATION_MF" description="APPLICATION.MF is malformed">
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E15[^0-9].*" />
 		</filter>
-		<filter name="MISSING_APPLICATION_MF">
+		<filter name="MISSING_APPLICATION_MF" description="APPLICATION.MF is missing">
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E16[^0-9].*" />
 		</filter>
-		<filter name="BAD_MANIFEST">
+		<filter name="BAD_MANIFEST" description="MANIFEST.MF is malformed">
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E17[^0-9].*" />
 		</filter>
-		<filter name="INVALID_URL">
+		<filter name="INVALID_URL" description="Invalid URL">
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E18[^0-9].*" />
 		</filter>
-		<filter name="INVALID_URL_CONTENT">
+		<filter name="INVALID_URL_CONTENT" description="URL is not accessible">
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E21[^0-9].*" />
 		</filter>
-		<filter name="INVALID_CONFIGURATION_VARIABLE">
+		<filter name="INVALID_CONFIGURATION_VARIABLE" description="Invalid configuration variable">
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E23[^0-9].*" />
 		</filter>
-		<filter name="INVALID_VERSION">
+		<filter name="INVALID_VERSION" description="Version not valid">
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E24[^0-9].*" />
 		</filter>
-		<filter name="XML_READ_ERROR">
+		<filter name="XML_READ_ERROR" description="XML read error">
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E25[^0-9].*" />
 		</filter>
-		<filter name="MISSING_XML_SCHEMA">
+		<filter name="MISSING_XML_SCHEMA" description="XML schema missing">
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E26[^0-9].*" />
 		</filter>
-		<filter name="XML_VALIDATION_ERROR">
+		<filter name="XML_VALIDATION_ERROR" description="XML validation error">
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E27[^0-9].*" />
 		</filter>
-		<filter name="FILE_DOES_NOT_EXIST">
+		<filter name="FILE_DOES_NOT_EXIST" description="File not exists">
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E29[^0-9].*" />
 		</filter>
-		<filter name="INVALID_TARGETOS">
+		<filter name="INVALID_TARGETOS" description="Invalid target OS">
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E33[^0-9].*" />
 		</filter>
-		<filter name="MISSING_LOCALOBR">
+		<filter name="MISSING_LOCALOBR" description="Local OBR folder is missing">
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E35[^0-9].*" />
 		</filter>
-		<filter name="INVALID_PACKAGE_NAME">
+		<filter name="INVALID_PACKAGE_NAME" description="Invalid CRONUS package name">
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E36[^0-9].*" />
 		</filter>
-		<filter name="INVALID_PARAMETER">
+		<filter name="INVALID_PARAMETER" description="Invalid parameters">
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E37[^0-9].*" />
 		</filter>
-		<filter name="INVALID_APPROVAL_ID">
+		<filter name="INVALID_APPROVAL_ID" description="Empty approval Id">
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E38[^0-9].*" />
 		</filter>
-		<filter name="INVALID_COS">
+		<filter name="INVALID_COS" description="Invalid COS">
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E39[^0-9].*" />
 		</filter>
-		<filter name="INVALID_MANIFEST_NAME">
+		<filter name="INVALID_MANIFEST_NAME" description="Invalid manifest name">
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E40[^0-9].*" />
 		</filter>
-		<filter name="INVALID_MANIFEST_VERSIONS">
+		<filter name="INVALID_MANIFEST_VERSIONS" description="Invalid manifest version">
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E41[^0-9].*" />
 		</filter>
-		<filter name="INVALID_MANIFEST_INPUTS">
+		<filter name="INVALID_MANIFEST_INPUTS" description="Invalid manifest inputs">
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E42[^0-9].*" />
 		</filter>
-		<filter name="INVALID_PACKAGE_REF_INPUTS">
+		<filter name="INVALID_PACKAGE_REF_INPUTS" description="Package external id is null">
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E43[^0-9].*" />
 		</filter>
-		<filter name="PACKAGE_DOES_NOT_EXIST">
+		<filter name="PACKAGE_DOES_NOT_EXIST" description="Package not exists">
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E44[^0-9].*" />
 		</filter>
-		<filter name="ERROR_VERIFYING_PACKAGE_REF">
+		<filter name="ERROR_VERIFYING_PACKAGE_REF" description="Error verifying package reference">
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E45[^0-9].*" />
 		</filter>
-		<filter name="PACKAGE_ALREADY_EXISTS">
+		<filter name="PACKAGE_ALREADY_EXISTS" description="Package already exists">
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E46[^0-9].*" />
 		</filter>
-		<filter name="CANNOT_IDENTIFY_WEB_BUNDLE">
+		<filter name="CANNOT_IDENTIFY_WEB_BUNDLE" description="Unable to identify the web bundle">
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E53[^0-9].*" />
 		</filter>
-		<filter name="CANNOT_RESOLVE_WEB_BUNDLE">
+		<filter name="CANNOT_RESOLVE_WEB_BUNDLE" description="Could not uniquely resolve artifact in localobr">
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E54[^0-9].*" />
 		</filter>
-		<filter name="CANNOT_FIND_WEBCONTEXT">
+		<filter name="CANNOT_FIND_WEBCONTEXT" description="Unable to find the web context">
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E55[^0-9].*" />
 		</filter>
-		<filter name="MISSING_MANIFEST_MF">
+		<filter name="MISSING_MANIFEST_MF" description="MANIFEST.MF or DEPLOYMENT.MF is missing">
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E56[^0-9].*" />
 		</filter>
-		<filter name="ERROR_INITIALIZING_CONFIG">
+		<filter name="ERROR_INITIALIZING_CONFIG" description="Failed to Resolve Web Bundle using the artifact information">
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E57[^0-9].*" />
 		</filter>
-		<filter name="CANNOT_PARSE_CRONUS_INI_PARAM">
+		<filter name="CANNOT_PARSE_CRONUS_INI_PARAM" description="Cannot parse cronus.ini file parameter">
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E60[^0-9].*" />
 		</filter>
-		<filter name="ERROR_DO_NOT_OVERRIDE_FILES">
+		<filter name="ERROR_DO_NOT_OVERRIDE_FILES" description="Having DO-NOT-OVERRIDE configuration files in application configuration">
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E61[^0-9].*" />
 		</filter>
-		<filter name="APP_NAME_NOT_REGISTERED">
+		<filter name="APP_NAME_NOT_REGISTERED" description="appName is not registered in the App Registration Service">
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E108[^0-9].*" />
 		</filter>
 
@@ -480,59 +477,59 @@
 	
 	<category name="system">
 		<!-- Raptor-2.x filters-->
-		<filter name="ERROR_CREATE_FILE_OR_DIRECTORY">
+		<filter name="ERROR_CREATE_FILE_OR_DIRECTORY" description="Failed to create a file or directory">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E10[^0-9].*" />
 		</filter>
-		<filter name="ERROR_PROCESSING_ARCHIVE">
+		<filter name="ERROR_PROCESSING_ARCHIVE" description="Failed to process archive">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E11[^0-9].*" />
 		</filter>
-		<filter name="ERROR_DELETE_FILE_OR_DIRECTORY">
+		<filter name="ERROR_DELETE_FILE_OR_DIRECTORY" description="Failed to delete the file or directory">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E12[^0-9].*" />
 		</filter>
-		<filter name="ERROR_FILE_DOWNLOAD">
+		<filter name="ERROR_FILE_DOWNLOAD" description="Failed to download file">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E14[^0-9].*" />
 		</filter>
-		<filter name="INVALID_URL_CONTENT">
+		<filter name="INVALID_URL_CONTENT" description="URL is not accessible">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E21[^0-9].*" />
 		</filter>
-		<filter name="INVALID_FILENAME">
+		<filter name="INVALID_FILENAME" description="Invalid directory or file name">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E28[^0-9].*" />
 		</filter>
-		<filter name="ERROR_FILE_IO">
+		<filter name="ERROR_FILE_IO" description="File IO error">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E30[^0-9].*" />
 		</filter>		
-		<filter name="INTERNAL_ERROR">
+		<filter name="INTERNAL_ERROR" description="Internal Error">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E31[^0-9].*" />
 		</filter>			
 
 		
 		
 		<!-- Raptor-1.x filters-->
-		<filter name="ERROR_READ_FILE_OR_DIRECTORY">
+		<filter name="ERROR_READ_FILE_OR_DIRECTORY" description="File or Directory is missing">
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E9[^0-9].*" />
 		</filter>
-		<filter name="ERROR_CREATE_FILE_OR_DIRECTORY">
+		<filter name="ERROR_CREATE_FILE_OR_DIRECTORY" description="Failed to create a file or directory">
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E10[^0-9].*" />
 		</filter>
-		<filter name="ERROR_PROCESSING_ARCHIVE">
+		<filter name="ERROR_PROCESSING_ARCHIVE" description="Failed to process archive">
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E11[^0-9].*" />
 		</filter>
-		<filter name="ERROR_DELETE_FILE_OR_DIRECTORY">
+		<filter name="ERROR_DELETE_FILE_OR_DIRECTORY" description="Failed to delete the file or directory">
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E12[^0-9].*" />
 		</filter>
-		<filter name="ERROR_FILE_DOWNLOAD">
+		<filter name="ERROR_FILE_DOWNLOAD" description="Failed to download file">
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E14[^0-9].*" />
 		</filter>
-		<filter name="HOSTNAME_ERROR">
+		<filter name="HOSTNAME_ERROR" description="Failed to resolve the host name">
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E20[^0-9].*" />
 		</filter>
-		<filter name="INVALID_FILENAME">
+		<filter name="INVALID_FILENAME" description="Invalid directory or file name">
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E28[^0-9].*" />
 		</filter>
-		<filter name="ERROR_FILE_IO">
+		<filter name="ERROR_FILE_IO" description="File IO error">
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E30[^0-9].*" />
 		</filter>
-		<filter name="INTERNAL_ERROR">
+		<filter name="INTERNAL_ERROR" description="Internal Error">
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E31[^0-9].*" />
 		</filter>
 
@@ -614,57 +611,60 @@
 	
 	<category name="external">
 		<!-- Raptor-2.x filters-->
-		<filter name="CERTIFICATE_ERROR">
+		<filter name="CERTIFICATE_ERROR" description="HTTPs certificate is not valid">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E34[^0-9].*" />
 		</filter>
-		<filter name="APP_REGSERVICE_ERROR_CONSUMER_ID">
+		<filter name="APP_REGSERVICE_ERROR_CONSUMER_ID" description="Failed to retrieve consumer Id by appName through App Registration Service">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E100[^0-9].*" />
 		</filter>
-		<filter name="MANIFEST_REGISTRATION_ERROR">
+		<filter name="MANIFEST_REGISTRATION_ERROR" description="Failed to register manifest">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E101[^0-9].*" />
 		</filter>		
-		<filter name="UPLOAD_ERROR">
+		<filter name="UPLOAD_ERROR" description="Failed to upload Cronus Package">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E102[^0-9].*" />
 		</filter>
-		<filter name="ERROR_READING_COS_INFO">
+		<filter name="ERROR_READING_COS_INFO" description="Unable to retrieve Class of Service">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E103[^0-9].*" />
 		</filter>
-		<filter name="ERROR_REGISTERING_MANIFEST">
+		<filter name="ERROR_REGISTERING_MANIFEST" description="Unable to register manifest">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E104[^0-9].*" />
 		</filter>
-		<filter name="ERROR_REGISTERING_PACKAGE_REF">
+		<filter name="ERROR_REGISTERING_PACKAGE_REF" description="Failed to register package reference">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E105[^0-9].*" />
 		</filter>	
-		<filter name="STATEHUB_SERVICE_ERROR">
+		<filter name="STATEHUB_SERVICE_ERROR" description="CMPaaS Service error">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E106[^0-9].*" />
 		</filter>
-		<filter name="PAYPAL_SERVICE_ERROR">
+		<filter name="PAYPAL_SERVICE_ERROR" description="Fail to call paypal dependency services">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E121[^0-9].*" />
 		</filter>
 
 		<!-- Raptor-1.x filters-->
-		<filter name="CERTIFICATE_ERROR">
+		<filter name="CERTIFICATE_ERROR" description="HTTPs certificate is not valid">
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E34[^0-9].*" />
 		</filter>
-		<filter name="APP_REGSERVICE_ERROR_CONSUMER_ID">
+		<filter name="APP_REGSERVICE_ERROR_CONSUMER_ID" description="Failed to retrieve consumer Id by appName through App Registration Service">
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E100[^0-9].*" />
 		</filter>
-		<filter name="MANIFEST_REGISTRATION_ERROR">
+		<filter name="MANIFEST_REGISTRATION_ERROR" description="Failed to register manifest">
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E101[^0-9].*" />
 		</filter>
-		<filter name="UPLOAD_ERROR">
+		<filter name="UPLOAD_ERROR" description="Failed to upload Cronus Package">
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E102[^0-9].*" />
 		</filter>
-		<filter name="ERROR_REGISTERING_MANIFEST">
+		<filter name="ERROR_READING_COS_INFO" description="Unable to retrieve Class of Service">
+			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E103[^0-9].*" />
+		</filter>
+		<filter name="ERROR_REGISTERING_MANIFEST" description="Unable to register manifest">
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E104[^0-9].*" />
 		</filter>
-		<filter name="ERROR_REGISTERING_PACKAGE_REF">
+		<filter name="ERROR_REGISTERING_PACKAGE_REF" description="Failed to register package reference">
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E105[^0-9].*" />
 		</filter>
-		<filter name="STATEHUB_SERVICE_ERROR">
+		<filter name="STATEHUB_SERVICE_ERROR" description="CMPaaS Service error">
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E106[^0-9].*" />
 		</filter>
-		<filter name="UNKNOWN">
+		<filter name="UNKNOWN" description="Failed to retrieve consumer Id by appName through App Registration Service">
 			<cause pattern=".*Assembler\+Errors#AssemblerErrors-E255[^0-9].*" />
 		</filter>
 
