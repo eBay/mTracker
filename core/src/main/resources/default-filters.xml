@@ -403,7 +403,7 @@
 		</filter>
 		
 		<filter name="SOAPluginErrServiceGeneration">
-			<cause keyword="Failed to execute goal com.ebay.ebox.plugins:maven-soa-plugin"/>
+			<cause keyword="Failed to execute goal com.ebay.raptor.build:maven-soa-plugin"/>
 			<cause keyword="Exception executing service generator facade, please make sure SOATools has been added to the project dependency list"/>
 		</filter>
 		
@@ -411,6 +411,9 @@
 			<cause keyword="Failed to execute goal com.ebay.raptor.build:maven-soa-plugin"/>
 			<cause keyword="com.ebay.soaframework.tools.codegen.exception.MissingInputOptionException: Input type is missing"/>
 		</filter>		
+		<filter name="CoreDomainNotAllowedInRaptorProject">
+			<cause keyword="com.ebay.v3project.v3core:CoreDomain is not allowed in a Raptor project"/>
+	    </filter>	
 		<filter name="ShadeFail">
 			<cause keyword="Failed to execute goal org.apache.maven.plugins:maven-shade-plugin"/>
 		</filter>	
