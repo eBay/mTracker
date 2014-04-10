@@ -10,40 +10,18 @@
 		<filter name="TestRunFailure" description="There are test failures">
 			<cause
 				keyword="Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin" />
-			<cause keyword="There are test failures" />
 		</filter>
+
 		<filter name="CompilationFailure" description="Failed to compile the project">
 			<cause
 				keyword="Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin" />
 		</filter>
-		<filter name="NoTestSuiteFile">
-			<cause
-				keyword="Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin" />
-			<cause keyword="TestSetFailedException: Suite file" />
-		</filter>
-		<filter name="NoTestRunFailure">
-			<cause
-				keyword="Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin" />
-			<cause keyword="No tests were executed" />
-		</filter>
-		<filter name="TestExitInIllegalState">
-			<cause keyword="org.apache.maven.plugins:maven-surefire-plugin"/>
-			<cause keyword="java.lang.IllegalStateException: Shutdown in progress"/>
-		</filter>		
 		
 		<filter name="LSPCodeGenFail">
 			<cause keyword="com.ebay.lsp.build:code-gen-plugin"/>
 		</filter>
-		<filter name="TestClassMissing">
-			<cause keyword="org.apache.maven.plugins:maven-surefire-plugin"/>
-			<cause keyword="A required class was missing while executing"/>
-		</filter>
 		<filter name="ContentPluginFail">
 			<cause keyword="com.ebay.content:maven-content-plugin"/>
-		</filter>
-		<filter name="ErrorForkTest">
-			<cause keyword="org.apache.maven.plugins:maven-surefire-plugin"/>
-			<cause keyword="Error while executing forked tests"/>
 		</filter>
 		<filter name="EnunciateFail">
 			<cause keyword="org.codehaus.enunciate:maven-enunciate-plugin"/>
@@ -337,6 +315,18 @@
 			<cause
 				keyword="Could not resolve dependencies for project" />
 		</filter>
+		<filter name="DependencyArtifactNotFound" description="Could not find an artifact for project">
+		<cause
+				keyword="Failed to execute goal org.apache.maven.plugins:maven-dependency-plugin" />
+			<cause
+				keyword="Unable to find artifact" />
+		</filter>	
+		<filter name="SCMTagNotFound" description="Could not find tag for project">
+		<cause
+				keyword="Failed to execute goal org.apache.maven.plugins:maven-scm-plugin" />
+			<cause
+				keyword="Cannot run tag command" />
+		</filter>		
 		<filter name="PluginDependencyResolveFailure" description="One of its dependencies could not be resolved for plugin.">
 			<cause
 				keyword="org.apache.maven.plugin.PluginResolutionException" />
@@ -386,12 +376,6 @@
 
 		<filter name="PluginCheckstyleFail">
 			<cause keyword="Failed to execute goal org.apache.maven.plugins:maven-checkstyle-plugin" />
-		</filter>
-
-		<filter name="SurefireForkFail">
-			<cause
-				keyword="Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin" />
-			<cause keyword="Error occurred in starting fork" />
 		</filter>
 		<filter name="ResourceNotFound">
 			<cause keyword="org.codehaus.plexus.resource.loader.ResourceNotFoundException: Could not find resource"/>
