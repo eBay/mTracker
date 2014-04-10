@@ -325,6 +325,12 @@
 		<cause
 				keyword="Failed to execute goal org.apache.maven.plugins:maven-scm-plugin" />
 			<cause
+				keyword="tag are missing or invalid" />
+		</filter>
+		<filter name="CANNOT_RUN_TAG_CMD" description="Could not find tag for project">
+		<cause
+				keyword="Failed to execute goal org.apache.maven.plugins:maven-scm-plugin" />
+			<cause
 				keyword="Cannot run tag command" />
 		</filter>		
 		<filter name="PluginDependencyResolveFailure" description="One of its dependencies could not be resolved for plugin.">
