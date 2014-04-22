@@ -3,6 +3,7 @@
  */
 package com.ebay.build.udc.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -51,4 +52,16 @@ public class UsageDataDaoJDBCImpl implements IUsageDataDao {
 	public List<UsageDataInfo> queryUsageData(UsageDataInfo data) throws DaoException {
 		return udcJdbc.query(data);
 	}
+
+	@Override
+	public List<UsageDataInfo> queryUncategoriedErrorRecords(Date startDate, Date endDate) throws DaoException {
+		return udcJdbc.queryUncategoriedErrorRecords(startDate, endDate);
+	}
+
+	@Override
+	public void updateUsageDataErrorInfo(List<UsageDataInfo> infos)
+			throws DaoException {
+		udcJdbc.updateErrorInfo(infos);
+	}
+	
 }

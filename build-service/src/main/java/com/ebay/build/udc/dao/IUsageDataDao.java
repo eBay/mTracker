@@ -4,6 +4,7 @@
 
 package com.ebay.build.udc.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import com.ebay.build.udc.UsageDataInfo;
@@ -27,6 +28,12 @@ public interface IUsageDataDao
     
     public List<UsageDataInfo> queryUsageData(UsageDataInfo data)
              throws DaoException;
+    
+    public List<UsageDataInfo> queryUncategoriedErrorRecords(Date startDate, Date endDate)
+    		 throws DaoException;
+    public void updateUsageDataErrorInfo(List<UsageDataInfo> infos)
+    		 throws DaoException;
+    
     
     public class DaoException extends Exception {
     	

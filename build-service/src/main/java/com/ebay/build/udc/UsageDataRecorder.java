@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.xml.bind.JAXBException;
+
 import org.apache.commons.lang.StringUtils;
 
 import au.com.bytecode.opencsv.CSVReader;
@@ -15,6 +17,8 @@ import au.com.bytecode.opencsv.bean.CsvToBean;
 
 import com.ebay.build.udc.dao.IUsageDataDao;
 import com.ebay.build.udc.dao.IUsageDataDao.DaoException;
+import com.ebay.ide.profile.filter.RideFilterFactory;
+import com.ebay.ide.profile.filter.model.RideFilter;
 
 
 /**
@@ -28,7 +32,7 @@ public class UsageDataRecorder extends Thread
 			"bundleId", "bundleVersion", "when", "duration", "size",
 			"quantity", "exception", "properties", "sessionProperties" };
     
-  
+	private List<RideFilter> lsFilter = null;
 
     private List<File>            m_files = new ArrayList<File>();
     private List<UsageDataInfo>   m_data  = new ArrayList<UsageDataInfo>();
@@ -45,11 +49,19 @@ public class UsageDataRecorder extends Thread
         }
 
         this.dao = dao;
+        RideFilterFactory factory = new RideFilterFactory();
+    	try {
+			lsFilter = factory.getRideFilters();
+		} catch (JAXBException e1) {
+			System.err.println("Filter initialized fail");
+			e1.printStackTrace();
+		}
     }
 
     @Override
     public void run()
     {
+    	
         try
         {
             for (File file : this.m_files)
@@ -158,6 +170,25 @@ public class UsageDataRecorder extends Thread
                 info.setProperties(record.getProperties());
                 info.setSessionProperties(record.getSessionProperties());
               
+                RideFilter findFilter = null;
+                if(lsFilter != null){
+                	for(RideFilter filter: lsFilter){
+                		if(filter.isMatch(info.getWhat(), info.getException()))
+                		{
+                			findFilter =  filter;
+                			break;
+                		}
+                	}
+                }
+                if(findFilter!=null){
+                	info.setCategory(findFilter.getCategory());
+                	info.setErrorCode(findFilter.getName());
+                }else
+                {
+                	info.setCategory(null);
+                	info.setErrorCode(null);
+                }
+                
                 this.m_data.add(info);
             }
             catch (NumberFormatException e)
