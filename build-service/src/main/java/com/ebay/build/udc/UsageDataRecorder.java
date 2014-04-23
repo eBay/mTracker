@@ -171,16 +171,23 @@ public class UsageDataRecorder extends Thread
                 info.setSessionProperties(record.getSessionProperties());
               
                 RideFilter findFilter = null;
-                if(lsFilter != null){
-                	for(RideFilter filter: lsFilter){
-                		if(filter.isMatch(info.getWhat(), info.getException()))
-                		{
-                			findFilter =  filter;
-                			break;
-                		}
-                	}
-                }
-                if(findFilter!=null){
+				//ensure that the failure of filter process will not affect the insert.
+                try {
+					if (lsFilter != null) {
+						for (RideFilter filter : lsFilter) {
+							if (filter.isMatch(info.getWhat(),
+									info.getException())) {
+								findFilter = filter;
+								break;
+							}
+						}
+					}
+				} catch (Exception e) {
+					System.err.println("Error In Filter Process");
+					e.printStackTrace();
+				}
+                
+				if(findFilter!=null){
                 	info.setCategory(findFilter.getCategory());
                 	info.setErrorCode(findFilter.getName());
                 }else
