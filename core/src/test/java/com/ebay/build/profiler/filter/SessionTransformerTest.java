@@ -1,9 +1,10 @@
-package com.ebay.build.profiler.publisher;
+package com.ebay.build.profiler.filter;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import com.ebay.build.profiler.filter.SessionTransformer;
 import com.ebay.build.profiler.model.Session;
 
 public class SessionTransformerTest {

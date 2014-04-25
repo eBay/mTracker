@@ -81,7 +81,7 @@ public class DevxReportJob implements Job {
 				} 
 			}
 		}
-		return 0;
+		return -1;
 	}
 	
 	private void velocityParse(String templateFile, ValueRetriever retriever, File directory) {
@@ -142,10 +142,11 @@ public class DevxReportJob implements Job {
 				double total = 0;
 				for (Field field : collection.getFields()) {
 					if (dbo != null) {
+						double valueFromDB = this.getValueFromDataObj(dbo, field.getName());
 						if (collection.getName().contains("SRP")) {
-							total += this.getValueFromDataObj(dbo, field.getName());
+							total += valueFromDB;
 						}
-						field.setValue(Math.round(this.getValueFromDataObj(dbo, field.getName())*100.0)/100.0);
+						field.setValue(Math.round(valueFromDB*100.0)/100.0);
 					} else {
 						if (collection.getName().contains("SRP")) {
 							total = -1;

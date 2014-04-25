@@ -13,7 +13,7 @@ public class ValueRetriever {
 			if (collectionName.equals(collection.getName())) {
 				for (Field field : collection.getFields()) {
 					if (fieldName.equals(field.getName())) {
-						if (field.getValue() == -1) {
+						if (field.getValue() < 0) {
 							return "N/A";
 						} else {
 							if (field.getName().contains("Reliability")) {

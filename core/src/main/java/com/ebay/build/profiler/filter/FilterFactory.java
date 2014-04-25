@@ -21,7 +21,7 @@ import com.ebay.build.profiler.filter.model.Filters;
 public class FilterFactory {
 	public final static String FILTER_LIST_IN_GIT = "https://github.scm.corp.ebay.com/DevExTech/maven-time-tracking/raw/master/core/src/main/resources/default-filters.xml";
 	
-	private void marshal(File reportFile,  Filters filters){
+	protected void marshal(File reportFile,  Filters filters){
 		try {
 			JAXBContext jc;
 		
@@ -34,7 +34,7 @@ public class FilterFactory {
 		}	
 	}
 	
-	private Filters unmarshal(File reportFile) {
+	protected Filters unmarshal(File reportFile) {
 		JAXBContext jc;
 		try {
 			jc = JAXBContext.newInstance(Filters.class);
@@ -48,21 +48,21 @@ public class FilterFactory {
 		return new Filters();
 	}
 	
-	private Filters unmarshal(InputStream is) throws JAXBException {
+	protected Filters unmarshal(InputStream is) throws JAXBException {
 		JAXBContext jc;
 		jc = JAXBContext.newInstance(Filters.class);
 		Unmarshaller u = jc.createUnmarshaller();
 		return (Filters) u.unmarshal(is);
 	}
 	
-	private Filters unmarshal(URL aURL) throws JAXBException {
+	protected Filters unmarshal(URL aURL) throws JAXBException {
 		JAXBContext jc;
 		jc = JAXBContext.newInstance(Filters.class);
 		Unmarshaller u = jc.createUnmarshaller();
 		return (Filters) u.unmarshal(aURL);
 	}
 	
-	private List<Filter> build(URL url, URL defaultFilterList) {
+	protected List<Filter> build(URL url, URL defaultFilterList) {
 		Filters filters = new Filters();
 
 		try {

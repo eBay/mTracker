@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.ebay.build.profiler.filter.SessionTransformer;
 import com.ebay.build.profiler.model.Session;
 import com.ebay.build.profiler.utils.FileUtils;
 

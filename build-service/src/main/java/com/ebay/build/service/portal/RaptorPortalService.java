@@ -23,6 +23,9 @@ public class RaptorPortalService {
 			@QueryParam("raptorVersion") @DefaultValue("2.0.0") String raptor,
 			@QueryParam("rideVersion") String ride,
 			@QueryParam("jvmVersion") String jvm) {
+		if (ride == null || ride.startsWith("5.0")) {
+			return "http://invalid";
+		}
 		return "http://go/ride/welcome";
 	}
 }
