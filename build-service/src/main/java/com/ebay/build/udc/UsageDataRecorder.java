@@ -169,11 +169,11 @@ public class UsageDataRecorder extends Thread
                 info.setException(record.getException());
                 info.setProperties(record.getProperties());
                 info.setSessionProperties(record.getSessionProperties());
-              
+                
                 RideFilter findFilter = null;
 				//ensure that the failure of filter process will not affect the insert.
                 try {
-					if (lsFilter != null) {
+					if (!StringUtils.isEmpty(info.getException()) && lsFilter != null) {
 						for (RideFilter filter : lsFilter) {
 							if (filter.isMatch(info.getWhat(),
 									info.getException())) {
