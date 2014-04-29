@@ -5,6 +5,15 @@ public class AssemblyBreakdown {
 	private int packageDuration;
 	private int uploadDuration;
 	private int serviceDuration;
+	private String stack;
+	
+	public String getStack() {
+		return this.stack;
+	}
+	
+	public void setStack(String s) {
+		this.stack = s;
+	}
 	
 	public String getJenkinsUrl() {
 		return jenkinsUrl;
