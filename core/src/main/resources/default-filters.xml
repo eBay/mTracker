@@ -99,6 +99,9 @@
 		<filter name="PACKAGE_ALREADY_EXISTS" description="Package already exists">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E46[^0-9].*" />
 		</filter>
+		<filter name="PACKAGE_ALREADY_EXISTS" description="Package already exists">
+			<cause keyword="Package already exists in cronus repo" />
+		</filter>
 		<filter name="CANNOT_PARSE_CRONUS_INI_PARAM" description="Cannot parse cronus.ini file parameter">
 			<cause pattern=".*AssemblerErrorsforRaptor-2\.x-E60[^0-9].*" />
 		</filter>
