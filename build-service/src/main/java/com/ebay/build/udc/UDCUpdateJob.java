@@ -1,7 +1,6 @@
 package com.ebay.build.udc;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -10,7 +9,7 @@ import javax.xml.bind.JAXBException;
 import com.ebay.build.udc.dao.IUsageDataDao;
 import com.ebay.build.udc.dao.IUsageDataDao.DaoException;
 import com.ebay.build.udc.dao.UsageDataDaoJDBCImpl;
-import com.ebay.build.utils.DateUtil;
+import com.ebay.build.profiler.utils.DateUtils;
 import com.ebay.ide.profile.filter.RideFilterFactory;
 import com.ebay.ide.profile.filter.model.RideFilter;
 
@@ -26,13 +25,13 @@ public class UDCUpdateJob {
 	}
 	
 	public void run(){
-		Date currDate = DateUtil.getCurrDate();
+		Date currDate = DateUtils.getCurrDate();
 		Date startDate = fromDate;
 		try {
 			//update day by day
 			while(startDate.before(currDate)){
 				long time = System.currentTimeMillis();
-				Date tempDate = DateUtil.addDays(startDate, 1);
+				Date tempDate = DateUtils.addDays(startDate, 1);
 				int result = dao.queryAndUpdateUncategoriedErrorRecords(startDate, tempDate, lsFilter);
 				String startStr = new SimpleDateFormat("dd-MM-yy").format(startDate);
 				System.out.println(startStr + ": Update "+result+" records. Excute time is: " + (System.currentTimeMillis() - time));
@@ -45,7 +44,7 @@ public class UDCUpdateJob {
 	
 	public static void main(String[] args){
 		
-		Date date = DateUtil.addDays(DateUtil.getCurrDate(), -30);
+		Date date = DateUtils.addDays(DateUtils.getCurrDate(), -30);
 		try {
 			UDCUpdateJob job = new UDCUpdateJob(date);
 			job.run();
