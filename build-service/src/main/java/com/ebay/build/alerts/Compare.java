@@ -13,7 +13,7 @@ import java.util.Set;
 import com.ebay.build.alerts.connector.Connector;
 import com.ebay.build.alerts.connector.XMLConnector;
 import com.ebay.build.profiler.utils.DateUtils;
-import com.ebay.build.utils.StringUtils;
+import com.ebay.build.profiler.utils.StringUtils;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
