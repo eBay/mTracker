@@ -61,15 +61,18 @@ public class UsageDataRecorder extends Thread
     @Override
     public void run()
     {
-    	
+    	long startTime = System.currentTimeMillis();
         try
         {
             for (File file : this.m_files)
             {
                 process(file);
             }
+            
+            System.out.println("UsageDataRecorder parse .csv time is " + (System.currentTimeMillis()-startTime));
+            long time = System.currentTimeMillis();
             insertUsageData();
-
+            System.out.println("UsageDataRecorder: insert "+m_data.size()+" records. And use " + (System.currentTimeMillis()-time) + " milliseconds");
             cleanFiles();
 
             System.out.println("Processed " + this.m_files.size() + " log files!");
@@ -78,6 +81,8 @@ public class UsageDataRecorder extends Thread
         {
             e.printStackTrace();
         }
+        long duration = System.currentTimeMillis() - startTime;
+        System.out.println("UsageDataRecorder execute time is " + duration);
     }
 
     private void cleanFiles()
@@ -99,7 +104,8 @@ public class UsageDataRecorder extends Thread
         }
 
     
-        dao.insertUsageData(this.m_data);
+        int[] aa = dao.insertUsageData(this.m_data);
+        System.out.println("Batch update return array's length: "+aa.length);
     }
 
     private void process(File report)
@@ -153,6 +159,7 @@ public class UsageDataRecorder extends Thread
                 info.setHost(hostName);
                 info.setUser(userName);
                 info.setIdeType(record.getIdeType());
+                
                 if(!StringUtils.isEmpty(record.getSessionId())){
                 	info.setSessionId(record.getSessionId());
                 }

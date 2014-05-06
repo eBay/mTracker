@@ -1,10 +1,6 @@
 package com.ebay.build.udc.dao;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.sql.Clob;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.MessageFormat;
@@ -19,22 +15,28 @@ import javax.sql.DataSource;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
-import org.springframework.jdbc.core.RowMapper;
 
+import com.ebay.build.udc.ErrorRowCallBackHandler;
 import com.ebay.build.udc.UsageDataInfo;
 import com.ebay.build.utils.ServiceConfig;
+import com.ebay.ide.profile.filter.model.RideFilter;
 
 public class UDCJDBCTemplate {
 
     private DataSource dataSource;
     private JdbcTemplate jdbcTemplateObject;
+    private JdbcTemplate updateJdbcTemplateObject;
+    
     private String udcTable;
     
+    private static final int batchSize = 1000;
+    
     private static final String STMT_INSERT = "insert into {0} "
-            + "(IDEType, IDEVersion, SessionId, Host, UserName, Kind, What, Description, BundleId, BundleVersion, AccessTime, Duration, Size_, Quantity, Exception_, Properties, category, errorcode) values "
+            + "(IDEType, IDEVersion, SessionId, Host, UserName, Kind, What, Description, BundleId, BundleVersion, AccessTime, Duration, Size_, Quantity, Exception, Properties, category, errorcode) values "
             + "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String STMT_INSERT_SESSION = "insert into "
             + ServiceConfig.get("udc.table.session.name")
@@ -45,6 +47,7 @@ public class UDCJDBCTemplate {
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
         this.jdbcTemplateObject = new JdbcTemplate(dataSource);
+        this.updateJdbcTemplateObject = new JdbcTemplate(dataSource);
     }
 
     public DataSource getDataSource() {
@@ -88,8 +91,6 @@ public class UDCJDBCTemplate {
 
     }
 
-
-
 	private String getQuerySessionSql(Set<String> keySet) {
 		StringBuffer sql= new StringBuffer(STMT_QUERY_SESSION +" where ");
 		for (String id : keySet) {
@@ -123,48 +124,62 @@ public class UDCJDBCTemplate {
 
         }
         
-
+        System.out.println("UDCJDBCTemplate: size of UsageDataInfo " + infos.size());
 		String sql = MessageFormat.format(STMT_INSERT, udcTable);
-        return jdbcTemplateObject.batchUpdate(sql,
-                new BatchPreparedStatementSetter() {
-            @Override
-            public void setValues(PreparedStatement ps, int i)
-                    throws SQLException {
-                UsageDataInfo info = infos.get(i);
 
-                ps.setString(1, info.getIdeType());
-                ps.setString(2, info.getIdeVersion());
-                ps.setString(3, info.getSessionId());
+		int results[] = new int[infos.size()];
+		
+		int batchCount = infos.size()%batchSize==0?infos.size()/batchSize: infos.size()/batchSize + 1;
+		int countIndex;
+		
+		for(countIndex=1;countIndex<=batchCount;countIndex++){
+			int fromIndex = (countIndex-1)*batchSize;
+			int toIndexTemp = countIndex*batchSize;
+			int toIndex = toIndexTemp < infos.size()?toIndexTemp:infos.size();			
+			final List<UsageDataInfo> tempInfos = infos.subList(fromIndex, toIndex);
+			int[] result = jdbcTemplateObject.batchUpdate(sql,
+					new BatchPreparedStatementSetter() {
+				@Override
+				public void setValues(PreparedStatement ps, int i)
+						throws SQLException {
+					UsageDataInfo info = tempInfos.get(i);
 
-                ps.setString(4, info.getHost());
-                ps.setString(5, info.getUser());
-                ps.setString(6, info.getKind());
-                ps.setString(7, info.getWhat());
-                ps.setString(8, info.getDescription());
-                ps.setString(9, info.getBundleId());
-                ps.setString(10, info.getBundleVersion());
-                ps.setTimestamp(11, new Timestamp(info.getWhen()));
-                ps.setInt(12, info.getDuration());
-                ps.setInt(13, info.getSize());
-                ps.setInt(14, info.getQuantity());
-                ps.setString(15, info.getException());
-                ps.setString(16, info.getProperties());
-                if(info.getCategory() == null)
-                	ps.setNull(17, java.sql.Types.VARCHAR);
-                else
-                	ps.setString(17, info.getCategory());
-                if(info.getErrorCode() == null)
-                	ps.setNull(18, java.sql.Types.VARCHAR);
-                else
-                    ps.setString(18, info.getErrorCode());
-            }
+					ps.setString(1, info.getIdeType());
+					ps.setString(2, info.getIdeVersion());
+					ps.setString(3, info.getSessionId());
+					ps.setString(4, info.getHost());
+					ps.setString(5, info.getUser());
+					ps.setString(6, info.getKind());
+					ps.setString(7, info.getWhat());
+					ps.setString(8, info.getDescription());
+					ps.setString(9, info.getBundleId());
+					ps.setString(10, info.getBundleVersion());
+					ps.setTimestamp(11, new Timestamp(info.getWhen()));
+					ps.setInt(12, info.getDuration());
+					ps.setInt(13, info.getSize());
+					ps.setInt(14, info.getQuantity());
+					ps.setString(15, info.getException());
+					ps.setString(16, info.getProperties());
+					if(info.getCategory() == null)
+						ps.setNull(17, java.sql.Types.VARCHAR);
+					else
+						ps.setString(17, info.getCategory());
+					if(info.getErrorCode() == null)
+						ps.setNull(18, java.sql.Types.VARCHAR);
+					else
+						ps.setString(18, info.getErrorCode());
+				}
 
-            @Override
-            public int getBatchSize() {
-                return infos.size();
-            }
-        });
-
+				@Override
+				public int getBatchSize() {
+					return tempInfos.size();
+				}
+			});
+			for(int rIndex=0; rIndex<result.length;rIndex++){
+				results[rIndex+fromIndex] = result[rIndex];
+			}
+		}
+		return results;
     }
 
 	public List<UsageDataInfo> query(UsageDataInfo data) {
@@ -173,94 +188,96 @@ public class UDCJDBCTemplate {
 		
 	}
 	
-	public List<UsageDataInfo> queryUncategoriedErrorRecords(Date startDate, Date endDate){
-		final String startStr =new SimpleDateFormat("dd-MMM-yy").format(startDate);
+	
+	/**
+	 * query and update uncategoried error records that occurred between startDate to endDate 
+	 * @param startDate
+	 * @param endDate
+	 * @return update records' quantity
+	 */
+	public int queryAndUpdateUncategoriedErrorRecords(Date startDate, Date endDate, 
+			List<RideFilter> lsFilters) throws DataAccessException{
+		final String startStr =new SimpleDateFormat("dd-MM-yy").format(startDate);
 		
-		final String endStr = new SimpleDateFormat("dd-MMM-yy").format(endDate);
+		final String endStr = new SimpleDateFormat("dd-MM-yy").format(endDate);
 		
-//		String sqlQuery = "select ID, kind, what, exception_, category, ErrorCode from "+ 
-//				udcTable + 
-//			" where accesstime >= to_date(?, 'DD-Mon-YY') and accesstime < to_date(?, 'DD-Mon-YY') and idetype='RIDE' and exception_ is not null";
+		String sqlQueryTemp = "select ID, kind, what, exception, category, ErrorCode from " 
+				+ udcTable  
+				+ " where accesstime >= to_date(?, 'DD-MM-YY') "
+				+ " and accesstime < to_date(?, 'DD-MM-YY') "
+				+ " and exception is not null "
+				+ " and category is null";
 		
-		String sqlQueryTemp = "select ID, kind, what, exception_, category, ErrorCode from "+ 
-				udcTable + 
-			" where accesstime >= to_date(?, 'DD-Mon-YY') and accesstime < to_date(?, 'DD-Mon-YY') and exception_ is not null and category is null";
-		
-		List<UsageDataInfo> ls = jdbcTemplateObject.query(sqlQueryTemp, new PreparedStatementSetter(){
+		ErrorRowCallBackHandler handler = new ErrorRowCallBackHandler(lsFilters){
+			@Override
+			protected void updateRecordsToDB(List<UsageDataInfo> ls) {
+				updateErrorInfoToDB(ls);
+		}};
+		jdbcTemplateObject.query(sqlQueryTemp, new PreparedStatementSetter(){
+
 			@Override
 			public void setValues(PreparedStatement ps) throws SQLException {
-				System.out.println(startStr);
-				System.out.println(endStr);
 				ps.setString(1, startStr);
 				ps.setString(2, endStr);
 			}
 			
-		},
-				new RowMapper<UsageDataInfo>(){
-			@Override
-			public UsageDataInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
-				UsageDataInfo record = new UsageDataInfo();  
-		        record.setId(rs.getLong("id"));
-		        record.setKind(rs.getString("kind"));
-		        record.setWhat(rs.getString("what"));
-		        Clob clobException = rs.getClob("exception_");
-		        String strException;
-				try {
-					strException = clobToString(clobException);
-				} catch (Exception e) {
-					e.printStackTrace();
-					strException = "Unknown";
-				}
-		        record.setException(strException);
-		        record.setCategory(rs.getString("category"));
-		        record.setErrorCode(rs.getString("ErrorCode"));
-		        
-		        return record;  
-			}
-		});
-		return ls;
+		}, handler);
+		handler.flush();
+		return handler.updateAmount;
 	}
 	
-	private String clobToString(Clob clob) throws SQLException, IOException{
-        BufferedReader br = new BufferedReader(clob.getCharacterStream());
-        String s = br.readLine();
-        StringBuffer sb = new StringBuffer();
-        while (s != null) {
-            sb.append(s);
-            s = br.readLine();
-        }
-        return sb.toString();
-	}
 	/**
 	 * update catetory and errorcode of usagedatainfo
 	 */
-	public void updateErrorInfo(final List<UsageDataInfo> ls){
-		String sqlUpdate = "update " + udcTable +
-				" set category = ? , ErrorCode= ? where id = ?"; 
-		
-		int result[] = jdbcTemplateObject.batchUpdate(sqlUpdate, new BatchPreparedStatementSetter(){
+	private void updateErrorInfoToDB(final List<UsageDataInfo> infos) {
+		long time = System.currentTimeMillis();
+		String sqlUpdate = "update " + udcTable
+				+ " set category = ? , ErrorCode= ? where id = ?";
 
-			@Override
-			public void setValues(PreparedStatement ps, int i)
-					throws SQLException {
-				UsageDataInfo info = ls.get(i);
-				if(info.getCategory() == null)
-					ps.setString(1, "null");
-				else
-					ps.setString(1, info.getCategory());
-				if(info.getErrorCode() == null)
-					ps.setString(2, "null");
-				else
-					ps.setString(2, info.getErrorCode());
-				ps.setLong(3, info.getId());
-			}
+		int results[] = new int[infos.size()];
 
-			@Override
-			public int getBatchSize() {
-				return ls.size();
+		int batchCount = infos.size() % batchSize == 0 ? infos.size()
+				/ batchSize : infos.size() / batchSize + 1;
+		int countIndex;
+
+		for (countIndex = 1; countIndex <= batchCount; countIndex++) {
+			int fromIndex = (countIndex - 1) * batchSize;
+			int toIndexTemp = countIndex * batchSize;
+			int toIndex = toIndexTemp < infos.size() ? toIndexTemp : infos
+					.size();
+			final List<UsageDataInfo> tempInfos = infos.subList(fromIndex,
+					toIndex);
+
+			int result[] = updateJdbcTemplateObject.batchUpdate(sqlUpdate,
+					new BatchPreparedStatementSetter() {
+
+						@Override
+						public void setValues(PreparedStatement ps, int i)
+								throws SQLException {
+							UsageDataInfo info = tempInfos.get(i);
+							if (info.getCategory() == null)
+								ps.setString(1, "null");
+							else
+								ps.setString(1, info.getCategory());
+							if (info.getErrorCode() == null)
+								ps.setString(2, "null");
+							else
+								ps.setString(2, info.getErrorCode());
+							ps.setLong(3, info.getId());
+						}
+
+						@Override
+						public int getBatchSize() {
+							return tempInfos.size();
+						}
+
+					});
+			for (int rIndex = 0; rIndex < result.length; rIndex++) {
+				results[rIndex + fromIndex] = result[rIndex];
 			}
-			
-		});
-		System.out.println(result);
+		}
+		long duration = System.currentTimeMillis() - time;
+		System.out.println("------ Update " + results.length + " records to db. Use time " + duration );
 	}
+	
 }

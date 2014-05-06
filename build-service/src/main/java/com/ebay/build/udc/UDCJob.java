@@ -36,8 +36,9 @@ public class UDCJob implements Job {
 
 	@Override
 	public void execute(JobExecutionContext jec) throws JobExecutionException {
+		long startTime = System.currentTimeMillis();
 		System.out.println("[INFO] " + new Date() + " Start executing UDCJob...");
-
+		
 		File[] files = QUEUE_DIR.listFiles(new FilenameFilter() {
 
 			@Override
@@ -95,6 +96,7 @@ public class UDCJob implements Job {
 			}
 			System.out.println("[INFO] End executing UDCJob...");
 		}
-
+		long duration = System.currentTimeMillis() - startTime;
+		System.out.println("[INFO] UDCJob execute time is " + duration);
 	}
 }

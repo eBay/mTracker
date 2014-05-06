@@ -12,6 +12,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.ebay.build.udc.UsageDataInfo;
+import com.ebay.ide.profile.filter.model.RideFilter;
 
 /**
  * @author bishen
@@ -54,14 +55,9 @@ public class UsageDataDaoJDBCImpl implements IUsageDataDao {
 	}
 
 	@Override
-	public List<UsageDataInfo> queryUncategoriedErrorRecords(Date startDate, Date endDate) throws DaoException {
-		return udcJdbc.queryUncategoriedErrorRecords(startDate, endDate);
+	public int queryAndUpdateUncategoriedErrorRecords(
+			Date startDate, Date endDate, List<RideFilter> lsFilter) throws DaoException {
+		return udcJdbc.queryAndUpdateUncategoriedErrorRecords(startDate, endDate, lsFilter);
 	}
 
-	@Override
-	public void updateUsageDataErrorInfo(List<UsageDataInfo> infos)
-			throws DaoException {
-		udcJdbc.updateErrorInfo(infos);
-	}
-	
 }

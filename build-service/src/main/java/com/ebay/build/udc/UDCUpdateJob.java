@@ -1,5 +1,6 @@
 package com.ebay.build.udc;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -31,59 +32,20 @@ public class UDCUpdateJob {
 			//update day by day
 			while(startDate.before(currDate)){
 				long time = System.currentTimeMillis();
-				List<UsageDataInfo> lsNeedUpdate = new ArrayList<UsageDataInfo>();
-				
 				Date tempDate = DateUtil.addDays(startDate, 1);
-				//1. read data from db
-				List<UsageDataInfo> lsInfo = dao.queryUncategoriedErrorRecords(startDate, tempDate);
+				int result = dao.queryAndUpdateUncategoriedErrorRecords(startDate, tempDate, lsFilter);
+				String startStr = new SimpleDateFormat("dd-MM-yy").format(startDate);
+				System.out.println(startStr + ": Update "+result+" records. Excute time is: " + (System.currentTimeMillis() - time));
 				startDate = tempDate;
-				if(lsInfo == null || lsInfo.size() == 0)
-					continue;
-				//2. find UsageDataInfo that need updated
-				System.out.println("Start filter.....");
-				for(UsageDataInfo info: lsInfo){
-					RideFilter filter = findMatchFilter(info);
-					if(filter != null){
-						if(info.getCategory()!=null && info.getCategory().equals(filter.getCategory())
-								&& info.getErrorCode()!=null && info.getErrorCode().equals(filter.getName())){
-							continue;
-						}else{
-							info.setCategory(filter.getCategory());
-							info.setErrorCode(filter.getName());
-							lsNeedUpdate.add(info);
-						}
-					}else{
-						if(info.getCategory() != null || info.getErrorCode() != null){
-							info.setCategory(null);
-							info.setErrorCode(null);
-							lsNeedUpdate.add(info);
-						}
-					}
-				}
-				//3. update db
-				System.out.println("Start update category and error code....");
-				dao.updateUsageDataErrorInfo(lsNeedUpdate);
-				
-				System.out.println(System.currentTimeMillis() - time);
 			}
 		} catch (DaoException e) {
 			e.printStackTrace();
 		} 
 	}
 	
-	private RideFilter findMatchFilter(UsageDataInfo info){
-		for(RideFilter filter: lsFilter){
-			if(filter.isMatch(info.getWhat(), info.getException()))
-			{
-				return filter;
-			}
-		}
-		return null;
-	}
-	
 	public static void main(String[] args){
 		
-		Date date = DateUtil.addDays(DateUtil.getCurrDate(), -3);
+		Date date = DateUtil.addDays(DateUtil.getCurrDate(), -30);
 		try {
 			UDCUpdateJob job = new UDCUpdateJob(date);
 			job.run();
