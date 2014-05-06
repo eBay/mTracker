@@ -256,11 +256,11 @@ public class UDCJDBCTemplate {
 								throws SQLException {
 							UsageDataInfo info = tempInfos.get(i);
 							if (info.getCategory() == null)
-								ps.setString(1, "null");
+								ps.setNull(1, java.sql.Types.VARCHAR);
 							else
 								ps.setString(1, info.getCategory());
 							if (info.getErrorCode() == null)
-								ps.setString(2, "null");
+								ps.setNull(2, java.sql.Types.VARCHAR);
 							else
 								ps.setString(2, info.getErrorCode());
 							ps.setLong(3, info.getId());

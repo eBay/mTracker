@@ -45,14 +45,11 @@ public abstract class ErrorRowCallBackHandler implements RowCallbackHandler {
         record.setException(strException);
         
         RideFilter filter = findMatchFilter(record);
-        if(filter == null){
-        	record.setCategory(null);
-        	record.setErrorCode(null);
-		}else{
+        if(filter != null){
 			record.setCategory(filter.getCategory());
 			record.setErrorCode(filter.getName());
+			lsNeedUpdated.add(record);
 		}
-		lsNeedUpdated.add(record);
 	    if(lsNeedUpdated.size()==batchSize){
         	updateRecords();
         	lsNeedUpdated.clear();
