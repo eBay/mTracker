@@ -47,10 +47,13 @@ public class AssemblyLogLoader {
 		}
 		
 		try {
+			System.out.println("== jenkins url: " + URLDecoder.decode(jenkinsURL, "UTF-8"));
+			System.out.println("== stack: " + prop.getProperty("stack"));
 			ab.setJenkinsUrl(URLDecoder.decode(jenkinsURL, "UTF-8"));
 			ab.setPackageDuration(Integer.parseInt(prop.getProperty("package")));
 			ab.setUploadDuration(Integer.parseInt(prop.getProperty("upload")));
 			ab.setServiceDuration(Integer.parseInt(prop.getProperty("service")));
+			ab.setStack(prop.getProperty("stack"));
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
