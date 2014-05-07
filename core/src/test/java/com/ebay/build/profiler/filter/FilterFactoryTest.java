@@ -73,7 +73,7 @@ public class FilterFactoryTest {
 		if (file.exists()) {
 			file.delete();
 		}
-		FilterFactory factory = new FilterFactory();
+		FilterFactory factory = new MavenBuildFilterFactory();
 		factory.marshal(file, filters);
 		
 		assertTrue(file.exists());
@@ -91,11 +91,11 @@ public class FilterFactoryTest {
 	public void testRemoteFilter() {
 		URL remoteFilter = null;
 		try {
-			remoteFilter = new URL(FilterFactory.FILTER_LIST_IN_GIT);
+			remoteFilter = new URL(MavenBuildFilterFactory.FILTER_LIST_IN_GIT);
 		} catch (MalformedURLException e) {
 			fail(e.getMessage());
 		}
-		FilterFactory factory = new FilterFactory();
+		FilterFactory factory = new MavenBuildFilterFactory();
 		List<Filter> filters = factory.build(remoteFilter, null);
 		assertTrue(filters.size() > 0);
 	}
@@ -103,7 +103,7 @@ public class FilterFactoryTest {
 	@Test
 	public void testLocalFilter() {
 		URL localFilter = getClass().getClassLoader().getResource("test-filter.xml");
-		FilterFactory factory = new FilterFactory();
+		FilterFactory factory = new MavenBuildFilterFactory();
 		List<Filter> filters = factory.build(null, localFilter);
 		assertTrue(filters.size() > 0);
 	}
