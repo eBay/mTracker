@@ -15,10 +15,11 @@ import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy;
 import au.com.bytecode.opencsv.bean.CsvToBean;
 
+import com.ebay.build.profiler.filter.RideErrorClassifier;
+import com.ebay.build.profiler.filter.RideFilterFactory;
+import com.ebay.build.profiler.filter.model.Filter;
 import com.ebay.build.udc.dao.IUsageDataDao;
 import com.ebay.build.udc.dao.IUsageDataDao.DaoException;
-import com.ebay.ide.profile.filter.RideFilterFactory;
-import com.ebay.ide.profile.filter.model.RideFilter;
 
 
 /**
@@ -32,7 +33,7 @@ public class UsageDataRecorder extends Thread
 			"bundleId", "bundleVersion", "when", "duration", "size",
 			"quantity", "exception", "properties", "sessionProperties" };
     
-	private List<RideFilter> lsFilter = null;
+	private RideErrorClassifier errorClassifier;
 
     private List<File>            m_files = new ArrayList<File>();
     private List<UsageDataInfo>   m_data  = new ArrayList<UsageDataInfo>();
@@ -49,13 +50,7 @@ public class UsageDataRecorder extends Thread
         }
 
         this.dao = dao;
-        RideFilterFactory factory = new RideFilterFactory();
-    	try {
-			lsFilter = factory.getRideFilters();
-		} catch (JAXBException e1) {
-			System.err.println("Filter initialized fail");
-			e1.printStackTrace();
-		}
+        errorClassifier = new RideErrorClassifier();
     }
 
     @Override
@@ -177,17 +172,11 @@ public class UsageDataRecorder extends Thread
                 info.setProperties(record.getProperties());
                 info.setSessionProperties(record.getSessionProperties());
                 
-                RideFilter findFilter = null;
+                Filter findFilter = null;
 				//ensure that the failure of filter process will not affect the insert.
                 try {
-					if (!StringUtils.isEmpty(info.getException()) && lsFilter != null) {
-						for (RideFilter filter : lsFilter) {
-							if (filter.isMatch(info.getWhat(),
-									info.getException())) {
-								findFilter = filter;
-								break;
-							}
-						}
+					if(errorClassifier !=null && info.getException() != null){
+						findFilter = errorClassifier.doClassify(info.getWhat(), info.getException());
 					}
 				} catch (Exception e) {
 					System.err.println("Error In Filter Process");

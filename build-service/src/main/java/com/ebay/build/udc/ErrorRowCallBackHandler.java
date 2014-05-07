@@ -10,15 +10,16 @@ import java.util.List;
 
 import org.springframework.jdbc.core.RowCallbackHandler;
 
-import com.ebay.ide.profile.filter.model.RideFilter;
+import com.ebay.build.profiler.filter.RideErrorClassifier;
+import com.ebay.build.profiler.filter.model.Filter;
 
 public abstract class ErrorRowCallBackHandler implements RowCallbackHandler {
 	private static int batchSize = 1000;
-	private List<RideFilter> lsFilter;
+	private RideErrorClassifier errorClassifier;
 	private List<UsageDataInfo> lsNeedUpdated= new ArrayList<UsageDataInfo>();
 	public int updateAmount = 0;
-	public ErrorRowCallBackHandler(List<RideFilter> lsFilters){
-		this.lsFilter = lsFilters;
+	public ErrorRowCallBackHandler(RideErrorClassifier errorClassifier){
+		this.errorClassifier = errorClassifier;
 	}
 	
 	public void setBatchSize(int size){
@@ -27,9 +28,8 @@ public abstract class ErrorRowCallBackHandler implements RowCallbackHandler {
 	
 	@Override
 	public void processRow(ResultSet rs) throws SQLException {
-		if(lsFilter == null || lsFilter.size() == 0)
+		if(errorClassifier == null)
 			return;
-		
 		UsageDataInfo record = new UsageDataInfo();  
         record.setId(rs.getLong("id"));
         record.setKind(rs.getString("kind"));
@@ -44,7 +44,7 @@ public abstract class ErrorRowCallBackHandler implements RowCallbackHandler {
 		}
         record.setException(strException);
         
-        RideFilter filter = findMatchFilter(record);
+        Filter filter = errorClassifier.doClassify(record.getWhat(), record.getException());
         if(filter != null){
 			record.setCategory(filter.getCategory());
 			record.setErrorCode(filter.getName());
@@ -80,14 +80,5 @@ public abstract class ErrorRowCallBackHandler implements RowCallbackHandler {
 	
 	public void flush(){
 		updateRecords();
-	}
-	private RideFilter findMatchFilter(UsageDataInfo info){
-		for(RideFilter filter: lsFilter){
-			if(filter.isMatch(info.getWhat(), info.getException()))
-			{
-				return filter;
-			}
-		}
-		return null;
 	}
 }

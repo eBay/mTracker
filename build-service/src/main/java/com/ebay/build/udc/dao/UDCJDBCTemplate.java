@@ -20,10 +20,10 @@ import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 
+import com.ebay.build.profiler.filter.RideErrorClassifier;
 import com.ebay.build.udc.ErrorRowCallBackHandler;
 import com.ebay.build.udc.UsageDataInfo;
 import com.ebay.build.utils.ServiceConfig;
-import com.ebay.ide.profile.filter.model.RideFilter;
 
 public class UDCJDBCTemplate {
 
@@ -196,7 +196,7 @@ public class UDCJDBCTemplate {
 	 * @return update records' quantity
 	 */
 	public int queryAndUpdateUncategoriedErrorRecords(Date startDate, Date endDate, 
-			List<RideFilter> lsFilters) throws DataAccessException{
+			RideErrorClassifier errorClassifier) throws DataAccessException{
 		final String startStr =new SimpleDateFormat("dd-MM-yy").format(startDate);
 		
 		final String endStr = new SimpleDateFormat("dd-MM-yy").format(endDate);
@@ -208,7 +208,7 @@ public class UDCJDBCTemplate {
 				+ " and exception is not null "
 				+ " and category is null";
 		
-		ErrorRowCallBackHandler handler = new ErrorRowCallBackHandler(lsFilters){
+		ErrorRowCallBackHandler handler = new ErrorRowCallBackHandler(errorClassifier){
 			@Override
 			protected void updateRecordsToDB(List<UsageDataInfo> ls) {
 				updateErrorInfoToDB(ls);
