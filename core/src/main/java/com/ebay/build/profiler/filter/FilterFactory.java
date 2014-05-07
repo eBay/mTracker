@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +17,12 @@ import com.ebay.build.profiler.filter.model.Category;
 import com.ebay.build.profiler.filter.model.Filter;
 import com.ebay.build.profiler.filter.model.Filters;
 
-public class FilterFactory {
-	public final static String FILTER_LIST_IN_GIT = "https://github.scm.corp.ebay.com/DevExTech/maven-time-tracking/raw/master/core/src/main/resources/default-filters.xml";
+public abstract class FilterFactory {
+	
+	public final static String BASE_FILTER_LIST_IN_GIT = "https://github.scm.corp.ebay.com/DevExTech/maven-time-tracking/raw/master/core/src/main/resources";
+	
+	public abstract URL getRemoteFilterURL();
+	public abstract URL getLocalFilterURL();
 	
 	protected void marshal(File reportFile,  Filters filters){
 		try {
@@ -88,14 +91,6 @@ public class FilterFactory {
 	}
 	
 	public List<Filter> getFilters() {
-		URL defaultFilterList = this.getClass().getResource("/default-filters.xml");
-		URL remoteFilterList = null;
-		try {
-			remoteFilterList = new URL(FILTER_LIST_IN_GIT);
-		} catch (MalformedURLException e) {
-			System.err.println("[WARNING] can not load the filter list from remote " + remoteFilterList);
-		}
-				
-		return build(remoteFilterList, defaultFilterList);
+		return build(this.getRemoteFilterURL(), this.getLocalFilterURL());
 	}
 }
