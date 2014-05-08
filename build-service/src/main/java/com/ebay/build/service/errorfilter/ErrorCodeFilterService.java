@@ -10,6 +10,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import com.ebay.build.profiler.filter.FilterFactory;
+import com.ebay.build.profiler.filter.MavenBuildFilterFactory;
 import com.ebay.build.profiler.filter.model.Filter;
 
 @Path("")
@@ -18,7 +19,7 @@ public class ErrorCodeFilterService {
 	List<ErrorCodeRes> filters = new ArrayList<ErrorCodeRes>();
 	
 	public ErrorCodeFilterService() {
-		FilterFactory factory = new FilterFactory();
+		FilterFactory factory = new MavenBuildFilterFactory();
 		
 		for (Filter filter : factory.getFilters()) {
 			ErrorCodeRes res = new ErrorCodeRes();

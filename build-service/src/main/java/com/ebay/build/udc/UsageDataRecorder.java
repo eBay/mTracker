@@ -7,12 +7,17 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.xml.bind.JAXBException;
+
 import org.apache.commons.lang.StringUtils;
 
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy;
 import au.com.bytecode.opencsv.bean.CsvToBean;
 
+import com.ebay.build.profiler.filter.RideErrorClassifier;
+import com.ebay.build.profiler.filter.RideFilterFactory;
+import com.ebay.build.profiler.filter.model.Filter;
 import com.ebay.build.udc.dao.IUsageDataDao;
 import com.ebay.build.udc.dao.IUsageDataDao.DaoException;
 
@@ -28,7 +33,7 @@ public class UsageDataRecorder extends Thread
 			"bundleId", "bundleVersion", "when", "duration", "size",
 			"quantity", "exception", "properties", "sessionProperties" };
     
-  
+	private RideErrorClassifier errorClassifier;
 
     private List<File>            m_files = new ArrayList<File>();
     private List<UsageDataInfo>   m_data  = new ArrayList<UsageDataInfo>();
@@ -45,19 +50,24 @@ public class UsageDataRecorder extends Thread
         }
 
         this.dao = dao;
+        errorClassifier = new RideErrorClassifier();
     }
 
     @Override
     public void run()
     {
+    	long startTime = System.currentTimeMillis();
         try
         {
             for (File file : this.m_files)
             {
                 process(file);
             }
+            
+            System.out.println("UsageDataRecorder parse .csv time is " + (System.currentTimeMillis()-startTime));
+            long time = System.currentTimeMillis();
             insertUsageData();
-
+            System.out.println("UsageDataRecorder: insert "+m_data.size()+" records. And use " + (System.currentTimeMillis()-time) + " milliseconds");
             cleanFiles();
 
             System.out.println("Processed " + this.m_files.size() + " log files!");
@@ -66,6 +76,8 @@ public class UsageDataRecorder extends Thread
         {
             e.printStackTrace();
         }
+        long duration = System.currentTimeMillis() - startTime;
+        System.out.println("UsageDataRecorder execute time is " + duration);
     }
 
     private void cleanFiles()
@@ -87,7 +99,8 @@ public class UsageDataRecorder extends Thread
         }
 
     
-        dao.insertUsageData(this.m_data);
+        int[] aa = dao.insertUsageData(this.m_data);
+        System.out.println("Batch update return array's length: "+aa.length);
     }
 
     private void process(File report)
@@ -141,6 +154,7 @@ public class UsageDataRecorder extends Thread
                 info.setHost(hostName);
                 info.setUser(userName);
                 info.setIdeType(record.getIdeType());
+                
                 if(!StringUtils.isEmpty(record.getSessionId())){
                 	info.setSessionId(record.getSessionId());
                 }
@@ -157,7 +171,27 @@ public class UsageDataRecorder extends Thread
                 info.setException(record.getException());
                 info.setProperties(record.getProperties());
                 info.setSessionProperties(record.getSessionProperties());
-              
+                
+                Filter findFilter = null;
+				//ensure that the failure of filter process will not affect the insert.
+                try {
+					if(errorClassifier !=null && info.getException() != null){
+						findFilter = errorClassifier.doClassify(info.getWhat(), info.getException());
+					}
+				} catch (Exception e) {
+					System.err.println("Error In Filter Process");
+					e.printStackTrace();
+				}
+                
+				if(findFilter!=null){
+                	info.setCategory(findFilter.getCategory());
+                	info.setErrorCode(findFilter.getName());
+                }else
+                {
+                	info.setCategory(null);
+                	info.setErrorCode(null);
+                }
+                
                 this.m_data.add(info);
             }
             catch (NumberFormatException e)

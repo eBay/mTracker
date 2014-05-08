@@ -6,13 +6,27 @@ import javax.xml.bind.annotation.XmlAttribute;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Cause {
+	
+	@XmlAttribute
+	private String source;
+	
 	@XmlAttribute
 	private String keyword;
 	
 	@XmlAttribute
 	private String pattern;
 
+	@XmlAttribute
+	private String value;
 
+	public String getSource() {
+		return source;
+	}
+
+	public void setSource(String source) {
+		this.source = source;
+	}
+	
 	public String getKeyword() {
 		return keyword;
 	}
@@ -27,5 +41,13 @@ public class Cause {
 	
 	public void setPattern(String p) {
 		this.pattern = p;
+	}
+	
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
 	}
 }

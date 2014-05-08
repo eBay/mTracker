@@ -9,16 +9,20 @@ import com.ebay.build.profiler.utils.StringUtils;
 
 public class FilterMatcher {
 
-	public boolean isMatchFilter(HashMap<String, String> source, Filter filter) {
-//		for (Cause cause : filter.getCause()) {
-//			for (String key : source.keySet()) {
-//				if (key.equals(cause.getSource()) && source.get(key) != null) {
-//					if (!isMatchCause(source.get(key), cause)) {
-//						return false;
-//					}
-//				}
-//			}
-//		}
+	public boolean isMatch(HashMap<String, String> source, Filter filter) {
+		for (Cause cause : filter.getCause()) {
+			String sourceName = cause.getSource();
+			//whether sourceName is null or not, there should be a key with value sourceName in source
+			//or the record can't match, that means returning false;
+			if(source.containsKey(sourceName)) {
+				String value = source.get(sourceName);   //wouldn't cause error when sourceName is null;
+				if(!isMatchCause(value, cause)) {
+					return false;
+				}
+			} else {
+				return false;
+			}
+		}
 		return true;
 	}
 
@@ -41,7 +45,7 @@ public class FilterMatcher {
 	}
 	
 	protected boolean isMatchContent(String content, Cause cause) {
-		if (!StringUtils.isEmpty(cause.getKeyword()) && content.equals(cause.getKeyword())) {
+		if (!StringUtils.isEmpty(cause.getValue()) && content.equals(cause.getValue())) {
 			return true;
 		}
 		return false;

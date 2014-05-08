@@ -29,6 +29,7 @@ public class UsageDataInfo
     public static final String KIND_DIALOG      = "dialog";     //$NON-NLS-1$
     public static final String KIND_UNKNOWN     = "unknown";    //$NON-NLS-1$
 
+    private long               id;
     private String 			   ideType;
     private String 			   ideVersion;
     private String 			   sessionId;
@@ -46,12 +47,30 @@ public class UsageDataInfo
     private String             exception;
     private String             properties;
     private String 			   sessionProperties;
-
+    
+    //for error classified
+    private String             category;
+    private String             errorCode;
+    
     public UsageDataInfo()
     {
     }
 
-    /**
+    
+    
+    public long getId() {
+		return id;
+	}
+
+
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+
+
+	/**
      * @return the host
      */
     public String getHost()
@@ -289,6 +308,22 @@ public class UsageDataInfo
 
 	public void setSessionProperties(String sessionProperties) {
 		this.sessionProperties = sessionProperties;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public String getErrorCode() {
+		return errorCode;
+	}
+
+	public void setErrorCode(String errorCode) {
+		this.errorCode = errorCode;
 	}
     
 	

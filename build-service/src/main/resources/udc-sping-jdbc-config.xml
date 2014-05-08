@@ -24,9 +24,8 @@
 		<property name="dataSource" ref="dataSource" />
 		<property name="udcTable" value="usagedata" />
 	</bean>
-	
-	
-	<bean id="UDCJDBCTemplate_paypal" class="com.ebay.build.udc.dao.UDCJDBCTemplate">
+		
+ 	<bean id="UDCJDBCTemplate_paypal" class="com.ebay.build.udc.dao.UDCJDBCTemplate">
 		<property name="dataSource" ref="dataSource" />
 		<property name="udcTable" value="usagedata4p" />
 	</bean>

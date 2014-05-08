@@ -13,8 +13,9 @@ import com.ebay.build.udc.dao.UsageDataDaoJDBCImpl;
 
 public class UDCDataCollectorTest {
 
-	private static final String SELECT_COUNT = "Select count(*) from usagedata";
-
+	private static final String SELECT_COUNT = "Select count(*) from usagedata where ideVersion = 'x.x.x'";
+	private static final String DELETE_TEST_DATA = "delete from usagedata where ideVersion='x.x.x'";
+	
 	@Test
 	public void testCollect() throws DaoException {
 		// do not rename the test resouce file, UDC will parse the name
@@ -23,12 +24,13 @@ public class UDCDataCollectorTest {
 		File file = new File(url.getFile());
 
 		UsageDataDaoJDBCImpl dao = new UsageDataDaoJDBCImpl("");
-		int size = dao.getJdbcTemplate().queryForInt(SELECT_COUNT);
 
 		new UsageDataRecorder(Arrays.asList(file), dao).run();
 
 		int newSize = dao.getJdbcTemplate().queryForInt(SELECT_COUNT);
-		Assert.assertTrue(newSize - size >= 5);
+		Assert.assertTrue(newSize == 2);
+		
+		dao.getJdbcTemplate().execute(DELETE_TEST_DATA);
 
 	}
 }

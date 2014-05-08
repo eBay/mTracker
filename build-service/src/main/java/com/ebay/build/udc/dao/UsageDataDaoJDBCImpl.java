@@ -3,6 +3,7 @@
  */
 package com.ebay.build.udc.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -10,6 +11,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import com.ebay.build.profiler.filter.RideErrorClassifier;
 import com.ebay.build.udc.UsageDataInfo;
 
 /**
@@ -51,4 +53,11 @@ public class UsageDataDaoJDBCImpl implements IUsageDataDao {
 	public List<UsageDataInfo> queryUsageData(UsageDataInfo data) throws DaoException {
 		return udcJdbc.query(data);
 	}
+
+	@Override
+	public int queryAndUpdateUncategoriedErrorRecords(
+			Date startDate, Date endDate, RideErrorClassifier errorClassifier) throws DaoException {
+		return udcJdbc.queryAndUpdateUncategoriedErrorRecords(startDate, endDate, errorClassifier);
+	}
+
 }
