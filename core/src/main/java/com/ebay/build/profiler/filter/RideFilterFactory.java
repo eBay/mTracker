@@ -1,22 +1,7 @@
 package com.ebay.build.profiler.filter;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
-
-import com.ebay.build.profiler.filter.model.Category;
-import com.ebay.build.profiler.filter.model.Filter;
-import com.ebay.build.profiler.filter.model.Filters;
 
 public class RideFilterFactory extends FilterFactory {
 	

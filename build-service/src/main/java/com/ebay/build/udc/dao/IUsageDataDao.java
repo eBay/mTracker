@@ -8,7 +8,6 @@ import java.util.Date;
 import java.util.List;
 
 import com.ebay.build.profiler.filter.RideErrorClassifier;
-import com.ebay.build.profiler.filter.model.Filter;
 import com.ebay.build.udc.UsageDataInfo;
 
 /**

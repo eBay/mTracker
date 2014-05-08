@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.xml.bind.JAXBException;
-
 import org.apache.commons.lang.StringUtils;
 
 import au.com.bytecode.opencsv.CSVReader;
@@ -16,7 +14,6 @@ import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy;
 import au.com.bytecode.opencsv.bean.CsvToBean;
 
 import com.ebay.build.profiler.filter.RideErrorClassifier;
-import com.ebay.build.profiler.filter.RideFilterFactory;
 import com.ebay.build.profiler.filter.model.Filter;
 import com.ebay.build.udc.dao.IUsageDataDao;
 import com.ebay.build.udc.dao.IUsageDataDao.DaoException;

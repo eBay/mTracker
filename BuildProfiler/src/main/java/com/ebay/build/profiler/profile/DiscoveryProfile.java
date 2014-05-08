@@ -3,24 +3,17 @@
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.eventspy.EventSpy.Context;
 import org.apache.maven.execution.ExecutionEvent;
 import org.apache.maven.project.MavenProject;
 
 import com.ebay.build.profiler.mdda.util.FileProperties;
-import com.ebay.build.profiler.mdda.util.PreDownload;
 import com.ebay.build.profiler.readers.ProcessHelper;
 import com.ebay.build.profiler.util.Timer;
-import com.ebay.build.profiler.utils.FileUtils;
-import com.ebay.build.profiler.utils.MD5Generator;
 import com.ebay.build.profiler.writers.SessionExporter;
 import com.ebay.build.service.client.PostSessionClient;
 //import com.ebay.kernel.calwrapper.CalTransaction;

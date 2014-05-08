@@ -2,14 +2,10 @@ package com.ebay.build.udc;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 import javax.xml.bind.JAXBException;
 
-import com.ebay.build.profiler.filter.FilterFactory;
 import com.ebay.build.profiler.filter.RideErrorClassifier;
-import com.ebay.build.profiler.filter.RideFilterFactory;
-import com.ebay.build.profiler.filter.model.Filter;
 import com.ebay.build.profiler.utils.DateUtils;
 import com.ebay.build.udc.dao.IUsageDataDao;
 import com.ebay.build.udc.dao.IUsageDataDao.DaoException;

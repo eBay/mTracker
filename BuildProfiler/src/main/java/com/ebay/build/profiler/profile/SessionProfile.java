@@ -3,10 +3,8 @@ package com.ebay.build.profiler.profile;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.eventspy.EventSpy.Context;
 import org.apache.maven.execution.ExecutionEvent;
-import org.apache.maven.project.MavenProject;
 
 import com.ebay.build.profiler.mdda.util.FileProperties;
 import com.ebay.build.profiler.util.Timer;
