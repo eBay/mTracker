@@ -48,4 +48,8 @@ public class Filter {
 	public void setCategory(String category) {
 		this.category = category;
 	}
+	
+	public void setCauses(List<Cause> lsCause){
+		this.cause = lsCause;
+	}
 }

@@ -14,12 +14,14 @@ public class FilterMatcher {
 			String sourceName = cause.getSource();
 			//whether sourceName is null or not, there should be a key with value sourceName in source
 			//or the record can't match, that means returning false;
-			if(source.containsKey(sourceName)){
+			if(source.containsKey(sourceName)) {
 				String value = source.get(sourceName);   //wouldn't cause error when sourceName is null;
-				if(!isMatchCause(value, cause))
+				if(!isMatchCause(value, cause)) {
 					return false;
-			}else
-				return false;       
+				}
+			} else {
+				return false;
+			}
 		}
 		return true;
 	}
