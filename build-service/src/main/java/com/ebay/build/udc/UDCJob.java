@@ -32,12 +32,13 @@ public class UDCJob implements Job {
 	 private final File QUEUE_DIR = new File(
              ServiceConfig.get("queue_root_dir"));
 
-
+	 private final static Logger logger = Logger.getLogger(UDCJob.class.getName());
 
 	@Override
 	public void execute(JobExecutionContext jec) throws JobExecutionException {
 		long startTime = System.currentTimeMillis();
-		System.out.println("[INFO] " + new Date() + " Start executing UDCJob...");
+
+		logger.log(Level.INFO, new Date() + " Start executing UDCJob...");
 		
 		File[] files = QUEUE_DIR.listFiles(new FilenameFilter() {
 
@@ -48,7 +49,8 @@ public class UDCJob implements Job {
 		});
 
 		for (File file : files) {
-			System.out.println("Processing udc folder: " + file.getName());
+			
+			logger.log(Level.INFO, "Processing udc folder: " + file.getName());
 			
 			String type = StringUtils.substringAfter(file.getName(), "udc_");
 
@@ -70,7 +72,7 @@ public class UDCJob implements Job {
 						CompressUtils.unCompress(resultFile, csvDest.getAbsolutePath());
 						org.apache.commons.io.FileUtils.deleteQuietly(resultFile);
 					} catch (IOException ex) {
-						Logger.getLogger(UDCJob.class.getName()).log(Level.SEVERE,
+						logger.log(Level.SEVERE,
 								"Cannot handle zip:" + resultFile + ", move to: " + wrongDest, ex);
 						try {
 							org.apache.commons.io.FileUtils.deleteQuietly(new File(wrongDest, resultFile.getName()));
@@ -86,17 +88,17 @@ public class UDCJob implements Job {
 			File[] csvFiles = FileUtils.loadFiles(csvDest, ".csv");
 			if (csvFiles.length > 0) {
 				try {
-					System.out.println("Processing files: " + ArrayUtils.toString(csvFiles));
+					logger.log(Level.INFO,"Processing files: " + ArrayUtils.toString(csvFiles));
 					new UsageDataRecorder(Arrays.asList(csvFiles), new UsageDataDaoJDBCImpl(type)).start();
 				} catch (Exception e) {
 					e.printStackTrace();
 				} 
 			} else {
-				System.out.println("No csv records found under " + csvDest);
+				logger.log(Level.INFO, "No csv records found under " + csvDest);
 			}
-			System.out.println("[INFO] End executing UDCJob...");
+			logger.log(Level.INFO, "End executing UDCJob...");
 		}
 		long duration = System.currentTimeMillis() - startTime;
-		System.out.println("[INFO] UDCJob execute time is " + duration);
+		logger.log(Level.INFO, "UDCJob execute time is " + duration);
 	}
 }

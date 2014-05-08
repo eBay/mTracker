@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
@@ -34,6 +36,8 @@ public class UDCJDBCTemplate {
     private String udcTable;
     
     private static final int batchSize = 1000;
+    
+    private static Logger logger = Logger.getLogger(UDCJDBCTemplate.class.getName());
     
     private static final String STMT_INSERT = "insert into {0} "
             + "(IDEType, IDEVersion, SessionId, Host, UserName, Kind, What, Description, BundleId, BundleVersion, AccessTime, Duration, Size_, Quantity, Exception, Properties, category, errorcode) values "
@@ -80,7 +84,7 @@ public class UDCJDBCTemplate {
 		if (props.size() > 0) {
 			List<String> existIds = jdbcTemplateObject.queryForList(getQuerySessionSql(props.keySet()), String.class);
 			for (String id : existIds) {
-				LoggerFactory.getLogger(getClass()).warn(
+				logger.log(Level.WARNING,
 						"Skipping insert to DB as session id already exists in DB, id:" + id);
 				props.remove(id);
 
@@ -100,7 +104,7 @@ public class UDCJDBCTemplate {
 	}
 
 	public int[] create(final List<UsageDataInfo> infos) {
-        final Map<String, String> props = extractSessionProperties(infos);
+		final Map<String, String> props = extractSessionProperties(infos);
         final String[] keys = (String[]) props.keySet().toArray(new String[0]);
 
         //insert session data
@@ -124,7 +128,7 @@ public class UDCJDBCTemplate {
 
         }
         
-        System.out.println("UDCJDBCTemplate: size of UsageDataInfo " + infos.size());
+        logger.log(Level.INFO, "UDCJDBCTemplate: size of UsageDataInfo " + infos.size());
 		String sql = MessageFormat.format(STMT_INSERT, udcTable);
 
 		int results[] = new int[infos.size()];
@@ -277,7 +281,7 @@ public class UDCJDBCTemplate {
 			}
 		}
 		long duration = System.currentTimeMillis() - time;
-		System.out.println("------ Update " + results.length + " records to db. Use time " + duration );
+		logger.log(Level.INFO, "------ Update " + results.length + " records to db. Use time " + duration );
 	}
 	
 }

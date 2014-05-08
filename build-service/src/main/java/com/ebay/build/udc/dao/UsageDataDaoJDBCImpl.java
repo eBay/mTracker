@@ -5,6 +5,8 @@ package com.ebay.build.udc.dao;
 
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.ApplicationContext;
@@ -21,16 +23,16 @@ public class UsageDataDaoJDBCImpl implements IUsageDataDao {
 
 	private ApplicationContext context = null;
 	private UDCJDBCTemplate udcJdbc = null;
-
+	private static Logger logger = Logger.getLogger(UsageDataDaoJDBCImpl.class.getName());
 	public UsageDataDaoJDBCImpl(String type) {
 		super();
 
 		String templateName = StringUtils.isEmpty(type) ? "UDCJDBCTemplate" : "UDCJDBCTemplate_" + type;
-		System.out.println("[INFO]: init " + templateName + " bean...");
+		logger.log(Level.INFO, "Init " + templateName + " bean...");
 		context = new ClassPathXmlApplicationContext("udc-sping-jdbc-config.xml");
 
 		udcJdbc = (UDCJDBCTemplate) context.getBean(templateName);
-		System.out.println("[INFO]: finish initing " + templateName + " bean!");
+		logger.log(Level.INFO, "Finish initing " + templateName + " bean!");
 
 	}
 

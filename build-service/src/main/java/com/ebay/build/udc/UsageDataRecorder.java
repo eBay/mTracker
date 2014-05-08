@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -34,7 +36,7 @@ public class UsageDataRecorder extends Thread
 
     private List<File>            m_files = new ArrayList<File>();
     private List<UsageDataInfo>   m_data  = new ArrayList<UsageDataInfo>();
-    
+    private static Logger logger = Logger.getLogger(UsageDataRecorder.class.getName());
    
     private IUsageDataDao dao;
 	
@@ -61,20 +63,20 @@ public class UsageDataRecorder extends Thread
                 process(file);
             }
             
-            System.out.println("UsageDataRecorder parse .csv time is " + (System.currentTimeMillis()-startTime));
+            logger.log(Level.INFO, "UsageDataRecorder parse .csv time is " + (System.currentTimeMillis()-startTime));
             long time = System.currentTimeMillis();
             insertUsageData();
-            System.out.println("UsageDataRecorder: insert "+m_data.size()+" records. And use " + (System.currentTimeMillis()-time) + " milliseconds");
+            logger.log(Level.INFO, "UsageDataRecorder: insert "+m_data.size()+" records. And use " + (System.currentTimeMillis()-time) + " milliseconds");
             cleanFiles();
 
-            System.out.println("Processed " + this.m_files.size() + " log files!");
+            logger.log(Level.INFO, "Processed " + this.m_files.size() + " log files!");
         }
         catch (Exception e)
         {
             e.printStackTrace();
         }
         long duration = System.currentTimeMillis() - startTime;
-        System.out.println("UsageDataRecorder execute time is " + duration);
+        logger.log(Level.INFO, "UsageDataRecorder execute time is " + duration);
     }
 
     private void cleanFiles()
@@ -97,7 +99,7 @@ public class UsageDataRecorder extends Thread
 
     
         int[] aa = dao.insertUsageData(this.m_data);
-        System.out.println("Batch update return array's length: "+aa.length);
+        logger.log(Level.INFO, "Batch update return array's length: "+aa.length);
     }
 
     private void process(File report)
@@ -176,7 +178,7 @@ public class UsageDataRecorder extends Thread
 						findFilter = errorClassifier.doClassify(info.getWhat(), info.getException());
 					}
 				} catch (Exception e) {
-					System.err.println("Error In Filter Process");
+					logger.log(Level.SEVERE, "Error In Filter Process");
 					e.printStackTrace();
 				}
                 
