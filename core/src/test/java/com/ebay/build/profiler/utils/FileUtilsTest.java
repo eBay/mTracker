@@ -20,7 +20,7 @@ public class FileUtilsTest {
 		
 		File[] files = FileUtils.loadFiles(resourceFolder, ".xml");
 		assertNotNull(files);
-		assertEquals(1, files.length);
+		assertEquals(2, files.length);
 		assertEquals("a.xml", files[0].getName());
 		
 		files = FileUtils.loadFiles(resourceFolder, ".DONE");

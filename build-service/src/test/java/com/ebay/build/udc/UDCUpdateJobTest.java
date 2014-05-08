@@ -32,7 +32,7 @@ public class UDCUpdateJobTest {
 		String INSERT =  "insert into usagedata(ideType, ideVersion, host, userName, kind, what, description, accesstime, exception) "+
 				"values ('ride', 'x.x.x', 'd-shc-00355773', 'qingqliu', 'buildevent', 'runMavenBuild' ,'for test',  to_date('"+
 				strDate +
-				"', 'DD-MM-YY hh:mi:ss') "+ 
+				"', 'DD-MM-YY hh24:mi:ss') "+ 
 				", '[ERROR] No goals have been specified for this build . You must specify a valid lifecycle phase or a goal in the format ...')";
 		
 		dao.getJdbcTemplate().execute(INSERT);
