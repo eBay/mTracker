@@ -66,6 +66,7 @@ public abstract class ErrorRowCallBackHandler implements RowCallbackHandler {
             sb.append(s);
             s = br.readLine();
         }
+        br.close();
         return sb.toString();
 	}
 	
