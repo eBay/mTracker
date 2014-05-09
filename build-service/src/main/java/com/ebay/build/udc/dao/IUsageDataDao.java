@@ -24,7 +24,7 @@ public interface IUsageDataDao
      * @return
      * @throws DaoException
      */
-    public int[] insertUsageData(List<UsageDataInfo> infos)
+    public int insertUsageData(List<UsageDataInfo> infos)
             throws DaoException;
     
     public List<UsageDataInfo> queryUsageData(UsageDataInfo data)

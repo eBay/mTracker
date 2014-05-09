@@ -77,7 +77,7 @@ public abstract class ErrorRowCallBackHandler implements RowCallbackHandler {
 		updateRecordsToDB(this.lsNeedUpdated);
 	}
 	
-	protected abstract void updateRecordsToDB(List<UsageDataInfo> ls);
+	protected abstract int updateRecordsToDB(List<UsageDataInfo> ls);
 	
 	public void flush(){
 		updateRecords();

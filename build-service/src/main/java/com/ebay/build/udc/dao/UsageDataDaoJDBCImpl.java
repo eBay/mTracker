@@ -41,10 +41,10 @@ public class UsageDataDaoJDBCImpl implements IUsageDataDao {
 	}
 
 	@Override
-	public int[] insertUsageData(List<UsageDataInfo> infos) throws DaoException {
+	public int insertUsageData(List<UsageDataInfo> infos) throws DaoException {
 
 		if (infos == null) {
-			return new int[0];
+			return 0;
 		}
 
 		return udcJdbc.create(infos);

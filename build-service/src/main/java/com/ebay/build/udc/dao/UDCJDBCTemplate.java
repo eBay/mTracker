@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -16,7 +17,6 @@ import java.util.logging.Logger;
 import javax.sql.DataSource;
 
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -103,7 +103,22 @@ public class UDCJDBCTemplate {
 		return StringUtils.removeEnd(sql.toString(), "or");
 	}
 
-	public int[] create(final List<UsageDataInfo> infos) {
+	private List<List<UsageDataInfo>> divideList(List<UsageDataInfo> infos){
+		List<List<UsageDataInfo>> lsResult = new ArrayList<List<UsageDataInfo>>();
+		int batchCount = infos.size()%batchSize==0?infos.size()/batchSize: infos.size()/batchSize + 1;
+		int countIndex;
+		for(countIndex=1;countIndex<=batchCount;countIndex++){
+			int fromIndex = (countIndex-1)*batchSize;
+			int toIndexTemp = countIndex*batchSize;
+			int toIndex = toIndexTemp < infos.size()?toIndexTemp:infos.size();			
+			List<UsageDataInfo> tempInfos = infos.subList(fromIndex, toIndex);
+			lsResult.add(tempInfos);
+		}
+		return lsResult;
+	}
+	
+	public int create(final List<UsageDataInfo> infos) {
+		long startTime = System.currentTimeMillis();
 		final Map<String, String> props = extractSessionProperties(infos);
         final String[] keys = (String[]) props.keySet().toArray(new String[0]);
 
@@ -130,60 +145,64 @@ public class UDCJDBCTemplate {
         
         logger.log(Level.INFO, "UDCJDBCTemplate: size of UsageDataInfo " + infos.size());
 		String sql = MessageFormat.format(STMT_INSERT, udcTable);
-
-		int results[] = new int[infos.size()];
 		
-		int batchCount = infos.size()%batchSize==0?infos.size()/batchSize: infos.size()/batchSize + 1;
-		int countIndex;
-		
-		for(countIndex=1;countIndex<=batchCount;countIndex++){
-			int fromIndex = (countIndex-1)*batchSize;
-			int toIndexTemp = countIndex*batchSize;
-			int toIndex = toIndexTemp < infos.size()?toIndexTemp:infos.size();			
-			final List<UsageDataInfo> tempInfos = infos.subList(fromIndex, toIndex);
-			int[] result = jdbcTemplateObject.batchUpdate(sql,
-					new BatchPreparedStatementSetter() {
-				@Override
-				public void setValues(PreparedStatement ps, int i)
-						throws SQLException {
-					UsageDataInfo info = tempInfos.get(i);
+		List<List<UsageDataInfo>> lsArInfos = divideList(infos);
+		int dealtNum = 0;
+		for(final List<UsageDataInfo> lsInfos: lsArInfos){
+			try{
+				int[] result = jdbcTemplateObject.batchUpdate(sql,
+						new BatchPreparedStatementSetter() {
+							@Override
+							public void setValues(PreparedStatement ps, int i)
+									throws SQLException {
+								UsageDataInfo info = lsInfos.get(i);
 
-					ps.setString(1, info.getIdeType());
-					ps.setString(2, info.getIdeVersion());
-					ps.setString(3, info.getSessionId());
-					ps.setString(4, info.getHost());
-					ps.setString(5, info.getUser());
-					ps.setString(6, info.getKind());
-					ps.setString(7, info.getWhat());
-					ps.setString(8, info.getDescription());
-					ps.setString(9, info.getBundleId());
-					ps.setString(10, info.getBundleVersion());
-					ps.setTimestamp(11, new Timestamp(info.getWhen()));
-					ps.setInt(12, info.getDuration());
-					ps.setInt(13, info.getSize());
-					ps.setInt(14, info.getQuantity());
-					ps.setString(15, info.getException());
-					ps.setString(16, info.getProperties());
-					if(info.getCategory() == null)
-						ps.setNull(17, java.sql.Types.VARCHAR);
-					else
-						ps.setString(17, info.getCategory());
-					if(info.getErrorCode() == null)
-						ps.setNull(18, java.sql.Types.VARCHAR);
-					else
-						ps.setString(18, info.getErrorCode());
-				}
+								ps.setString(1, info.getIdeType());
+								ps.setString(2, info.getIdeVersion());
+								ps.setString(3, info.getSessionId());
+								ps.setString(4, info.getHost());
+								ps.setString(5, info.getUser());
+								ps.setString(6, info.getKind());
+								ps.setString(7, info.getWhat());
+								ps.setString(8, info.getDescription());
+								ps.setString(9, info.getBundleId());
+								ps.setString(10, info.getBundleVersion());
+								ps.setTimestamp(11,
+										new Timestamp(info.getWhen()));
+								ps.setInt(12, info.getDuration());
+								ps.setInt(13, info.getSize());
+								ps.setInt(14, info.getQuantity());
+								ps.setString(15, info.getException());
+								ps.setString(16, info.getProperties());
+								if (info.getCategory() == null)
+									ps.setNull(17, java.sql.Types.VARCHAR);
+								else
+									ps.setString(17, info.getCategory());
+								if (info.getErrorCode() == null)
+									ps.setNull(18, java.sql.Types.VARCHAR);
+								else
+									ps.setString(18, info.getErrorCode());
+							}
 
-				@Override
-				public int getBatchSize() {
-					return tempInfos.size();
-				}
-			});
-			for(int rIndex=0; rIndex<result.length;rIndex++){
-				results[rIndex+fromIndex] = result[rIndex];
+							@Override
+							public int getBatchSize() {
+								return lsInfos.size();
+							}
+						});
+				dealtNum+=result.length;
+			} catch (Exception e){
+				logger.log(Level.SEVERE, "Error occurred in one batch insert at " + (new Date()));
+				e.printStackTrace();
 			}
 		}
-		return results;
+		long duration = System.currentTimeMillis() - startTime;
+		int iCompare = infos.size() - dealtNum;
+		if(iCompare>0){
+			logger.log(Level.SEVERE, iCompare + " records are failed to insert. ");
+		}else{
+			logger.log(Level.INFO, "Insert " + dealtNum + " records into DB. Use " + duration + " milliseconds. ");
+		}
+		return dealtNum;
     }
 
 	public List<UsageDataInfo> query(UsageDataInfo data) {
@@ -214,8 +233,8 @@ public class UDCJDBCTemplate {
 		
 		ErrorRowCallBackHandler handler = new ErrorRowCallBackHandler(errorClassifier){
 			@Override
-			protected void updateRecordsToDB(List<UsageDataInfo> ls) {
-				updateErrorInfoToDB(ls);
+			protected int updateRecordsToDB(List<UsageDataInfo> ls) {
+				return updateErrorInfoToDB(ls);
 		}};
 		jdbcTemplateObject.query(sqlQueryTemp, new PreparedStatementSetter(){
 
@@ -233,32 +252,22 @@ public class UDCJDBCTemplate {
 	/**
 	 * update catetory and errorcode of usagedatainfo
 	 */
-	private void updateErrorInfoToDB(final List<UsageDataInfo> infos) {
+	private int updateErrorInfoToDB(final List<UsageDataInfo> infos) {
 		long time = System.currentTimeMillis();
 		String sqlUpdate = "update " + udcTable
 				+ " set category = ? , ErrorCode= ? where id = ?";
 
-		int results[] = new int[infos.size()];
-
-		int batchCount = infos.size() % batchSize == 0 ? infos.size()
-				/ batchSize : infos.size() / batchSize + 1;
-		int countIndex;
-
-		for (countIndex = 1; countIndex <= batchCount; countIndex++) {
-			int fromIndex = (countIndex - 1) * batchSize;
-			int toIndexTemp = countIndex * batchSize;
-			int toIndex = toIndexTemp < infos.size() ? toIndexTemp : infos
-					.size();
-			final List<UsageDataInfo> tempInfos = infos.subList(fromIndex,
-					toIndex);
-
+		List<List<UsageDataInfo>> lsArInfos = divideList(infos);
+		int dealtNum=0;
+		for(final List<UsageDataInfo> lsInfos: lsArInfos){
+			try{
 			int result[] = updateJdbcTemplateObject.batchUpdate(sqlUpdate,
 					new BatchPreparedStatementSetter() {
 
 						@Override
 						public void setValues(PreparedStatement ps, int i)
 								throws SQLException {
-							UsageDataInfo info = tempInfos.get(i);
+							UsageDataInfo info = lsInfos.get(i);
 							if (info.getCategory() == null)
 								ps.setNull(1, java.sql.Types.VARCHAR);
 							else
@@ -272,16 +281,26 @@ public class UDCJDBCTemplate {
 
 						@Override
 						public int getBatchSize() {
-							return tempInfos.size();
+							return lsInfos.size();
 						}
 
 					});
-			for (int rIndex = 0; rIndex < result.length; rIndex++) {
-				results[rIndex + fromIndex] = result[rIndex];
+			
+			dealtNum += result.length;
+			} catch(Exception e){
+				logger.log(Level.SEVERE, "Error Occurred in one batch update at " + (new Date()));
+				e.printStackTrace();
 			}
 		}
 		long duration = System.currentTimeMillis() - time;
-		logger.log(Level.INFO, "------ Update " + results.length + " records to db. Use time " + duration );
+		int iCompare = infos.size() - dealtNum;
+		if(iCompare>0)
+		{
+			logger.log(Level.SEVERE, iCompare + " records are failed to update.");
+		}else{
+			logger.log(Level.INFO, "Update " + dealtNum + " records to DB. Use " + duration + " milliseconds.");
+		}
+		return dealtNum;
 	}
 	
 }

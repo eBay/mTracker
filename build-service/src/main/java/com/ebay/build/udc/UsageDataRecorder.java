@@ -98,8 +98,7 @@ public class UsageDataRecorder extends Thread
         }
 
     
-        int[] aa = dao.insertUsageData(this.m_data);
-        logger.log(Level.INFO, "Batch update return array's length: "+aa.length);
+        dao.insertUsageData(this.m_data);
     }
 
     private void process(File report)
