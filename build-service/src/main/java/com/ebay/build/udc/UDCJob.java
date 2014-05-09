@@ -7,8 +7,10 @@ package com.ebay.build.udc;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,6 +20,10 @@ import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
+import com.ebay.build.profiler.filter.FilterFactory;
+import com.ebay.build.profiler.filter.PaypalFilterFactory;
+import com.ebay.build.profiler.filter.RideFilterFactory;
+import com.ebay.build.profiler.filter.model.Filter;
 import com.ebay.build.profiler.utils.FileUtils;
 import com.ebay.build.udc.dao.UsageDataDaoJDBCImpl;
 import com.ebay.build.utils.CompressUtils;
@@ -89,7 +95,7 @@ public class UDCJob implements Job {
 			if (csvFiles.length > 0) {
 				try {
 					logger.log(Level.INFO,"Processing files: " + ArrayUtils.toString(csvFiles));
-					new UsageDataRecorder(Arrays.asList(csvFiles), new UsageDataDaoJDBCImpl(type)).start();
+					new UsageDataRecorder(Arrays.asList(csvFiles), type).start();
 				} catch (Exception e) {
 					e.printStackTrace();
 				} 

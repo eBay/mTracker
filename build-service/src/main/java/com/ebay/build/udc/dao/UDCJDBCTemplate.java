@@ -22,7 +22,7 @@ import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 
-import com.ebay.build.profiler.filter.RideErrorClassifier;
+import com.ebay.build.profiler.filter.ErrorClassifier;
 import com.ebay.build.udc.ErrorRowCallBackHandler;
 import com.ebay.build.udc.UsageDataInfo;
 import com.ebay.build.utils.ServiceConfig;
@@ -219,7 +219,7 @@ public class UDCJDBCTemplate {
 	 * @return update records' quantity
 	 */
 	public int queryAndUpdateUncategoriedErrorRecords(Date startDate, Date endDate, 
-			RideErrorClassifier errorClassifier) throws DataAccessException{
+			ErrorClassifier errorClassifier) throws DataAccessException{
 		final String startStr =new SimpleDateFormat("dd-MM-yy").format(startDate);
 		
 		final String endStr = new SimpleDateFormat("dd-MM-yy").format(endDate);

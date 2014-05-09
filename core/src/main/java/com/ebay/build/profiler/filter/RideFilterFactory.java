@@ -5,9 +5,9 @@ import java.net.URL;
 
 public class RideFilterFactory extends FilterFactory {
 	
-	public final static String FILTER_LIST_FILE = "/ride-filters.xml";
-	public final static String FILTER_LIST_IN_GIT = BASE_FILTER_LIST_IN_GIT + FILTER_LIST_FILE;
-	
+	protected String FILTER_LIST_FILE = "/ride-filters.xml";
+	protected String FILTER_LIST_IN_GIT = BASE_FILTER_LIST_IN_GIT + FILTER_LIST_FILE;
+
 	@Override
 	public URL getRemoteFilterURL() {
 		try {

@@ -13,7 +13,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import com.ebay.build.profiler.filter.RideErrorClassifier;
+import com.ebay.build.profiler.filter.ErrorClassifier;
 import com.ebay.build.udc.UsageDataInfo;
 
 /**
@@ -58,7 +58,7 @@ public class UsageDataDaoJDBCImpl implements IUsageDataDao {
 
 	@Override
 	public int queryAndUpdateUncategoriedErrorRecords(
-			Date startDate, Date endDate, RideErrorClassifier errorClassifier) throws DaoException {
+			Date startDate, Date endDate, ErrorClassifier errorClassifier) throws DaoException {
 		return udcJdbc.queryAndUpdateUncategoriedErrorRecords(startDate, endDate, errorClassifier);
 	}
 

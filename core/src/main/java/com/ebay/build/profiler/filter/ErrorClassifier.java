@@ -3,17 +3,19 @@ package com.ebay.build.profiler.filter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.ebay.build.profiler.filter.model.Filter;
 
-public class RideErrorClassifier {
-	private final List<Filter> filters = new ArrayList<Filter>();
-	private final FilterMatcher matcher = new FilterMatcher();
+public class ErrorClassifier {
+	protected  List<Filter> filters = new ArrayList<Filter>();
+	private  FilterMatcher matcher = new FilterMatcher();
 
-	public RideErrorClassifier() {
-		FilterFactory factory = new RideFilterFactory();
-		filters.addAll(factory.getFilters());
-		System.out.println("[INFO] RideTransformer loaded " + filters.size() + " filters.");
+	public ErrorClassifier(List<Filter> lsFilters) {
+		if(lsFilters != null)
+			filters.addAll(lsFilters);
+		Logger.getLogger(ErrorClassifier.class.getName()).log(Level.INFO, "ErrorClassifier loaded " + filters.size() + " filters.");
 	}
 	
 	public Filter doClassify(String what, String exception) {

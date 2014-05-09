@@ -7,7 +7,9 @@ import java.util.logging.Logger;
 
 import javax.xml.bind.JAXBException;
 
-import com.ebay.build.profiler.filter.RideErrorClassifier;
+import com.ebay.build.profiler.filter.ErrorClassifier;
+import com.ebay.build.profiler.filter.FilterFactory;
+import com.ebay.build.profiler.filter.RideFilterFactory;
 import com.ebay.build.profiler.utils.DateUtils;
 import com.ebay.build.udc.dao.IUsageDataDao;
 import com.ebay.build.udc.dao.IUsageDataDao.DaoException;
@@ -17,11 +19,12 @@ public class UDCUpdateJob {
 	private static Logger logger = Logger.getLogger(UDCUpdateJob.class.getName());
 	private IUsageDataDao dao;
 	private Date fromDate;
-	private RideErrorClassifier errorClassifier;
-	public UDCUpdateJob(Date fromDate) throws JAXBException{
-		dao = new UsageDataDaoJDBCImpl(null);
+	private ErrorClassifier errorClassifier;
+	public UDCUpdateJob(Date fromDate, String type) throws JAXBException{
+		dao = new UsageDataDaoJDBCImpl(type);
 		this.fromDate = fromDate;
-		errorClassifier = new RideErrorClassifier();
+		FilterFactory factory = new RideFilterFactory();
+		errorClassifier = new ErrorClassifier(factory.getFilters());
 	}
 	
 	public void run(){
@@ -47,7 +50,7 @@ public class UDCUpdateJob {
 		
 		Date date = DateUtils.addDays(DateUtils.getCurrDate(), -30);
 		try {
-			UDCUpdateJob job = new UDCUpdateJob(date);
+			UDCUpdateJob job = new UDCUpdateJob(date, "");
 			job.run();
 		} catch (JAXBException e) {
 			e.printStackTrace();

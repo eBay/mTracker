@@ -37,7 +37,7 @@ public class UDCUpdateJobTest {
 		
 		dao.getJdbcTemplate().execute(INSERT);
 		int size = dao.getJdbcTemplate().queryForInt(SELECT);
-		UDCUpdateJob job = new UDCUpdateJob(ca.getTime());
+		UDCUpdateJob job = new UDCUpdateJob(ca.getTime(), "");
 		job.run();
 		int size2 = dao.getJdbcTemplate().queryForInt(SELECT);
 		Assert.assertTrue(size2-size>0);

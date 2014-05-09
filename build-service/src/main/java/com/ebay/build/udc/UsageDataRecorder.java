@@ -15,9 +15,13 @@ import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy;
 import au.com.bytecode.opencsv.bean.CsvToBean;
 
-import com.ebay.build.profiler.filter.RideErrorClassifier;
+import com.ebay.build.profiler.filter.ErrorClassifier;
+import com.ebay.build.profiler.filter.FilterFactory;
+import com.ebay.build.profiler.filter.PaypalFilterFactory;
+import com.ebay.build.profiler.filter.RideFilterFactory;
 import com.ebay.build.profiler.filter.model.Filter;
 import com.ebay.build.udc.dao.IUsageDataDao;
+import com.ebay.build.udc.dao.UsageDataDaoJDBCImpl;
 import com.ebay.build.udc.dao.IUsageDataDao.DaoException;
 
 
@@ -32,7 +36,7 @@ public class UsageDataRecorder extends Thread
 			"bundleId", "bundleVersion", "when", "duration", "size",
 			"quantity", "exception", "properties", "sessionProperties" };
     
-	private RideErrorClassifier errorClassifier;
+	private ErrorClassifier errorClassifier;
 
     private List<File>            m_files = new ArrayList<File>();
     private List<UsageDataInfo>   m_data  = new ArrayList<UsageDataInfo>();
@@ -43,13 +47,31 @@ public class UsageDataRecorder extends Thread
     /**
      * @param files
      */
-    public UsageDataRecorder(List<File> files, IUsageDataDao dao) {
+    public UsageDataRecorder(List<File> files, String type) {
         if (files != null) {
             this.m_files.addAll(files);
         }
+        List<Filter> lsFilters = new ArrayList<Filter>(); 
+		try {
+			if (StringUtils.isEmpty(type) || type.trim().length() == 0) {
+				logger.log(Level.INFO, "Processing RIDE");
+				FilterFactory filterFactory = new RideFilterFactory();
+				lsFilters.addAll(filterFactory.getFilters());
+			} else if (type.equalsIgnoreCase("paypal")) {
+				logger.log(Level.INFO, "Processing paypal");
+				FilterFactory filterFactory = new PaypalFilterFactory();
+				lsFilters.addAll(filterFactory.getFilters());
 
-        this.dao = dao;
-        errorClassifier = new RideErrorClassifier();
+			} else {
+				logger.log(Level.WARNING, "Processing " + type
+						+ " whose filter has not been implemented");
+			}
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, "Error in load filters");
+			e.printStackTrace();
+		}
+        this.dao = new UsageDataDaoJDBCImpl(type);
+        errorClassifier = new ErrorClassifier(lsFilters);
     }
 
     @Override

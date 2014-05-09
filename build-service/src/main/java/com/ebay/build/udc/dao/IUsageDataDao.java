@@ -7,7 +7,7 @@ package com.ebay.build.udc.dao;
 import java.util.Date;
 import java.util.List;
 
-import com.ebay.build.profiler.filter.RideErrorClassifier;
+import com.ebay.build.profiler.filter.ErrorClassifier;
 import com.ebay.build.udc.UsageDataInfo;
 
 /**
@@ -30,7 +30,7 @@ public interface IUsageDataDao
     public List<UsageDataInfo> queryUsageData(UsageDataInfo data)
              throws DaoException;
     
-    public int queryAndUpdateUncategoriedErrorRecords(Date startDate, Date endDate, RideErrorClassifier errorClassifier)
+    public int queryAndUpdateUncategoriedErrorRecords(Date startDate, Date endDate, ErrorClassifier errorClassifier)
     		 throws DaoException;
     
     

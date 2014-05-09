@@ -10,15 +10,15 @@ import java.util.List;
 
 import org.springframework.jdbc.core.RowCallbackHandler;
 
-import com.ebay.build.profiler.filter.RideErrorClassifier;
+import com.ebay.build.profiler.filter.ErrorClassifier;
 import com.ebay.build.profiler.filter.model.Filter;
 
 public abstract class ErrorRowCallBackHandler implements RowCallbackHandler {
 	private static int batchSize = 1000;
-	private RideErrorClassifier errorClassifier;
+	private ErrorClassifier errorClassifier;
 	private List<UsageDataInfo> lsNeedUpdated= new ArrayList<UsageDataInfo>();
 	public int updateAmount = 0;
-	public ErrorRowCallBackHandler(RideErrorClassifier errorClassifier){
+	public ErrorRowCallBackHandler(ErrorClassifier errorClassifier){
 		this.errorClassifier = errorClassifier;
 	}
 	
