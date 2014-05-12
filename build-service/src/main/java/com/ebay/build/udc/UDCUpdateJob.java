@@ -15,19 +15,28 @@ import com.ebay.build.udc.dao.IUsageDataDao;
 import com.ebay.build.udc.dao.IUsageDataDao.DaoException;
 import com.ebay.build.udc.dao.UsageDataDaoJDBCImpl;
 
-public class UDCUpdateJob {
+public class UDCUpdateJob extends Thread{
 	private static Logger logger = Logger.getLogger(UDCUpdateJob.class.getName());
 	private IUsageDataDao dao;
 	private Date fromDate;
 	private ErrorClassifier errorClassifier;
-	public UDCUpdateJob(Date fromDate, String type) throws JAXBException{
+	public UDCUpdateJob(Date fromDate, String type){
 		dao = new UsageDataDaoJDBCImpl(type);
 		this.fromDate = fromDate;
 		FilterFactory factory = new RideFilterFactory();
 		errorClassifier = new ErrorClassifier(factory.getFilters());
 	}
-	
+	private StringBuffer inProcessStatus = new StringBuffer();
+	public String getStatus(){
+		return inProcessStatus.toString();
+	}
+	private void changeStringBufferContent(StringBuffer sb, String content){
+		sb.delete(0, sb.length());
+		sb.append(content);
+	}
 	public void run(){
+		changeStringBufferContent(inProcessStatus, "Executing");
+		String resultMsg;
 		Date currDate = DateUtils.getCurrDate();
 		Date startDate = fromDate;
 		try {
@@ -38,24 +47,23 @@ public class UDCUpdateJob {
 				int result = dao.queryAndUpdateUncategoriedErrorRecords(startDate, tempDate, errorClassifier);
 				String startStr = new SimpleDateFormat("dd-MM-yy").format(startDate);
 				logger.log(Level.INFO,  startStr + ": Update "+result+" records. Excute time is: " + (System.currentTimeMillis() - time));
+				changeStringBufferContent(inProcessStatus," Executing. " + startStr + ": Update "+result+" records. Excute time is: " + (System.currentTimeMillis() - time));
 				startDate = tempDate;
 			}
+			resultMsg="Success";
 		} catch (DaoException e) {
 			logger.log(Level.SEVERE, "Error In Update Job");
+			resultMsg="Failed";
 			e.printStackTrace();
 		} 
+		changeStringBufferContent(inProcessStatus, resultMsg);		
 	}
 	
 	public static void main(String[] args){
 		
 		Date date = DateUtils.addDays(DateUtils.getCurrDate(), -30);
-		try {
-			UDCUpdateJob job = new UDCUpdateJob(date, "");
-			job.run();
-		} catch (JAXBException e) {
-			e.printStackTrace();
-		}
-		
+		UDCUpdateJob job = new UDCUpdateJob(date, "");
+		job.start();
 	} 
 	
 }
