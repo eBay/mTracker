@@ -7,10 +7,8 @@ package com.ebay.build.udc;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,12 +18,7 @@ import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
-import com.ebay.build.profiler.filter.FilterFactory;
-import com.ebay.build.profiler.filter.PaypalFilterFactory;
-import com.ebay.build.profiler.filter.RideFilterFactory;
-import com.ebay.build.profiler.filter.model.Filter;
 import com.ebay.build.profiler.utils.FileUtils;
-import com.ebay.build.udc.dao.UsageDataDaoJDBCImpl;
 import com.ebay.build.utils.CompressUtils;
 import com.ebay.build.utils.ServiceConfig;
 
@@ -39,6 +32,7 @@ public class UDCJob implements Job {
              ServiceConfig.get("queue_root_dir"));
 
 	 private final static Logger logger = Logger.getLogger(UDCJob.class.getName());
+	 private static boolean firstExecStatus = true;
 
 	@Override
 	public void execute(JobExecutionContext jec) throws JobExecutionException {
@@ -69,6 +63,24 @@ public class UDCJob implements Job {
 			File wrongDest = new File(udcQueue, "wrong");
 			if (!wrongDest.exists()) {
 				wrongDest.mkdirs();
+			}
+
+			// When UDCJob is not the first time to execute after server start
+			// up, we should check if the last job has been finished.
+			// check whether there are .csv files in udc or udc_**, if yes, that
+			// means last job haven't be finished,
+			// and this insert job will be cancelled.
+			File[] beforeHandleCsvFiles = FileUtils.loadFiles(csvDest, ".csv");
+			if (beforeHandleCsvFiles.length > 0 && !firstExecStatus) {
+				String tempMsg;
+				if (StringUtils.isEmpty(type) || type.trim().length() == 0) {
+					tempMsg = "This insert job for ride is cancelled for last job is still executing.";
+				} else {
+					tempMsg = "This insert job for " + type
+							+ " is cancelled for last job is still executing.";
+				}
+				logger.log(Level.SEVERE, tempMsg);
+				continue;
 			}
 
 			File[] resultsFile = FileUtils.loadFiles(udcQueue, ".zip");
@@ -106,5 +118,9 @@ public class UDCJob implements Job {
 		}
 		long duration = System.currentTimeMillis() - startTime;
 		logger.log(Level.INFO, "UDCJob execute time is " + duration);
+		if(firstExecStatus){
+			firstExecStatus=false;
+		}
+			
 	}
 }
