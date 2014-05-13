@@ -1,5 +1,7 @@
 package com.ebay.build.udc;
 
+import static org.junit.Assert.fail;
+
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -14,7 +16,7 @@ import org.junit.Test;
 import com.ebay.build.udc.dao.UsageDataDaoJDBCImpl;
 import com.ebay.build.utils.SpringConfig;
 
-public class UDCUpdateJobTest {
+public class PaypalUpdateJobTest {
 	private UsageDataDaoJDBCImpl dao;
 	private String udcTable;
 	private UDCUpdateJob job;
@@ -26,9 +28,9 @@ public class UDCUpdateJobTest {
 			", ''[ERROR] No goals have been specified for this build . You must specify a valid lifecycle phase or a goal in the format ...'')";
 	@Before
 	public void setUp() throws Exception {
-		dao = (UsageDataDaoJDBCImpl)SpringConfig.getBean("rideDao");
+		dao = (UsageDataDaoJDBCImpl)SpringConfig.getBean("paypalDao");
 		udcTable = dao.getUdcJdbc().getUdcTable();
-		job = (UDCUpdateJob)SpringConfig.getBean("rideUpdateJob");
+		job = (UDCUpdateJob)SpringConfig.getBean("paypalUpdateJob");
 	}
 	@Test
 	public void testRun() throws JAXBException {
@@ -48,7 +50,7 @@ public class UDCUpdateJobTest {
 		job.run();
 		
 		int size2 = dao.getJdbcTemplate().queryForInt(sql);
-		Assert.assertTrue(size2-size>0);
+		fail("Not yet implemented");
 				
 	}
 	@After

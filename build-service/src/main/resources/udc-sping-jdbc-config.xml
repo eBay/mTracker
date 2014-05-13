@@ -30,4 +30,47 @@
 		<property name="udcTable" value="usagedata4p" />
 	</bean>
 
+	<bean id="rideDao" class="com.ebay.build.udc.dao.UsageDataDaoJDBCImpl">
+		<property name="udcJdbc" ref="UDCJDBCTemplate" />
+	</bean>
+
+	<bean id="paypalDao" class="com.ebay.build.udc.dao.UsageDataDaoJDBCImpl">
+		<property name="udcJdbc" ref="UDCJDBCTemplate_paypal" />
+	</bean>
+	
+	<!-- filter configuration -->
+	<bean id="rideFilterFactory" class="com.ebay.build.profiler.filter.UDCFilterFactory">
+		<property name="filterFile" value="/ride-filters.xml"/>
+	</bean>
+	
+	<bean id="paypalFilterFactory" class="com.ebay.build.profiler.filter.UDCFilterFactory">
+		<property name="filterFile" value="/paypal-filters.xml"/>
+	</bean>
+	
+	<bean id="rideErrorClassifier" class="com.ebay.build.profiler.filter.ErrorClassifier" scope="prototype">
+		<property name="factory" ref="rideFilterFactory"></property>
+	</bean>
+	<bean id="paypalErrorClassifier" class="com.ebay.build.profiler.filter.ErrorClassifier" scope="prototype">
+		<property name="factory" ref="paypalFilterFactory"></property>
+	</bean>
+	
+	<bean id="rideUsageDataRecorder" class="com.ebay.build.udc.UsageDataRecorder" scope="prototype">
+		<property name="dao" ref="rideDao" />
+		<property name="errorClassifier" ref="rideErrorClassifier"/>
+	</bean>
+	
+	<bean id="paypalUsageDataRecorder" class="com.ebay.build.udc.UsageDataRecorder" scope="prototype">
+		<property name="dao" ref="paypalDao" />
+		<property name="errorClassifier" ref="paypalErrorClassifier"/>
+	</bean>
+	
+	<bean id="rideUpdateJob" class="com.ebay.build.udc.UDCUpdateJob" scope="prototype">
+		<property name="dao" ref="rideDao" />
+		<property name="errorClassifier" ref="rideErrorClassifier"/>
+	</bean>
+	
+	<bean id="paypalUpdateJob" class="com.ebay.build.udc.UDCUpdateJob" scope="prototype">
+		<property name="dao" ref="paypalDao" />
+		<property name="errorClassifier" ref="paypalErrorClassifier"/>
+	</bean>
 </beans>

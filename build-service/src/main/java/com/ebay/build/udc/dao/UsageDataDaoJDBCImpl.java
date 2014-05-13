@@ -21,19 +21,15 @@ import com.ebay.build.udc.UsageDataInfo;
  */
 public class UsageDataDaoJDBCImpl implements IUsageDataDao {
 
-	private ApplicationContext context = null;
 	private UDCJDBCTemplate udcJdbc = null;
-	private static Logger logger = Logger.getLogger(UsageDataDaoJDBCImpl.class.getName());
-	public UsageDataDaoJDBCImpl(String type) {
+	public void setUdcJdbc(UDCJDBCTemplate udcJdbc) {
+		this.udcJdbc = udcJdbc;
+	}
+    public UDCJDBCTemplate getUdcJdbc(){
+    	return this.udcJdbc;
+    }
+	public UsageDataDaoJDBCImpl() {
 		super();
-
-		String templateName = StringUtils.isEmpty(type) ? "UDCJDBCTemplate" : "UDCJDBCTemplate_" + type;
-		logger.log(Level.INFO, "Init " + templateName + " bean...");
-		context = new ClassPathXmlApplicationContext("udc-sping-jdbc-config.xml");
-
-		udcJdbc = (UDCJDBCTemplate) context.getBean(templateName);
-		logger.log(Level.INFO, "Finish initing " + templateName + " bean!");
-
 	}
 
 	public JdbcTemplate getJdbcTemplate() {

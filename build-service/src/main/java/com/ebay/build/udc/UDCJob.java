@@ -21,6 +21,7 @@ import org.quartz.JobExecutionException;
 import com.ebay.build.profiler.utils.FileUtils;
 import com.ebay.build.utils.CompressUtils;
 import com.ebay.build.utils.ServiceConfig;
+import com.ebay.build.utils.SpringConfig;
 
 /**
  * 
@@ -33,7 +34,8 @@ public class UDCJob implements Job {
 
 	 private final static Logger logger = Logger.getLogger(UDCJob.class.getName());
 	 private static boolean firstExecStatus = true;
-
+	 
+	 
 	@Override
 	public void execute(JobExecutionContext jec) throws JobExecutionException {
 		long startTime = System.currentTimeMillis();
@@ -107,7 +109,18 @@ public class UDCJob implements Job {
 			if (csvFiles.length > 0) {
 				try {
 					logger.log(Level.INFO,"Processing files: " + ArrayUtils.toString(csvFiles));
-					new UsageDataRecorder(Arrays.asList(csvFiles), type).start();
+					String recorderName;
+					if( StringUtils.isEmpty(type)){
+						recorderName = "rideUsageDataRecorder"; 
+					}else if(type.contains("paypal")){
+						recorderName = "paypalUsageDataRecorder";
+					} else{
+						logger.log(Level.INFO, "Unknown type: " + type);
+						continue;
+					}
+					UsageDataRecorder recorder = (UsageDataRecorder)SpringConfig.getBean(recorderName);
+					recorder.setFiles(Arrays.asList(csvFiles));
+					recorder.start();
 				} catch (Exception e) {
 					e.printStackTrace();
 				} 

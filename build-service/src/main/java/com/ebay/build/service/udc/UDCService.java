@@ -1,6 +1,7 @@
 package com.ebay.build.service.udc;
 
 import java.util.Date;
+import java.util.HashMap;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
@@ -12,13 +13,13 @@ import javax.ws.rs.core.MediaType;
 
 import com.ebay.build.profiler.utils.DateUtils;
 import com.ebay.build.udc.UDCUpdateJob;
+import com.ebay.build.utils.SpringConfig;
 
 @Path("")
 public class UDCService {
-	private static UDCUpdateJob rideJob = null;
-	private static UDCUpdateJob paypalJob = null;
-	private static Date rideJobStartDate = null;
-	private static Date paypalJobStartDate = null;
+	private static HashMap<String, UDCUpdateJob> jobs = new HashMap<String, UDCUpdateJob>();
+	private static HashMap<String, Date> jobsStartTime = new HashMap<String, Date>();
+
 	@POST
     @Path("/update/{appname}/start/{days}")
     @Produces(MediaType.TEXT_PLAIN)
@@ -29,28 +30,27 @@ public class UDCService {
 		String returnMsg="Nothing to update";
 		if(days<=0)
 			days=30;
-		if(appName.equalsIgnoreCase("ride")){
-			if(rideJob!=null && rideJob.getStatus().contains("Executing")){
-				returnMsg = "A update job for Ride is already in process. ";
-			}else{
-				Date date = DateUtils.addDays(DateUtils.getCurrDate(), -days);
-				rideJobStartDate = new Date();
-				rideJob = new UDCUpdateJob(date, "");
-				rideJob.start();
-				returnMsg = "Update job for Ride is starting...";
-			}
-		}else if (appName.equalsIgnoreCase("paypal")){
-			if(paypalJob!=null && paypalJob.getStatus().contains("Executing")){
-				return "A update job for Paypal is already in process. ";
-			}else{
-				Date date = DateUtils.addDays(DateUtils.getCurrDate(), -days);
-				paypalJobStartDate = new Date();
-				paypalJob = new UDCUpdateJob(date, "paypal");
-				paypalJob.start();
-				returnMsg = "Update job for Paypal is starting...";
-			}
-		}else{}
+		Date date = DateUtils.addDays(DateUtils.getCurrDate(), -days);
 		
+		//appName is not ride and paypal
+		if(!appName.equals("ride")&&!appName.equals("paypal")){
+			return "The update job for " + appName + " is not implemented.";
+		}
+
+		if(jobs.containsKey(appName)&&checkJobExecuting(jobs.get(appName))){
+			//appName is ride or paypal and there is a update job has been started and last update job is not finished.
+			return "A update job for " + appName + " is already in process. ";
+		}else{
+			//appName is ride or paypal and there is no update job is executing.
+			//create one and put it in jobs
+			UDCUpdateJob job = (UDCUpdateJob)SpringConfig.getBean(appName+"UpdateJob");
+			jobs.put(appName, job);
+			job.setFromDate(date);
+			job.start();
+			jobsStartTime.put(appName, new Date());
+		}
+		
+		returnMsg = "Update job for " + appName + " is starting...";
 		return returnMsg;
 	}
 	@POST
@@ -69,18 +69,25 @@ public class UDCService {
 	public String get(@HeaderParam("Content-Type") String contentType, 
 			@PathParam("appname") String appName){
 		String msg = "Last update job status: ";
-		if(appName.equalsIgnoreCase("ride")&&rideJob!=null){
-			msg += "(Start at "+rideJobStartDate+")";
-			msg += rideJob.getStatus();
-		}else if(appName.equalsIgnoreCase("paypal")&&paypalJob!=null){
-			msg += "(Start at "+paypalJobStartDate+")";
-			msg += paypalJob.getStatus();
-		} else if(paypalJob==null && rideJob==null){
+		if(!appName.equals("ride")&&!appName.equals("paypal")){
+			//appName is not ride and not paypal
+			msg += "The update job for " + appName + " is not implemented.";
+		} else if(!jobs.containsKey(appName)){
+			//appName is ride or paypal, but there is no update job that has ever executed
 			msg += "No update job has been executed.";
-		}else
-		{
-			msg +="Unknown App Name";
+		} else{
+			//there is update job for ride or paypal has ever executed.
+			msg += "Start at "+jobsStartTime.get(appName)+"; ";
+			msg += jobs.get(appName).getStatus();
 		}
 		return msg;
 	}
+	
+	private boolean checkJobExecuting(UDCUpdateJob job){
+		if(job!=null && job.getStatus().contains("Executing")){
+			return true;
+		}
+		return false;
+	}
+	
 }

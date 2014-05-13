@@ -2,19 +2,33 @@ package com.ebay.build.udc;
 
 import java.io.File;
 import java.net.URL;
+import java.text.MessageFormat;
 import java.util.Arrays;
 
 import junit.framework.Assert;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import com.ebay.build.udc.dao.IUsageDataDao.DaoException;
 import com.ebay.build.udc.dao.UsageDataDaoJDBCImpl;
+import com.ebay.build.utils.SpringConfig;
 
 public class UDCDataCollectorTest {
 
-	private static final String SELECT_COUNT = "Select count(*) from usagedata where ideVersion = 'x.x.x'";
-	private static final String DELETE_TEST_DATA = "delete from usagedata where ideVersion='x.x.x'";
+	private static final String SELECT_COUNT = "Select count(*) from {0} where ideVersion = ''x.x.x''";
+	private static final String DELETE_TEST_DATA = "delete from {0} where ideVersion=''x.x.x''";
+	private UsageDataDaoJDBCImpl dao;
+	private String udcTable;
+	private UsageDataRecorder recorder;
+	
+	@Before
+	public void setUp() throws Exception {
+		dao = (UsageDataDaoJDBCImpl)SpringConfig.getBean("rideDao");
+		udcTable = dao.getUdcJdbc().getUdcTable();
+		recorder = (UsageDataRecorder)SpringConfig.getBean("rideUsageDataRecorder");
+	}
 	
 	@Test
 	public void testCollect() throws DaoException {
@@ -23,14 +37,18 @@ public class UDCDataCollectorTest {
 				"D-SHC-00436909_wecai_1382582655937.csv");
 		File file = new File(url.getFile());
 
-		UsageDataDaoJDBCImpl dao = new UsageDataDaoJDBCImpl("");
+		recorder.setFiles(Arrays.asList(file));
+		recorder.run();
 
-		new UsageDataRecorder(Arrays.asList(file), "").run();
-
-		int newSize = dao.getJdbcTemplate().queryForInt(SELECT_COUNT);
+		String sql = MessageFormat.format(SELECT_COUNT, udcTable);
+		int newSize = dao.getJdbcTemplate().queryForInt(sql);
 		Assert.assertTrue(newSize == 2);
-		
-		dao.getJdbcTemplate().execute(DELETE_TEST_DATA);
 
+	}
+	
+	@After
+	public void tearDown() throws Exception {
+		String sql = MessageFormat.format(DELETE_TEST_DATA, udcTable);
+		dao.getJdbcTemplate().execute(sql);
 	}
 }

@@ -9,14 +9,16 @@ import java.util.logging.Logger;
 import com.ebay.build.profiler.filter.model.Filter;
 
 public class ErrorClassifier {
+	private UDCFilterFactory factory;
+	public void setFactory(UDCFilterFactory factory) {
+		this.factory = factory;
+		filters.addAll(factory.getFilters());
+		Logger.getLogger(ErrorClassifier.class.getName()).log(Level.INFO, 
+				"Load " + filters.size() + " filter rules");
+	}
+
 	protected  List<Filter> filters = new ArrayList<Filter>();
 	private  FilterMatcher matcher = new FilterMatcher();
-
-	public ErrorClassifier(List<Filter> lsFilters) {
-		if(lsFilters != null)
-			filters.addAll(lsFilters);
-		Logger.getLogger(ErrorClassifier.class.getName()).log(Level.INFO, "ErrorClassifier loaded " + filters.size() + " filters.");
-	}
 	
 	public Filter doClassify(String what, String exception) {
 		if(what == null || exception == null)

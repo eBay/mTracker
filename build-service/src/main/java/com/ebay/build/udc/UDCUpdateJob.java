@@ -5,28 +5,34 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.xml.bind.JAXBException;
-
 import com.ebay.build.profiler.filter.ErrorClassifier;
-import com.ebay.build.profiler.filter.FilterFactory;
-import com.ebay.build.profiler.filter.RideFilterFactory;
 import com.ebay.build.profiler.utils.DateUtils;
 import com.ebay.build.udc.dao.IUsageDataDao;
 import com.ebay.build.udc.dao.IUsageDataDao.DaoException;
-import com.ebay.build.udc.dao.UsageDataDaoJDBCImpl;
 
 public class UDCUpdateJob extends Thread{
 	private static Logger logger = Logger.getLogger(UDCUpdateJob.class.getName());
 	private IUsageDataDao dao;
 	private Date fromDate;
 	private ErrorClassifier errorClassifier;
-	public UDCUpdateJob(Date fromDate, String type){
-		dao = new UsageDataDaoJDBCImpl(type);
-		this.fromDate = fromDate;
-		FilterFactory factory = new RideFilterFactory();
-		errorClassifier = new ErrorClassifier(factory.getFilters());
-	}
 	private StringBuffer inProcessStatus = new StringBuffer();
+
+	public UDCUpdateJob(){
+		logger.log(Level.INFO, "Initialize UDCUpdateJob");
+		inProcessStatus.append("Init");
+		fromDate = DateUtils.addDays(DateUtils.getCurrDate(), -30);
+	}
+	public void setFromDate(Date fromDate) {
+		this.fromDate = fromDate;
+	}
+
+	public void setDao(IUsageDataDao dao) {
+		this.dao = dao;
+	}
+	public void setErrorClassifier(ErrorClassifier errorClassifier) {
+		this.errorClassifier = errorClassifier;
+	}
+
 	public String getStatus(){
 		return inProcessStatus.toString();
 	}
@@ -58,12 +64,5 @@ public class UDCUpdateJob extends Thread{
 		} 
 		changeStringBufferContent(inProcessStatus, resultMsg);		
 	}
-	
-	public static void main(String[] args){
-		
-		Date date = DateUtils.addDays(DateUtils.getCurrDate(), -30);
-		UDCUpdateJob job = new UDCUpdateJob(date, "");
-		job.start();
-	} 
 	
 }

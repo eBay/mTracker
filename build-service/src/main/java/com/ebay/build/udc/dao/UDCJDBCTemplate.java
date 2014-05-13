@@ -63,6 +63,10 @@ public class UDCJDBCTemplate {
 		this.udcTable = udcTable;
 	}
 
+    public String getUdcTable(){
+    	return udcTable;
+    }
+    
 	public JdbcTemplate getJdbcTemplate() {
 		return jdbcTemplateObject;
 	}
