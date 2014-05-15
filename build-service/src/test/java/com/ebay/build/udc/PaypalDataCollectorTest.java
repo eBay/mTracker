@@ -32,7 +32,7 @@ public class PaypalDataCollectorTest {
 	public void testCollect() throws DaoException {
 		// do not rename the test resouce file, UDC will parse the name
 		URL url = getClass().getClassLoader().getResource(
-				"D-SHC-00436909_wecai_1382582655937.csv");
+				"D-SHC-00436909_qingqliu_1382582655937.csv");
 		File file = new File(url.getFile());
 
 		recorder.setFiles(Arrays.asList(file));
