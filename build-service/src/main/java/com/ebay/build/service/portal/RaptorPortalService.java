@@ -26,6 +26,6 @@ public class RaptorPortalService {
 		if (ride == null || ride.startsWith("5.0")) {
 			return "http://invalid";
 		}
-		return "http://go/ride/welcome";
+		return "https://github.scm.corp.ebay.com/pages/DevExRelease/RIDEWelcome/";
 	}
 }
