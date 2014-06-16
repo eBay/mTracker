@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
 
-import com.ebay.build.profiler.model.Plugin;
+import com.ebay.build.core.model.Plugin;
 
 public class PluginMapper implements RowMapper<Plugin> {
 

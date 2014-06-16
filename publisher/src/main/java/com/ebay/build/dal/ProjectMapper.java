@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
 
-import com.ebay.build.profiler.model.Project;
+import com.ebay.build.core.model.Project;
 
 public class ProjectMapper implements RowMapper<Project> {
 

@@ -4,9 +4,9 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-import com.ebay.build.profiler.model.Session;
-import com.ebay.build.profiler.publisher.LoaderProcessor;
-import com.ebay.build.profiler.readers.LineProcessor;
+import com.ebay.build.core.model.Session;
+import com.ebay.build.core.readers.LineProcessor;
+import com.ebay.build.publisher.LoaderProcessor;
 
 public class DALTest {
 	@SuppressWarnings("resource")

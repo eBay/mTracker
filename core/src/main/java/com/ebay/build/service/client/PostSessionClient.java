@@ -9,7 +9,7 @@ import javax.ws.rs.core.Response;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.jackson.JacksonFeature;
 
-import com.ebay.build.profiler.model.Session;
+import com.ebay.build.core.model.Session;
 
 public class PostSessionClient {
 

@@ -12,8 +12,8 @@ import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
-import com.ebay.build.profiler.model.Plugin;
-import com.ebay.build.profiler.utils.StringUtils;
+import com.ebay.build.core.model.Plugin;
+import com.ebay.build.core.utils.StringUtils;
 
 public class PluginJDBCTemplate {
 	private DataSource dataSource;

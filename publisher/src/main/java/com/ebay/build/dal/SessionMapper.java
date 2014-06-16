@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
 
-import com.ebay.build.profiler.model.Session;
+import com.ebay.build.core.model.Session;
 
 public class SessionMapper implements RowMapper<Session> {
 

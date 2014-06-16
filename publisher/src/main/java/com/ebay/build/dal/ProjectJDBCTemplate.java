@@ -11,7 +11,7 @@ import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
-import com.ebay.build.profiler.model.Project;
+import com.ebay.build.core.model.Project;
 
 public class ProjectJDBCTemplate {
 	private DataSource dataSource;

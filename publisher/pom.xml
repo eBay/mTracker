@@ -5,7 +5,7 @@
 	<artifactId>publisher</artifactId>
 	<packaging>jar</packaging>
 	<version>1.0.15-jar-with-dependencies</version>
-	<name>LogPublisher</name>
+	<name>Build Log Publisher</name>
 	<url>http://maven.apache.org</url>
 	
 	<distributionManagement>
