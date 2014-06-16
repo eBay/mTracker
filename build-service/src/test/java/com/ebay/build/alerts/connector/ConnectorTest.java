@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.ebay.build.profiler.utils.DateUtils;
+import com.ebay.build.core.utils.DateUtils;
 import com.ebay.build.utils.ServiceConfig;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;

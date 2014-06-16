@@ -11,7 +11,7 @@ import java.util.Date;
 
 import org.junit.Test;
 
-import com.ebay.build.profiler.utils.DateUtils;
+import com.ebay.build.core.utils.DateUtils;
 
 public class ReliabilityEmailJobTest {
 	

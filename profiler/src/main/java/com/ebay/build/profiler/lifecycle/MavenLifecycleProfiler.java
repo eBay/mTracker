@@ -11,7 +11,7 @@ import org.apache.maven.execution.ExecutionEvent;
 import org.apache.maven.execution.MavenExecutionRequest;
 import org.apache.maven.settings.building.SettingsBuildingRequest;
 
-import com.ebay.build.profiler.model.Session;
+import com.ebay.build.core.model.Session;
 import com.ebay.build.profiler.profile.DiscoveryProfile;
 import com.ebay.build.profiler.profile.MojoProfile;
 import com.ebay.build.profiler.profile.PhaseProfile;

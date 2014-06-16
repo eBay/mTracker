@@ -10,7 +10,7 @@ import javax.sql.DataSource;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import com.ebay.build.profiler.model.Session;
+import com.ebay.build.core.model.Session;
 
 public class SessionJDBCTemplate {
 	private DataSource dataSource;

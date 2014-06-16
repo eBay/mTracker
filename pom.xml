@@ -16,6 +16,7 @@
 		<module>core</module>
 		<module>profiler</module>
 		<module>publisher</module>	
+		<module>build-service</module>	
 	</modules>
 
 </project>

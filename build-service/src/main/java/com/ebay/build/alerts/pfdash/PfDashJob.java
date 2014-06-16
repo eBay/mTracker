@@ -19,7 +19,7 @@ import com.ebay.build.alerts.Condition;
 import com.ebay.build.alerts.SingleResult;
 import com.ebay.build.alerts.Time;
 import com.ebay.build.alerts.connector.Connector;
-import com.ebay.build.profiler.utils.DateUtils;
+import com.ebay.build.core.utils.DateUtils;
 import com.ebay.build.service.BuildServiceScheduler;
 import com.ebay.build.utils.ServiceConfig;
 import com.mongodb.DB;

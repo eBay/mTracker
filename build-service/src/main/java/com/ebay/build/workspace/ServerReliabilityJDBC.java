@@ -15,7 +15,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import com.ebay.build.reliability.ErrorCode;
 import com.ebay.build.reliability.ReportInfo;
 import com.ebay.build.reliability.ReportInfoMapper;
-import com.ebay.build.profiler.utils.StringUtils;
+import com.ebay.build.core.utils.StringUtils;
 
 public class ServerReliabilityJDBC {
 	

@@ -9,9 +9,9 @@ import org.quartz.JobExecutionContext;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.ebay.build.profiler.filter.SessionTransformer;
-import com.ebay.build.profiler.model.Session;
-import com.ebay.build.profiler.utils.StringUtils;
+import com.ebay.build.core.filter.SessionTransformer;
+import com.ebay.build.core.model.Session;
+import com.ebay.build.core.utils.StringUtils;
 import com.ebay.build.tracking.jdbc.SessionJDBCTemplate;
 
 public class BatchUpdateCategoryJob implements Job {

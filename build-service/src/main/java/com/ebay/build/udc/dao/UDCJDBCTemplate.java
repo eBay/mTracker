@@ -22,7 +22,7 @@ import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 
-import com.ebay.build.profiler.filter.ErrorClassifier;
+import com.ebay.build.core.filter.ErrorClassifier;
 import com.ebay.build.udc.ErrorRowCallBackHandler;
 import com.ebay.build.udc.UsageDataInfo;
 import com.ebay.build.utils.ServiceConfig;

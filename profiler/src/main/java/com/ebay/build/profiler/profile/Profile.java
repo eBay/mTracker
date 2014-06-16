@@ -7,7 +7,7 @@ import java.net.UnknownHostException;
 import org.apache.maven.eventspy.EventSpy.Context;
 import org.apache.maven.execution.ExecutionEvent;
 
-import com.ebay.build.profiler.model.Session;
+import com.ebay.build.core.model.Session;
 import com.ebay.build.profiler.util.GitUtil;
 import com.ebay.build.profiler.util.Timer;
 import com.ebay.build.service.config.BuildServiceConfigBean;

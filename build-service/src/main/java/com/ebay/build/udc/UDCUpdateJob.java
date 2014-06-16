@@ -5,8 +5,8 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.ebay.build.profiler.filter.ErrorClassifier;
-import com.ebay.build.profiler.utils.DateUtils;
+import com.ebay.build.core.filter.ErrorClassifier;
+import com.ebay.build.core.utils.DateUtils;
 import com.ebay.build.udc.dao.IUsageDataDao;
 import com.ebay.build.udc.dao.IUsageDataDao.DaoException;
 

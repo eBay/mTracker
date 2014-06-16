@@ -6,7 +6,7 @@ import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
-import com.ebay.build.profiler.utils.FileUtils;
+import com.ebay.build.core.utils.FileUtils;
 import com.ebay.build.utils.ServiceConfig;
 
 public class DiskCleanJob  implements Job {

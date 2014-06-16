@@ -23,8 +23,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.ebay.build.profiler.model.Session;
-import com.ebay.build.profiler.readers.LineProcessor;
+import com.ebay.build.core.model.Session;
+import com.ebay.build.core.readers.LineProcessor;
 
 public class QueueServiceTest {
 	 private HttpServer server;

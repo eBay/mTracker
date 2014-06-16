@@ -5,15 +5,10 @@ package com.ebay.build.udc.dao;
 
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-import org.apache.commons.lang.StringUtils;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import com.ebay.build.profiler.filter.ErrorClassifier;
+import com.ebay.build.core.filter.ErrorClassifier;
 import com.ebay.build.udc.UsageDataInfo;
 
 /**

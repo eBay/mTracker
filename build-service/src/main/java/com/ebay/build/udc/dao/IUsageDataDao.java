@@ -7,7 +7,7 @@ package com.ebay.build.udc.dao;
 import java.util.Date;
 import java.util.List;
 
-import com.ebay.build.profiler.filter.ErrorClassifier;
+import com.ebay.build.core.filter.ErrorClassifier;
 import com.ebay.build.udc.UsageDataInfo;
 
 /**

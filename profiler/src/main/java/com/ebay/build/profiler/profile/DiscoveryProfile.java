@@ -11,9 +11,9 @@ import org.apache.maven.eventspy.EventSpy.Context;
 import org.apache.maven.execution.ExecutionEvent;
 import org.apache.maven.project.MavenProject;
 
-import com.ebay.build.profiler.readers.ProcessHelper;
+import com.ebay.build.core.readers.ProcessHelper;
 import com.ebay.build.profiler.util.Timer;
-import com.ebay.build.profiler.writers.SessionExporter;
+import com.ebay.build.core.writers.SessionExporter;
 import com.ebay.build.service.client.PostSessionClient;
 
 public class DiscoveryProfile extends Profile {

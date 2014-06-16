@@ -6,7 +6,7 @@ import java.util.TimeZone;
 
 import com.ebay.build.email.MailSenderInfo;
 import com.ebay.build.email.SimpleMailSender;
-import com.ebay.build.profiler.utils.DateUtils;
+import com.ebay.build.core.utils.DateUtils;
 import com.ebay.build.utils.ServiceConfig;
 
 public class AlertEmail {

@@ -1,6 +1,6 @@
 package com.ebay.build.tracking.jdbc;
 
-import com.ebay.build.profiler.model.Session;
+import com.ebay.build.core.model.Session;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.Clob;

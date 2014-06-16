@@ -1,6 +1,6 @@
 package com.ebay.build.tracking;
 
-import com.ebay.build.profiler.model.Session;
+import com.ebay.build.core.model.Session;
 import com.ebay.build.tracking.jdbc.DurationObject;
 import com.ebay.build.tracking.jdbc.RawDataJDBCTemplate;
 import com.ebay.build.tracking.jdbc.SessionJDBCTemplate;

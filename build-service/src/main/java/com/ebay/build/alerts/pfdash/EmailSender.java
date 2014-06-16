@@ -9,8 +9,8 @@ import com.ebay.build.alerts.Time;
 import com.ebay.build.alerts.VelocityParse;
 import com.ebay.build.email.MailSenderInfo;
 import com.ebay.build.email.SimpleMailSender;
-import com.ebay.build.profiler.utils.DateUtils;
-import com.ebay.build.profiler.utils.FileUtils;
+import com.ebay.build.core.utils.DateUtils;
+import com.ebay.build.core.utils.FileUtils;
 import com.ebay.build.utils.ServiceConfig;
 
 

@@ -10,8 +10,8 @@ import java.util.List;
 
 import org.springframework.jdbc.core.RowCallbackHandler;
 
-import com.ebay.build.profiler.filter.ErrorClassifier;
-import com.ebay.build.profiler.filter.model.Filter;
+import com.ebay.build.core.filter.ErrorClassifier;
+import com.ebay.build.core.filter.model.Filter;
 
 public abstract class ErrorRowCallBackHandler implements RowCallbackHandler {
 	private static int batchSize = 1000;

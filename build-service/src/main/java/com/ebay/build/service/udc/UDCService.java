@@ -11,7 +11,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.ebay.build.profiler.utils.DateUtils;
+import com.ebay.build.core.utils.DateUtils;
 import com.ebay.build.udc.UDCUpdateJob;
 import com.ebay.build.utils.SpringConfig;
 

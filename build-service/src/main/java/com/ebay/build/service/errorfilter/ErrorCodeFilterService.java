@@ -9,9 +9,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.ebay.build.profiler.filter.FilterFactory;
-import com.ebay.build.profiler.filter.MavenBuildFilterFactory;
-import com.ebay.build.profiler.filter.model.Filter;
+import com.ebay.build.core.filter.FilterFactory;
+import com.ebay.build.core.filter.MavenBuildFilterFactory;
+import com.ebay.build.core.filter.model.Filter;
 
 @Path("")
 public class ErrorCodeFilterService {

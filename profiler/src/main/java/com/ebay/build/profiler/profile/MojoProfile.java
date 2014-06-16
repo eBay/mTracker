@@ -6,7 +6,7 @@ import org.apache.maven.eventspy.EventSpy.Context;
 import org.apache.maven.execution.ExecutionEvent;
 import org.apache.maven.plugin.MojoExecution;
 
-import com.ebay.build.profiler.model.Plugin;
+import com.ebay.build.core.model.Plugin;
 import com.ebay.build.profiler.util.Timer;
 
 /**

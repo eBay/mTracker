@@ -25,8 +25,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.ebay.build.charts.LineChart;
 import com.ebay.build.email.MailSenderInfo;
 import com.ebay.build.email.SimpleMailSender;
-import com.ebay.build.profiler.utils.DateUtils;
-import com.ebay.build.profiler.utils.FileUtils;
+import com.ebay.build.core.utils.DateUtils;
+import com.ebay.build.core.utils.FileUtils;
 import com.ebay.build.service.BuildServiceScheduler;
 import com.ebay.build.utils.ServiceConfig;
 

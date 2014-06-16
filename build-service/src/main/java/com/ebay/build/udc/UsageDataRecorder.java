@@ -15,8 +15,8 @@ import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy;
 import au.com.bytecode.opencsv.bean.CsvToBean;
 
-import com.ebay.build.profiler.filter.ErrorClassifier;
-import com.ebay.build.profiler.filter.model.Filter;
+import com.ebay.build.core.filter.ErrorClassifier;
+import com.ebay.build.core.filter.model.Filter;
 import com.ebay.build.udc.dao.IUsageDataDao;
 import com.ebay.build.udc.dao.IUsageDataDao.DaoException;
 

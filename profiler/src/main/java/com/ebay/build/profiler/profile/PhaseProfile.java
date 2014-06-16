@@ -7,8 +7,8 @@ import java.util.List;
 import org.apache.maven.eventspy.EventSpy.Context;
 import org.apache.maven.execution.ExecutionEvent;
 
-import com.ebay.build.profiler.model.Phase;
-import com.ebay.build.profiler.model.Project;
+import com.ebay.build.core.model.Phase;
+import com.ebay.build.core.model.Project;
 import com.ebay.build.profiler.util.Timer;
 
 public class PhaseProfile extends Profile {
