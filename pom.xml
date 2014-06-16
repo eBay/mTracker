@@ -8,14 +8,14 @@
 	<name>PlatformFramework:PaaS:Build:MavenTracking</name>
 	<description>Build All Modules</description>
 	
-	 <properties>		
+	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>		
 	</properties>
 
 	<modules>		
 		<module>core</module>
-		<module>BuildProfiler</module>
-		<module>LogPublisher</module>	
+		<module>profiler</module>
+		<module>publisher</module>	
 	</modules>
 
 </project>
