@@ -9,7 +9,6 @@ import java.util.Calendar;
 import javax.xml.bind.JAXBException;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -43,13 +42,13 @@ public class PaypalUpdateJobTest {
 		dao.getJdbcTemplate().execute(sql);
 		
 		sql = MessageFormat.format(SELECT, udcTable);
-		int size = dao.getJdbcTemplate().queryForInt(sql);
+		//int size = dao.getJdbcTemplate().queryForInt(sql);
 		
 		
 		job.setFromDate(ca.getTime());
 		job.run();
 		
-		int size2 = dao.getJdbcTemplate().queryForInt(sql);
+		//int size2 = dao.getJdbcTemplate().queryForInt(sql);
 		fail("Not yet implemented");
 				
 	}
