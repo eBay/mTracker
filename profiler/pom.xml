@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.ebay.build.profiler</groupId>
   <artifactId>profiler</artifactId>
-  <version>1.0.13-M${maven.version}</version>
+  <version>1.0.13</version>
   <name>Build Profiler</name>
   <description>BuildProfiler is used to collect build metrics for maven builds. It gives a break up of maven build like how much each project took and how much each plugin took etc.,</description>
   
@@ -13,7 +13,7 @@
 	<dependency>
 		<groupId>org.apache.maven</groupId>
 		<artifactId>maven-core</artifactId>
-		<version>${maven.version}</version>
+		<version>3.1.1</version>
 	</dependency>
 
 	<dependency>
@@ -29,7 +29,7 @@
 	</dependency>
     
     <dependency>
-      <groupId>com.ebay.build.profiler</groupId>
+      <groupId>com.ebay.build.core</groupId>
       <artifactId>core</artifactId>
       <version>1.0.14</version>
     </dependency>

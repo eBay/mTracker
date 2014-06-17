@@ -24,7 +24,7 @@ public class ProcessHelper {
 				session.setGitUrl(keyValue[1]);
 			}
 			if ("jenkins.url".equals(keyValue[0])) {
-				session.setJekinsUrl(keyValue[1]);
+				session.setJenkinsUrl(keyValue[1]);
 			}
 			if ("git.branch".equals(keyValue[0])) {
 				session.setGitBranch(keyValue[1]);

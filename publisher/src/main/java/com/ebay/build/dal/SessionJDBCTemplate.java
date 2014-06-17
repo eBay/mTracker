@@ -48,7 +48,7 @@ public class SessionJDBCTemplate {
 				ps.setTimestamp(9, new java.sql.Timestamp(session.getStartTime().getTime()));
 				ps.setString(10,  session.getGitUrl());
 				ps.setString(11, session.getGitBranch());
-				ps.setString(12, session.getJekinsUrl());
+				ps.setString(12, session.getJenkinsUrl());
 				ps.setString(13, session.getJavaVersion());
 				ps.setString(14, getCause(session.getExceptionMessage()));
 				

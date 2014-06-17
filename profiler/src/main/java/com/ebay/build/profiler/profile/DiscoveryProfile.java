@@ -43,7 +43,7 @@ public class DiscoveryProfile extends Profile {
 			ProcessHelper.parseSessionPayLoad(data, getSession());
 		}
 	
-		System.out.println("[INFO] Running From CI: " + this.isInJekins());
+		System.out.println("[INFO] Running From CI: " + this.isInJenkins());
 		System.out.println("[INFO] Build Environment: " + this.getBuildEnvironment());
 		System.out.println("[INFO] Application Name: " + getSession().getAppName());
 	}
@@ -158,7 +158,7 @@ public class DiscoveryProfile extends Profile {
 			}
 		}
 		
-		if (this.isInJekins()) {
+		if (this.isInJenkins()) {
 			exportSession();
 			return;
 		}

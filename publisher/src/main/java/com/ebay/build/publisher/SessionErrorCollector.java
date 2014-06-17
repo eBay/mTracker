@@ -35,7 +35,7 @@ public class SessionErrorCollector {
 		StringBuffer buffer = new StringBuffer();
 		buffer.append("------------ Session Error Collector --------------------\n");
 		buffer.append("session id:" ).append(this.sessionID).append("\n");
-		buffer.append("jenkins url:" ).append(this.session.getJekinsUrl()).append("\n");
+		buffer.append("jenkins url:" ).append(this.session.getJenkinsUrl()).append("\n");
 		buffer.append("git url:" ).append(this.session.getGitUrl()).append("\n");
 		buffer.append("machine name: ").append(this.session.getMachineName()).append("\n");
 		buffer.append("exception: " ).append(this.errorMessage).append("\n");

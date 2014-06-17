@@ -17,7 +17,7 @@ public class Session extends TrackingModel {
 	private String environment;
 	private String gitUrl;
 	private String gitBranch;
-	private String jekinsUrl; 
+	private String jenkinsUrl; 
 	private String raptorVersion;
 	private String domainVersion;
 	
@@ -100,14 +100,14 @@ public class Session extends TrackingModel {
 	public void setGitBranch(String gitBranch) {
 		this.gitBranch = gitBranch;
 	}
-	public String getJekinsUrl() {
-		if (StringUtils.isEmpty(jekinsUrl)) {
+	public String getJenkinsUrl() {
+		if (StringUtils.isEmpty(jenkinsUrl)) {
 			return "N/A";
 		}
-		return jekinsUrl;
+		return jenkinsUrl;
 	}
-	public void setJekinsUrl(String jekinsUrl) {
-		this.jekinsUrl = jekinsUrl;
+	public void setJenkinsUrl(String jenkinsUrl) {
+		this.jenkinsUrl = jenkinsUrl;
 	}
 	
 	public String toString() {

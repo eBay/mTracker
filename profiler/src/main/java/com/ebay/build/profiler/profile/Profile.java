@@ -55,8 +55,6 @@ public class Profile {
     	if (getSession().getMachineName() == null) {
     		getSession().setMachineName(machineName);
     	}
-    	
-    	//skipMDDA = (Boolean) context.getData().get("skipMDDA");
     }
   }
 
@@ -151,11 +149,7 @@ public class Profile {
 		return new BuildServiceConfigBean();
 	}
 	
-//	public boolean isMDDAEnabled() {
-//		return this.getConfig().isGlobalSwitch() && !this.skipMDDA; 
-//	}
-	
-	protected boolean isInJekins() {
+	protected boolean isInJenkins() {
 		return "CI".equalsIgnoreCase(getBuildEnvironment());
 	}
 	
