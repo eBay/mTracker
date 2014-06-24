@@ -117,7 +117,7 @@ public class QueueService {
     
     private String getHostName() {
         try {
-            return java.net.InetAddress.getLocalHost().getHostName();
+            return java.net.InetAddress.getLocalHost().getCanonicalHostName();
         } catch (UnknownHostException e) {
         }
         return "";

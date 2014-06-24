@@ -44,7 +44,7 @@ public class Profile {
     	String poolName = getAppName();
     	String machineName = "N/A";
     	try {
-    		machineName = InetAddress.getLocalHost().getHostName();
+    		machineName = InetAddress.getLocalHost().getCanonicalHostName();
     	} catch (UnknownHostException e) {
     		e.printStackTrace();
     	}
@@ -153,8 +153,9 @@ public class Profile {
 		return "CI".equalsIgnoreCase(getBuildEnvironment());
 	}
 	
-	protected boolean isInRIDE() {
-		return "RIDE".equalsIgnoreCase(getBuildEnvironment());
+	protected boolean isInIDE() {
+		String env = getBuildEnvironment(); 
+		return env!= null && env.contains("IDE");
 	}
 	
 	protected String endTransaction() {

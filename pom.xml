@@ -5,7 +5,7 @@
 	<artifactId>RaptorBuildTracking</artifactId>
 	<version>1.0.13</version>
 	<packaging>pom</packaging>
-	<name>PlatformFramework:PaaS:Build:MavenTracking</name>
+	<name>MavenBuildTracking</name>
 	<description>Build All Modules</description>
 	
 	<properties>

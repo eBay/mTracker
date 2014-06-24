@@ -74,7 +74,7 @@ public class DiscoveryProfile extends Profile {
         }
 		
 		try {
-			data.append(";machine=").append(java.net.InetAddress.getLocalHost().getHostName());
+			data.append(";machine=").append(java.net.InetAddress.getLocalHost().getCanonicalHostName());
 		} catch (UnknownHostException e) {}
 		
 		data.append(";uname=").append(System.getProperty("user.name"));
@@ -130,20 +130,7 @@ public class DiscoveryProfile extends Profile {
 		
 		List<MavenProject> projects = this.event.getSession().getProjects();
 		if (projects != null && projects.size() > 0) {
-			MavenProject domainProject = getParentProject(projects.get(0), "com.ebay.raptor", "DomainParent");
-			MavenProject raptorProject = getParentProject(projects.get(0), "com.ebay.raptor", "RaptorParent");
-			if (raptorProject != null) {
-				this.getSession().setRaptorVersion(raptorProject.getVersion());
-			}
-			if (domainProject != null) {
-				this.getSession().setDomainVersion(domainProject.getVersion());
-			}
-			if (raptorProject == null || domainProject == null) {
-				raptorProject = getParentProject(projects.get(0), "com.ebay.raptor", "RaptorPlatform");
-				if (raptorProject != null) {
-					this.getSession().setRaptorVersion(raptorProject.getVersion());
-				}
-			}
+			//TODO Resolve application level information here.
 		}
 
 		this.getSession().setDuration(this.getElapsedTime());
@@ -163,7 +150,7 @@ public class DiscoveryProfile extends Profile {
 			return;
 		}
 		
-		if (this.isInRIDE()) {
+		if (this.isInIDE()) {
 			new PostSessionClient().queue(getSession());
 		}
 	}
