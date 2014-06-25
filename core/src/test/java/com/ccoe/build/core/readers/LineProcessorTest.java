@@ -79,12 +79,12 @@ public class LineProcessorTest {
 		
 		
 		// Test Project End
-		String log = "2      T17:41:40.77	Project	Samples Parent	0	1134	com.ebay.app.raptor:CalTestParent:pom:0.0.1-SNAPSHOT";
+		String log = "2      T17:41:40.77	Project	Samples Parent	0	1134	com.ccoe.app.raptor:CalTestParent:pom:0.0.1-SNAPSHOT";
 		assertTrue(processor.projectEnd(log, session));
 		
 		assertEquals("0", project.getStatus());
 		assertEquals(1134, project.getDuration().longValue());
-		assertEquals("com.ebay.app.raptor", project.getGroupId());
+		assertEquals("com.ccoe.app.raptor", project.getGroupId());
 		assertEquals("CalTestParent", project.getArtifactId());
 		assertEquals("pom", project.getType());
 		assertEquals("0.0.1-SNAPSHOT", project.getVersion());
@@ -127,16 +127,16 @@ public class LineProcessorTest {
 		session.setCurrentProject(project);
 		project.getPhases().add(new Phase());
 
-		String line = "4          A17:41:39.74	Plugin	com.ebay.osgi.build:dependency-version-validator:1.0.0	0	246	 (default)";
+		String line = "4          A17:41:39.74	Plugin	com.ccoe.osgi.build:dependency-version-validator:1.0.0	0	246	 (default)";
 		assertTrue(processor.pluginAtom(line, session));
 		
 		Plugin plugin = session.getCurrentProject().getLastPhase().getPlugins().get(0);
-		assertEquals("com.ebay.osgi.build", plugin.getGroupId());
+		assertEquals("com.ccoe.osgi.build", plugin.getGroupId());
 		assertEquals("dependency-version-validator", plugin.getArtifactId());
 		assertEquals("1.0.0", plugin.getVersion());
 		assertEquals("0", plugin.getStatus());
 		assertEquals(246, plugin.getDuration().longValue());
-		assertEquals("com.ebay.osgi.build:dependency-version-validator:1.0.0", plugin.getPluginKey());
+		assertEquals("com.ccoe.osgi.build:dependency-version-validator:1.0.0", plugin.getPluginKey());
 		
 		// TODO assert payload
 	}
@@ -173,7 +173,7 @@ public class LineProcessorTest {
 		
 		assertEquals(1, phase.getPlugins().size());
 		
-		assertEquals("com.ebay.osgi.build", phase.getPlugins().get(0).getGroupId());
+		assertEquals("com.ccoe.osgi.build", phase.getPlugins().get(0).getGroupId());
 		assertEquals("maven-scm-build-info", phase.getPlugins().get(0).getArtifactId());
 		assertEquals("1.0.7", phase.getPlugins().get(0).getVersion());
 		assertEquals(98, phase.getPlugins().get(0).getDuration().longValue());
@@ -238,11 +238,11 @@ public class LineProcessorTest {
 		assertTrue(processor.projectStart("2      t17:41:39.64	Project	mweb", session));
 
 		// Test Project End
-		String log = "2      T03:22:48.99	Project	mweb	log	72840	com.ebay.app.raptor:mweb:war:1.0.0-SNAPSHOT";
+		String log = "2      T03:22:48.99	Project	mweb	log	72840	com.ccoe.app.raptor:mweb:war:1.0.0-SNAPSHOT";
 		assertTrue(processor.projectEnd(log, session));
 		
 		Project project = session.getProjects().values().iterator().next();		
-		assertEquals("com.ebay.app.raptor", project.getGroupId());
+		assertEquals("com.ccoe.app.raptor", project.getGroupId());
 		assertEquals("log", project.getStatus());
 	}
 }

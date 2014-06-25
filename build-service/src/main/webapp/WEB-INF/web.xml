@@ -9,10 +9,10 @@
 		<servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
 		<init-param>
 			<param-name>javax.ws.rs.Application</param-name>
-			<param-value>com.ebay.build.service.BuildServiceApplication</param-value>
+			<param-value>com.ccoe.build.service.BuildServiceApplication</param-value>
 		</init-param>
 		<!-- <init-param> <param-name>jersey.config.server.provider.packages</param-name> 
-			<param-value>com.ebay.build.service</param-value> </init-param> -->
+			<param-value>com.ccoe.build.service</param-value> </init-param> -->
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	
@@ -64,7 +64,7 @@
     </context-param>
 	  
 	<listener>
-		<listener-class>com.ebay.build.service.BuildServiceScheduler</listener-class>
+		<listener-class>com.ccoe.build.service.BuildServiceScheduler</listener-class>
 	</listener> 
 	
 	<!--

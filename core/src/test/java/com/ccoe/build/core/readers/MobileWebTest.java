@@ -34,6 +34,6 @@ public class MobileWebTest {
 		//assertEquals("MobileWeb", sessions.get(0).getProjects().get("Samples Parent").getPool().getName());
 		
 		assertNotNull(session.getProjects().get("mweb"));
-		assertEquals("com.ebay.app.raptor", session.getProjects().get("mweb").getGroupId());
+		assertEquals("com.ccoe.app.raptor", session.getProjects().get("mweb").getGroupId());
 	}
 }

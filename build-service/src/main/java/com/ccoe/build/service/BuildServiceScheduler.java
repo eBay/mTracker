@@ -38,14 +38,10 @@ public class BuildServiceScheduler implements ServletContextListener {
 		System.out.println("BuildServiceScheduler init start. output path: " + path);
 		
 		if (isSchedulerEnabled()) {
-//			HealthTrackScheduler healthTrackScheduler = new HealthTrackScheduler();
-//			ReliabilityEmailScheduler reliabilityScheduler = new ReliabilityEmailScheduler();
 			PfDashScheduler pfDashScheduler = new PfDashScheduler();
 			DevxScheduler devxScheduler = new DevxScheduler();
 
 			try {
-				//healthTrackScheduler.run();
-				//reliabilityScheduler.run();
 				pfDashScheduler.run();
 				devxScheduler.run();
 			} catch (Exception e) {

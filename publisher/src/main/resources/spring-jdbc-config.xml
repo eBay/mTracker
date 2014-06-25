@@ -28,7 +28,7 @@
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
-	<bean id="loaderProcessor" class="com.ccoe.build.profiler.publisher.LoaderProcessor">
+	<bean id="loaderProcessor" class="com.ccoe.build.publisher.LoaderProcessor">
 		<property name="sessionJDBCTemplate" ref="sessionJDBCTemplate"></property>
 		<property name="projectJDBCTemplate" ref="projectJDBCTemplate"></property>
 		<property name="pluginJDBCTemplate" ref="pluginJDBCTemplate"></property>
@@ -37,7 +37,7 @@
 	</bean>
 
 
-	<bean id="assemblyLogLoader" class="com.ccoe.build.profiler.publisher.AssemblyLogLoader">
+	<bean id="assemblyLogLoader" class="com.ccoe.build.publisher.AssemblyLogLoader">
 		<property name="sessionJDBCTemplate" ref="sessionJDBCTemplate"></property>
 	</bean>
 
@@ -68,10 +68,5 @@
 	<bean id="rawDataJDBCTemplate" class="com.ccoe.build.dal.RawDataJDBCTemplate">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
-
-	<bean id="pluginCountJDBCTemplate" class="com.ccoe.build.dal.PluginCountJDBCTemplate">
-		<property name="dataSource" ref="dataSource" />
-	</bean>
-
 
 </beans>

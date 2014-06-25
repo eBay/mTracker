@@ -11,12 +11,12 @@
 	<distributionManagement>
   	<snapshotRepository>
   		<id>snapshots</id>
-  		<url>http://nxraptor.qa.ebay.com/content/repositories/snapshots/</url>
+  		<url>http://nxraptor/content/repositories/snapshots/</url>
   	</snapshotRepository>
 	
 	<repository>
   		<id>releases</id>
-  		<url>http://nxraptor.qa.ebay.com/content/repositories/releases/</url>
+  		<url>http://nxraptor/content/repositories/releases/</url>
   	</repository>
   </distributionManagement>
 
@@ -88,45 +88,18 @@
 						<classpath />
 						
 						<!--
-						<argument>com.ccoe.build.profiler.publisher.UpdatePluginCountList</argument>
 						<argument>com.ccoe.build.profiler.publisher.Main</argument>
-						
-						
 						<argument>com.ccoe.build.profiler.publisher.JsonPublisher</argument>
 						
 						-->
 					</arguments>
 				</configuration>				
 			</plugin>			
-			<!-- 
-			<plugin>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<configuration>
-					<archive>
-						<manifest>
-						<mainClass>com.ccoe.build.profiler.publisher.Main</mainClass>						
-						
-						</manifest>
-					</archive>
-					<descriptorRefs>
-						<descriptorRef>jar-with-dependencies</descriptorRef>
-					</descriptorRefs>
-				</configuration>
-				<executions>
-					<execution>
-						<id>make-assembly</id> 
-						<phase>package</phase> 
-						<goals>
-							<goal>single</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			 -->
+			
 	    <!-- DEPLOY the JAR into NXRaptor
 	    *******************
 	    mvn deploy:deploy-file -DgroupId=com.ccoe.build.profiler -DartifactId=LogPublisher -Dversion=1.0.12 -Dclassifier=jar-with-dependencies 
-	                            -Durl=http://nxraptor.qa.ebay.com/content/repositories/releases -Dfile=LogPublisher-1.0.12-jar-with-dependencies.jar 
+	                            -Durl=http://nxraptor/content/repositories/releases -Dfile=LogPublisher-1.0.12-jar-with-dependencies.jar 
 	                            -DgeneratePom=false -DrepositoryId=releases
 	    *******************
 	     -->

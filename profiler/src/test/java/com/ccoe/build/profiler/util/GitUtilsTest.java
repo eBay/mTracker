@@ -1,7 +1,6 @@
 package com.ccoe.build.profiler.util;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 
@@ -19,10 +18,8 @@ public class GitUtilsTest {
 		assertEquals(gitBase.getName(), gitMeta.getName());
 		assertEquals(gitBase.getName(), GitUtil.findGitRepository(currentFolder).getName());
 		
-		File gitConfig = new File(new File(gitMeta,".git"), "config");
-		
-
-		assertTrue(GitUtil.getRepoName(gitConfig).startsWith("https://github.scm.corp.ebay.com/DevExTech/maven-time-tracking")); 
+		//File gitConfig = new File(new File(gitMeta,".git"), "config");
+		//assertTrue(GitUtil.getRepoName(gitConfig).startsWith("https://hostname/DevExTech/maven-time-tracking")); 
 	}
 }
 

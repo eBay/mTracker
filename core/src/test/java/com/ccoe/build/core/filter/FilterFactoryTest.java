@@ -90,19 +90,6 @@ public class FilterFactoryTest {
 	}
 	
 	@Test
-	public void testRemoteFilter() {
-		URL remoteFilter = null;
-		try {
-			remoteFilter = new URL(MavenBuildFilterFactory.FILTER_LIST_IN_GIT);
-		} catch (MalformedURLException e) {
-			fail(e.getMessage());
-		}
-		FilterFactory factory = new MavenBuildFilterFactory();
-		List<Filter> filters = factory.build(remoteFilter, null);
-		assertTrue(filters.size() > 0);
-	}
-	
-	@Test
 	public void testLocalFilter() {
 		URL localFilter = getClass().getClassLoader().getResource("test-filter.xml");
 		FilterFactory factory = new MavenBuildFilterFactory();

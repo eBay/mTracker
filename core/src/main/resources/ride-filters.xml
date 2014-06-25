@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <filters>
     <category name="Unknown Error">
-        <filter name="runMavenBuild: Failed to execute goal com.ebay.qe.mavenplugin:perftest" description="N/A">
+        <filter name="runMavenBuild: Failed to execute goal com.ccoe.qe.mavenplugin:perftest" description="N/A">
             <cause source="what" value="runMavenBuild"/>
-            <cause source="exception" keyword="Failed to execute goal com.ebay.qe.mavenplugin:perftest"/>
+            <cause source="exception" keyword="Failed to execute goal com.ccoe.qe.mavenplugin:perftest"/>
         </filter>
     </category>
     <category name="User Error">
-        <filter name="runMavenBuild: Failed to execute goal com.ebay.cos.tools:cosplugin" description="N/A">
+        <filter name="runMavenBuild: Failed to execute goal com.ccoe.cos.tools:cosplugin" description="N/A">
             <cause source="what" value="runMavenBuild"/>
-            <cause source="exception" keyword="Failed to execute goal com.ebay.cos.tools:cosplugin"/>
+            <cause source="exception" keyword="Failed to execute goal com.ccoe.cos.tools:cosplugin"/>
         </filter>
         <filter name="buildWorkspace: Can't find generated MANIFEST.MF" description="N/A">
             <cause source="what" value="buildWorkspace"/>
@@ -47,25 +47,25 @@
             <cause source="what" value="runMavenBuild"/>
             <cause source="exception" keyword="Failed to execute goal org.codehaus.mojo:openjpa-maven-plugin"/>
         </filter>
-        <filter name="runMavenBuild: Failed to execute goal com.ebay.lsp.build:code-gen-plugin" description="N/A">
+        <filter name="runMavenBuild: Failed to execute goal com.ccoe.lsp.build:code-gen-plugin" description="N/A">
             <cause source="what" value="runMavenBuild"/>
-            <cause source="exception" keyword="Failed to execute goal com.ebay.lsp.build:code-gen-plugin"/>
+            <cause source="exception" keyword="Failed to execute goal com.ccoe.lsp.build:code-gen-plugin"/>
         </filter>
         <filter name="buildWorkspace: No workspace found during trying to update classpath" description="N/A">
             <cause source="what" value="buildWorkspace"/>
             <cause source="exception" keyword="Status ERROR: bndtools.core code=0 Error requesting bnd classpath update. java.lang.IllegalArgumentException: No Workspace found"/>
         </filter>
-        <filter name="runMavenBuild: Failed to execute goal com.ebay.cos.platform:resource_analysis_plugin" description="N/A">
+        <filter name="runMavenBuild: Failed to execute goal com.ccoe.cos.platform:resource_analysis_plugin" description="N/A">
             <cause source="what" value="runMavenBuild"/>
-            <cause source="exception" keyword="Failed to execute goal com.ebay.cos.platform:resource_analysis_plugin"/>
+            <cause source="exception" keyword="Failed to execute goal com.ccoe.cos.platform:resource_analysis_plugin"/>
         </filter>
         <filter name="runMavenBuild: InvalidArtifactRTException" description="N/A">
             <cause source="what" value="runMavenBuild"/>
             <cause source="exception" keyword="org.apache.maven.artifact.InvalidArtifactRTException"/>
         </filter>
-        <filter name="runMavenBuild: Failed to execute goal com.ebay.sample:mojo" description="N/A">
+        <filter name="runMavenBuild: Failed to execute goal com.ccoe.sample:mojo" description="N/A">
             <cause source="what" value="runMavenBuild"/>
-            <cause source="exception" keyword="Failed to execute goal com.ebay.sample:mojo"/>
+            <cause source="exception" keyword="Failed to execute goal com.ccoe.sample:mojo"/>
         </filter>
         <filter name="runMavenBuild: Could not find goal in maven plugin" description="N/A">
             <cause source="what" value="runMavenBuild"/>
@@ -215,9 +215,9 @@
             <cause source="what" value="runMavenBuild"/>
             <cause source="exception" keyword="Failed to execute goal org.mortbay.jetty:jetty-maven-plugin"/>
         </filter>
-        <filter name="buildWorkspace: Failed to execute goal com.ebay.ebox.plugins:maven-ebox-plugin" description="N/A">
+        <filter name="buildWorkspace: Failed to execute goal com.ccoe.ebox.plugins:maven-ebox-plugin" description="N/A">
             <cause source="what" value="buildWorkspace"/>
-            <cause source="exception" keyword="Failed to execute goal com.ebay.ebox.plugins:maven-ebox-plugin"/>
+            <cause source="exception" keyword="Failed to execute goal com.ccoe.ebox.plugins:maven-ebox-plugin"/>
         </filter>
         <filter name="runMavenBuild: Failed to execute goal jaxb2-maven-plugin : xjc" description="N/A">
             <cause source="what" value="runMavenBuild"/>
@@ -237,7 +237,7 @@
         </filter>
         <filter name="buildWorkspace: Failed to execute goal - maven-content-plugin:content-validation" description="N/A">
             <cause source="what" value="buildWorkspace"/>
-            <cause source="exception" keyword="Failed to execute goal com.ebay.content:maven-content-plugin&amp;&amp;content-validation"/>
+            <cause source="exception" keyword="Failed to execute goal com.ccoe.content:maven-content-plugin&amp;&amp;content-validation"/>
         </filter>
         <filter name="buildWorkspace: Failed to execute goal org.codehaus.mojo:properties-maven-plugin" description="N/A">
             <cause source="what" value="buildWorkspace"/>
@@ -295,9 +295,9 @@
             <cause source="what" value="runMavenBuild"/>
             <cause source="exception" keyword="Failed to execute goal org.jenkins-ci.tools:maven-hpi-plugin"/>
         </filter>
-        <filter name="runMavenBuild:Failed goal com.ebay.ebox.plugins:maven-batch-plugin:package. release directory exis" description="N/A">
+        <filter name="runMavenBuild:Failed goal com.ccoe.ebox.plugins:maven-batch-plugin:package. release directory exis" description="N/A">
             <cause source="what" value="runMavenBuild"/>
-            <cause source="exception" keyword="Failed to execute goal com.ebay.ebox.plugins:maven-batch-plugin:&amp;&amp;:package \(default\) on project &amp;&amp;: release directory exist, need clean up"/>
+            <cause source="exception" keyword="Failed to execute goal com.ccoe.ebox.plugins:maven-batch-plugin:&amp;&amp;:package \(default\) on project &amp;&amp;: release directory exist, need clean up"/>
         </filter>
         <filter name="buildWorkspace: fail to update classpath:Operation was not prepared" description="N/A">
             <cause source="what" value="buildWorkspace"/>
@@ -343,9 +343,9 @@
             <cause source="what" value="buildWorkspace"/>
             <cause source="exception" keyword="org.eclipse.core.runtime.CoreException: Could not read maven project"/>
         </filter>
-        <filter name="runMavenBuild: Failed to execute goal com.ebay.ebox.plugins:maven-soa-plugin:prebuild" description="N/A">
+        <filter name="runMavenBuild: Failed to execute goal com.ccoe.ebox.plugins:maven-soa-plugin:prebuild" description="N/A">
             <cause source="what" value="runMavenBuild"/>
-            <cause source="exception" keyword="Failed to execute goal com.ebay.ebox.plugins:maven-soa-plugin&amp;&amp;prebuild"/>
+            <cause source="exception" keyword="Failed to execute goal com.ccoe.ebox.plugins:maven-soa-plugin&amp;&amp;prebuild"/>
         </filter>
         <filter name="runMavenBuild: Not well-formed pom.xml" description="N/A">
             <cause source="what" value="runMavenBuild"/>
@@ -375,9 +375,9 @@
             <cause source="what" value="runMavenBuild"/>
             <cause source="exception" keyword="Failed to execute goal com.googlecode.jstd-maven-plugin:jstd-maven-plugin"/>
         </filter>
-        <filter name="runMavenBuild: Failed to parse plugin descriptor for com.ebay.content:maven-content-plugin" description="N/A">
+        <filter name="runMavenBuild: Failed to parse plugin descriptor for com.ccoe.content:maven-content-plugin" description="N/A">
             <cause source="what" value="runMavenBuild"/>
-            <cause source="exception" keyword="Failed to parse plugin descriptor for com.ebay.content:maven-content-plugin"/>
+            <cause source="exception" keyword="Failed to parse plugin descriptor for com.ccoe.content:maven-content-plugin"/>
         </filter>
         <filter name="buildWorkspace: M2Eclipse - OutOfMemoryError" description="N/A">
             <cause source="what" value="buildWorkspace"/>
@@ -427,9 +427,9 @@
             <cause source="what" value="buildWorkspace"/>
             <cause source="exception" keyword="org.eclipse.core.runtime.CoreException: Launch configuration ++ references closed project"/>
         </filter>
-        <filter name="runMavenBuild: Failed to execute goal com.ebay.sample:tloc" description="N/A">
+        <filter name="runMavenBuild: Failed to execute goal com.ccoe.sample:tloc" description="N/A">
             <cause source="what" value="runMavenBuild"/>
-            <cause source="exception" keyword="Failed to execute goal com.ebay.sample:tloc&amp;&amp;A required class is missing"/>
+            <cause source="exception" keyword="Failed to execute goal com.ccoe.sample:tloc&amp;&amp;A required class is missing"/>
         </filter>
         <filter name="runMavenBuild: Error encountered while building the effective settings" description="N/A">
             <cause source="what" value="runMavenBuild"/>
@@ -527,13 +527,13 @@
             <cause source="what" value="runMavenBuild"/>
             <cause source="exception" keyword="The build could not read &amp;&amp;Child module &amp;&amp;does not exist"/>
         </filter>
-        <filter name="runMavenBuild: Failed to execute goal com.ebay.ebox.plugins:maven-ebay-build-plugin" description="N/A">
+        <filter name="runMavenBuild: Failed to execute goal com.ccoe.ebox.plugins:maven-ccoe-build-plugin" description="N/A">
             <cause source="what" value="runMavenBuild"/>
-            <cause source="exception" keyword="Failed to execute goal com.ebay.ebox.plugins:maven-ebay-build-plugin"/>
+            <cause source="exception" keyword="Failed to execute goal com.ccoe.ebox.plugins:maven-ccoe-build-plugin"/>
         </filter>
-        <filter name="buildWorkspace: Failed to execute goal com.ebay.utils:maven-minify-plugin" description="N/A">
+        <filter name="buildWorkspace: Failed to execute goal com.ccoe.utils:maven-minify-plugin" description="N/A">
             <cause source="what" value="buildWorkspace"/>
-            <cause source="exception" keyword="Failed to execute goal com.ebay.utils:maven-minify-plugin"/>
+            <cause source="exception" keyword="Failed to execute goal com.ccoe.utils:maven-minify-plugin"/>
         </filter>
         <filter name="runMavenBuild: Failed to execute goal org.jasig.maven:sass-maven-plugin" description="N/A">
             <cause source="what" value="runMavenBuild"/>
@@ -595,9 +595,9 @@
             <cause source="what" value="buildWorkspace"/>
             <cause source="exception" keyword="Status ERROR: org.maven.ide.eclipse code=0 Preference node&amp;&amp;has been removed"/>
         </filter>
-        <filter name="runMavenBuild: Failed to execute goal com.ebay.cos.plugin:EnunciateEbayPlugin" description="N/A">
+        <filter name="runMavenBuild: Failed to execute goal com.ccoe.cos.plugin:EnunciateccoePlugin" description="N/A">
             <cause source="what" value="runMavenBuild"/>
-            <cause source="exception" keyword="Failed to execute goal com.ebay.cos.plugin:EnunciateEbayPlugin"/>
+            <cause source="exception" keyword="Failed to execute goal com.ccoe.cos.plugin:EnunciateccoePlugin"/>
         </filter>
         <filter name="buildWorkspace:  Failed to execute goal org.apache.maven.plugins:maven-deploy-plugin" description="N/A">
             <cause source="what" value="buildWorkspace"/>
@@ -667,9 +667,9 @@
             <cause source="what" value="buildWorkspace"/>
             <cause source="exception" keyword="Status ERROR: org.maven.ide.eclipse code=0 Build errors&amp;&amp;Failed to execute goal org.apache.maven.plugins:maven-antrun-plugin"/>
         </filter>
-        <filter name="runMavenBuild: Failed to execute goal com.ebay.raptor.tools:split-package-validator" description="N/A">
+        <filter name="runMavenBuild: Failed to execute goal com.ccoe.raptor.tools:split-package-validator" description="N/A">
             <cause source="what" value="runMavenBuild"/>
-            <cause source="exception" keyword="Failed to execute goal com.ebay.raptor.tools&amp;&amp;split-package-validator&amp;&amp;validatesplitpackage"/>
+            <cause source="exception" keyword="Failed to execute goal com.ccoe.raptor.tools&amp;&amp;split-package-validator&amp;&amp;validatesplitpackage"/>
         </filter>
         <filter name="runMavenBuild: Failed to execute goal org.apache.maven.plugins:maven-deploy-plugin" description="N/A">
             <cause source="what" value="runMavenBuild"/>
@@ -681,7 +681,7 @@
         </filter>
         <filter name="buildWorkspace: Could not find goal 'content-codegen'" description="N/A">
             <cause source="what" value="buildWorkspace"/>
-            <cause source="exception" keyword="Could not find goal 'content-codegen' in plugin com.ebay.content:maven-content-plugin"/>
+            <cause source="exception" keyword="Could not find goal 'content-codegen' in plugin com.ccoe.content:maven-content-plugin"/>
         </filter>
         <filter name="runMavenBuild: Embedded error: Unrecognized Windows Sockets error" description="N/A">
             <cause source="what" value="runMavenBuild"/>
@@ -699,9 +699,9 @@
             <cause source="what" value="buildWorkspace"/>
             <cause source="exception" keyword="Error resolving version for 'org.apache.maven.plugins:maven-site-plugin': Plugin requires Maven version"/>
         </filter>
-        <filter name="runMavenBuild: Failed to execute goal com.ebay.kernel.build.plugins:kernel-build-maven-plugin" description="N/A">
+        <filter name="runMavenBuild: Failed to execute goal com.ccoe.kernel.build.plugins:kernel-build-maven-plugin" description="N/A">
             <cause source="what" value="runMavenBuild"/>
-            <cause source="exception" keyword="Failed to execute goal com.ebay.kernel.build.plugins:kernel-build-maven-plugin"/>
+            <cause source="exception" keyword="Failed to execute goal com.ccoe.kernel.build.plugins:kernel-build-maven-plugin"/>
         </filter>
         <filter name="buildWorkspace: M2Eclipse - Unable to load project configurator (ignore)" description="N/A">
             <cause source="what" value="buildWorkspace"/>
@@ -785,7 +785,7 @@
         </filter>
         <filter name="runMavenBuild: Failed to execute goal maven-content-plugin : content-validation" description="N/A">
             <cause source="what" value="runMavenBuild"/>
-            <cause source="exception" keyword="Failed to execute goal com.ebay.content:maven-content-plugin&amp;&amp;content-validation"/>
+            <cause source="exception" keyword="Failed to execute goal com.ccoe.content:maven-content-plugin&amp;&amp;content-validation"/>
         </filter>
         <filter name="buildWorkspace: Failed to execute goal org.codehaus.mojo:buildnumber-maven-plugin" description="N/A">
             <cause source="what" value="buildWorkspace"/>
@@ -799,9 +799,9 @@
             <cause source="what" value="buildWorkspace"/>
             <cause source="exception" keyword="Failed to execute goal org.codehaus.mojo:gwt-maven-plugin&amp;&amp;compile"/>
         </filter>
-        <filter name="buildWorkspace: Failed to execute goal com.ebay.header:maven-minify-plugin" description="N/A">
+        <filter name="buildWorkspace: Failed to execute goal com.ccoe.header:maven-minify-plugin" description="N/A">
             <cause source="what" value="buildWorkspace"/>
-            <cause source="exception" keyword="Failed to execute goal com.ebay.header:maven-minify-plugin"/>
+            <cause source="exception" keyword="Failed to execute goal com.ccoe.header:maven-minify-plugin"/>
         </filter>
         <filter name="buildWorkspace: Can't find pom.xml in a maven project" description="N/A">
             <cause source="what" value="buildWorkspace"/>
@@ -815,9 +815,9 @@
             <cause source="what" value="runMavenBuild"/>
             <cause source="exception" keyword="No plugin found&amp;&amp; in the current project and in the plugin groups"/>
         </filter>
-        <filter name="buildWorkspace: Unable to add com/ebay/kernel/Tracking" description="N/A">
+        <filter name="buildWorkspace: Unable to add com/ccoe/kernel/Tracking" description="N/A">
             <cause source="what" value="buildWorkspace"/>
-            <cause source="exception" keyword="Unable to add com/ebay/kernel/Tracking"/>
+            <cause source="exception" keyword="Unable to add com/ccoe/kernel/Tracking"/>
         </filter>
         <filter name="runMavenBuild: Failed to execute goal org.apache.cxf:cxf-codegen-plugin" description="N/A">
             <cause source="what" value="runMavenBuild"/>
@@ -837,7 +837,7 @@
         </filter>
         <filter name="runMavenBuild: Exception when running TapListener.logTestProgress" description="N/A">
             <cause source="what" value="runMavenBuild"/>
-            <cause source="exception" keyword="com.ebay.testng.reporter.TapListener.logTestProgress"/>
+            <cause source="exception" keyword="com.ccoe.testng.reporter.TapListener.logTestProgress"/>
         </filter>
         <filter name="runMavenBuild: Failed to execute goal org.apache.maven.plugins:maven-enforcer-plugin&amp;&amp;enforce" description="N/A">
             <cause source="what" value="runMavenBuild"/>
@@ -849,7 +849,7 @@
         </filter>
         <filter name="buildWorkspace: ebox fwk error: componentSpec is null" description="N/A">
             <cause source="what" value="buildWorkspace"/>
-            <cause source="exception" keyword="com.ebay.dsf.common.exceptions.DsfRuntimeException: componentSpec is null"/>
+            <cause source="exception" keyword="com.ccoe.dsf.common.exceptions.DsfRuntimeException: componentSpec is null"/>
         </filter>
         <filter name="runMavenBuild: failed to execute maven install" description="N/A">
             <cause source="what" value="runMavenBuild"/>
@@ -909,9 +909,9 @@
             <cause source="what" value="buildWorkspace"/>
             <cause source="exception" keyword="Failed to execute goal org.apache.maven.plugins:maven-resources-plugin&amp;&amp;copy-resources"/>
         </filter>
-        <filter name="buildWorkspace: Failed to execute goal com.ebay.content:maven-content-plugin" description="N/A">
+        <filter name="buildWorkspace: Failed to execute goal com.ccoe.content:maven-content-plugin" description="N/A">
             <cause source="what" value="buildWorkspace"/>
-            <cause source="exception" keyword="Failed to execute goal com.ebay.content:maven-content-plugin"/>
+            <cause source="exception" keyword="Failed to execute goal com.ccoe.content:maven-content-plugin"/>
         </filter>
         <filter name="buildWorkspace: error opening corrupted jar in maven repo" description="N/A">
             <cause source="what" value="buildWorkspace"/>
@@ -919,7 +919,7 @@
         </filter>
         <filter name="buildWorkspace: NPE in JSPPlus" description="N/A">
             <cause source="what" value="buildWorkspace"/>
-            <cause source="exception" keyword="java.lang.NullPointerException&amp;&amp;at com.ebay.tools.esf.taglib.v4.internal.monitor.PomListener.mavenProjectChanged\(PomListener.java:43\)"/>
+            <cause source="exception" keyword="java.lang.NullPointerException&amp;&amp;at com.ccoe.tools.esf.taglib.v4.internal.monitor.PomListener.mavenProjectChanged\(PomListener.java:43\)"/>
         </filter>
         <filter name="buildWorkspace:  Could not update workspace index java.io.IOException" description="N/A">
             <cause source="what" value="buildWorkspace"/>

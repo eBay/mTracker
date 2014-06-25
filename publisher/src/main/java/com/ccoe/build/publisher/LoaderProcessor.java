@@ -122,16 +122,5 @@ public class LoaderProcessor {
 	protected int loadSession(Session session) {
 		return this.sessionJDBCTemplate.create(session);
 	}
-	
-//	public List<Session> querySessionsWithoutCategory() {
-//		return sessionJDBCTemplate.getExpSessionWithNullCategory();
-//	}
-	
-//	public void updateSessionCategory(Session session) {
-//		sessionJDBCTemplate.updateCategory(session);
-//	}
-//	
-//	public void batchUpdateSessionCategory(List<Session> sessions) {
-//		sessionJDBCTemplate.batchUpdateCategory(sessions);
-//	}
+
 }

@@ -56,19 +56,13 @@ public class BatchUpdateDurationJob implements Job {
 	private String getBuildSQLClaus(String startDateString, String endDateString) {
 		return " status = 0 and duration_build is null and duration_download is null "
                 + " and start_time > to_date('" + startDateString + "', 'DD-Mon-YY HH24:Mi') "
-                + " and start_time < to_date('" + endDateString + "', 'DD-Mon-YY HH24:Mi')"
-                + " and goals not like 'com.ccoe.devex.assembler:assembler-maven-plugin:%:deploy%'" 
-                + " and goals not like 'com.ccoe.raptor.build:assembler-maven-plugin:%:deploy%'"
-                + " and goals not like 'assembler:deploy'";
+                + " and start_time < to_date('" + endDateString + "', 'DD-Mon-YY HH24:Mi')";
 	}
 	
 	private String getAssemblerSQLClaus(String startDateString, String endDateString) {
 		return " status = 0 and duration_build is null and duration_download is null "
                 + " and start_time > to_date('" + startDateString + "', 'DD-Mon-YY HH24:Mi') "
-                + " and start_time < to_date('" + endDateString + "', 'DD-Mon-YY HH24:Mi')"
-                + " and (goals like 'com.ccoe.devex.assembler:assembler-maven-plugin:%:deploy%' or " 
-                + "      goals like 'com.ccoe.raptor.build:assembler-maven-plugin:%:deploy%' or "
-                + "      goals like 'assembler:deploy')";
+                + " and start_time < to_date('" + endDateString + "', 'DD-Mon-YY HH24:Mi')";
 	}	
 	
 	private void updateRaptorBuildDuration(String startDateString, String endDateString) {

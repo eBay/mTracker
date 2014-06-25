@@ -19,7 +19,7 @@ import com.ccoe.build.core.filter.model.Filters;
 
 public abstract class FilterFactory {
 	
-	public final static String BASE_FILTER_LIST_IN_GIT = "https://github.scm.corp.ebay.com/DevExTech/maven-time-tracking/raw/master/core/src/main/resources";
+	public final static String BASE_FILTER_LIST_IN_GIT = "https://REPLACE_ME/DevExTech/maven-time-tracking/raw/master/core/src/main/resources";
 	
 	public abstract URL getRemoteFilterURL();
 	public abstract URL getLocalFilterURL();

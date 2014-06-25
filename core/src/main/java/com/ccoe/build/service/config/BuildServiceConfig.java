@@ -14,7 +14,7 @@ public class BuildServiceConfig {
 		Client client = ClientBuilder.newClient(new ClientConfig());
 		client.register(JacksonFeature.class);
 
-		String target = "http://rbuildservice.stratus.phx.qa.ebay.com/build-service/webapi/";
+		String target = "http://${HOSTNAME}/build-service/webapi/";
 		String path = "/config/" + configName;
 		BuildServiceConfigBean configBean = client.target(target).path(path).request().get(BuildServiceConfigBean.class);
 		
@@ -22,6 +22,6 @@ public class BuildServiceConfig {
 	}
 	
 	public static void main(String[] args) {
-		//System.out.println(new BuildServiceConfig().get("com.ebay.osgi.build.validation").isGlobalSwitch());
+		//System.out.println(new BuildServiceConfig().get("${CONFIG.NAME}").isGlobalSwitch());
 	}
 }

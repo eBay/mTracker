@@ -17,7 +17,7 @@ public class PostSessionClient {
 		Client client = ClientBuilder.newClient(new ClientConfig());
 		client.register(JacksonFeature.class);
 
-		//String target = "http://rbuildservice.stratus.phx.qa.ebay.com/build-service/webapi/";
+		//String target = "http://hostname/build-service/webapi/";
 		String target = "http://D-SHC-00436998:7070/myapp";
 		String path = "/queue/build/" + session.getAppName();
 		Response response = client.target(target).path(path).request().post(Entity.entity(session, 

@@ -46,7 +46,7 @@ public class SessionExporterTest {
 	@Test
 	public void testPluginAsString() {
 		Plugin plugin = new Plugin();
-		plugin.setGroupId("com.ebay.raptor");
+		plugin.setGroupId("com.ccoe.raptor");
 		plugin.setArtifactId("tracking");
 		plugin.setVersion("1.0.0");
 		plugin.setDuration(123L);

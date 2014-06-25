@@ -22,16 +22,16 @@
 		</filter>
 		<filter name="AssemblerResolveWebBundleFail">
 			<cause
-				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
+				keyword="Failed to execute goal com.ccoe.devex.assembler:assembler-maven-plugin" />
 			<cause
-				keyword="http://wiki2.arch.ebay.com/display/DevExTech/Assembler+Errors#AssemblerErrors-E57" />
+				keyword="http://wiki2.arch.ccoe.com/display/DevExTech/Assembler+Errors#AssemblerErrors-E57" />
 		</filter>
 		
 		<filter name="AssemblerErrMkFileFail">
 			<cause
-				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
+				keyword="Failed to execute goal com.ccoe.devex.assembler:assembler-maven-plugin" />
 			<cause
-				keyword="http://wiki2.arch.ebay.com/display/DevExTech/Assembler+Errors#AssemblerErrors-E10" />
+				keyword="http://wiki2.arch.ccoe.com/display/DevExTech/Assembler+Errors#AssemblerErrors-E10" />
 		</filter>
 		
 		
@@ -98,7 +98,7 @@
 		</filter>
 		
 		<filter name="ContentValidationFail">
-			<cause keyword="Failed to execute goal com.ebay.content:maven-content-plugin"/>
+			<cause keyword="Failed to execute goal com.ccoe.content:maven-content-plugin"/>
 			<cause keyword="content-validation (process-content-resources) on project"/>
 		</filter>
 		
@@ -137,17 +137,17 @@
 		</filter>	
 		
 		<filter name="OBRGenConflictKernelBundle">
-			<cause keyword="Failed to execute goal com.ebay.osgi.build:obrgen-maven-plugin"/>
+			<cause keyword="Failed to execute goal com.ccoe.osgi.build:obrgen-maven-plugin"/>
 			<cause keyword="Conflicting with Kernel bundles:"/>
 		</filter>	
 		
 		<filter name="SOAPluginErrServiceVersion">
-			<cause keyword="Failed to execute goal com.ebay.ebox.plugins:maven-soa-plugin"/>
+			<cause keyword="Failed to execute goal com.ccoe.ebox.plugins:maven-soa-plugin"/>
 			<cause keyword="Invalid Service current version"/>
 		</filter>
 		
 		<filter name="SOAPluginErrServiceGeneration">
-			<cause keyword="Failed to execute goal com.ebay.ebox.plugins:maven-soa-plugin"/>
+			<cause keyword="Failed to execute goal com.ccoe.ebox.plugins:maven-soa-plugin"/>
 			<cause keyword="Exception executing service generator facade, please make sure SOATools has been added to the project dependency list"/>
 		</filter>
 		
@@ -185,35 +185,35 @@
 	<category name="system">
 	    <filter name="AssemblerUploadCronusPackageFail">
 			<cause
-				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
+				keyword="Failed to execute goal com.ccoe.devex.assembler:assembler-maven-plugin" />
 			<cause
-				keyword="http://wiki2.arch.ebay.com/display/DevExTech/Assembler+Errors#AssemblerErrors-E102" />
+				keyword="http://wiki2.arch.ccoe.com/display/DevExTech/Assembler+Errors#AssemblerErrors-E102" />
 		</filter>
 		
 	    <filter name="AssemblerRetrieveClassFail">
 			<cause
-				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
+				keyword="Failed to execute goal com.ccoe.devex.assembler:assembler-maven-plugin" />
 			<cause
-				keyword="http://wiki2.arch.ebay.com/display/DevExTech/Assembler+Errors#AssemblerErrors-E103" />
+				keyword="http://wiki2.arch.ccoe.com/display/DevExTech/Assembler+Errors#AssemblerErrors-E103" />
 		</filter>
 		
 	    <filter name="AssemblerRegisterManifestFail">
 			<cause
-				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
+				keyword="Failed to execute goal com.ccoe.devex.assembler:assembler-maven-plugin" />
 			<cause
-				keyword="http://wiki2.arch.ebay.com/display/DevExTech/Assembler+Errors#AssemblerErrors-E104" />
+				keyword="http://wiki2.arch.ccoe.com/display/DevExTech/Assembler+Errors#AssemblerErrors-E104" />
 		</filter>
 		
 		<filter name="Assembler">
 			<cause
-				keyword="Failed to execute goal com.ebay.devex.assembler:assembler-maven-plugin" />
+				keyword="Failed to execute goal com.ccoe.devex.assembler:assembler-maven-plugin" />
 			<cause
-				keyword="http://wiki2.arch.ebay.com/display/DevExTech/Assembler+Errors#AssemblerErrors-E255" />
+				keyword="http://wiki2.arch.ccoe.com/display/DevExTech/Assembler+Errors#AssemblerErrors-E255" />
 		</filter>
 		
 		<filter name="OBRGen-MissingClassFail">
 			<cause
-				keyword="org.apache.maven.lifecycle.LifecycleExecutionException: Failed to execute goal com.ebay.osgi.build:obrgen-maven-plugin" />
+				keyword="org.apache.maven.lifecycle.LifecycleExecutionException: Failed to execute goal com.ccoe.osgi.build:obrgen-maven-plugin" />
 			<cause
 				keyword="A required class was missing" />
 		</filter>
@@ -247,7 +247,7 @@
 		
 		<filter name="OBRGenIOFailure">
 			<cause
-				keyword="Failed to execute goal com.ebay.osgi.build:obrgen-maven-plugin" />
+				keyword="Failed to execute goal com.ccoe.osgi.build:obrgen-maven-plugin" />
 			<cause
 				keyword="java.io.IOException: Destination" />				
 		</filter>

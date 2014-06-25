@@ -42,9 +42,11 @@ public class MojoProfile extends Profile {
 		
 		this.event = event;
 		
+		// get the configuration of the plugin if the group id matches the KEY.
+		// please replace the KEY
 		String configuration = "";
 		if (mojoExecution.getPlugin().getConfiguration() != null 
-				&& mojoExecution.getPlugin().getGroupId().contains("ebay")) {
+				&& mojoExecution.getPlugin().getGroupId().contains("KEY")) {
 			configuration = mojoExecution.getPlugin().getConfiguration().toString();
 		}
 		String payload = " (" + pluginExecutionId + ")  " + configuration;

@@ -2,17 +2,17 @@
 
 	<property environment="env"/>
 
-	<property name="MailLogger.mailhost" value="qa-ipmail01-d1.qa.ebay.com"/>
-	<property name="MailLogger.from" value="mmao@ebay.com"/>
+	<property name="MailLogger.mailhost" value=""/>
+	<property name="MailLogger.from" value=""/>
 	<property name="MailLogger.success.notify" value="false"/>
-	<property name="MailLogger.failure.to" value="mmao@ebay.com"/>
+	<property name="MailLogger.failure.to" value=""/>
 	<property name="MailLogger.failure.subject" value="LogPublisher failed on ${env.COMPUTERNAME}."/>
 
-	<property name="maven.repo.baseurl" value="http://nxraptor.qa.ebay.com/content/repositories/releases/com/ebay/build/profiler/LogPublisher"/>
+	<property name="maven.repo.baseurl" value="http://nxraptor.qa.ccoe.com/content/repositories/releases/com/ccoe/build/profiler/LogPublisher"/>
 
-	<property name="git.repo.baseurl" value="https://github.scm.corp.ebay.com/DevExTech/maven-time-tracking/raw/master/LogPublisher/bin"/>
+	<property name="git.repo.baseurl" value="https://github.scm.corp.ccoe.com/DevExTech/maven-time-tracking/raw/master/LogPublisher/bin"/>
 
-	<property name="rbservice.baseurl" value="http://rbuildservice.stratus.qa.ebay.com/build-service"/>
+	<property name="rbservice.baseurl" value="http://rbuildservice.stratus.qa.ccoe.com/build-service"/>
 
 	<property name="lib.dir" value="${basedir}/lib"/>
 	<property name="logs.dir" value="${basedir}/logs"/>

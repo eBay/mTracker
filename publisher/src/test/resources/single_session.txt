@@ -6,7 +6,7 @@ Start: 01-03-2013 17:41:38
 1    t17:41:39.62	URL	Session
 2      t17:41:39.64	Project	Samples Parent
 3        t17:41:39.74	Phase	validate
-4          A17:41:39.74	Plugin	com.ebay.osgi.build:dependency-version-validator:1.0.0	0	246	 (default)
+4          A17:41:39.74	Plugin	com.ccoe.osgi.build:dependency-version-validator:1.0.0	0	246	 (default)
 3        T17:41:39.99	Phase	validate	0	248	
       --------------------------------------------------------
 3        t17:41:39.99	Phase	generate-sources
@@ -15,7 +15,7 @@ Start: 01-03-2013 17:41:38
 3        T17:41:40.29	Phase	generate-sources	0	298	
       --------------------------------------------------------
 3        t17:41:40.29	Phase	generate-resources
-4          A17:41:40.29	Plugin	com.ebay.osgi.build:maven-scm-build-info:1.0.7	0	98	 (build-info)
+4          A17:41:40.29	Plugin	com.ccoe.osgi.build:maven-scm-build-info:1.0.7	0	98	 (build-info)
 3        T17:41:40.39	Phase	generate-resources	0	98	
       --------------------------------------------------------
 3        t17:41:40.39	Phase	process-classes
@@ -23,7 +23,7 @@ Start: 01-03-2013 17:41:38
 3        T17:41:40.53	Phase	process-classes	0	143	
       --------------------------------------------------------
 3        t17:41:40.53	Phase	validate
-4          A17:41:40.53	Plugin	com.ebay.osgi.build:dependency-version-validator:1.0.0	0	1	 (default)
+4          A17:41:40.53	Plugin	com.ccoe.osgi.build:dependency-version-validator:1.0.0	0	1	 (default)
 3        T17:41:40.53	Phase	validate	0	2	
       --------------------------------------------------------
 3        t17:41:40.53	Phase	generate-sources
@@ -32,19 +32,19 @@ Start: 01-03-2013 17:41:38
 3        T17:41:40.54	Phase	generate-sources	0	2	
       --------------------------------------------------------
 3        t17:41:40.54	Phase	package
-4          A17:41:40.54	Plugin	org.apache.maven.plugins:maven-source-plugin:2.1.2.ebay	0	152	 (default)
+4          A17:41:40.54	Plugin	org.apache.maven.plugins:maven-source-plugin:2.1.2.ccoe	0	152	 (default)
 3        T17:41:40.69	Phase	package	0	152	
       --------------------------------------------------------
 3        t17:41:40.69	Phase	install
 4          A17:41:40.69	Plugin	org.apache.maven.plugins:maven-install-plugin:2.3.1	0	83	 (default-install)
 3        T17:41:40.77	Phase	install	0	83	
       --------------------------------------------------------
-2      T17:41:40.77	Project	Samples Parent	0	1134	com.ebay.app.raptor:CalTestParent:pom:0.0.1-SNAPSHOT
+2      T17:41:40.77	Project	Samples Parent	0	1134	com.ccoe.app.raptor:CalTestParent:pom:0.0.1-SNAPSHOT
     --------------------------------------------------------
 2      t17:41:40.77	Project	caltest
 3        E17:41:41.63	CAL	BadInstrumentation	AlreadyCompleted	Class=T&When=17:41:40.77&Type=Phase&Name=install&Func=SetStatus&Arg=0
 3        t17:41:41.63	Phase	validate
-4          A17:41:41.63	Plugin	com.ebay.osgi.build:dependency-version-validator:1.0.0	0	43	 (default)
+4          A17:41:41.63	Plugin	com.ccoe.osgi.build:dependency-version-validator:1.0.0	0	43	 (default)
 3        T17:41:41.68	Phase	validate	0	44	
       --------------------------------------------------------
 3        t17:41:41.68	Phase	generate-sources
@@ -55,12 +55,12 @@ Start: 01-03-2013 17:41:38
       --------------------------------------------------------
 3        t17:41:41.81	Phase	generate-resources
 4          A17:41:41.81	Plugin	org.codehaus.mojo:build-helper-maven-plugin:1.7	0	2	 (add-resource)
-4          A17:41:41.82	Plugin	com.ebay.osgi.build:maven-scm-build-info:1.0.7	0	32	 (build-info)
+4          A17:41:41.82	Plugin	com.ccoe.osgi.build:maven-scm-build-info:1.0.7	0	32	 (build-info)
 3        T17:41:41.85	Phase	generate-resources	0	34	
       --------------------------------------------------------
 3        t17:41:41.85	Phase	process-resources
 4          A17:41:41.85	Plugin	org.apache.maven.plugins:maven-resources-plugin:2.5	0	79	 (default-resources)
-4          A17:41:41.93	Plugin	com.ebay.content:maven-content-plugin:2.0.1	0	396	 (process-content-resources)
+4          A17:41:41.93	Plugin	com.ccoe.content:maven-content-plugin:2.0.1	0	396	 (process-content-resources)
 3        T17:41:42.33	Phase	process-resources	0	477	
       --------------------------------------------------------
 3        t17:41:42.33	Phase	compile
@@ -90,7 +90,7 @@ Start: 01-03-2013 17:41:38
 3        T17:41:45.40	Phase	package	0	1049	
       --------------------------------------------------------
 3        t17:41:45.40	Phase	validate
-4          A17:41:45.40	Plugin	com.ebay.osgi.build:dependency-version-validator:1.0.0	0	1	 (default)
+4          A17:41:45.40	Plugin	com.ccoe.osgi.build:dependency-version-validator:1.0.0	0	1	 (default)
 3        T17:41:45.40	Phase	validate	0	1	
       --------------------------------------------------------
 3        t17:41:45.40	Phase	generate-sources
@@ -100,7 +100,7 @@ Start: 01-03-2013 17:41:38
 3        T17:41:45.40	Phase	generate-sources	0	3	
       --------------------------------------------------------
 3        t17:41:45.40	Phase	package
-4          A17:41:45.40	Plugin	org.apache.maven.plugins:maven-source-plugin:2.1.2.ebay	0	158	 (default)
+4          A17:41:45.40	Plugin	org.apache.maven.plugins:maven-source-plugin:2.1.2.ccoe	0	158	 (default)
 3        T17:41:45.56	Phase	package	0	158	
       --------------------------------------------------------
 3        t17:41:45.56	Phase	install
@@ -108,12 +108,12 @@ Start: 01-03-2013 17:41:38
 4          A17:41:45.63	Plugin	org.apache.felix:maven-bundle-plugin:2.3.7	0	228	 (bundle-install)
 3        T17:41:45.86	Phase	install	0	297	
       --------------------------------------------------------
-2      T17:41:45.86	Project	caltest	0	5086	com.ebay.app.raptor:caltest:war:0.0.1-SNAPSHOT
+2      T17:41:45.86	Project	caltest	0	5086	com.ccoe.app.raptor:caltest:war:0.0.1-SNAPSHOT
     --------------------------------------------------------
 2      t17:41:45.86	Project	EBA For caltest
 3        E17:41:46.35	CAL	BadInstrumentation	AlreadyCompleted	Class=T&When=17:41:45.86&Type=Phase&Name=install&Func=SetStatus&Arg=0
 3        t17:41:46.35	Phase	validate
-4          A17:41:46.35	Plugin	com.ebay.osgi.build:dependency-version-validator:1.0.0	0	37	 (default)
+4          A17:41:46.35	Plugin	com.ccoe.osgi.build:dependency-version-validator:1.0.0	0	37	 (default)
 3        T17:41:46.39	Phase	validate	0	37	
       --------------------------------------------------------
 3        t17:41:46.39	Phase	generate-sources
@@ -122,7 +122,7 @@ Start: 01-03-2013 17:41:38
 3        T17:41:46.50	Phase	generate-sources	0	113	
       --------------------------------------------------------
 3        t17:41:46.50	Phase	generate-resources
-4          A17:41:46.50	Plugin	com.ebay.osgi.build:maven-scm-build-info:1.0.7	0	32	 (build-info)
+4          A17:41:46.50	Plugin	com.ccoe.osgi.build:maven-scm-build-info:1.0.7	0	32	 (build-info)
 3        T17:41:46.53	Phase	generate-resources	0	32	
       --------------------------------------------------------
 3        t17:41:46.53	Phase	process-resources
@@ -132,7 +132,7 @@ Start: 01-03-2013 17:41:38
 3        t17:41:46.60	Phase	compile
 4          A17:41:46.60	Plugin	org.apache.maven.plugins:maven-compiler-plugin:2.5	0	59	 (default-compile)
 4          A17:41:46.66	Plugin	org.apache.maven.plugins:maven-compiler-plugin:2.5	0	4	 (default-compile)
-4          A17:41:46.66	Plugin	com.ebay.osgi.build:obrgen-maven-plugin:0.1.8	0	8612	 (obrgen)
+4          A17:41:46.66	Plugin	com.ccoe.osgi.build:obrgen-maven-plugin:0.1.8	0	8612	 (obrgen)
 3        T17:41:55.27	Phase	compile	0	8676	
       --------------------------------------------------------
 3        t17:41:55.27	Phase	process-classes
@@ -156,7 +156,7 @@ Start: 01-03-2013 17:41:38
 3        T17:41:55.68	Phase	package	0	112	
       --------------------------------------------------------
 3        t17:41:55.68	Phase	validate
-4          A17:41:55.68	Plugin	com.ebay.osgi.build:dependency-version-validator:1.0.0	0	1	 (default)
+4          A17:41:55.68	Plugin	com.ccoe.osgi.build:dependency-version-validator:1.0.0	0	1	 (default)
 3        T17:41:55.68	Phase	validate	0	1	
       --------------------------------------------------------
 3        t17:41:55.68	Phase	generate-sources
@@ -165,14 +165,14 @@ Start: 01-03-2013 17:41:38
 3        T17:41:55.68	Phase	generate-sources	0	2	
       --------------------------------------------------------
 3        t17:41:55.68	Phase	package
-4          A17:41:55.68	Plugin	org.apache.maven.plugins:maven-source-plugin:2.1.2.ebay	0	85	 (default)
+4          A17:41:55.68	Plugin	org.apache.maven.plugins:maven-source-plugin:2.1.2.ccoe	0	85	 (default)
 3        T17:41:55.77	Phase	package	0	85	
       --------------------------------------------------------
 3        t17:41:55.77	Phase	install
 4          A17:41:55.77	Plugin	org.apache.maven.plugins:maven-install-plugin:2.4	0	60	 (default-install)
 3        T17:41:55.83	Phase	install	0	60	
       --------------------------------------------------------
-2      T17:41:55.83	Project	EBA For caltest	0	9970	com.ebay.app.raptor:caltest.eba:eba:0.0.1-SNAPSHOT
+2      T17:41:55.83	Project	EBA For caltest	0	9970	com.ccoe.app.raptor:caltest.eba:eba:0.0.1-SNAPSHOT
     --------------------------------------------------------
 1    T17:41:55.83	URL	Session	0	16206	[install]
   --------------------------------------------------------
