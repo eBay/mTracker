@@ -13,12 +13,12 @@
    </bean>
 
     <bean id="sessionJDBCTemplate"
-          class="com.ebay.build.tracking.jdbc.SessionJDBCTemplate">
+          class="com.ccoe.build.tracking.jdbc.SessionJDBCTemplate">
         <property name="dataSource"  ref="dataSource" />
     </bean>
 
     <bean id="rawDataJDBCTemplate"
-          class="com.ebay.build.tracking.jdbc.RawDataJDBCTemplate">
+          class="com.ccoe.build.tracking.jdbc.RawDataJDBCTemplate">
         <property name="dataSource"  ref="dataSource" />
     </bean>
 </beans>
