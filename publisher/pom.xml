@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.ebay.build.publisher</groupId>
+	<groupId>com.ccoe.build.publisher</groupId>
 	<artifactId>publisher</artifactId>
 	<packaging>jar</packaging>
 	<version>1.0.15-jar-with-dependencies</version>
@@ -29,7 +29,7 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.ebay.build.core</groupId>
+			<groupId>com.ccoe.build.core</groupId>
 			<artifactId>core</artifactId>
 			<version>1.0.14</version>
 		</dependency>
@@ -88,11 +88,11 @@
 						<classpath />
 						
 						<!--
-						<argument>com.ebay.build.profiler.publisher.UpdatePluginCountList</argument>
-						<argument>com.ebay.build.profiler.publisher.Main</argument>
+						<argument>com.ccoe.build.profiler.publisher.UpdatePluginCountList</argument>
+						<argument>com.ccoe.build.profiler.publisher.Main</argument>
 						
 						
-						<argument>com.ebay.build.profiler.publisher.JsonPublisher</argument>
+						<argument>com.ccoe.build.profiler.publisher.JsonPublisher</argument>
 						
 						-->
 					</arguments>
@@ -104,7 +104,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-						<mainClass>com.ebay.build.profiler.publisher.Main</mainClass>						
+						<mainClass>com.ccoe.build.profiler.publisher.Main</mainClass>						
 						
 						</manifest>
 					</archive>
@@ -125,7 +125,7 @@
 			 -->
 	    <!-- DEPLOY the JAR into NXRaptor
 	    *******************
-	    mvn deploy:deploy-file -DgroupId=com.ebay.build.profiler -DartifactId=LogPublisher -Dversion=1.0.12 -Dclassifier=jar-with-dependencies 
+	    mvn deploy:deploy-file -DgroupId=com.ccoe.build.profiler -DartifactId=LogPublisher -Dversion=1.0.12 -Dclassifier=jar-with-dependencies 
 	                            -Durl=http://nxraptor.qa.ebay.com/content/repositories/releases -Dfile=LogPublisher-1.0.12-jar-with-dependencies.jar 
 	                            -DgeneratePom=false -DrepositoryId=releases
 	    *******************
@@ -150,7 +150,7 @@
                         </transformer>
                         <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                   			<manifestEntries>
-                    			<Main-Class>com.ebay.build.profiler.publisher.Main</Main-Class>                    			
+                    			<Main-Class>com.ccoe.build.profiler.publisher.Main</Main-Class>                    			
                   			</manifestEntries>
                 		</transformer>
                     </transformers>
