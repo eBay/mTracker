@@ -68,8 +68,29 @@ Following is a list of the information MBT tracked
 *	Error Code
 *	Fullstack Trace
 
-## Getting Started
+## Setting Up
 
+### Requirements
 
+* Maven 3.0.3+
+* JDK 1.6+
+* ANT 1.8+
 
-# The largest heading
+### Installation
+
+1. Download the core.jar and profiler.jar, copy these two jars into $MAVEN_HOME/lib/ext
+2. mkdir /var/lib/jenkins/maven.build.tracking
+3. cd /var/lib/jenkins/maven.build.tracking
+4. wget https://github.scm.corp.ebay.com/mmao/maven-time-tracking/raw/master/publisher/bin/build.xml
+5. setup cron job
+```
+# Name: maven-build-tracking LogPublish
+*/5 * * * * cd /var/lib/jenkins/maven.build.tracking; /usr/bin/ant -logger org.apache.tools.ant.listener.MailLogger > crontab-publish.log 2>&1
+# Name: maven-build-tracking SelfUpgrade
+0 * * * * cd /var/lib/jenkins/maven.build.tracking; /usr/bin/ant upgrade -logger org.apache.tools.ant.listener.MailLogger > crontab-upgrade.log 2>&1
+```
+
+### Build From Source
+
+1. git clone https://github.scm.corp.ebay.com/mmao/maven-time-tracking
+2. mvn clean install
