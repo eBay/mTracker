@@ -13,8 +13,8 @@
 	</properties>
 	
 	<scm>
-        <connection>scm:git:git@github.scm.corp.ebay.com:mmao/maven-time-tracking.git</connection>
-        <developerConnection>scm:git:git@github.scm.corp.ebay.com:mmao/maven-time-tracking.git</developerConnection>
+        <connection>scm:git:git@github.scm.corp.ebay.com:mmao/maven-build-tracking.git</connection>
+        <developerConnection>scm:git:git@github.scm.corp.ebay.com:mmao/maven-build-tracking.git</developerConnection>
     </scm>
     
     <mailingLists>
