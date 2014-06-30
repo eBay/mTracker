@@ -68,6 +68,13 @@ Following is a list of the information MBT tracked
 *	Error Code
 *	Fullstack Trace
 
+## Overview
+
+### The log based architecture
+
+![Image of architecture](https://github.scm.corp.ebay.com/mmao/maven-time-tracking/raw/master/docs/images/arch.png)
+
+
 ## Setting Up
 
 ### Requirements
