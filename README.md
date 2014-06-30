@@ -63,7 +63,6 @@ Following is a list of the information MBT tracked
 *	Jenkins URL
 *	Maven version
 *	Java version
-*	Raptor Version
 *	Error Category
 *	Error Code
 *	Fullstack Trace
@@ -79,7 +78,7 @@ Following is a list of the information MBT tracked
 
 ### Requirements
 
-* Maven 3.0.3+
+* Maven 3.0.5+
 * JDK 1.6+
 * ANT 1.8+
 
