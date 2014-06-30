@@ -83,6 +83,7 @@ Following is a list of the information MBT tracked
 3. cd /var/lib/jenkins/maven.build.tracking
 4. wget https://github.scm.corp.ebay.com/mmao/maven-time-tracking/raw/master/publisher/bin/build.xml
 5. setup cron job
+
 ```
 # Name: maven-build-tracking LogPublish
 */5 * * * * cd /var/lib/jenkins/maven.build.tracking; /usr/bin/ant -logger org.apache.tools.ant.listener.MailLogger > crontab-publish.log 2>&1
