@@ -2,15 +2,64 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.ccoe.build</groupId>
-	<artifactId>RaptorBuildTracking</artifactId>
+	<artifactId>MavenBuildTracking</artifactId>
 	<version>1.0.13</version>
 	<packaging>pom</packaging>
 	<name>MavenBuildTracking</name>
-	<description>Build All Modules</description>
+	<description>Maven Build Tracking is a system that track the builds in CI/CLI/IDE environments</description>
 	
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>		
 	</properties>
+	
+	<scm>
+        <connection>scm:git:git@github.scm.corp.ebay.com:mmao/maven-time-tracking.git</connection>
+        <developerConnection>scm:git:git@github.scm.corp.ebay.com:mmao/maven-time-tracking.git</developerConnection>
+    </scm>
+    
+    <mailingLists>
+        <mailingList>
+            <name>MBT User List</name>
+            <subscribe>users-subscribe@</subscribe>
+            <unsubscribe>users-unsubscribe@</unsubscribe>
+            <post>users@</post>
+            <archive></archive>
+        </mailingList>
+    </mailingLists>
+    
+    <developers>
+        <developer>
+            <name>James Mao</name>
+            <email>mmao@ebay.com</email>
+            <url>http://people.apache.org/~mmao/</url>
+            <organization>eBay Open Source</organization>
+            <organizationUrl> https://github.com/eBay</organizationUrl>
+            <properties>
+                <picUrl>http:///images/.png</picUrl>
+            </properties>
+        </developer>
+    </developers>
+    
+    <ciManagement>
+        <system>Jenkins</system>
+        <url></url>
+        <notifiers>
+            <notifier>
+                <type>mail</type>
+                <configuration>
+                    <address>notifications@</address>
+                </configuration>
+            </notifier>
+        </notifiers>
+    </ciManagement>
+    
+     <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
 	<modules>
 		<module>core</module>
