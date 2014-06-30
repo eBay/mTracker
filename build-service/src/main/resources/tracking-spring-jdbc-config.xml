@@ -8,8 +8,8 @@
       class="org.springframework.jdbc.datasource.DriverManagerDataSource">
       <property name="driverClassName" value="oracle.jdbc.OracleDriver"/>
       <property name="url" value="jdbc:oracle:thin:@xxxxxx:1521:PPLDB"/>
-      <property name="username" value="raptor_build_prod"/>
-      <property name="password" value="raptor"/>
+      <property name="username" value=""/>
+      <property name="password" value=""/>
    </bean>
 
     <bean id="sessionJDBCTemplate"

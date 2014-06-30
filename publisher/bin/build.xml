@@ -1,4 +1,4 @@
-<project name="raptor build tracking log publisher" default="publish" basedir=".">
+<project name="maven build tracking log publisher" default="publish" basedir=".">
 
 	<property environment="env"/>
 
@@ -93,7 +93,7 @@
 	</target>
 
 	<target name="download" unless="uptodate">
-		<echo message="New RaptorBuildTracking LogPublisher version found ${remote.version}"/>
+		<echo message="New MavenLogPublisher version found ${remote.version}"/>
 
 		<get src="${remote.jar.fullurl}" dest="${staging.dir}/${latest.jar.file}" maxtime="180"/>
 		<get src="${remote.key.file}" dest="${staging.dir}/${key.name}" maxtime="30"/>
@@ -116,7 +116,7 @@
 
 	<target name="publish" depends="init.local" unless="is.publishing">
 		<touch file="${basedir}/LOG_PUBLISH_IN_PROGRESS"/>
-		<echo message="Raptor Build Tracking Log Publishing..."/>
+		<echo message="Maven Build Tracking Log Publishing..."/>
 		<echo message="Running ${lib.dir}/${current.jar.file}"/>
 		<java jar="${lib.dir}/${current.jar.file}" fork="true">
 			<arg line="${logs.dir} ${retension.days}"/>

@@ -9,7 +9,6 @@ import javax.sql.DataSource;
 
 import oracle.jdbc.OraclePreparedStatement;
 
-import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -28,7 +27,7 @@ public class SessionJDBCTemplate {
 
 	public int create(final Session session) {
 		final String SQL = "insert into RBT_SESSION (pool_name, machine_name, user_name, environment, " +
-				"status, duration, maven_version, goals, start_time, git_url, git_branch, jekins_url, java_version, cause, full_stacktrace, raptor_version, domain_version, category, filter) " +
+				"status, duration, maven_version, goals, start_time, git_url, git_branch, jekins_url, java_version, cause, full_stacktrace, category, filter) " +
 				"values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 		KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -54,11 +53,8 @@ public class SessionJDBCTemplate {
 				
 				setFullStackTraceAsClob(15, ps, session);
 				
-				ps.setString(16, session.getRaptorVersion());
-				ps.setString(17, session.getDomainVersion());
-				
-				ps.setString(18,  session.getCategory());
-				ps.setString(19,  session.getFilter());
+				ps.setString(16,  session.getCategory());
+				ps.setString(17,  session.getFilter());
 
 				return ps;
 			}
@@ -106,24 +102,5 @@ public class SessionJDBCTemplate {
 		jdbcTemplateObject.update(SQL, id);
 		System.out.println("Deleted Record with ID = " + id);
 		return;
-	}
-	
-	public int[] batchUpdateAssemblyBreakdown(final List<AssemblyBreakdown> durations) {
-		int[] updateCounts = jdbcTemplateObject.batchUpdate(
-				"update RBT_SESSION set duration_assembly_package = ?, duration_assembly_upload = ?, duration_assembly_service = ?, stack = ? where jekins_url = ? and goals like '%assembler%deploy%' and status = 0",
-				new BatchPreparedStatementSetter() {
-					public void setValues(PreparedStatement ps, int i) throws SQLException {
-						ps.setInt(1, durations.get(i).getPackageDuration());
-						ps.setInt(2, durations.get(i).getUploadDuration());
-						ps.setInt(3, durations.get(i).getServiceDuration());
-						ps.setString(4, durations.get(i).getStack());
-						ps.setString(5, durations.get(i).getJenkinsUrl());
-					}
-
-					public int getBatchSize() {
-						return durations.size();
-					}
-				});
-		return updateCounts;
 	}
 }

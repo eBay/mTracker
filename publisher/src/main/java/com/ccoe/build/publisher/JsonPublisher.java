@@ -55,7 +55,7 @@ public class JsonPublisher extends AbstractPublisher {
 	
 	private static File getTargetFolder(String logDir) {
 		if (logDir == null) {
-			logDir = "/raptor.build.service/track/queue/build";
+			logDir = "/maven.build.service/track/queue/build";
 		}
 		return new File(logDir);
 	}

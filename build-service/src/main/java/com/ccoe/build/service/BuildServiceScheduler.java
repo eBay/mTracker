@@ -75,7 +75,7 @@ public class BuildServiceScheduler implements ServletContextListener {
 				return true;
 			}
 		} catch (Exception e) {
-			System.out.println("Build Service Scheduler can not access Raptor Build Service due to " + e.getMessage());
+			System.out.println("Build Service Scheduler can not access Build Service due to " + e.getMessage());
 		}
 		return false;
 	}

@@ -37,10 +37,6 @@
 	</bean>
 
 
-	<bean id="assemblyLogLoader" class="com.ccoe.build.publisher.AssemblyLogLoader">
-		<property name="sessionJDBCTemplate" ref="sessionJDBCTemplate"></property>
-	</bean>
-
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="oracle.jdbc.OracleDriver" />

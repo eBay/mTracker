@@ -33,11 +33,6 @@ public class LoaderProcessor {
 	}
 	
 	public LoaderProcessor(String mavenHome) {
-//		if (!"".equals(mavenHome)) {
-//			File conf = new File(mavenHome, "conf/spring-jdbc-config.xml");
-//			System.out.println("[INFO] Loading raptor tracking db configure file... " + conf);
-//			context = new FileSystemXmlApplicationContext(conf.toString());
-//		}
 	}
 	
 	public void setSessionJDBCTemplate(SessionJDBCTemplate jdbcTemplate) {

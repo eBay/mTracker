@@ -29,8 +29,6 @@ public class SessionMapper implements RowMapper<Session> {
 		}
 		
 		session.setExceptionMessage(rs.getString("cause"));
-		session.setRaptorVersion(rs.getString("raptor_version"));
-		session.setDomainVersion(rs.getString("domain_version"));
 		session.setCategory(rs.getString("category"));
 		
 		session.setId(rs.getInt("id"));

@@ -18,8 +18,6 @@ public class Session extends TrackingModel {
 	private String gitUrl;
 	private String gitBranch;
 	private String jenkinsUrl; 
-	private String raptorVersion;
-	private String domainVersion;
 	
 	private String goals;
 	private Map<String, Project> projects =  new HashMap<String, Project>();
@@ -114,7 +112,7 @@ public class Session extends TrackingModel {
 		StringBuffer sBuffer = new StringBuffer();
 
 		appendLine(sBuffer, "SQLLog for " + getAppName() + "-MavenBuild:" + getMachineName());
-		appendLine(sBuffer, "Environment: raptor-build-tracking");
+		appendLine(sBuffer, "Environment: maven-build-tracking");
 		appendLine(sBuffer, "Start: " + DateUtils.getCALDateTimeString(getStartTime()));
 		
 		appendTransacionStart(sBuffer, 0, " Environment " + getEnvironment());
@@ -165,24 +163,7 @@ public class Session extends TrackingModel {
 	public void setFullStackTrace(String fullStackTrace) {
 		this.fullStackTrace = fullStackTrace;
 	}
-	public String getRaptorVersion() {
-		return raptorVersion;
-	}
-	public void setRaptorVersion(String raptorVersion) {
-		this.raptorVersion = raptorVersion;
-		if (!StringUtils.isEmpty(this.raptorVersion) && this.payload != null && !this.payload.contains("raptor.version")) {
-			this.payload += ";raptor.version=" + this.raptorVersion;
-		}
-	}
-	public String getDomainVersion() {
-		return domainVersion;
-	}
-	public void setDomainVersion(String domainVersion) {
-		this.domainVersion = domainVersion;
-		if (!StringUtils.isEmpty(this.domainVersion) && this.payload != null && !this.payload.contains("domain.version")) {
-			this.payload += ";domain.version=" + this.domainVersion;
-		}
-	}
+
 	public String getCategory() {
 		return category;
 	}

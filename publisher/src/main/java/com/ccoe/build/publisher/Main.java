@@ -5,7 +5,7 @@ import java.io.File;
 public class Main {
 	
 	public static void main(String[] args) {
-		String logDir = "F:\\var\\lib\\jenkins\\raptor.build.tracking\\logs";
+		String logDir = "F:\\var\\lib\\jenkins\\maven.build.tracking\\logs";
 		int retensionDays = 14;
 		if (args != null && args.length > 0) {
 			 logDir = args[0];
@@ -20,14 +20,12 @@ public class Main {
 			PublisherConfig config = new PublisherConfig().targetFolder(targetFolder).retensionDays(retensionDays);
 			new LogPublisher(config).publish();
 			System.out.println("======= LogPubliser DONE =======");
-			new AssemblyLogPublisher(config).publish();
-			System.out.println("======= Assembly Log Publisher DONE =======");
 		}
 	}
 	
 	private static File getTargetFolder(String logDir) {
 		if (logDir == null) {
-			logDir = "/var/lib/jenkins/raptor.build.tracking/logs";
+			logDir = "/var/lib/jenkins/maven.build.tracking/logs";
 		}
 		return new File(logDir);
 	}

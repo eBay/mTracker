@@ -24,7 +24,7 @@ public class OutputRenderer {
 	}
 
 	public void renderToScreen() {
-		render("Raptor Build Profile Output :");
+		render("Maven Build Profile Output :");
 		render("-----------------------------------------------------------");
 		render("Project Discovery : "
 				+ Timer.formatTime(discoveryProfile.getElapsedTime()));

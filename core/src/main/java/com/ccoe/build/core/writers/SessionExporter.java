@@ -42,7 +42,7 @@ public class SessionExporter {
 	}
 
 	protected File genTargetFolder() {
-		File targetFolder = new File("/var/lib/jenkins/raptor.build.tracking/logs");
+		File targetFolder = new File("/var/lib/jenkins/maven.build.tracking/logs");
 		if (!targetFolder.exists()) {
 			targetFolder.mkdirs();
 		}
