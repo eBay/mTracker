@@ -85,7 +85,7 @@ Following is a list of the information MBT tracked
 
 ### Installation
 
-1. Download the core.jar and profiler.jar, copy these two jars into $MAVEN_HOME/lib/ext
+1. [Download](https://github.scm.corp.ebay.com/mmao/maven-time-tracking/tree/master/downloads) the core.jar and profiler.jar, copy these two jars into $MAVEN_HOME/lib/ext
 2. mkdir /var/lib/jenkins/maven.build.tracking
 3. cd /var/lib/jenkins/maven.build.tracking
 4. wget https://github.scm.corp.ebay.com/mmao/maven-time-tracking/raw/master/publisher/bin/build.xml
