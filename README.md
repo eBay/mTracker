@@ -1,8 +1,8 @@
-Maven Build Tracking
+mTracker
 ===================
 
 
-Maven Build Tracking is a system used to track the Maven builds in various environments (IDE, CLI, CI etc.), 
+mTracker a.k.a Maven Build Tracking is a system used to track the Maven builds in various environments (IDE, CLI, CI etc.), 
 load the data into central DB for analyzing performance/reliability metrics.
 It can be easily integrated with reporting system.
 It is low-footprint, low-latency, self-upgrade, easy to maintain.
