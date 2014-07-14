@@ -106,4 +106,8 @@ Following is a list of the information MBT tracked
 
 If you have any questions, try to find anwsers from the [forum](https://groups.google.com/forum/#!forum/mtracker-users), or post us a question on the [forum](https://groups.google.com/forum/#!forum/mtracker-users). Any feedbacks are welcome as well.
 
+To post to this [forum](https://groups.google.com/forum/#!forum/mtracker-users), send email to mtracker-users@googlegroups.com
+
+To unsubscribe from this [forum](https://groups.google.com/forum/#!forum/mtracker-users), send email to mtracker-users+unsubscribe@googlegroups.com
+
 If you find any issues, Please raise it [here](https://github.com/eBay/mTracker/issues).
