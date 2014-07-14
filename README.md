@@ -71,7 +71,7 @@ Following is a list of the information MBT tracked
 
 ### The log based architecture
 
-![Image of architecture](https://github.scm.corp.ebay.com/mmao/maven-time-tracking/raw/master/docs/images/arch.png)
+![Image of architecture](https://github.com/eBay/mTracker/raw/master/docs/images/arch.png)
 
 
 ## Setting Up
@@ -84,10 +84,10 @@ Following is a list of the information MBT tracked
 
 ### Installation
 
-1. [Download](https://github.scm.corp.ebay.com/mmao/maven-time-tracking/tree/master/downloads) the core.jar and profiler.jar, copy these two jars into $MAVEN_HOME/lib/ext
+1. [Download](https://github.com/eBay/mTracker/tree/master/downloads) the core.jar and profiler.jar, copy these two jars into $MAVEN_HOME/lib/ext
 2. mkdir /var/lib/jenkins/maven.build.tracking
 3. cd /var/lib/jenkins/maven.build.tracking
-4. wget https://github.scm.corp.ebay.com/mmao/maven-build-tracking/raw/master/publisher/bin/build.xml
+4. wget https://github.com/eBay/mTracker/raw/master/publisher/bin/build.xml
 5. setup cron job
 
 ```
@@ -99,5 +99,5 @@ Following is a list of the information MBT tracked
 
 ### Build From Source
 
-1. git clone https://github.scm.corp.ebay.com/mmao/maven-build-tracking
+1. git clone https://github.com/eBay/mTracker
 2. mvn clean install
