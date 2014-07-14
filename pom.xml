@@ -19,28 +19,28 @@ limitations under the License.
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.ccoe.build</groupId>
-	<artifactId>MavenBuildTracking</artifactId>
+	<artifactId>mTracker</artifactId>
 	<version>1.0.14</version>
 	<packaging>pom</packaging>
-	<name>MavenBuildTracking</name>
-	<description>Maven Build Tracking is a system that track the builds in CI/CLI/IDE environments</description>
+	<name>mTracker</name>
+	<description>mTracker is a system that track the builds in CI/CLI/IDE environments</description>
 	
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>		
 	</properties>
 	
 	<scm>
-        <connection>scm:git:git@github.scm.corp.ebay.com:mmao/maven-build-tracking.git</connection>
-        <developerConnection>scm:git:git@github.scm.corp.ebay.com:mmao/maven-build-tracking.git</developerConnection>
+        <connection>scm:git:git@github.com:eBay/mTracker.git</connection>
+        <developerConnection>scm:git:git@github.com:eBay/mTracker.git</developerConnection>
     </scm>
     
     <mailingLists>
         <mailingList>
-            <name>MBT User List</name>
-            <subscribe>users-subscribe@</subscribe>
-            <unsubscribe>users-unsubscribe@</unsubscribe>
-            <post>users@</post>
-            <archive></archive>
+            <name>mTracker User List</name>
+            <subscribe>mtracker-users+subscribe@googlegroups.com</subscribe>
+            <unsubscribe>mtracker-users+unsubscribe@googlegroups.com</unsubscribe>
+            <post>mtracker-users@googlegroups.com</post>
+            <archive>https://groups.google.com/forum/#!forum/mtracker-users</archive>
         </mailingList>
     </mailingLists>
     

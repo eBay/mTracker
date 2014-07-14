@@ -25,12 +25,15 @@ limitations under the License.
 	<property name="MailLogger.success.notify" value="false"/>
 	<property name="MailLogger.failure.to" value=""/>
 	<property name="MailLogger.failure.subject" value="LogPublisher failed on ${env.COMPUTERNAME}."/>
+	
+	<property name="NXRAPTOR_HOST" value="nxraptor.qa.ccoe.com"/>
+	<property name="BUILD_SERVICE_HOST" value="rbuildservice.stratus.qa.ccoe.com"/>
 
-	<property name="maven.repo.baseurl" value="http://nxraptor.qa.ccoe.com/content/repositories/releases/com/ccoe/build/profiler/LogPublisher"/>
+	<property name="maven.repo.baseurl" value="http://${NXRAPTOR_HOST}/content/repositories/releases/com/ccoe/build/publisher/publisher"/>
 
-	<property name="git.repo.baseurl" value="https://github.scm.corp.ccoe.com/DevExTech/maven-time-tracking/raw/master/LogPublisher/bin"/>
+	<property name="git.repo.baseurl" value="https://github.com/eBay/mTracker/raw/master/publisher/bin"/>
 
-	<property name="rbservice.baseurl" value="http://rbuildservice.stratus.qa.ccoe.com/build-service"/>
+	<property name="rbservice.baseurl" value="http://${BUILD_SERVICE_HOST}/build-service"/>
 
 	<property name="lib.dir" value="${basedir}/lib"/>
 	<property name="logs.dir" value="${basedir}/logs"/>
