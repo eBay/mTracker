@@ -1,4 +1,6 @@
-mTracker
+
+![Image of logo](https://raw.githubusercontent.com/eBay/mTracker/master/docs/images/mtracker_logo_small.png)
+
 ===================
 
 
