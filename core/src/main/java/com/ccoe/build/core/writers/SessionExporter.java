@@ -43,7 +43,7 @@ public class SessionExporter {
 		files.add(targetFile);
 		
 		if (!StringUtils.isEmpty(session.getFullStackTrace())) {
-			File stackTraceFile = new File(genTargetFolder(), targetFile.getName() + ".stacktrace");
+			File stackTraceFile = new File(targetFolder, targetFile.getName() + ".stacktrace");
 			System.out.println("[INFO] Dump build tracking session stacktrace to " + stackTraceFile);
 			FileUtils.writeToFile(stackTraceFile, session.getFullStackTrace());
 			files.add(stackTraceFile);
