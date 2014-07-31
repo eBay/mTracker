@@ -95,12 +95,13 @@ limitations under the License.
 			<scope>provided</scope>
 		</dependency>
 
+<!--
 		<dependency>
 			<groupId>oracle</groupId>
 			<artifactId>jdbc</artifactId>
 			<version>10.2</version>
 		</dependency>
-
+-->
 		<dependency>
 			<groupId>org.quartz-scheduler</groupId>
 			<artifactId>quartz</artifactId>
