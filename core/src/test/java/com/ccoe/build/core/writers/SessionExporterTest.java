@@ -79,7 +79,9 @@ public class SessionExporterTest {
 	
 	@Test
 	public void testProcess() throws URISyntaxException {
-		File targetFolder = new File(getClass().getResource("/").toURI());
+		File targetFolder = new File(getClass().getResource(".").toURI());
+		System.out.println(targetFolder + "-===================");
+
 		SessionExporter exporter = new SessionExporter();
 		Session session = new Session();
 		session.setAppName("test");
@@ -94,6 +96,7 @@ public class SessionExporterTest {
 		assertEquals(2, files.size());
 		
 		File sessionFile = files.get(0);
+		System.out.println(sessionFile + "-===================");
 		assertTrue(sessionFile.getName().startsWith("test--localhost--"));
 		assertTrue(sessionFile.exists());
 		
