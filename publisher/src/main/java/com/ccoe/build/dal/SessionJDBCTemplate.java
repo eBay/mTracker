@@ -24,7 +24,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import oracle.jdbc.OraclePreparedStatement;
+//import oracle.jdbc.OraclePreparedStatement;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -86,11 +86,14 @@ public class SessionJDBCTemplate {
 			content = session.getFullStackTrace();
 		}
 		
-		try {
-			((OraclePreparedStatement) ps).setStringForClob(index, content);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		//TODO: fix the set clob in case it is not Oracle DB, should work for other DB.
+		// one of the reason here is we can not find the oracle jdbc jar in the public repo.
+
+//		try {
+//			((OraclePreparedStatement) ps).setStringForClob(index, content);
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
 	}
 	
 	private String getCause(String message) {
