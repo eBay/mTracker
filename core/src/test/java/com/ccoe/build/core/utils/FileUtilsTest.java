@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Test;
+
 import com.ccoe.build.core.utils.FileUtils;
 
 public class FileUtilsTest {
@@ -58,8 +59,8 @@ public class FileUtilsTest {
 		File dc = new File(resourceFolder, "diskclean");
 		
 		assertTrue(dc.exists());
-		
-		FileUtils.renameDoneFile(new File(dc, "filestodelete.txt"));    
+
+		FileUtils.renameDoneFile(new File(dc, "filestodelete.txt"));
 		
 		File[] files = FileUtils.loadDoneFiles(dc);
 		assertTrue(files.length > 0);
