@@ -27,7 +27,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Test;
-
 import com.ccoe.build.core.utils.FileUtils;
 
 public class FileUtilsTest {
@@ -60,7 +59,7 @@ public class FileUtilsTest {
 		
 		assertTrue(dc.exists());
 		
-		FileUtils.renameDoneFile(new File(dc, "filestodelete.txt"));
+		FileUtils.renameDoneFile(new File(dc, "filestodelete.txt"));    
 		
 		File[] files = FileUtils.loadDoneFiles(dc);
 		assertTrue(files.length > 0);
@@ -77,6 +76,7 @@ public class FileUtilsTest {
 		assertFalse(file.exists());
 		FileUtils.writeToFile(file, "some contents");
 		assertTrue(file.exists());
+		file.delete();
 	}
 	
 	@Test
@@ -92,6 +92,7 @@ public class FileUtilsTest {
 		String unmodified = FileUtils.readFile(file);
 		FileUtils.modifyPropertyFile(file, map);
 		String modified = FileUtils.readFile(file);
-		assertFalse(unmodified.equals(modified));		
+		assertFalse(unmodified.equals(modified));
+		FileUtils.writeToFile(file, unmodified);	
 	}
 }
