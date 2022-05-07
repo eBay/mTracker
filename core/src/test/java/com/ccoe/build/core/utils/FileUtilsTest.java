@@ -59,7 +59,7 @@ public class FileUtilsTest {
 		File dc = new File(resourceFolder, "diskclean");
 		
 		assertTrue(dc.exists());
-
+		
 		FileUtils.renameDoneFile(new File(dc, "filestodelete.txt"));
 		
 		File[] files = FileUtils.loadDoneFiles(dc);
