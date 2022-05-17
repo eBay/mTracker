@@ -93,7 +93,7 @@ public class FileUtilsTest {
 		String unmodified = FileUtils.readFile(file);
 		FileUtils.modifyPropertyFile(file, map);
 		String modified = FileUtils.readFile(file);
-		assertFalse(unmodified.equals(modified));
+		assertFalse(unmodified.equals(modified));		
 		FileUtils.writeToFile(file, unmodified);	
 	}
 }
