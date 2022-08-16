@@ -77,6 +77,7 @@ public class FileUtilsTest {
 		assertFalse(file.exists());
 		FileUtils.writeToFile(file, "some contents");
 		assertTrue(file.exists());
+		file.delete();
 	}
 	
 	@Test
@@ -93,5 +94,6 @@ public class FileUtilsTest {
 		FileUtils.modifyPropertyFile(file, map);
 		String modified = FileUtils.readFile(file);
 		assertFalse(unmodified.equals(modified));		
+		FileUtils.writeToFile(file, unmodified);	
 	}
 }
