@@ -114,8 +114,10 @@ public class CompressUtils {
 				System.out.println("Extracting: " + entry);
 				int count;
 				byte data[] = new byte[BUFFER];
-				File unzipfile = new File(unzipdir + File.separator
-						+ entry.getName());
+				File unzipfile = new File(unzipdir, entry.getName());
+				if (!unzipfile.toPath().normalize().startsWith(unzipdir)) {
+					throw new IOException("Bad zip entry");
+				}
 				FileOutputStream fos = new FileOutputStream(unzipfile);
 				BufferedOutputStream dest = new BufferedOutputStream(fos, BUFFER);
 				
