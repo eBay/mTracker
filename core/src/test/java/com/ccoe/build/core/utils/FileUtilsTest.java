@@ -60,7 +60,9 @@ public class FileUtilsTest {
 		
 		assertTrue(dc.exists());
 		
-		FileUtils.renameDoneFile(new File(dc, "filestodelete.txt"));
+		File file = new File(dc, "filestodelete.txt");
+		FileUtils.writeToFile(file, "some contents");
+		FileUtils.renameDoneFile(file);
 		
 		File[] files = FileUtils.loadDoneFiles(dc);
 		assertTrue(files.length > 0);
