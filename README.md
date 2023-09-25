@@ -1,5 +1,5 @@
 
-![Image of logo](https://raw.githubusercontent.com/eBay/mTracker/master/docs/images/mtracker_logo_xsmall.png) [![Build Status](https://travis-ci.org/eBay/mTracker.png?branch=master)](https://travis-ci.org/eBay/mTracker)
+![Image of logo](https://raw.githubusercontent.com/eBay/mTracker/master/docs/images/mtracker_logo_xsmall.png) [![Build Status](https://travis-ci.org/eBay/mTracker.png?branch=master)](https://travis-ci.org/eBay/mTracker) [![Project Map](https://sourcespy.com/shield.svg)](https://sourcespy.com/github/ebaymtracker/)
 ===================
 
 
