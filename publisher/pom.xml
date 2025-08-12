@@ -73,7 +73,7 @@ limitations under the License.
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-api</artifactId>
-			<version>2.19.0</version>
+			<version>2.25.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
@@ -104,7 +104,7 @@ limitations under the License.
 						<argument>-classpath</argument>
 						<!-- automatically creates the classpath using all project dependencies, 
 							also adding the project build directory -->
-						<classpath />
+						<classpath/>
 						
 						<!--
 						<argument>com.ccoe.build.profiler.publisher.Main</argument>
